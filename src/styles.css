@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Raleway:wght@300&display=swap');
+
+/* You can add global styles to this file, and also import other style files */
+html, body  {
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family: 'Raleway', sans-serif;
+}
+main{
+  width:100%;
+  height:100%;
+}
+main > section{
+  height:100vh;
+  overflow-x:hidden;
+  overflow-y:auto;
+  display:flex;
+  flex-flow: column nowrap;
+}
+
+.jaune{
+  background-color:#F7C45F;
+}
+.bleu{
+  background-color:#28364A;
+}
+.bleufonce{
+  background-color:#202A3A;
+}
+.vert{
+  background-color: #33A537;
+}
+.orange{
+  background-color: #DFA83A;
+}
+.rouge{
+  background-color: #F14668;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
