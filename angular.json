@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "VInciPredictions:build:production",
+            "firebaseProject": "vinciplateforme",
+            "firebaseHostingSite": "vinciplateforme"
+          }
         }
       }
     }

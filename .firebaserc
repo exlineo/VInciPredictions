@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "vinciplateforme": {
+      "hosting": {
+        "VInciPredictions": [
+          "vinciplateforme"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "vinciplateforme"
+  }
+}
