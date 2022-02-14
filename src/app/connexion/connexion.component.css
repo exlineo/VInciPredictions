@@ -1,0 +1,9 @@
+section:nth-child(1){
+  background:url('/assets/images/pages/carte.jpg') 50% 50% no-repeat;
+}
+section:nth-child(2){
+  justify-content: space-between;
+}
+section:nth-child(3){
+
+}

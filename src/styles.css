@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Raleway:wght@300&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Raleway:wght@300&display=swap&family=Material+Icons'); */
+/* import "node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css" */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
 html, body  {
   margin:0;
@@ -8,9 +9,32 @@ html, body  {
   height:100%;
   font-family: 'Raleway', sans-serif;
 }
+.mat-typography{
+  font-family: 'Raleway', sans-serif;
+}
+h1, h2, h3, h4{
+  font-family: 'Playfair Display', serif;
+}
+h1, h4{
+  font-weight:normal;
+}
+a{
+  text-decoration: none;
+  transition:all .3s ease;
+  color:white;
+  cursor: pointer;
+  opacity:.7;
+}
+a:hover{
+  opacity:1;
+  transform:scale(1.05);
+}
 main{
   width:100%;
   height:100%;
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: stretch;
 }
 main > section{
   height:100vh;
@@ -18,16 +42,104 @@ main > section{
   overflow-y:auto;
   display:flex;
   flex-flow: column nowrap;
+  box-sizing: border-box;
+  margin:0;
+  padding:25px;
 }
-
+/* STRUCTURES */
+main.public > section:nth-child(1){
+  flex:1;
+}
+main.public > section:nth-child(2){
+  flex:1;
+}
+main.public > section:nth-child(3){
+  flex:2;
+}
+form{
+  display:flex;
+  flex-flow:column wrap;
+}
+fieldset{
+  display:flex;
+  flex-flow:column nowrap;
+  margin-bottom: 10px;
+  border:none;
+}
+input, select, textarea{
+  padding:10px;
+  border:1px solid rgba(255,255,255,.4);
+}
+input[type="submit"]{
+  background-color:#33A537;
+  color:white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+input[type="reset"]{
+  background-color:#F14668;
+  color:white;
+  text-transform: uppercase;
+  cursor:pointer;
+}
+form span{
+  padding:10px;
+}
+/* CLASSES PERSONNALISES */
+.logo{
+  width:100%;
+}
+.logo a {
+  display:flex;
+  flex-flow:row nowrap;
+  align-items:flex-end;
+  justify-content: space-around;
+}
+.logo a > *{
+  margin-top:auto;
+}
+.logo img{
+  width:100px;
+}
+.logo h3{
+  margin:0;
+  padding:0;
+}
+.menupied{
+  display:flex;
+  flex-flow:row nowrap;
+  align-items:center;
+}
+.menupied nav{
+  display:flex;
+  flex-flow:column nowrap;
+}
+.menulangues{
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  margin-bottom:20px;
+}
+.menulangues img{
+  max-width: 20px;
+  margin:0;
+  padding:3px;
+}
+/* COULEURS */
 .jaune{
   background-color:#F7C45F;
+  color:#202A3A;
+}
+.jaune a {
+  color:#202A3A
 }
 .bleu{
   background-color:#28364A;
+  color:white;
 }
 .bleufonce{
   background-color:#202A3A;
+  color:white;
 }
 .vert{
   background-color: #33A537;
@@ -38,6 +150,16 @@ main > section{
 .rouge{
   background-color: #F14668;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.icone{
+  font-family: 'Material Icons' !important;
+  font-size:24px;
+}
+nav .icone{
+  padding:5px;
+}
+.ng-valid{
+  border-bottom:1px solid green;
+}
+.ng-invalid{
+  border-bottom:1px solid red;
+}
