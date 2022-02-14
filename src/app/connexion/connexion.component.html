@@ -4,39 +4,25 @@
   </section>
   <section class="bleufonce">
     <!-- ENTETE DE LA COLONNE -->
-    <header class="logo">
-      <nav class="menulangues">
-        <a (click)="l.setLang('en')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/uk.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
-        <a (click)="l.setLang('es')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/es.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
-        <a (click)="l.setLang('fr')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/fr.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
-        <a (click)="l.setLang('pt')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/pt.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
-      </nav>
-      <a routerLink="/">
-        <img src="/assets/images/logos/Logo_VinCi_nb_web.png">
-        <h4>Vin,<br>
-          Innovation et<br>
-          Compétitivité<br>
-          Internationale</h4>
-      </a>
-    </header>
+    <app-entete></app-entete>
     <!-- FORMULAIRE DE CONNEXION -->
     <form [formGroup]="connexionForm">
       <!-- EMAIL -->
       <fieldset>
         <label>{{ l.t['FORM_EMAIL'] }}</label>
-        <input type="email" [formControl]="mailForm" placeholder="Ex. exemple@exemple.com">
+        <input type="email" [formControl]="mailForm" placeholder="Ex. exemple@exemple.com" required>
         <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
         <span *ngIf="mailForm.hasError('email') && !mailForm.hasError('required')" class="rouge">
           {{ l.t['FORM_FORMAT_MAIL'] }}
         </span>
-        <span *ngIf="connexionForm.hasError('required')" class="rouge">
+        <span *ngIf="mailForm.hasError('required')" class="rouge">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
       <!-- PASSE -->
       <fieldset>
         <label>{{ l.t['FORM_PASSE'] }}</label>
-        <input type="password" matInput [formControl]="passForm" require placeholder="[a-z][A-Z][0-9] + special > 8" minlength="8">
+        <input type="password" matInput [formControl]="passForm" require placeholder="[a-z][A-Z][0-9] + special > 8" required minlength="8">
         <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
         <span *ngIf="passForm.hasError('pattern') && !mailForm.hasError('required')" class="rouge">
           {{ l.t['FORM_FORMAT_PASSE'] }}
@@ -47,19 +33,13 @@
       </fieldset>
       <a (click)="oublie()" [title]="l.t['FORM_OUBLIE']">{{ l.t['FORM_OUBLIE'] }}</a>
       <a (click)="creer()" [title]="l.t['FORM_CREE']">{{ l.t['FORM_CREE'] }}</a>
-      <fieldset>
+      <fieldset class="h">
         <input type="reset" [value]="l.t['FORM_EFFACE']">
         <input type="submit" [value]="l.t['FORM_VALIDE']">
       </fieldset>
     </form>
     <!-- MENU DU BAS -->
-    <article class="menupied">
-      <nav>
-        <a routerLink="" [title]="l.t['MENTIONS']"><span class="icone">gavel</span></a>
-        <a routerLink="" [title]="l.t['RGPD']"><span class="icone">record_voice_over</span></a>
-      </nav>
-      <a href="https://www.interreg-sudoe.eu/" [title]="l.t['LIEN']+' Inerreg Sudoe'"><img src="/assets/images/logos/logo_interreg.png" [alt]="l.t['LOGO']"></a>
-    </article>
+    <app-pied></app-pied>
   </section>
   <section class="jaune">
     <h2></h2>

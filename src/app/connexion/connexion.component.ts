@@ -17,10 +17,9 @@ export class ConnexionComponent implements OnInit {
     ]),
     description: new FormControl()
   });
-  /** Validateurs du formulaire */
+  /** Formulaire et validateurs */
   mailForm = new FormControl('', [Validators.required, Validators.email]);
   passForm = new FormControl('', [Validators.required, Validators.pattern(CustomPattern)]);
-  matcher = new CustomErrorMatch();
   /**
    * Formulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues

@@ -75,12 +75,14 @@ input[type="submit"]{
   color:white;
   text-transform: uppercase;
   cursor: pointer;
+  width:fit-content;
 }
 input[type="reset"]{
-  background-color:#F14668;
+  background-color:#F7C45F;
   color:white;
   text-transform: uppercase;
   cursor:pointer;
+  width:fit-content;
 }
 form span{
   padding:10px;
@@ -92,14 +94,14 @@ form span{
 .logo a {
   display:flex;
   flex-flow:row nowrap;
-  align-items:flex-end;
-  justify-content: space-around;
+  justify-content: center;
 }
 .logo a > *{
   margin-top:auto;
 }
 .logo img{
   width:100px;
+  margin-right:20px;
 }
 .logo h3{
   margin:0;
@@ -109,6 +111,7 @@ form span{
   display:flex;
   flex-flow:row nowrap;
   align-items:center;
+  justify-content: space-between;
 }
 .menupied nav{
   display:flex;
@@ -124,6 +127,13 @@ form span{
   max-width: 20px;
   margin:0;
   padding:3px;
+}
+.h{
+  flex-flow:row nowrap;
+  justify-content:flex-end;
+}
+.v{
+  flex-flow:column nowrap;
 }
 /* COULEURS */
 .jaune{

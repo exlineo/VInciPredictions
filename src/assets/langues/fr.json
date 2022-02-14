@@ -7,9 +7,19 @@
   "LANG_IMG":"Drapeau",
   "FORM_REQUIS":"Ce champ est requis",
   "FORM_EMAIL":"Email",
+  "FORM_EMAIL2":"Email (confirmer)",
+  "FORM_NOM":"Votre nom",
+  "FORM_PRENOM":"Votre prénom",
+  "FORM_ADR":"Adresse",
+  "FORM_ADR2":"Adresse (complément)",
+  "FORM_ZIP":"Code postal",
+  "FORM_VILLE":"Ville",
+  "FORM_TEL":"Téléphone",
+  "FORM_MOBILE":"Mobile",
   "FORM_PASSE":"Mot de passe",
+  "FORM_PASSE2":"Mot de passe (confirmer)",
   "FORM_OUBLIE":"Mot de passe oublié ?",
-  "FORM_CREE":"Créer un compte",
+  "FORM_CREE":"Créer",
   "FORM_HINT_MAIL":"Saisissez votre email",
   "FORM_FORMAT":"Merci de vérifier le format du champ",
   "FORM_FORMAT_MAIL":"L'email saisi n'a pas un bon format",
@@ -20,5 +30,6 @@
   "LIEN":"Visiter le site Internet",
   "LOGO":"Logo",
   "MENTIONS":"Mentions légales",
-  "RGPD":"Données personnelles"
+  "RGPD":"Données personnelles",
+  "COMPTE":"Créer un compte"
 }

@@ -13,7 +13,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { ProfilComponent } from './profil/profil.component';
 import { ContactComponent } from './contact/contact.component';
+import { CompteComponent } from './compte/compte.component';
 import { ErreurComponent } from './erreur/erreur.component';
+import { EnteteComponent } from './structure/entete/entete.component';
+import { PiedComponent } from './structure/pied/pied.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { ErreurComponent } from './erreur/erreur.component';
     ConnexionComponent,
     ProfilComponent,
     ContactComponent,
-    ErreurComponent
+    CompteComponent,
+    ErreurComponent,
+    EnteteComponent,
+    PiedComponent
   ],
   imports: [
     BrowserModule,
