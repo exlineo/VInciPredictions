@@ -40,7 +40,7 @@
   "RECHERCHER":"Rechercher",
   "EXPORT":"Exporter les données",
   "FILTRE_BTN":"Appliquer les filtres",
-  "FILTRE_TITRE":"Filter les données",
+  "FILTRE_TITRE":"Filtrer les données",
   "FILTRE_PAYS":"Pays",
   "FILTRE_REGIONS":"Régions viticoles",
   "FILTRE_PDO":"Désignations d'origines contrôlées",
@@ -48,6 +48,12 @@
   "FILTRE_RENDEMENTS":"Rendements",
   "FILTRE_MOYENNES":"Moyennes",
   "FILTRE_CROISSANCE":"Taux de croissance",
+  "FILTRE_VALIDE":"Valider ces filtres",
+  "FILTRE_FR":"France",
+  "FILTRE_ES":"Espagne",
+  "FILTRE_PT":"Portugal",
   "RES_TITRE":"Données filtrées",
-  "RES_DESCR":"Résultats de vos recherches (sélectionnez les options de visualisation)"
+  "RES_FILTRES":"Filtres sélectionnés",
+  "RES_DESCR":"Résultats de vos recherches (sélectionnez les options de visualisation)",
+  "RES_VISUAL":"Visualisation des données"
 }

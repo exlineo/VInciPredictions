@@ -2,34 +2,62 @@
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
   <form class="bleu">
     <div>
-    <label>{{ l.t['FILTRE_PAYS'] }}</label>
+      <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
       <select multiple>
-
-      </select></div>
-      <div>
-    <label>{{ l.t['FILTRE_REGIONS'] }}</label>
-      <select multiple>
-
-      </select></div>
+        <option value="es">{{ l.t['FILTRE_ES'] }}</option>
+        <option value="fr">{{ l.t['FILTRE_FR'] }}</option>
+        <option value="pt">{{ l.t['FILTRE_PT'] }}</option>
+      </select>
+    </div>
     <div>
-      <label>{{ l.t['FILTRE_PDO'] }}</label>
+      <h3>{{ l.t['FILTRE_REGIONS'] }}</h3>
+      <select multiple>
+        <option value="bordeaux">{{ l.t['FILTRE_ES'] }}</option>
+        <option value="languedoc">{{ l.t['FILTRE_FR'] }}</option>
+        <option value="sud-ouest">{{ l.t['FILTRE_PT'] }}</option>
+        <option value="ebro">{{ l.t['FILTRE_ES'] }}</option>
+        <option value="catalogne">{{ l.t['FILTRE_FR'] }}</option>
+        <option value="duero">{{ l.t['FILTRE_PT'] }}</option>
+        <option value="nord-ouest">{{ l.t['FILTRE_PT'] }}</option>
+        <option value="levante">{{ l.t['FILTRE_PT'] }}</option>
+        <option value="duero">{{ l.t['FILTRE_PT'] }}</option>
+      </select>
+    </div>
+    <div>
+      <h3>{{ l.t['FILTRE_PDO'] }}</h3>
       <select multiple>
 
-      </select></div>
+      </select>
+    </div>
     <div>
-      <label>{{ l.t['FILTRE_INDICATEURS'] }}</label>
-      <input type="radio" name="indicateurs" value="rendements">
-      <label>{{ l.t['FILTRE_RENDEMENTS'] }}</label>
+      <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
+      <label><input type="radio" name="indicateurs" value="rendements">
+        {{ l.t['FILTRE_RENDEMENTS'] }}</label>
 
-      <input type="radio" name="indicateurs" value="moyennes">
-      <label>{{ l.t['FILTRE_MOYENNES'] }}</label>
+      <label><input type="radio" name="indicateurs" value="moyennes">
+        {{ l.t['FILTRE_MOYENNES'] }}</label>
 
-      <input type="radio" name="indicateurs" value="croissance">
-      <label>{{ l.t['FILTRE_CROISSANCE'] }}</label>
+      <label><input type="radio" name="indicateurs" value="croissance">
+        {{ l.t['FILTRE_CROISSANCE'] }}</label>
+    </div>
+    <div>
+      <input type="reset" [value]="l.t['FORM_EFFACE']">
+      <input type="submit" [value]="l.t['FILTRE_VALIDE']">
     </div>
   </form>
 </section>
 <section>
+  <h2>{{ l.t['RES_TITRE'] }}</h2>
+  <p>{{ l.t['RES_DESCR'] }}</p>
+  <article>
+    <h3>{{ l.t['RES_FILTRES'] }}</h3>
+  </article>
+  <article>
+    <h3>{{ l.t['RES_VISUAL'] }}</h3>
+  </article>
+  <article>
+
+  </article>
   <nav>
     <span class="icone">scatter_plot</span>
     <span class="icone">area_chart</span>

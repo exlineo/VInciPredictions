@@ -13,7 +13,7 @@ html, body  {
 h1, h2, h3, h4{
   font-family: 'Playfair Display', serif;
 }
-h1, h4{
+h1, h3, h4{
   font-weight:normal;
 }
 a{
@@ -96,10 +96,17 @@ form.bleu div{
   display:flex;
   flex-flow:column nowrap;
 }
-form.bleu input, form.bleu textarea, form.bleu select, form.bleu option{
+form.bleu textarea, form.bleu select, form.bleu option{
   background-color:#28364A;
   border:0;
   color:white;
+}
+form.bleu option{
+  padding:4px;
+  transition:"background-color" .3s ease;
+}
+form.bleu option:hover{
+  background-color:#DFA83A;
 }
 /* CLASSES PERSONNALISES */
 .logo{

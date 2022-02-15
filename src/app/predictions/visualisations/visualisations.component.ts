@@ -8,6 +8,8 @@ import { LanguesService } from 'src/app/utils/services/langues.service';
 })
 export class VisualisationsComponent implements OnInit {
 
+  filtres:Array<string> = [];
+
   constructor(public l:LanguesService) { }
 
   ngOnInit(): void {
