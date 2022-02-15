@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
+import { ProfilComponent } from './profil/profil.component';
+import { VisualisationsComponent } from './visualisations/visualisations.component';
 
 const routes: Routes = [
-  {path:'', component:AccueilComponent}
+  {
+    path: '', component: AccueilComponent, children: [
+      { path: 'visualisations', component: VisualisationsComponent },
+      { path: 'profil', component: ProfilComponent }
+    ]
+  }
 ];
 
 @NgModule({

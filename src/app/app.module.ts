@@ -5,19 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MaterialModule } from './utils/material.module';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ConnexionComponent } from './connexion/connexion.component';
-import { ProfilComponent } from './profil/profil.component';
 import { ContactComponent } from './contact/contact.component';
 import { CompteComponent } from './compte/compte.component';
 import { ErreurComponent } from './erreur/erreur.component';
-import { EnteteComponent } from './structure/entete/entete.component';
-import { PiedComponent } from './structure/pied/pied.component';
-import { PopupComponent } from './structure/popup/popup.component';
 // FIREBASE
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -29,25 +23,25 @@ import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 
+import { LanguesService } from './utils/services/langues.service';
+import { AuthService } from './utils/services/auth.service';
+import { UtilsModule } from './utils/utils.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     ConnexionComponent,
-    ProfilComponent,
     ContactComponent,
     CompteComponent,
-    ErreurComponent,
-    EnteteComponent,
-    PiedComponent,
-    PopupComponent
+    ErreurComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    UtilsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
@@ -57,8 +51,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage())
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [],
+  providers: [LanguesService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

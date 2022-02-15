@@ -1,12 +1,40 @@
 section:nth-child(1){
   flex:1;
+  justify-content: space-between;
+  padding:25px 10px;
+}
+section:nth-child(1) nav{
+  display:flex;
+  flex-flow:column nowrap;
+}
+a{
+  margin:10px 0;
 }
 section:nth-child(2){
-  flex:2;
+  flex:8;
+  padding:0;
+}
+section:nth-child(2) > section{
+  height:100vh;
 }
 section:nth-child(3){
-  flex:6;
-}
-section:nth-child(4){
   flex:0.2;
+  justify-content: space-between;
+}
+section:nth-child(3) article{
+  display:flex;
+  flex-flow:column nowrap;
+}
+section:nth-child(3) .icone{
+  color:white;
+  font-size: 36px;
+}
+hr{
+  margin:5px;
+  margin-left:auto;
+  width:60%;
+  /* border:1px solid white; */
+  border:0;
+  height:1px;
+  background-color: rgb(255,255,255,.5);
 }

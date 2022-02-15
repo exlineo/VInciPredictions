@@ -1,0 +1,15 @@
+:host{
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: stretch;
+}
+section{
+  height:100vh;
+  padding:20px;
+}
+section:nth-child(1){
+  flex:1;
+}
+section:nth-child(2){
+  flex:3;
+}

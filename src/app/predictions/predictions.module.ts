@@ -3,18 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { PredictionsRoutingModule } from './predictions-routing.module';
 import { AccueilComponent } from './accueil/accueil.component';
-import { EnteteComponent } from '../structure/entete/entete.component';
-import { PiedComponent } from '../structure/pied/pied.component';
+import { UtilsModule } from '../utils/utils.module';
+import { VisualisationsComponent } from './visualisations/visualisations.component';
+import { ProfilComponent } from './profil/profil.component';
+
 
 @NgModule({
   declarations: [
     AccueilComponent,
-    EnteteComponent,
-    PiedComponent
+    VisualisationsComponent,
+    ProfilComponent
   ],
   imports: [
     CommonModule,
-    PredictionsRoutingModule
+    PredictionsRoutingModule,
+    UtilsModule
   ]
 })
 export class PredictionsModule { }
