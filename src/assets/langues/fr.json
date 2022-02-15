@@ -19,17 +19,20 @@
   "FORM_PASSE":"Mot de passe",
   "FORM_PASSE2":"Mot de passe (confirmer)",
   "FORM_OUBLIE":"Mot de passe oublié ?",
-  "FORM_CREE":"Créer",
+  "FORM_CREE":"Créer un compte",
   "FORM_HINT_MAIL":"Saisissez votre email",
   "FORM_FORMAT":"Merci de vérifier le format du champ",
   "FORM_FORMAT_MAIL":"L'email saisi n'a pas un bon format",
-  "FORM_FORMAT_PASSE":"Le mot de passe doit avoir au moins une minusculte, une majuscule et un chiffre",
+  "FORM_FORMAT_PASSE":"Le mot de passe doit avoir au moins une minuscule, une majuscule et un chiffre",
   "FORM_VALIDE":"Valider",
   "FORM_ANNULE":"Annuler",
   "FORM_EFFACE":"Effacer",
+  "FORM_OBLIGATOIRE":"Champs obligatoires",
+  "FORM_CONNECTE":"Se connecter",
   "LIEN":"Visiter le site Internet",
   "LOGO":"Logo",
   "MENTIONS":"Mentions légales",
   "RGPD":"Données personnelles",
-  "COMPTE":"Créer un compte"
+  "COMPTE":"Créer un compte",
+  "DECONNEXION":"Déconnexion"
 }

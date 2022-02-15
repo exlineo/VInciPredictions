@@ -17,6 +17,7 @@ import { CompteComponent } from './compte/compte.component';
 import { ErreurComponent } from './erreur/erreur.component';
 import { EnteteComponent } from './structure/entete/entete.component';
 import { PiedComponent } from './structure/pied/pied.component';
+import { PopupComponent } from './structure/popup/popup.component';
 // FIREBASE
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -37,7 +38,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     CompteComponent,
     ErreurComponent,
     EnteteComponent,
-    PiedComponent
+    PiedComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

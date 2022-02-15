@@ -9,9 +9,6 @@ html, body  {
   height:100%;
   font-family: 'Raleway', sans-serif;
 }
-.mat-typography{
-  font-family: 'Raleway', sans-serif;
-}
 h1, h2, h3, h4{
   font-family: 'Playfair Display', serif;
 }
@@ -69,6 +66,7 @@ fieldset{
 input, select, textarea{
   padding:10px;
   border:1px solid rgba(255,255,255,.4);
+  font-family: 'Raleway', sans-serif;
 }
 input[type="submit"]{
   background-color:#33A537;
@@ -135,6 +133,11 @@ form span{
 .v{
   flex-flow:column nowrap;
 }
+.l{
+  width:100% !important;
+  flex-flow:row nowrap;
+  justify-content:center;
+}
 /* COULEURS */
 .jaune{
   background-color:#F7C45F;
@@ -163,6 +166,7 @@ form span{
 .icone{
   font-family: 'Material Icons' !important;
   font-size:24px;
+  vertical-align: middle;
 }
 nav .icone{
   padding:5px;

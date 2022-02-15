@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { CustomErrorMatch, CustomPattern } from '../utils/tools/CustomErrorMatch';
 
 import { LanguesService } from '../utils/services/langues.service';
+import { AuthService } from '../utils/services/auth.service';
 
 @Component({
   selector: 'app-connexion',
@@ -11,20 +12,15 @@ import { LanguesService } from '../utils/services/langues.service';
 })
 export class ConnexionComponent implements OnInit {
 
-  connexionForm = new FormGroup({
-    title: new FormControl(null, [
-      Validators.required
-    ]),
-    description: new FormControl()
+  connexionForm = this.fbuild.group({
+    mail: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
   });
-  /** Formulaire et validateurs */
-  mailForm = new FormControl('', [Validators.required, Validators.email]);
-  passForm = new FormControl('', [Validators.required, Validators.pattern(CustomPattern)]);
   /**
    * Formulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
    */
-  constructor(public l: LanguesService) { }
+  constructor(public l: LanguesService, private fbuild:FormBuilder, private auth:AuthService) {}
 
   ngOnInit(): void {
   }
@@ -33,7 +29,8 @@ export class ConnexionComponent implements OnInit {
 
   }
   /** Créer un compte */
-  creer(){
-
+  connexion(){
+    console.log("Connexion");
+    this.auth.idUser(this.connexionForm.value);
   }
 }

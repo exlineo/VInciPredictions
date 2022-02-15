@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LanguesService } from '../utils/services/langues.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomPattern } from '../utils/tools/CustomErrorMatch';
+import { AuthService } from '../utils/services/auth.service';
 
 @Component({
   selector: 'app-compte',
@@ -10,41 +11,38 @@ import { CustomPattern } from '../utils/tools/CustomErrorMatch';
 })
 export class CompteComponent implements OnInit {
   /** Formulaire d'inscription */
-  profilForm = new FormGroup({
-    title: new FormControl(null, [
-      Validators.required
-    ]),
-    description: new FormControl()
+  profile = this.fbuild.group({
+    nom: ['', [Validators.required]],
+    prenom: ['', [Validators.required]],
+    adr: [''],
+    adr2: [''],
+    code: [''],
+    ville: [''],
+    pays: [''],
+    tel: [''],
+    mobile: [''],
+    mail: ['', [Validators.required, Validators.email]],
+    mail2: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]],
+    pass2: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
   });
-  /** Formulaire et validateurs */
-  nomForm = new FormControl('', [Validators.required]);
-  prenomForm = new FormControl('', [Validators.required]);
-  adrForm = new FormControl('', [Validators.required]);
-  adrForm2 = new FormControl('', [Validators.required]);
-  codeForm = new FormControl('', [Validators.required]);
-  villeForme = new FormControl('', [Validators.required]);
-  telForm = new FormControl('', [Validators.required]);
-  mobileForm = new FormControl('', [Validators.required]);
-
-  mailForm = new FormControl('', [Validators.required, Validators.email]);
-  mailFormConfirm = new FormControl('', [Validators.required, Validators.email]);
-  passForm = new FormControl('', [Validators.required, Validators.pattern(CustomPattern)]);
-  passFormConfirm = new FormControl('', [Validators.required, Validators.pattern(CustomPattern)]);
   /**
-   * Formulaire de connexion des utilisateurs
+   * ulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
    */
-  constructor(public l: LanguesService) { }
+  constructor(public l: LanguesService, public auth: AuthService, public fbuild: FormBuilder) {
+
+  }
 
   ngOnInit(): void {
   }
   /** Permettre de réinitialiser le mot de passe */
-  oublie(){
+  oublie() {
 
   }
   /** Créer un compte */
-  creer(){
-
+  creeCompte() {
+    this.auth.creeUser(this.profile.value);
   }
 
 }

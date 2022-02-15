@@ -6,6 +6,9 @@ import { DataComponent } from './data/data.component';
 import { ProfilsComponent } from './profils/profils.component';
 import { DataMajComponent } from './data-maj/data-maj.component';
 import { TraductionsComponent } from './traductions/traductions.component';
+import { GestionRoutingModule } from './gestion-routing.module';
+import { EnteteComponent } from '../structure/entete/entete.component';
+import { PiedComponent } from '../structure/pied/pied.component';
 
 @NgModule({
   declarations: [
@@ -14,10 +17,13 @@ import { TraductionsComponent } from './traductions/traductions.component';
     DataComponent,
     ProfilsComponent,
     DataMajComponent,
-    TraductionsComponent
+    TraductionsComponent,
+    EnteteComponent,
+    PiedComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    GestionRoutingModule
   ]
 })
 export class GestionModule { }

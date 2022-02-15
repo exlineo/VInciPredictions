@@ -2,8 +2,11 @@ section:nth-child(1){
   flex:1;
 }
 section:nth-child(2){
-  flex:5;
+  flex:2;
 }
 section:nth-child(3){
+  flex:6;
+}
+section:nth-child(4){
   flex:0.2;
 }
