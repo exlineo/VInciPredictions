@@ -1,28 +1,42 @@
 import { Injectable } from '@angular/core';
 
+// Accès aux bases de données
+import { first } from 'rxjs/operators';
+import { Database, objectVal, ref } from '@angular/fire/database';
+import { Firestore, collection, getDocs, doc, getDoc, docData } from "@angular/fire/firestore";
+
+export interface TraductionI {
+  langue: string;
+  data: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
 
-  constructor() { }
+  private doc: any;
+
+  constructor(private dbrt: Database, private dbf: Firestore) {
+    // console.log(doc);
+  }
   /**
    * Récupérer les données stockées localement
    * @param id {string} Identifiant de la donnée à récupérer localement
    * @returns Renvoie une chaîne de caractères
    */
-  getLocalString(id:string, defaut:string):string{
-    if(localStorage.getItem(id)) {
+  getLocalString(id: string, defaut: string): string {
+    if (localStorage.getItem(id)) {
       return localStorage.getItem(id) as string
-    } else {return defaut};
+    } else { return defaut };
   }
   /**
    * Récupérer des données structurées JSON
    * @param id {string} Identifiant à appeler dans les données
    * @returns Renvoie un objet JSON
    */
-  getLocalData(id:string):unknown{
-    if(localStorage.getItem(id)){
+  getLocalData(id: string): unknown {
+    if (localStorage.getItem(id)) {
       return JSON.parse(localStorage.getItem(id) as string);
     }
     return null;
@@ -32,7 +46,55 @@ export class StoreService {
    * @param id {string} Identifiant des données locales à écrire
    * @param data {unknown} Les données à stocker (seront transformées en chaîne)
    */
-  setData(id:string, data:unknown){
+  setData(id: string, data: unknown) {
     localStorage.setItem(id, JSON.stringify(data));
+  }
+  /** Récupérer les données en temps réel */
+  getRTDB() {
+    this.doc = ref(this.dbrt, 'fr');
+    objectVal(this.doc).pipe(
+      // traceUntilFirst('database')
+      first()
+    ).subscribe(
+      d => console.log(d)
+    );
+  }
+  /**
+   *
+   * @param collection Nom de la collection appelée
+   * @returns Renvoie les données
+   */
+  async getFireCol(collec: string) {
+    let truc = await getDocs(collection(this.dbf, collec))
+    .then(docs => {
+      console.log(docs);
+      docs.forEach(d => console.log(d));
+    });
+    console.log(truc);
+  }
+  /**
+   * Récupérer un objet spécifique dans la base
+   * @param collection Nom de la collection appelée
+   * @param param Nom de l'objet recherché
+   * @returns Renvoie les données
+   */
+  async getFireDoc(collec: string, param: string){
+    const customDoc = doc(this.dbf, collec, param);
+    // return await docData(customDoc);
+    // const l: any = getDoc(customDoc);
+    // if (l.exists()) {
+    //   console.log("Document data:", l.data());
+    // } else {
+    //   // doc.data() will be undefined in this case
+    //   console.log("No such document!");
+    // };
+
+    return await getDoc(customDoc)
+    // .then(d => d.get('data'))
+    // .then(a => a)
+    // .catch(er => console.log(er));
+    .then(d => d.data())
+    .then(d => d)
+    .catch(er => console.log(er));
   }
 }

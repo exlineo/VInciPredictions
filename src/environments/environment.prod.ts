@@ -6,6 +6,7 @@ export const environment = {
     apiKey: 'AIzaSyCX5cNJJ6IM6TvM35AOqojh3JDdTXATQgg',
     authDomain: 'vinciplateforme.firebaseapp.com',
     messagingSenderId: '693248639106',
+    databaseURL:"https://vinciplateforme-default-rtdb.europe-west1.firebasedatabase.app/"
   },
   production: true
 };
