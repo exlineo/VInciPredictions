@@ -7,6 +7,8 @@ import { UtilsModule } from '../utils/utils.module';
 import { VisualisationsComponent } from './visualisations/visualisations.component';
 import { ProfilComponent } from './profil/profil.component';
 
+import * as echarts from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,9 @@ import { ProfilComponent } from './profil/profil.component';
   imports: [
     CommonModule,
     PredictionsRoutingModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    }),
     UtilsModule
   ]
 })

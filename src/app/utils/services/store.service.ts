@@ -80,19 +80,7 @@ export class StoreService {
    */
   async getFireDoc(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
-    // return await docData(customDoc);
-    // const l: any = getDoc(customDoc);
-    // if (l.exists()) {
-    //   console.log("Document data:", l.data());
-    // } else {
-    //   // doc.data() will be undefined in this case
-    //   console.log("No such document!");
-    // };
-
     return await getDoc(customDoc)
-    // .then(d => d.get('data'))
-    // .then(a => a)
-    // .catch(er => console.log(er));
     .then(d => d.data())
     .then(d => d)
     .catch(er => console.log(er));

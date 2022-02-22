@@ -24,16 +24,13 @@ export class LanguesService {
 
     // this.lang = fire.doc<TraductionI>('fr');
     // console.log('value change', this.lang.valueChanges());
-    this.loadLangue();
+    // this.loadLangue();
     // Récupérer les traductions stockées en local pour éviter des requêtes
     this.store.getLocalData('traductions') ? this.t = this.store.getLocalData('traductions') : this.getTextLangue(this.langue);
   }
   /** Charger les ndonnées de la langue depuis la base de données */
   async loadLangue() {
-    // this.lang = this.store.getFireCol('traductions');
-    // this.lang = this.store.getFireDoc('traductions', this.langue).then(a => a.json());
     this.lang = await this.store.getFireDoc('traductions', this.langue);
-    // this.store.getFireCol('traductions');
     console.log("lang", JSON.parse(this.lang.data));
   }
   /**

@@ -1,3 +1,4 @@
+<!-- FILTRES -->
 <section class="bleu">
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
   <form class="bleu">
@@ -41,31 +42,46 @@
         {{ l.t['FILTRE_CROISSANCE'] }}</label>
     </div>
     <div>
+      <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
+      <section class="double-slider">
+        <span>1990</span>
+        <article class="range-slider">
+          <!-- <span class="rangeValues"></span> -->
+          <input value="0" min="0" max="30" step="1" type="range" (change)="selectRange($event)">
+          <input value="0" min="0" max="30" step="1" type="range" (change)="selectRange($event)">
+        </article>
+        <span>2024</span>
+      </section>
+    </div>
+    <div class="h">
       <input type="reset" [value]="l.t['FORM_EFFACE']">
       <input type="submit" [value]="l.t['FILTRE_VALIDE']">
     </div>
   </form>
 </section>
+<!-- VISUALISATION -->
 <section>
   <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p>
+  <!-- FILTRES SELECTIONNES -->
+  <h3>{{ l.t['RES_FILTRES'] }}</h3>
   <article>
-    <h3>{{ l.t['RES_FILTRES'] }}</h3>
   </article>
-  <article>
-    <h3>{{ l.t['RES_VISUAL'] }}</h3>
-  </article>
-  <article>
-
-  </article>
+  <!-- GRAPH -->
+  <h3>{{ l.t['RES_VISUAL'] }}</h3>
+  <!-- OPTIONS DE CHOIX -->
   <nav>
-    <span class="icone">scatter_plot</span>
+    <!-- <span class="icone">scatter_plot</span> -->
     <span class="icone">area_chart</span>
     <span class="icone">pie_chart_outline</span>
-    <span class="icone">pie_chart_outline</span>
-    <span class="icone">bubble_chart</span>
+    <!-- <span class="icone">bubble_chart</span> -->
     <span class="icone">stacked_line_chart</span>
-    <span class="icone">data_object</span>
-    <span class="icone">multiline_chart</span>
+    <!-- <span class="icone">data_object</span> -->
+    <!-- <span class="icone">multiline_chart</span> -->
   </nav>
+  <article echarts [options]="options">
+
+  </article>
+  <article></article>
+
 </section>
