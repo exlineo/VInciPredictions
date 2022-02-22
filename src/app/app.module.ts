@@ -28,7 +28,6 @@ import { AuthService } from './utils/services/auth.service';
 import { UtilsModule } from './utils/utils.module';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
-import { FiltresPipe } from './utils/tools/filtres.pipe';
 
 @NgModule({
   declarations: [
@@ -38,8 +37,7 @@ import { FiltresPipe } from './utils/tools/filtres.pipe';
     CompteComponent,
     ErreurComponent,
     RgpdComponent,
-    MentionsComponent,
-    FiltresPipe
+    MentionsComponent
   ],
   imports: [
     BrowserModule,

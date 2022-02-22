@@ -1,8 +1,7 @@
 <main>
   <section>
     <h2>{{ page.titre }}</h2>
-    <article>
-      {{ page.contenu }}
+    <article [innerHtml]="page.contenu | md">
     </article>
   </section>
 </main>
