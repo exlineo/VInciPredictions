@@ -26,6 +26,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { LanguesService } from './utils/services/langues.service';
 import { AuthService } from './utils/services/auth.service';
 import { UtilsModule } from './utils/utils.module';
+import { RgpdComponent } from './structure/rgpd/rgpd.component';
+import { MentionsComponent } from './structure/mentions/mentions.component';
+import { FiltresPipe } from './utils/tools/filtres.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { UtilsModule } from './utils/utils.module';
     ConnexionComponent,
     ContactComponent,
     CompteComponent,
-    ErreurComponent
+    ErreurComponent,
+    RgpdComponent,
+    MentionsComponent,
+    FiltresPipe
   ],
   imports: [
     BrowserModule,

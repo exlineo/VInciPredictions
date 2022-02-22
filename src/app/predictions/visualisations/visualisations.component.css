@@ -19,3 +19,7 @@ section:nth-child(2) nav{
   display:flex;
   justify-content: flex-end;
 }
+section.double-slider{
+  margin:0;
+  padding:0;
+}

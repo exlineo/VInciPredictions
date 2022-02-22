@@ -9,5 +9,5 @@ import { DataService } from './utils/services/data.service';
 export class AppComponent {
   title = 'VInci Predictions';
 
-  constructor(){}
+  constructor(public data:DataService){}
 }

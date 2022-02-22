@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs } from "@angular/fire/firestore";
+import { PageI } from '../modeles/page-i';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ import { Firestore, collection, getDocs } from "@angular/fire/firestore";
 export class DataService {
 
   private doc:any;
+  page:PageI= {nom:'', titre:'', contenu:''}; // Nom de la page en cours si nécessaire
   /**
    * Service de gestion des données
    * @param db Accès à la base de données géré directement par Firebase

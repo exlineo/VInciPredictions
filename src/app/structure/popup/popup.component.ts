@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PageI } from 'src/app/utils/modeles/page-i';
 
 @Component({
   selector: 'app-popup',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PopupComponent implements OnInit {
   /** Réception de données à traiter pour l'affichage */
-  @Input() data:unknown = {};
+  @Input() page!:PageI;
 
   constructor() { }
 
