@@ -25,7 +25,6 @@
     "firebase": "^9.4.0",
     "marked": "^4.0.12",
     "ngx-echarts": "^8.0.1",
-    "ngx-markdown": "^13.1.0",
     "rxfire": "^6.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

@@ -100,6 +100,11 @@
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
+      <fieldset>
+        <label>{{ l.t['FORM_PROMO'] }}</label>
+        <input type="text" formControlName="promo" require [placeholder]="l.t['FORM_PROMO']">
+        <span>{{ l.t['FORM_PROMO_INFOS'] }}</span>
+      </fieldset>
       <fieldset class="l">
         <input type="reset" [value]="l.t['FORM_EFFACE']">
         <input type="submit" [value]="l.t['FORM_VALIDE']">

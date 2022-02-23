@@ -24,7 +24,8 @@ export class CompteComponent implements OnInit {
     mail: ['', [Validators.required, Validators.email]],
     mail2: ['', [Validators.required, Validators.email]],
     pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]],
-    pass2: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
+    pass2: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]],
+    promo:['']
   });
   /**
    * ulaire de connexion des utilisateurs
