@@ -14,6 +14,7 @@ import { PageI } from '../modeles/page-i';
 export class DataService {
 
   private doc:any;
+  pop:boolean = false;
   page:PageI= {nom:'', titre:'', contenu:''}; // Nom de la page en cours si nécessaire
   /**
    * Service de gestion des données
@@ -39,5 +40,9 @@ export class DataService {
    */
   getData(collec:string){
     return getDocs(collection(this.dbf, collec));
+  }
+  /** Créer afficher la popup */
+  setPop(){
+
   }
 }

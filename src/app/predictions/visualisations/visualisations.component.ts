@@ -10,6 +10,8 @@ export class VisualisationsComponent implements OnInit {
 
   /** Ensemble des filtres appliqués */
   filtres:Array<string> = [];
+  /** Fixer le type de rendu */
+  chartType:string = 'bar';
   /** Options pour la visualisation des données avec echarts */
   options:any = {};
   /** Portées des années à filtrer */
@@ -23,7 +25,9 @@ export class VisualisationsComponent implements OnInit {
     const data2 = [];
 
     for (let i = 0; i < 100; i++) {
-      xAxisData.push('category' + i);
+      let rend = 1981 + i;
+      console.log(rend, this.l.t['FILTRE_RENDEMENTS']);
+      xAxisData.push(rend);
       data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
       data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
     }
@@ -45,13 +49,13 @@ export class VisualisationsComponent implements OnInit {
       series: [
         {
           name: 'Bordeaux',
-          type: 'bar',
+          type: this.chartType,
           data: data1,
           animationDelay: (idx:number) => idx * 10,
         },
         {
           name: 'Sud-ouest',
-          type: 'bar',
+          type: this.chartType,
           data: data2,
           animationDelay: (idx:number) => idx * 10 + 100,
         },
@@ -73,5 +77,9 @@ export class VisualisationsComponent implements OnInit {
       this.range.max = val;
       e.target.value = val-1995;
     }
+  }
+  /** Modifier le type de rendu */
+  setChartType(chart:string){
+    this.chartType = chart;
   }
 }

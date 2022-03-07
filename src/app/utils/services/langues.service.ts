@@ -21,10 +21,6 @@ export class LanguesService {
   constructor(private http: HttpClient, private store: StoreService) {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
     this.langue = this.store.getLocalString('langue', 'fr');
-
-    // this.lang = fire.doc<TraductionI>('fr');
-    // console.log('value change', this.lang.valueChanges());
-    // this.loadLangue();
     // Récupérer les traductions stockées en local pour éviter des requêtes
     this.store.getLocalData('traductions') ? this.t = this.store.getLocalData('traductions') : this.getTextLangue(this.langue);
   }

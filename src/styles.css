@@ -171,6 +171,12 @@ form.bleu option:hover{
 }
 /* DOUBLE SLIDER
 https://codepen.io/rendykstan/pen/VLqZGO
+https://codepen.io/thebabydino/pen/NWWerZG
+https://codepen.io/tylerama/pen/YwvpBW
+https://codepen.io/enxaneta/pen/YyXKdg
+https://codepen.io/MarioD/pen/WwXbgr
+https://codepen.io/Manitoba/pen/ZWRjye
+https://codepen.io/vsync/pen/mdEJMLv : https://github.com/yairEO/ui-range
 */
 section.double-slider{
   display:flex;
@@ -336,6 +342,7 @@ input[type=range]:last-of-type::-moz-range-track {
   font-family: 'Material Icons' !important;
   font-size:24px;
   vertical-align: middle;
+  cursor: pointer;
 }
 nav .icone{
   padding:5px;

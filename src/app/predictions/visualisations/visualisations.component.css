@@ -5,7 +5,7 @@
 }
 section{
   height:100vh;
-  padding:20px;
+  padding:20px 0 20px 20px;
   box-sizing: border-box;
 }
 section:nth-child(1){
@@ -22,4 +22,9 @@ section:nth-child(2) nav{
 section.double-slider{
   margin:0;
   padding:0;
+}
+section:nth-child(1) > form{
+  overflow-y:auto;
+  overflow-x: hidden;
+  flex-flow:column nowrap;
 }
