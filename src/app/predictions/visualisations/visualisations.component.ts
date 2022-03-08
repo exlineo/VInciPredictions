@@ -32,7 +32,7 @@ export class VisualisationsComponent implements OnInit {
       data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
     }
 
-    this.options = this.options = {
+    this.options = {
       legend: {
         data: ['Bordeaux', 'Sud-ouest'],
         align: 'left',

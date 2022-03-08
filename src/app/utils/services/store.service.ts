@@ -80,9 +80,9 @@ export class StoreService {
    */
   async getFireDoc(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
-    return await getDoc(customDoc)
-    .then(d => d.data())
-    .then(d => d)
-    .catch(er => console.log(er));
+    return await getDoc(customDoc);
+    // .then(d => d.data())
+    // .then(d => d)
+    // .catch(er => console.log(er));
   }
 }

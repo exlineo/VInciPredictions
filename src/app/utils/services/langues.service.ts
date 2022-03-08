@@ -22,12 +22,19 @@ export class LanguesService {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
     this.langue = this.store.getLocalString('langue', 'fr');
     // Récupérer les traductions stockées en local pour éviter des requêtes
-    this.store.getLocalData('traductions') ? this.t = this.store.getLocalData('traductions') : this.getTextLangue(this.langue);
+    this.store.getLocalData('traductions') ? this.t = this.store.getLocalData('traductions') : this.loadLangue();
   }
   /** Charger les ndonnées de la langue depuis la base de données */
-  async loadLangue() {
-    this.lang = await this.store.getFireDoc('traductions', this.langue);
-    console.log("lang", JSON.parse(this.lang.data));
+  loadLangue() {
+    this.store.getFireDoc('traductions', this.langue)
+    .then<any>(d => d.data())
+    .then<unknown>(d => {
+      let tmp = d['data'];
+      this.t = JSON.parse(tmp);
+      console.log(d);
+    }
+      )
+    .catch(er => console.log(er));
   }
   /**
    * Permet de récupérer les textes en lien avec une langue lors de la sélection

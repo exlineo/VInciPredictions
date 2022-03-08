@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs } from "@angular/fire/firestore";
 import { PageI } from '../modeles/page-i';
+import { StoreService } from './store.service';
 
 
 @Injectable({
@@ -20,26 +21,8 @@ export class DataService {
    * Service de gestion des données
    * @param db Accès à la base de données géré directement par Firebase
    */
-  constructor(private dbrt:Database, private dbf:Firestore) {
+  constructor(private store:StoreService) {
 
-  }
-  /** Récupérer les données en temps réel */
-  getRTDB(){
-    this.doc = ref(this.dbrt, 'fr');
-    objectVal(this.doc).pipe(
-      // traceUntilFirst('database')
-      first()
-    ).subscribe(
-      d => console.log(d)
-    );
-  }
-  /**
-   *
-   * @param collection Nom de la collection appelée
-   * @returns Renvoie les données
-   */
-  getData(collec:string){
-    return getDocs(collection(this.dbf, collec));
   }
   /** Créer afficher la popup */
   setPop(){
