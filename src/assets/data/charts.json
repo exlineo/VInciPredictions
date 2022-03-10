@@ -1,0 +1,109 @@
+{
+  "barres":{
+    "xAxisData":[],
+    "data":[],
+    "options":{
+      "legend": {
+        "data": ["Bordeaux", "Sud-ouest"],
+        "align": "left"
+      },
+      "tooltip": {},
+      "xAxis": {
+        "data": "xAxisData",
+        "silent": false,
+        "splitLine": {
+          "show": false
+        }
+      },
+      "yAxis": {},
+      "series": [
+        {
+          "name": "Bordeaux",
+          "type": "bar",
+          "data": [],
+          "animationDelay": 10
+        },
+        {
+          "name": "Sud-ouest",
+          "type": "bar",
+          "data": [],
+          "animationDelay": 110
+        }
+      ],
+      "animationEasing": "elasticOut",
+      "animationDelayUpdate": 5
+    }
+  },
+  "lignes":{
+    "xAxisData":[],
+    "data":[],
+    "options":{
+      "legend": {
+        "data": ["Bordeaux", "Sud-ouest"],
+        "align": "left"
+      },
+      "tooltip": {},
+      "xAxis": {
+        "data": "xAxisData",
+        "silent": false,
+        "splitLine": {
+          "show": false
+        }
+      },
+      "yAxis": {},
+      "series": [
+        {
+          "name": "Bordeaux",
+          "type": "line",
+          "data": [],
+          "animationDelay": 10
+        },
+        {
+          "name": "Sud-ouest",
+          "type": "line",
+          "data": [],
+          "animationDelay": 110
+        }
+      ],
+      "animationEasing": "elasticOut",
+      "animationDelayUpdate": 5
+    }
+  },
+  "camembert":{
+    "tooltip": {
+      "trigger": "item"
+    },
+    "legend": {
+      "top": "5%",
+      "left": "center"
+    },
+    "series": [
+      {
+        "name": "Access From",
+        "type": "pie",
+        "radius": ["40%", "70%"],
+        "avoidLabelOverlap": false,
+        "itemStyle": {
+          "borderRadius": 10,
+          "borderColor": "#fff",
+          "borderWidth": 2
+        },
+        "label": {
+          "show": false,
+          "position": "center"
+        },
+        "emphasis": {
+          "label": {
+            "show": true,
+            "fontSize": "40",
+            "fontWeight": "bold"
+          }
+        },
+        "labelLine": {
+          "show": false
+        },
+        "data": []
+      }
+    ]
+  }
+}

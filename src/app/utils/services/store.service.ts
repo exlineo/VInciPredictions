@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
-import { Firestore, collection, getDocs, doc, getDoc, docData } from "@angular/fire/firestore";
+import { Firestore, collection, getDocs, doc, getDoc, docData, query, where } from "@angular/fire/firestore";
 
 export interface TraductionI {
   langue: string;
@@ -16,6 +16,8 @@ export interface TraductionI {
 export class StoreService {
 
   private doc: any;
+  private dataFiltre:any;
+  public filtres:any;
 
   constructor(private dbrt: Database, private dbf: Firestore) {
     // console.log(doc);
@@ -60,7 +62,6 @@ export class StoreService {
     );
   }
   /**
-   *
    * @param collection Nom de la collection appelée
    * @returns Renvoie les données
    */
@@ -81,8 +82,11 @@ export class StoreService {
   async getFireDoc(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
-    // .then(d => d.data())
-    // .then(d => d)
-    // .catch(er => console.log(er));
+  }
+  /** Effectuer une requête à partir des filtres */
+  async getFireFiltre(){
+
+    // Exemple
+    const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));
   }
 }
