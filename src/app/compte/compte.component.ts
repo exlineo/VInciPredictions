@@ -31,11 +31,10 @@ export class CompteComponent implements OnInit {
    * ulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
    */
-  constructor(public l: LanguesService, public auth: AuthService, public fbuild: FormBuilder) {
-
-  }
+  constructor(public l: LanguesService, public auth: AuthService, public fbuild: FormBuilder) {}
 
   ngOnInit(): void {
+    this.l.getPage('compte');
   }
   /** Permettre de réinitialiser le mot de passe */
   oublie() {

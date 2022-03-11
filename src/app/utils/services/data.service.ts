@@ -7,6 +7,7 @@ import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs } from "@angular/fire/firestore";
 import { PageI } from '../modeles/page-i';
 import { StoreService } from './store.service';
+import { LanguesService } from './langues.service';
 
 
 @Injectable({
@@ -21,11 +22,12 @@ export class DataService {
    * Service de gestion des données
    * @param db Accès à la base de données géré directement par Firebase
    */
-  constructor(private store:StoreService) {
+  constructor(private store:StoreService, private lServ:LanguesService) {
 
   }
   /** Créer afficher la popup */
   setPop(){
 
   }
+
 }

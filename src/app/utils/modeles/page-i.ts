@@ -1,5 +1,5 @@
 export interface PageI {
-  nom:string;
+  nom?:string;
   titre:string;
   contenu:string;
 }

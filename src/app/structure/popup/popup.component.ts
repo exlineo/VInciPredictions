@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageI } from 'src/app/utils/modeles/page-i';
+
 @Component({
   selector: 'app-popup',
   templateUrl: './popup.component.html',

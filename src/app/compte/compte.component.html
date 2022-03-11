@@ -6,7 +6,8 @@
     <!-- ENTETE DE LA COLONNE -->
     <app-entete></app-entete>
     <!-- CONTENU -->
-    <article></article>
+    <article [innerHTML]="l.page.contenu | md">
+    </article>
     <!-- MENU DU BAS -->
     <app-pied></app-pied>
   </section>
@@ -39,6 +40,14 @@
         <label>{{ l.t['FORM_ADR2'] }}</label>
         <input type="text" formControlName="adr2" [placeholder]="l.t['FORM_ADR2']">
       </fieldset>
+      <fieldset>
+        <label>{{ l.t['FORM_ZIP'] }}</label>
+        <input type="number" formControlName="code" [placeholder]="l.t['FORM_ZIP']">
+      </fieldset>
+      <fieldset>
+        <label>{{ l.t['FORM_VILLE'] }}</label>
+        <input type="text" formControlName="ville" [placeholder]="l.t['FORM_VILLE']">
+      </fieldset>
       <!-- ADRESSE -->
       <fieldset>
         <label>{{ l.t['FORM_TEL'] }}</label>
@@ -62,9 +71,9 @@
         <span *ngIf="profile.controls['mail'].hasError('email') && !profile.controls['mail'].hasError('required')" class="orange">
           {{ l.t['FORM_FORMAT_MAIL'] }}
         </span>
-        <span *ngIf="profile.controls['mail'].hasError('required')" class="orange">
+        <!-- <span *ngIf="profile.controls['mail'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
-        </span>
+        </span> -->
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_EMAIL2'] }} *</label>
@@ -73,8 +82,11 @@
         <span *ngIf="profile.controls['mail2'].hasError('email') && !profile.controls['mail2'].hasError('required')" class="orange">
           {{ l.t['FORM_FORMAT_MAIL'] }}
         </span>
-        <span *ngIf="profile.controls['mail2'].hasError('required')" class="orange">
+        <!-- <span *ngIf="profile.controls['mail2'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
+        </span> -->
+        <span *ngIf="(profile.controls['mail'].value != profile.controls['mail2'].value) && !profile.controls['mail2'].hasError('required')" class="orange">
+          {{ l.t['FORM_CORRESPOND'] }}
         </span>
       </fieldset>
       <!-- PASSE -->
@@ -85,9 +97,9 @@
         <span *ngIf="profile.controls['pass'].hasError('pattern') && !profile.controls['pass'].hasError('required')" class="orange">
           {{ l.t['FORM_FORMAT_PASSE'] }}
         </span>
-        <span *ngIf="profile.controls['pass'].hasError('required')" class="orange">
+        <!-- <span *ngIf="profile.controls['pass'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
-        </span>
+        </span> -->
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_PASSE2'] }} *</label>
@@ -96,8 +108,11 @@
         <span *ngIf="profile.controls['pass2'].hasError('pattern') && !profile.controls['pass2'].hasError('required')" class="orange">
           {{ l.t['FORM_FORMAT_PASSE'] }}
         </span>
-        <span *ngIf="profile.controls['pass2'].hasError('required')" class="orange">
+        <!-- <span *ngIf="profile.controls['pass2'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
+        </span> -->
+        <span *ngIf="(profile.controls['pass'].value != profile.controls['pass2'].value) && !profile.controls['pass2'].hasError('required')" class="orange">
+          {{ l.t['FORM_CORRESPOND'] }}
         </span>
       </fieldset>
       <fieldset>

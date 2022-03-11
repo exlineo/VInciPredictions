@@ -5,6 +5,7 @@
   <section class="bleufonce">
     <!-- ENTETE DE LA COLONNE -->
     <app-entete></app-entete>
+    <p>{{ l.page.contenu }}</p>
     <!-- FORMULAIRE DE CONNEXION -->
     <form [formGroup]="connexionForm" (submit)="connexion()">
       <!-- EMAIL -->

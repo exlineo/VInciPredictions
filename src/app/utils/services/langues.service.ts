@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PageI } from '../modeles/page-i';
 import { StoreService } from './store.service';
 
 
@@ -9,10 +10,10 @@ import { StoreService } from './store.service';
 export class LanguesService {
 
   langue = 'fr';
-  t: any = {};
-  // lang:Array<any> = [];
-  lang:any;
-  // private lang: AngularFirestoreDocument<TraductionI>;
+  t: any = {}; // Traductions téléchargées
+  lang: any; // Langue actuelle
+  page: PageI = { nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
+
   /**
    * Service de gestion des langues et traductions
    * @param http Opérer des requêtes HTTP
@@ -27,14 +28,14 @@ export class LanguesService {
   /** Charger les ndonnées de la langue depuis la base de données */
   loadLangue() {
     this.store.getFireDoc('traductions', this.langue)
-    .then<any>(d => d.data())
-    .then<unknown>(d => {
-      let tmp = d['data'];
-      this.t = JSON.parse(tmp);
-      console.log(d);
-    }
+      .then<any>(d => d.data())
+      .then<unknown>(d => {
+        let tmp = d['data'];
+        this.t = JSON.parse(tmp);
+        console.log(d);
+      }
       )
-    .catch(er => console.log(er));
+      .catch(er => console.log(er));
   }
   /**
    * Permet de récupérer les textes en lien avec une langue lors de la sélection
@@ -56,5 +57,16 @@ export class LanguesService {
     this.store.setData('langue', l);
     // Recharger la langue après la sélection
     this.getTextLangue(l);
+  }
+  /** Récupérer les informations de la page en cours */
+  getPage(page: string) {
+    this.store.getFireDoc(this.langue, page)
+      .then<any>(d => d.data())
+      .then<unknown>(p => {
+        this.page = p;
+        console.log(p);
+      }
+      )
+      .catch(er => console.log(er));
   }
 }

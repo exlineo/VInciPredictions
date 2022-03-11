@@ -16,7 +16,8 @@ import { MarkPipe } from '../utils/tools/filtres.pipe';
   exports:[
     EnteteComponent,
     PiedComponent,
-    PopupComponent
+    PopupComponent,
+    MarkPipe
   ],
   imports: [
     CommonModule

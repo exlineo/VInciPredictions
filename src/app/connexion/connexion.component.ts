@@ -23,6 +23,8 @@ export class ConnexionComponent implements OnInit {
   constructor(public l: LanguesService, private fbuild:FormBuilder, private auth:AuthService) {}
 
   ngOnInit(): void {
+    console.log("Appel des données");
+    this.l.getPage('connexion');
   }
   /** Permettre de réinitialiser le mot de passe */
   oublie(){

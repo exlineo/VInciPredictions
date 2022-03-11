@@ -66,12 +66,7 @@ export class StoreService {
    * @returns Renvoie les données
    */
   async getFireCol(collec: string) {
-    let truc = await getDocs(collection(this.dbf, collec))
-    .then(docs => {
-      console.log(docs);
-      docs.forEach(d => console.log(d));
-    });
-    console.log(truc);
+    return await getDocs(collection(this.dbf, collec));
   }
   /**
    * Récupérer un objet spécifique dans la base

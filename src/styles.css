@@ -348,10 +348,10 @@ nav .icone{
   padding:5px;
 }
 .ng-valid{
-  border-bottom:1px solid green;
+  border-bottom:2px solid green;
 }
 .ng-invalid{
-  border-bottom:1px solid red;
+  border-bottom:2px solid red;
 }
 /* SCROLLBARS */
 ::-webkit-scrollbar {
