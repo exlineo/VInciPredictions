@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
 import { PopupComponent } from '../structure/popup/popup.component';
@@ -17,10 +21,14 @@ import { MarkPipe } from '../utils/tools/filtres.pipe';
     EnteteComponent,
     PiedComponent,
     PopupComponent,
-    MarkPipe
+    MarkPipe,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ]
 })
 export class UtilsModule { }

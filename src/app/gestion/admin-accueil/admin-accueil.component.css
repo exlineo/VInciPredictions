@@ -1,9 +1,15 @@
 section:nth-child(1){
   flex:1;
+  justify-content: space-between;
+  padding:25px 10px;
 }
 section:nth-child(2){
   flex:5;
 }
 section:nth-child(3){
   flex:0.2;
+}
+section:nth-child(1) nav{
+  display:flex;
+  flex-flow:column nowrap;
 }

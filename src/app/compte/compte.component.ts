@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LanguesService } from '../utils/services/langues.service';
-import { CustomPattern } from '../utils/tools/CustomErrorMatch';
 import { AuthService } from '../utils/services/auth.service';
 
 @Component({
@@ -11,27 +10,31 @@ import { AuthService } from '../utils/services/auth.service';
 })
 export class CompteComponent implements OnInit {
   /** Formulaire d'inscription */
-  profile = this.fbuild.group({
+  compte = this.fbuild.group({
     nom: ['', [Validators.required]],
     prenom: ['', [Validators.required]],
-    adr: [''],
-    adr2: [''],
-    code: [''],
+    adresse: [''],
+    adresse2: [''],
+    codePostal: [''],
     ville: [''],
     pays: [''],
     tel: [''],
     mobile: [''],
-    mail: ['', [Validators.required, Validators.email]],
-    mail2: ['', [Validators.required, Validators.email]],
-    pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]],
-    pass2: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]],
-    promo:['']
+    mailGroup: this.fbuild.group({
+      mail: ['', [Validators.required, Validators.email]],
+      mail2: ['', [Validators.required, Validators.email]]
+    }),
+    passGroup: this.fbuild.group({
+      pass: ['', [Validators.required, Validators.pattern(`(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
+      pass2: ['', [Validators.required]]
+    }),
+    code: ['']
   });
   /**
    * ulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
    */
-  constructor(public l: LanguesService, public auth: AuthService, public fbuild: FormBuilder) {}
+  constructor(public l: LanguesService, public auth: AuthService, public fbuild: FormBuilder) { }
 
   ngOnInit(): void {
     this.l.getPage('compte');
@@ -42,7 +45,7 @@ export class CompteComponent implements OnInit {
   }
   /** Créer un compte */
   creeCompte() {
-    this.auth.creeUser(this.profile.value);
+    this.auth.creeUser(this.compte.value);
   }
 
 }

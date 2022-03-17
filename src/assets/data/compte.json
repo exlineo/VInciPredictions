@@ -1,13 +1,15 @@
 {
+  "uid":"hoDa2AuLPadSJLyt6VUqaKOyscN2",
   "nom":"Abbadie",
   "prenom":"Gérald",
   "adresse":"9 place Gramont",
-  "adresseComp":"",
-  "codePostal":"",
-  "ville":"",
+  "adresse2":"",
+  "codePostal":"64000",
+  "ville":"Pau",
   "tel":"",
-  "mobile":"",
-  "email":"",
-  "passe":"",
-  "code":""
+  "mobile":"06 17 18 13 91",
+  "email":"contact@exlineo.com",
+  "code":"",
+  "droits":{"petite":2, "grande":2, "export":2},
+  "statut":666
 }

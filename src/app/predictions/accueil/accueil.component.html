@@ -19,11 +19,10 @@
   </section>
   <section class="jaune">
     <article>
-      <span class="icone">download</span>
-      <span class="icone">cloud_upload</span>
+      <a routerLink="/profil" [title]="l.t['DECONNEXION']"><span class="icone">account_circle</span></a>
+      <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><span class="icone">person_off</span></a>
     </article>
     <article>
-      <a routerLink="/predictions/profil"><span class="icone">account_circle</span></a>
       <span class="icone">miscellaneous_services</span>
     </article>
   </section>

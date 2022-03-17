@@ -3,46 +3,47 @@
 
   </section>
   <section class="bleufonce">
-    <!-- ENTETE DE LA COLONNE -->
+    <!-- COLONNE HEADER -->
     <app-entete></app-entete>
-    <!-- CONTENU -->
+    <!-- CONTENT -->
+    <h2>{{ l.page.titre }}</h2>
     <article [innerHTML]="l.page.contenu | md">
     </article>
-    <!-- MENU DU BAS -->
+    <!-- BOTTOM NAV -->
     <app-pied></app-pied>
   </section>
   <!-- FORMULAIRES DE CREATION DE COMPTE -->
   <section class="orange">
     <h2>{{ l.t['COMPTE'] }}</h2>
-    <!-- FORMULAIRE DE CONNEXION -->
-    <form [formGroup]="profile" (submit)="creeCompte()">
-      <!-- Nom, prénom -->
+    <!-- CONNECTION FORM -->
+    <form [formGroup]="compte" (submit)="creeCompte()">
+      <!-- Name, Surname -->
       <fieldset>
         <label>{{ l.t['FORM_NOM'] }} *</label>
         <input type="text" formControlName="nom" [placeholder]="l.t['FORM_NOM']" required>
-        <span *ngIf="profile.controls['nom'].hasError('required')" class="orange">
+        <span *ngIf="compte.controls['nom'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_PRENOM'] }} *</label>
         <input type="text" formControlName="prenom" [placeholder]="l.t['FORM_PRENOM']" required>
-        <span *ngIf="profile.controls['prenom'].hasError('required')" class="orange">
+        <span *ngIf="compte.controls['prenom'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
       <!-- ADRESSE -->
       <fieldset>
         <label>{{ l.t['FORM_ADR'] }}</label>
-        <input type="text" formControlName="adr" [placeholder]="l.t['FORM_ADR']">
+        <input type="text" formControlName="adresse" [placeholder]="l.t['FORM_ADR']">
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_ADR2'] }}</label>
-        <input type="text" formControlName="adr2" [placeholder]="l.t['FORM_ADR2']">
+        <input type="text" formControlName="adresse2" [placeholder]="l.t['FORM_ADR2']">
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_ZIP'] }}</label>
-        <input type="number" formControlName="code" [placeholder]="l.t['FORM_ZIP']">
+        <input type="number" formControlName="codePostal" [placeholder]="l.t['FORM_ZIP']">
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_VILLE'] }}</label>
@@ -52,72 +53,74 @@
       <fieldset>
         <label>{{ l.t['FORM_TEL'] }}</label>
         <input type="text" formControlName="tel" [placeholder]="l.t['FORM_TEL']">
-        <!-- <span *ngIf="profile.controls['tel'].hasError('required')" class="orange">
+        <!-- <span *ngIf="compte.controls['tel'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span> -->
       </fieldset>
       <fieldset>
         <label>{{ l.t['FORM_MOBILE'] }}</label>
         <input type="text" formControlName="mobile" [placeholder]="l.t['FORM_MOBILE']">
-        <!-- <span *ngIf="profile.controls['mobile'].hasError('required')" class="orange">
+        <!-- <span *ngIf="compte.controls['mobile'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span> -->
       </fieldset>
       <!-- EMAIL -->
-      <fieldset>
-        <label>{{ l.t['FORM_EMAIL'] }} *</label>
-        <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
-        <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-        <span *ngIf="profile.controls['mail'].hasError('email') && !profile.controls['mail'].hasError('required')" class="orange">
-          {{ l.t['FORM_FORMAT_MAIL'] }}
-        </span>
-        <!-- <span *ngIf="profile.controls['mail'].hasError('required')" class="orange">
+      <div formGroupName="mailGroup">
+        <fieldset>
+          <label>{{ l.t['FORM_EMAIL'] }} *</label>
+          <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
+          <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+          <span *ngIf="compte.controls['mail'].hasError('email') && !compte.controls['mail'].hasError('required')"
+            class="orange">
+            {{ l.t['FORM_FORMAT_MAIL'] }}
+          </span>
+          <!-- <span *ngIf="compte.controls['mail'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span> -->
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_EMAIL2'] }} *</label>
-        <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
-        <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-        <span *ngIf="profile.controls['mail2'].hasError('email') && !profile.controls['mail2'].hasError('required')" class="orange">
-          {{ l.t['FORM_FORMAT_MAIL'] }}
-        </span>
-        <!-- <span *ngIf="profile.controls['mail2'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span> -->
-        <span *ngIf="(profile.controls['mail'].value != profile.controls['mail2'].value) && !profile.controls['mail2'].hasError('required')" class="orange">
-          {{ l.t['FORM_CORRESPOND'] }}
-        </span>
-      </fieldset>
+        </fieldset>
+        <fieldset>
+          <label>{{ l.t['FORM_EMAIL2'] }} *</label>
+          <input type="email" formControlName="mail2" [placeholder]="l.t['FORM_EMAIL']" required>
+          <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+          <span *ngIf="compte.controls['mail2'].hasError('email') && !compte.controls['mail2'].hasError('required')"
+            class="orange">
+            {{ l.t['FORM_FORMAT_MAIL'] }}
+          </span>
+          <span
+            *ngIf="(compte.controls['mail'].value != compte.controls['mail2'].value) && !compte.controls['mail2'].hasError('required')"
+            class="orange">
+            {{ l.t['FORM_CORRESPOND'] }}
+          </span>
+        </fieldset>
+      </div>
       <!-- PASSE -->
-      <fieldset>
-        <label>{{ l.t['FORM_PASSE'] }} *</label>
-        <input type="password" formControlName="pass" require [placeholder]="l.t['FORM_PASSE']" minlength="8" required>
-        <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
-        <span *ngIf="profile.controls['pass'].hasError('pattern') && !profile.controls['pass'].hasError('required')" class="orange">
-          {{ l.t['FORM_FORMAT_PASSE'] }}
-        </span>
-        <!-- <span *ngIf="profile.controls['pass'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span> -->
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_PASSE2'] }} *</label>
-        <input type="password" formControlName="pass2" require [placeholder]="l.t['FORM_PASSE2']" minlength="8" required>
-        <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
-        <span *ngIf="profile.controls['pass2'].hasError('pattern') && !profile.controls['pass2'].hasError('required')" class="orange">
-          {{ l.t['FORM_FORMAT_PASSE'] }}
-        </span>
-        <!-- <span *ngIf="profile.controls['pass2'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span> -->
-        <span *ngIf="(profile.controls['pass'].value != profile.controls['pass2'].value) && !profile.controls['pass2'].hasError('required')" class="orange">
-          {{ l.t['FORM_CORRESPOND'] }}
-        </span>
-      </fieldset>
+      <div formGroupName="passGroup">
+        <fieldset>
+          <label>{{ l.t['FORM_PASSE'] }} *</label>
+          <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+          <span *ngIf="compte.controls['pass'].hasError('pattern')" class="orange">
+            {{ l.t['FORM_FORMAT_PASSE'] }}
+          </span>
+          <!-- Requis -->
+          <span *ngIf="compte.controls['pass'].hasError('required')" class="orange">{{ l.t['FORM_REQUIS'] }}</span>
+        </fieldset>
+        <fieldset>
+          <label>{{ l.t['FORM_PASSE2'] }} *</label>
+          <input type="text" formControlName="pass2" [placeholder]="l.t['FORM_PASSE2']" required>
+          <span
+            *ngIf="(compte.controls['pass'].value != compte.controls['pass2'].value) && !compte.controls['pass2'].hasError('required')"
+            class="orange">
+            {{ l.t['FORM_CORRESPOND'] }}
+          </span>
+          <span *ngIf="compte.controls['pass2'].hasError('required')" class="orange">
+            {{ l.t['FORM_REQUIS'] }}
+          </span>
+        </fieldset>
+      </div>
       <fieldset>
         <label>{{ l.t['FORM_PROMO'] }}</label>
-        <input type="text" formControlName="promo" require [placeholder]="l.t['FORM_PROMO']">
+        <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']">
         <span>{{ l.t['FORM_PROMO_INFOS'] }}</span>
       </fieldset>
       <fieldset class="l">

@@ -9,12 +9,14 @@ import { ProfilComponent } from './profil/profil.component';
 
 import * as echarts from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { InfosComponent } from './infos/infos.component';
 
 @NgModule({
   declarations: [
     AccueilComponent,
     VisualisationsComponent,
-    ProfilComponent
+    ProfilComponent,
+    InfosComponent
   ],
   imports: [
     CommonModule,

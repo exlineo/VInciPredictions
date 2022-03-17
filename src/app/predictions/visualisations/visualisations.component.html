@@ -1,10 +1,10 @@
-<!-- FILTRES -->
+<!-- FILTERS -->
 <section class="bleu">
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
-  <form class="bleu">
+  <form  [formGroup]="filtresForm" (submit)="appliqueFiltres()" class="bleu">
     <div>
       <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
-      <select multiple>
+      <select multiple formControlName="pays" >
         <option value="es">{{ l.t['FILTRE_ES'] }}</option>
         <option value="fr">{{ l.t['FILTRE_FR'] }}</option>
         <option value="pt">{{ l.t['FILTRE_PT'] }}</option>
@@ -12,7 +12,7 @@
     </div>
     <div>
       <h3>{{ l.t['FILTRE_REGIONS'] }}</h3>
-      <select multiple>
+      <select multiple formControlName="regions" >
         <option value="bordeaux">{{ l.t['FILTRE_ES'] }}</option>
         <option value="languedoc">{{ l.t['FILTRE_FR'] }}</option>
         <option value="sud-ouest">{{ l.t['FILTRE_PT'] }}</option>
@@ -33,13 +33,13 @@
     <div class="l">
       <div>
         <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
-        <label><input type="radio" name="indicateurs" value="rendements">
+        <label><input type="radio" name="rendements" formControlName="rendements" value="rendements">
           {{ l.t['FILTRE_RENDEMENTS'] }}</label>
 
-        <label><input type="radio" name="indicateurs" value="moyennes">
+        <label><input type="radio" name="moyennes" formControlName="moyennes" value="moyennes">
           {{ l.t['FILTRE_MOYENNES'] }}</label>
 
-        <label><input type="radio" name="indicateurs" value="croissance">
+        <label><input type="radio" name="croissance" formControlName="croissance" value="croissance">
           {{ l.t['FILTRE_CROISSANCE'] }}</label>
       </div>
       <div>
@@ -58,11 +58,11 @@
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <section class="double-slider">
         <span>1990</span>
-        <article class="range-slider">
+        <article class="range-slider" formGroupName="ecart">
           <!-- <span class="rangeValues"></span> -->
-          <input value="0" min="0" max="29" step="1" type="range" (change)="selectRange($event, 'min')" class="rangemin"
+          <input value="0" min="0" max="29" step="1" type="range" formControlName="debut" (change)="selectRange($event, 'min')" class="rangemin"
             [attr.data-range]="range.min">
-          <input value="30" min="1" max="30" step="1" type="range" (change)="selectRange($event, 'max')"
+          <input value="30" min="1" max="30" step="1" type="range" formControlName="fin" (change)="selectRange($event, 'max')"
             class="rangemax" [attr.data-range]="range.max">
           <div></div>
         </article>

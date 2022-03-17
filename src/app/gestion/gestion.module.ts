@@ -9,9 +9,7 @@ import { ProfilsComponent } from './profils/profils.component';
 import { DataMajComponent } from './data-maj/data-maj.component';
 import { TraductionsComponent } from './traductions/traductions.component';
 import { GestionRoutingModule } from './gestion-routing.module';
-// import { EnteteComponent } from '../structure/entete/entete.component';
-// import { PiedComponent } from '../structure/pied/pied.component';
-// import { PopupComponent } from '../structure/popup/popup.component';
+import { InfosAdminComponent } from './infos-admin/infos-admin.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +19,7 @@ import { GestionRoutingModule } from './gestion-routing.module';
     ProfilsComponent,
     DataMajComponent,
     TraductionsComponent,
-    // EnteteComponent,
-    // PiedComponent,
-    // PopupComponent
+    InfosAdminComponent
   ],
   imports: [
     CommonModule,

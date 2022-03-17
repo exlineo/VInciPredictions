@@ -302,17 +302,26 @@ article.range-slider input[type=range]::-moz-range-track {
   background-color: rgba(0, 0, 0, 1);
   border: 0;
 }
-
+nav a{
+  margin:10px 0;
+}
+nav hr{
+  margin:5px;
+  margin-left:auto;
+  width:60%;
+  /* border:1px solid white; */
+  border:0;
+  height:1px;
+  background-color: rgb(255,255,255,.5);
+}
 input[type=range]:last-of-type::-moz-range-track {
   -moz-appearance: none;
   background: none transparent;
   border: 0;
 }
-
-  input[type=range]::-moz-focus-outer {
-    border: 0;
-  }
-
+input[type=range]::-moz-focus-outer {
+  border: 0;
+}
 /* COULEURS */
 .jaune{
   background-color:#F7C45F;
@@ -345,7 +354,7 @@ input[type=range]:last-of-type::-moz-range-track {
   cursor: pointer;
 }
 nav .icone{
-  padding:5px;
+  padding:0 8px;
 }
 .ng-valid{
   border-bottom:2px solid green;

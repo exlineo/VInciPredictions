@@ -1,58 +1,93 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut } from "@angular/fire/auth";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@angular/fire/auth";
 import { Router } from '@angular/router';
-import { ProfilI } from '../modeles/profil-i';
+import { Profil, ProfilI } from '../modeles/profil-i';
+import { UserI } from '../modeles/user-i';
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  /** Les données de l'utilisateur */
-  profile:ProfilI = <ProfilI>{};
+  /** User's data */
+  profil: ProfilI = new Profil();
+  utilisateur: UserI = <UserI>{};
 
-  /** Accès à l'API de Firebase pour l'authentification
-   * @param auth Objet d'authentification déclaré dans le module
+  /** Accessing Firebase
+   * @param auth Firebase object to authentication
   */
-  constructor(private auth:Auth, private route:Router) {}
+  constructor(private auth: Auth, private route: Router, private store: StoreService) { }
   /**
-   * Créer un compte utiisateur sur Firebase
-   * @param mail Email saisi par l'utilisateur
-   * @param mdp Mot de passe saisi par l'utilisateur
+   * Create account on firebase with email and password
+   * @param p Object with email and password transmitted from connection form
    */
-  creeUser(profile:any) {
-    this.profile = profile;
-    createUserWithEmailAndPassword(this.auth, profile.mail, profile.pass)
+  creeUser(p: any) {
+    this.setProfil(this.profil);
+    createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
-        this.profile.fireU = retour.user;
+        // Add Firebase UID in user's profil
         console.log(retour, retour.user);
+        this.profil.uid = retour.user.uid;
+        // Add profil to firestore
+        this.store.setFireDoc('comptes', { uid: this.profil.uid, doc: this.profil })
+          .then(r => {
+            console.log(r);
+          })
+          .catch(er => console.log(er));
       })
       .catch((error) => {
         console.log(error.code, error.message);
       });
   }
   /**
-   * Connexion avec un compte utiisateur sur Firebase
-   * @param mail Email saisi par l'utilisateur
-   * @param mdp Mot de passe saisi par l'utilisateur
+   * User connection with email and password in firebase
+   * @param mail User's email
+   * @param mdp User's password
    */
-  idUser(connexion:{mail:string, pass:string}) {
-    console.log("Connexion", connexion);
+  idUser(connexion: { mail: string, pass: string }) {
+    console.log("Connexion");
+    /**
+     * Get authentication from user's credentials
+     * @param {Auth} auth Authentication object from Firebase admin SDK
+     * @param {string} connexion.mail Email from id form
+     * @param {string} connexion.pass Password from id form
+     */
     signInWithEmailAndPassword(this.auth, connexion.mail, connexion.pass)
-      .then((retour) => {
-        this.profile.fireU = retour.user;
-        this.route.navigateByUrl('/predictions');
+      .then((r) => {
+        this.profil.uid = r.user.uid;
+        // this.utilisateur = retour.user;
+        console.log('Connexion réussie', this.profil);
+        // Get profil from Firestore
+        this.store.getFireDoc('comptes', r.user.uid)
+          .then(d => d.data())
+          .then(u => {
+            console.log("Création du compte réussie", u);
+            this.profil = u as ProfilI;
+            this.route.navigateByUrl('/predictions');
+          })
+          .catch(er => console.log(er));
       })
       .catch((error) => {
         console.log(error.code, error.message);
       });
   }
-  /** Déconnexion d'un utilisateur */
-  deconnexion(){
+  /** User di */
+  deconnexion() {
     signOut(this.auth).then(() => {
-      this.profile.fireU = null;
+      this.profil.uid = undefined;
+      this.profil.statut = 0;
       console.log("Déconnexion réussie");
-    }).catch((error) => {
-      console.log('Problème dans la déconnexion');
+      this.route.navigateByUrl('/');
+    }).catch((er) => {
+      console.log('Problème dans la déconnexion', er);
     });
+  };
+  /** Add user data in database from account form */
+  setProfil(p: any) {
+    for (let prop in this.profil) {
+      if (p.hasOwnProperty(prop)) prop = p[prop];
+      console.log(prop, p['prop'], this.profil);
+    }
+    this.profil.statut = 0; // Statut invité par défaut. Ce paramètre sera changé dans l'admin
   }
 }

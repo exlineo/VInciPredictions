@@ -7,9 +7,6 @@ section:nth-child(1) nav{
   display:flex;
   flex-flow:column nowrap;
 }
-a{
-  margin:10px 0;
-}
 section:nth-child(2){
   flex:8;
   padding:0;
@@ -28,13 +25,4 @@ section:nth-child(3) article{
 section:nth-child(3) .icone{
   color:white;
   font-size: 36px;
-}
-hr{
-  margin:5px;
-  margin-left:auto;
-  width:60%;
-  /* border:1px solid white; */
-  border:0;
-  height:1px;
-  background-color: rgb(255,255,255,.5);
 }

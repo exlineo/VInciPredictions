@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/utils/services/auth.service';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
@@ -7,11 +8,13 @@ import { LanguesService } from 'src/app/utils/services/langues.service';
   styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent implements OnInit {
-
-  constructor(public l:LanguesService) { }
+  /** Informations préalables
+   * @param {LanguesService} l récupérer les langues et le traitement des données rattachées
+  */
+  constructor(public l:LanguesService, public authServ:AuthService) { }
 
   ngOnInit(): void {
+    // Récupérer les données de la page des prédictions
     this.l.getPage('predictions');
   }
-
 }

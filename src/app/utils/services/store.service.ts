@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
-import { Firestore, collection, getDocs, doc, getDoc, docData, query, where } from "@angular/fire/firestore";
+import { Firestore, collection, getDocs, doc, getDoc, setDoc, docData, query, where } from "@angular/fire/firestore";
 
 export interface TraductionI {
   langue: string;
@@ -78,9 +78,18 @@ export class StoreService {
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
   }
+  /**
+   *
+   * @param collec Collection dans laquelle ajouter des données
+   * @param data Objet à envoyer comprenant un uid
+   * @returns Renvoyer une promesse pour confirmer
+   */
+  async setFireDoc(collec: string, data:{uid:string, doc:any}){
+    const customDoc = doc(this.dbf, collec, data.uid);
+    return await setDoc(customDoc, data.doc, { merge: true }); // Mettre à jour un objet existant
+  }
   /** Effectuer une requête à partir des filtres */
   async getFireFiltre(){
-
     // Exemple
     const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));
   }

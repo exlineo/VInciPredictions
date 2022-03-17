@@ -5,9 +5,9 @@
       <a (click)="l.setLang('fr')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/fr.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
       <a (click)="l.setLang('pt')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/pt.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
     </nav>
-    <a routerLink="/">
+    <a routerLink="/" [title]="l.t['ACCUEIL']">
       <img src="/assets/images/logos/Logo_VinCi_nb_web.png">
-      <h4>Vin,<br>
+      <h4>Vin<br>
         Innovation et<br>
         Compétitivité<br>
         Internationale</h4>

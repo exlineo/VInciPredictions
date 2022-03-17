@@ -1,4 +1,5 @@
 {
+  "ACCUEIL":"Retourner à l'accueil",
   "LANG_L":"français",
   "LANG_PT":"portuguais",
   "LANG_ES":"espagnole",
@@ -60,6 +61,8 @@
   "FILTRE_FR":"France",
   "FILTRE_ES":"Espagne",
   "FILTRE_PT":"Portugal",
+  "TOUS":"Tous",
+  "AUCUN":"Aucun",
   "RES_TITRE":"Données filtrées",
   "RES_FILTRES":"Filtres sélectionnés",
   "RES_DESCR":"Résultats de vos recherches (sélectionnez les options de visualisation)",

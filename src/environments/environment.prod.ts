@@ -8,5 +8,6 @@ export const environment = {
     messagingSenderId: '693248639106',
     databaseURL:"https://vinciplateforme-default-rtdb.europe-west1.firebasedatabase.app/"
   },
+  csvUrl:'assets/data/data.csv',
   production: true
 };

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PredictionsService } from '../utils/services/predictions.service';
 
 @Component({
   selector: 'app-data-maj',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataMajComponent implements OnInit {
 
-  constructor() { }
+  constructor(public predServ:PredictionsService) { }
 
   ngOnInit(): void {
+    this.predServ.getCSV();
   }
 
 }

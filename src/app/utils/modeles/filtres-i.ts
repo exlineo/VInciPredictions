@@ -1,26 +1,32 @@
 /** Interface des filtres applicables */
 export interface FiltresI {
-  pays?:string;
-  region?:string;
+  pays?:Array<string>;
+  regions?:Array<string>;
+  pdo?:Array<string>;
   type?:string;
-  pdo?:string;
-  annees?:Array<number>;
+  ecart?:{debut:number, fin:number};
 }
 export interface RendementI{
   pays:string;
   region:string;
-  type?:string;
-  pdo:string;
+  couleur?:Couleur;
+  pdo?:string;
   rendements:Array<number>;
-  prediction:Array<number>;
-  indicateurs:Array<number>;
+  predictions:Array<number>;
+  fiabilites:Array<number>;
 }
 export class Rendement implements RendementI{
   pays = "";
   region = "";
-  type = "";
   pdo = "";
+  type = Couleur.aucun;
   rendements = []; // new Array(40);
-  prediction = []; // new Array(11);
-  indicateurs = []; // new Array(11);
+  predictions = []; // new Array(11);
+  fiabilites = []; // new Array(11);
+}
+export enum Couleur{
+  blanc = 'blanc',
+  rouge = 'rouge',
+  tous = 'tous',
+  aucun = ''
 }

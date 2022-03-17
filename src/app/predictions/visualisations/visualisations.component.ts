@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
@@ -10,6 +11,19 @@ export class VisualisationsComponent implements OnInit {
 
   /** Ensemble des filtres appliqués */
   filtres:Array<string> = [];
+  filtresForm = this.fbuild.group({
+    pays: [''],
+    regions: [''],
+    pdo: [''],
+    rendements:[''],
+    moyennes:[''],
+    croissance:[''],
+    couleur: [''],
+    ecart:this.fbuild.group({
+      debut:[''],
+      fin:['']
+    })
+  });
   /** Fixer le type de rendu */
   chartType:string = 'bar';
   /** Options pour la visualisation des données avec echarts */
@@ -17,7 +31,7 @@ export class VisualisationsComponent implements OnInit {
   /** Portées des années à filtrer */
   range:{min:number, max:number}={min:1996, max:2024};
 
-  constructor(public l:LanguesService) { }
+  constructor(public l:LanguesService, public fbuild:FormBuilder) { }
 
   ngOnInit(): void {
     const xAxisData = [];
@@ -81,5 +95,9 @@ export class VisualisationsComponent implements OnInit {
   /** Modifier le type de rendu */
   setChartType(chart:string){
     this.chartType = chart;
+  }
+  /** Valid filters and create chart */
+  appliqueFiltres(){
+    console.log(this.filtresForm.value);
   }
 }
