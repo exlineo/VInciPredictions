@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
 
 @Component({
@@ -8,10 +9,16 @@ import { PredictionsService } from '../utils/services/predictions.service';
 })
 export class DataMajComponent implements OnInit {
 
-  constructor(public predServ:PredictionsService) { }
+  constructor(public predServ:PredictionsService, public l:LanguesService) { }
 
   ngOnInit(): void {
     this.predServ.getCSV();
   }
+  /**
+   * Upload CSV file
+   * @param e File event
+   */
+  upload(e:any){
 
+  }
 }

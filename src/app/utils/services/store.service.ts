@@ -19,13 +19,11 @@ export class StoreService {
   private dataFiltre:any;
   public filtres:any;
 
-  constructor(private dbrt: Database, private dbf: Firestore) {
-    // console.log(doc);
-  }
+  constructor(private dbrt: Database, private dbf: Firestore) {}
   /**
-   * Récupérer les données stockées localement
-   * @param id {string} Identifiant de la donnée à récupérer localement
-   * @returns Renvoie une chaîne de caractères
+   * Get back data from local storage
+   * @param {string} id IID of the data
+   * @returns {promise} Renvoie une chaîne de caractères
    */
   getLocalString(id: string, defaut: string): string {
     if (localStorage.getItem(id)) {
@@ -33,9 +31,9 @@ export class StoreService {
     } else { return defaut };
   }
   /**
-   * Récupérer des données structurées JSON
-   * @param id {string} Identifiant à appeler dans les données
-   * @returns Renvoie un objet JSON
+   * Get JSON data
+   * @param {string} id ID of the data
+   * @returns {promise}
    */
   getLocalData(id: string): unknown {
     if (localStorage.getItem(id)) {
@@ -44,14 +42,14 @@ export class StoreService {
     return null;
   }
   /**
-   * Ecrire des données locales
-   * @param id {string} Identifiant des données locales à écrire
-   * @param data {unknown} Les données à stocker (seront transformées en chaîne)
+   * Write data localy
+   * @param id {string} ID of the data
+   * @param data {unknown} data to write
    */
   setData(id: string, data: unknown) {
     localStorage.setItem(id, JSON.stringify(data));
   }
-  /** Récupérer les données en temps réel */
+  /** Get realtime data */
   getRTDB() {
     this.doc = ref(this.dbrt, 'fr');
     objectVal(this.doc).pipe(
@@ -62,27 +60,28 @@ export class StoreService {
     );
   }
   /**
-   * @param collection Nom de la collection appelée
-   * @returns Renvoie les données
+   * Get entire collection
+   * @param {string} collection Collection name to get
+   * @returns {promise} Returns data received
    */
   async getFireCol(collec: string) {
     return await getDocs(collection(this.dbf, collec));
   }
   /**
-   * Récupérer un objet spécifique dans la base
-   * @param collection Nom de la collection appelée
-   * @param param Nom de l'objet recherché
-   * @returns Renvoie les données
+   * Get pecific object with parameters
+   * @param {string} collection Name of called collection
+   * @param {string} param Searched object
+   * @returns {promise} Send back object
    */
   async getFireDoc(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
   }
   /**
-   *
-   * @param collec Collection dans laquelle ajouter des données
-   * @param data Objet à envoyer comprenant un uid
-   * @returns Renvoyer une promesse pour confirmer
+   * write a document on Firestore
+   * @param collec Name of collection
+   * @param data Object with UID to write
+   * @returns {promise} Returns a promise
    */
   async setFireDoc(collec: string, data:{uid:string, doc:any}){
     const customDoc = doc(this.dbf, collec, data.uid);

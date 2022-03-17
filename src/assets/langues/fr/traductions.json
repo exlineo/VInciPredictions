@@ -67,5 +67,13 @@
   "RES_FILTRES":"Filtres sélectionnés",
   "RES_DESCR":"Résultats de vos recherches (sélectionnez les options de visualisation)",
   "RES_VISUAL":"Visualisation des données",
-  "COPYRIGHT":"Réalisation exlineo.com"
+  "COPYRIGHT":"Réalisation exlineo.com",
+  "FICHIER":"Fichier",
+  "FICHIERS":"Fichiers",
+  "FICHIER_UP":"Téléverser un fichier",
+  "FICHIER_CSV":"Le fichier doit être au format CSV",
+  "FICHIER_V":"Revenir à cette version",
+  "FICHIER_CHOIX":"Choisir un fichier",
+  "FICHIER_PLUS":"Ajouter un fichier",
+  "FICHIER_SUPPR":"Supprimer le fichier"
 }

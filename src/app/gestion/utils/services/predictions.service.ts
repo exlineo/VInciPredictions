@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { getDownloadURL, getStorage, list, listAll, ref } from '@angular/fire/storage';
+import { getMetadata } from 'firebase/storage';
+import { FileI } from 'src/app/utils/modeles/file-i';
 
 import { environment } from 'src/environments/environment';
 
@@ -7,8 +10,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PredictionsService {
-  predictions:Array<any> = [];
-  constructor(private http:HttpClient) {}
+
+  predictions:Array<any> = []; // Data from database
+  filesCSV:Array<FileI> = []; // List of files uploaded with datas
+
+  constructor(private http:HttpClient) {
+    this.listeFiles();
+  }
   /**
    * Load CSV and filter data to set the database
    */
@@ -29,5 +37,26 @@ export class PredictionsService {
   }
   /** Return JSON object */
   setJSON(d:string){
+  }
+  /** List files from fire bucket to get archived datas */
+  listeFiles(){
+    let fireStore = getStorage();
+    let  listRef = ref(fireStore, 'gs://vinciplateforme');
+
+    listAll(listRef).then((res) => {
+      res.prefixes.forEach((folderRef) => {
+        // All the prefixes under listRef
+        console.log('folder', folderRef);
+      });
+      res.items.forEach((itemRef) => {
+        console.log('item', itemRef);
+        getMetadata(itemRef).then(meta => {
+          this.filesCSV.push({nom:meta.name, creation:meta.timeCreated, maj:meta.updated, taille:meta.size, bucket:meta.bucket});
+          console.log('meta', meta);
+        });
+      });
+    }).catch((er) => {
+      console.log(er)
+    });
   }
 }

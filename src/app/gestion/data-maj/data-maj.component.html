@@ -1,1 +1,22 @@
-<p>data-maj works!</p>
+<section>
+  <article>
+    <table>
+
+    </table>
+  </article>
+</section>
+<section class="bleu">
+  <article>
+    <h2>{{ l.t[''] }}</h2>
+    <p></p>
+    <select name="fichiers">
+      <option *ngFor="let f of predServ.filesCSV" [value]="f.nom">{{ f.nom }} ({{ f.creation }})</option>
+    </select>
+  </article>
+  <article>
+    <h2>{{ l.t[''] }}</h2>
+    <p></p>
+    <label for="fichierup"><span class="icone">upload</span>{{ l.t['FICHIER_UP'] }}</label>
+    <input type="file" id="fichierup" (change)="upload($event)" accept=".png,.jpg" />
+  </article>
+</section>

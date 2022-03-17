@@ -5,6 +5,7 @@ section:nth-child(1){
 }
 section:nth-child(2){
   flex:5;
+  padding:0;
 }
 section:nth-child(3){
   flex:0.2;
