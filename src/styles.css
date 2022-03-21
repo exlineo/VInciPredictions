@@ -1,7 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Raleway:wght@300&display=swap&family=Material+Icons'); */
-/* import "node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css" */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-/* You can add global styles to this file, and also import other style files */
+/* Variables */
+:root{
+  --grisclair:#E9E9E9;
+}
+
 html, body  {
   margin:0;
   padding:0;
@@ -9,6 +11,7 @@ html, body  {
   height:100%;
   font-family: 'Raleway', sans-serif;
   scroll-behavior: smooth;
+  overflow:hidden;
 }
 h1, h2, h3, h4{
   font-family: 'Playfair Display', serif;
@@ -112,6 +115,24 @@ label[for="fichierup"]{
 }
 label[for="fichierup"] span{
   margin-right:10px;
+}
+table{
+  font-size:80%;
+  border-collapse: collapse;
+}
+table *{
+  border:0;
+  padding:5px;
+  margin:0;
+  text-align: center;
+}
+thead {
+}
+tbody > tr:nth-child(even){
+  background-color:#E9E9E9;
+}
+table tr, table th{
+  border-bottom:2px solid white;
 }
 form span{
   padding:10px;
@@ -267,9 +288,6 @@ input.rangemax{
 input.rangemin::-webkit-slider-runnable-track{
   background-color: none;
 }
-/* input.rangemin::-webkit-slider-progress{
-  background-color: #F14668;
-} */
 article.range-slider input[type="range"]::-webkit-slider-thumb {
   pointer-events: auto;
   position: relative;
@@ -352,6 +370,9 @@ input[type=range]::-moz-focus-outer {
   border: 0;
 }
 /* COULEURS */
+.grisclair{
+  background-color: #E9E9E9;
+}
 .jaune{
   background-color:#F7C45F;
   color:#202A3A;
@@ -370,11 +391,20 @@ input[type=range]::-moz-focus-outer {
 .vert{
   background-color: #33A537;
 }
+.vertclair{
+  background-color: #afccb0;
+}
 .orange{
   background-color: #DFA83A;
 }
+.orangeclair{
+  background-color: #e7dabf;
+}
 .rouge{
   background-color: #F14668;
+}
+.rougeclair{
+  background-color: #eccad1;
 }
 .icone{
   font-family: 'Material Icons' !important;

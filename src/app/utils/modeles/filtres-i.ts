@@ -8,8 +8,8 @@ export interface FiltresI {
 }
 export interface RendementI{
   pays:string;
-  region:string;
-  couleur?:Couleur;
+  regions:string;
+  type?:Couleur;
   pdo?:string;
   rendements:Array<number>;
   predictions:Array<number>;
@@ -17,7 +17,7 @@ export interface RendementI{
 }
 export class Rendement implements RendementI{
   pays = "";
-  region = "";
+  regions = "";
   pdo = "";
   type = Couleur.aucun;
   rendements = []; // new Array(40);

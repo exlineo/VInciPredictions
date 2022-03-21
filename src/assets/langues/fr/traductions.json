@@ -1,9 +1,9 @@
 {
   "ACCUEIL":"Retourner à l'accueil",
-  "LANG_L":"français",
-  "LANG_PT":"portuguais",
-  "LANG_ES":"espagnole",
-  "LANG_EN":"anglais",
+  "LANG_FR":"Français",
+  "LANG_PT":"Portuguais",
+  "LANG_ES":"Espagnole",
+  "LANG_EN":"Anglais",
   "LANG_CHOIX":"Changer la langue",
   "LANG_IMG":"Drapeau",
   "FORM_REQUIS":"Ce champ est requis",
@@ -49,7 +49,7 @@
   "FILTRE_REGIONS":"Régions viticoles",
   "FILTRE_PDO":"Désignations d'origines contrôlées",
   "FILTRE_INDICATEURS":"Indicateurs",
-  "FILTRE_COULEUR":"Type de vin",
+  "FILTRE_TYPE":"Type de vin",
   "FILTRE_ROUGE":"Rouge",
   "FILTRE_BLANC":"Blanc",
   "FILTRE_TOUS":"Tous",
@@ -75,5 +75,7 @@
   "FICHIER_V":"Revenir à cette version",
   "FICHIER_CHOIX":"Choisir un fichier",
   "FICHIER_PLUS":"Ajouter un fichier",
-  "FICHIER_SUPPR":"Supprimer le fichier"
+  "FICHIER_SUPPR":"Supprimer le fichier",
+  "GESTION_VERSION":"Liste des versions de données",
+  "GESTION_AJOUT":"Ajouter un nouveau fichier"
 }

@@ -1,0 +1,63 @@
+{
+  "pays": [
+    {
+      "nom": "Espagne",
+      "regions": [
+        {
+          "nom": "Upper Ebro",
+          "pdo": ["Alella","Alicante","Almansa","Bierzo","Calatayud","Campo de Borja","Cariñena","Cava"]
+        },
+        {
+          "nom": "Cataluña",
+          "pdo": ["Conca de Barberá","Condado de Huelva","Costers del Segre","Empordà","Jerez (Xerés-Sherry)","Jumilla"]
+        },
+        {
+          "nom": "El valle del Duero",
+          "pdo": ["La Mancha","Málaga y Sierras de Málaga","Manzanilla","Méntrida","Montilla-Moriles","Navarra"]
+        },
+        {
+          "nom": "El noroeste",
+          "pdo": ["Penedés","Rias Baixas","Ribeiro"]
+        },
+        {
+          "nom": "Levante",
+          "pdo": ["Priorat","Ribera del Duero","Rioja","Rueda"]
+        },
+        {
+          "nom": "Castilla la Mancha",
+          "pdo": ["Somontano","Tarragona","Terra Alta","Toro"]
+        },
+        {
+          "nom": "Las islas",
+          "pdo": ["Utiel-Requena","Valdeorras","Valdepeñas","Valencia","Yecla"]
+        }
+      ]
+    },
+    {
+      "nom": "France",
+      "regions": [
+        {
+          "nom": "Bordeaux",
+          "pdo": ["Barsac","Blaye","Bordeaux","Bordeaux supérieur","Cadillac","Canon Fronsac","Cérons","Côtes de Blaye","Côtes de Bordeaux Cadillac","Côtes de Bordeaux Castillon","Côtes de Bordeaux Francs","Côtes de Bordeaux-Saint-Macaire","Côtes de Bourg, Bourg et Bourgeais","Crémant de Bordeaux","Entre-deux-Mers","Entre-deux-Mers Haut-Benauge","Fronsac","Graves","Graves de Vayres","Graves supérieures","Haut-Médoc","Lalande-de-Pomerol","Listrac-Médoc","Loupiac","Lussac-Saint-Emilion","Margaux","Médoc","Montagne-Saint-Emilion","Moulis ou Moulis-en-Médoc","Pauillac","Pomerol","Premières Côtes de Bordeaux","Puisseguin-Saint-Emilion","Sainte-Croix-du-Mont","Saint-Emilion","Saint-Emilion grand cru","Saint-Estèphe","Saint-Georges-Saint-Emilion","Saint-Julien","Sauternes"]
+        },
+        {
+          "nom": "Languedoc-roussillon",
+          "pdo": ["Corbières","Costieres de Nimes","Côteaux de Languedoc","Coteaux de Languedoc","Côtes du Roussillon","Côtes du Roussillon Villages","Faugères","Fitou","Limoux","Minervois","Muscat de Rivesaltes","Rivesaltes","Saint-Chinian"]
+        },
+        {
+          "nom": "Sud-ouest",
+          "pdo": ["Bergerac","Buzet","Cahors","Côtes de Duras","Côtes du Marmandais","Fronton","Gaillac","Gaillac","Jurançon","Monbazillac","Montravel"]
+        }
+      ]
+    },
+    {
+      "nom": "Portugual",
+      "regions": [
+        {
+          "nom": "Douro",
+          "pdo": ["Alentejo","Vinhos Verdes","Região Demarcada do Douro (RDD)"]
+        }
+      ]
+    }
+  ]
+}

@@ -8,20 +8,22 @@ import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
 import { PopupComponent } from '../structure/popup/popup.component';
 
-import { MarkPipe } from '../utils/tools/filtres.pipe';
+import { FiltresPipe, MarkPipe } from '../utils/tools/filtres.pipe';
 
 @NgModule({
   declarations: [
     EnteteComponent,
     PiedComponent,
     PopupComponent,
-    MarkPipe
+    MarkPipe,
+    FiltresPipe
   ],
   exports:[
     EnteteComponent,
     PiedComponent,
     PopupComponent,
     MarkPipe,
+    FiltresPipe,
     ReactiveFormsModule,
     HttpClientModule
   ],
