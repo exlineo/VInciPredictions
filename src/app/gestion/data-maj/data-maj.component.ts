@@ -15,14 +15,13 @@ export class DataMajComponent implements OnInit {
     pays: [''],
     regions: [''],
     pdo: [''],
-    types: [''],
-    rendements: [''],
-    moyennes: [''],
-    croissance: [''],
-    debut: [''],
-    fin: ['']
+    type: [''],
+    rendements: [[]],
+    moyennes: [[]],
+    croissance: [[]],
+    debut: [1983],
+    fin: [2032]
   });
-
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
   ngOnInit(): void {
@@ -37,6 +36,31 @@ export class DataMajComponent implements OnInit {
   }
   /** Filtre data for admin validation */
   filtreData(){
+
+  }
+  /** Renew countries list */
+  majPays(){
+
+  }
+  /** Renew regions list */
+  majRegions(){
+
+  }
+  /** Renew PDOs list */
+  majPDO(){
+
+  }
+  /** Renew wines types list */
+  majTypes(){
+
+  }
+  /** Get list of countries, regions, PDOs, types
+   * @param {string} f wich filter apply
+  */
+  getList(f:string){
+
+  }
+  setFiltres(){
 
   }
 }

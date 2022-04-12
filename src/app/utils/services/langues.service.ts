@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PageI } from '../modeles/page-i';
+import { MarkPipe } from '../tools/filtres.pipe';
+import { BucketService } from './bucket.service';
 import { StoreService } from './store.service';
 
 
@@ -11,7 +13,7 @@ export class LanguesService {
 
   langue = 'fr';
   t: any = {}; // Traductions téléchargées
-  lang: any; // Langue actuelle
+  // lang: any; // Langue actuelle
   page: PageI = { nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
 
   /**
@@ -64,7 +66,7 @@ export class LanguesService {
       .then<any>(d => d.data())
       .then<unknown>(p => {
         this.page = p;
-        console.log(p);
+        console.log(p, "Contenus markdown");
       }
       )
       .catch(er => console.log(er));

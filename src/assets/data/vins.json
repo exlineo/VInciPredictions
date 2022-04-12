@@ -1,12 +1,29 @@
 {
   "fr":{
+    "pays":[
+      {"nom":"France",
+        "regions":[
+          {
+            "nom":"Bordeaux",
+            "pdo":["Barsac", "Blaye", "Bordeaux", "Bordeaux", "Bordeaux supérieur", "Bordeaux supérieur", "Cadillac", "Canon Fronsac", "Cérons", "Côtes de Blaye", "Côtes de Bordeaux Blaye", "Côtes de Bordeaux Cadillac", "Côtes de Bordeaux Castillon", "Côtes de Bordeaux Francs", "Côtes de Bordeaux Francs", "Côtes de Bordeaux-Saint-Macaire", "Côtes de Bourg, Bourg et Bourgeais", "Côtes de Bourg, Bourg et Bourgeais", "Crémant de Bordeaux", "Entre-deux-Mers", "Entre-deux-Mers Haut-Benauge", "Fronsac", "Graves", "Graves", "Graves de Vayres", "Graves de Vayres", "Graves supérieures", "Haut-Médoc", "Lalande-de-Pomerol", "Listrac-Médoc", "Loupiac", "Lussac-Saint-Emilion", "Margaux", "Médoc", "Montagne-Saint-Emilion", "Moulis ou Moulis-en-Médoc", "Pauillac", "Pomerol", "Premières Côtes de Bordeaux", "Puisseguin-Saint-Emilion", "Sainte-Croix-du-Mont", "Saint-Emilion", "Saint-Emilion grand cru", "Saint-Estèphe", "Saint-Georges-Saint-Emilion", "Saint-Julien", "Sauternes"]
+          },
+          {
+            "nom":"Languedoc-Roussillon",
+            "pdo":["Corbières", "Costières de Nimes", "Côteaux de Languedoc", "Côtes du Roussillon", "Côtes du Roussillon villages", "Faugères", "Fitou", "Limoux", "Minervois", "Muscat de Rivesaltes", "Rivesaltes", "Saint-Chinian"]
+          },
+          {
+            "nom":"Sud-Ouest",
+            "pdo":["Bergerac", "Buzet", "Cahors", "Côtes de Duras", "Côtes du Marmandais", "Fronton", "Gaillac", "Jurançon", "Monbazillac", "Montravel"]
+          }
+        ]
+      }, "Espagne", "Portugal"],
     "regions":[],
     "pdo":{
       "bordeaux":["Barsac", "Blaye", "Bordeaux", "Bordeaux", "Bordeaux supérieur", "Bordeaux supérieur", "Cadillac", "Canon Fronsac", "Cérons", "Côtes de Blaye", "Côtes de Bordeaux Blaye", "Côtes de Bordeaux Cadillac", "Côtes de Bordeaux Castillon", "Côtes de Bordeaux Francs", "Côtes de Bordeaux Francs", "Côtes de Bordeaux-Saint-Macaire", "Côtes de Bourg, Bourg et Bourgeais", "Côtes de Bourg, Bourg et Bourgeais", "Crémant de Bordeaux", "Entre-deux-Mers", "Entre-deux-Mers Haut-Benauge", "Fronsac", "Graves", "Graves", "Graves de Vayres", "Graves de Vayres", "Graves supérieures", "Haut-Médoc", "Lalande-de-Pomerol", "Listrac-Médoc", "Loupiac", "Lussac-Saint-Emilion", "Margaux", "Médoc", "Montagne-Saint-Emilion", "Moulis ou Moulis-en-Médoc", "Pauillac", "Pomerol", "Premières Côtes de Bordeaux", "Puisseguin-Saint-Emilion", "Sainte-Croix-du-Mont", "Saint-Emilion", "Saint-Emilion grand cru", "Saint-Estèphe", "Saint-Georges-Saint-Emilion", "Saint-Julien", "Sauternes"]
     }
   },
   "es":{
-    "regions":["Bordeaux","languedoc-roussillon","sud-ouest",""],
+    "regions":["Bordeaux","Languedoc-roussillon","Sud-ouest",""],
     "pdo":{
       "bordeaux":["Barsac", "Blaye", "Bordeaux", "Bordeaux", "Bordeaux supérieur", "Bordeaux supérieur", "Cadillac", "Canon Fronsac", "Cérons", "Côtes de Blaye", "Côtes de Bordeaux Blaye", "Côtes de Bordeaux Cadillac", "Côtes de Bordeaux Castillon", "Côtes de Bordeaux Francs", "Côtes de Bordeaux Francs", "Côtes de Bordeaux-Saint-Macaire", "Côtes de Bourg, Bourg et Bourgeais", "Côtes de Bourg, Bourg et Bourgeais", "Crémant de Bordeaux", "Entre-deux-Mers", "Entre-deux-Mers Haut-Benauge", "Fronsac", "Graves", "Graves", "Graves de Vayres", "Graves de Vayres", "Graves supérieures", "Haut-Médoc", "Lalande-de-Pomerol", "Listrac-Médoc", "Loupiac", "Lussac-Saint-Emilion", "Margaux", "Médoc", "Montagne-Saint-Emilion", "Moulis ou Moulis-en-Médoc", "Pauillac", "Pomerol", "Premières Côtes de Bordeaux", "Puisseguin-Saint-Emilion", "Sainte-Croix-du-Mont", "Saint-Emilion", "Saint-Emilion grand cru", "Saint-Estèphe", "Saint-Georges-Saint-Emilion", "Saint-Julien", "Sauternes"]
     }

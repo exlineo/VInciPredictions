@@ -7,7 +7,7 @@
     <app-entete></app-entete>
     <!-- CONTENT -->
     <h2>{{ l.page.titre }}</h2>
-    <article [innerHTML]="l.page.contenu | md">
+    <article [innerHTML]="l.page.contenu">
     </article>
     <!-- BOTTOM NAV -->
     <app-pied></app-pied>
@@ -70,7 +70,7 @@
           <label>{{ l.t['FORM_EMAIL'] }} *</label>
           <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
           <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-          <span *ngIf="compte.controls['mail'].hasError('email') && !compte.controls['mail'].hasError('required')"
+          <span *ngIf="compte.controls['mailGroup'].get('mail')?.hasError('email') && compte.controls['mailGroup'].get('mail')?.hasError('required')"
             class="orange">
             {{ l.t['FORM_FORMAT_MAIL'] }}
           </span>
@@ -82,12 +82,12 @@
           <label>{{ l.t['FORM_EMAIL2'] }} *</label>
           <input type="email" formControlName="mail2" [placeholder]="l.t['FORM_EMAIL']" required>
           <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-          <span *ngIf="compte.controls['mail2'].hasError('email') && !compte.controls['mail2'].hasError('required')"
+          <span *ngIf="compte.controls['mailGroup'].get('mail2')?.hasError('email') && compte.controls['mailGroup'].get('mail2')?.hasError('required')"
             class="orange">
             {{ l.t['FORM_FORMAT_MAIL'] }}
           </span>
           <span
-            *ngIf="(compte.controls['mail'].value != compte.controls['mail2'].value) && !compte.controls['mail2'].hasError('required')"
+            *ngIf="(compte.controls['mailGroup'].get('mail2')?.value != compte.controls['mailGroup'].get('mail2')?.value) && !compte.controls['mailGroup'].get('mail2')?.hasError('required')"
             class="orange">
             {{ l.t['FORM_CORRESPOND'] }}
           </span>
@@ -99,21 +99,21 @@
           <label>{{ l.t['FORM_PASSE'] }} *</label>
           <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-          <span *ngIf="compte.controls['pass'].hasError('pattern')" class="orange">
+          <span *ngIf="compte.controls['passGroup'].get('pass')?.hasError('pattern')" class="orange">
             {{ l.t['FORM_FORMAT_PASSE'] }}
           </span>
           <!-- Requis -->
-          <span *ngIf="compte.controls['pass'].hasError('required')" class="orange">{{ l.t['FORM_REQUIS'] }}</span>
+          <span *ngIf="compte.controls['passGroup'].get('pass')?.hasError('required')" class="orange">{{ l.t['FORM_REQUIS'] }}</span>
         </fieldset>
         <fieldset>
           <label>{{ l.t['FORM_PASSE2'] }} *</label>
           <input type="text" formControlName="pass2" [placeholder]="l.t['FORM_PASSE2']" required>
           <span
-            *ngIf="(compte.controls['pass'].value != compte.controls['pass2'].value) && !compte.controls['pass2'].hasError('required')"
+            *ngIf="(compte.controls['passGroup'].get('pass')?.value != compte.controls['passGroup'].get('pass2')?.value) && !compte.controls['pass2'].hasError('required')"
             class="orange">
             {{ l.t['FORM_CORRESPOND'] }}
           </span>
-          <span *ngIf="compte.controls['pass2'].hasError('required')" class="orange">
+          <span *ngIf="compte.controls['passGroup'].get('pass2')?.hasError('required')" class="orange">
             {{ l.t['FORM_REQUIS'] }}
           </span>
         </fieldset>

@@ -415,10 +415,10 @@ input[type=range]::-moz-focus-outer {
 nav .icone{
   padding:0 8px;
 }
-.ng-valid{
+input.ng-valid, textarea.ng-valid{
   border-bottom:2px solid green;
 }
-.ng-invalid{
+input.ng-invalid, textarea.ng-invalid{
   border-bottom:2px solid red;
 }
 /* SCROLLBARS */

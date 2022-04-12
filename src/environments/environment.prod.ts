@@ -9,5 +9,6 @@ export const environment = {
     databaseURL:"https://vinciplateforme-default-rtdb.europe-west1.firebasedatabase.app/"
   },
   csvUrl:'assets/data/data.csv',
+  bucket:'gs://vinciplateforme.appspot.com/',
   production: true
 };

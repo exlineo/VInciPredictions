@@ -8,16 +8,25 @@ section:nth-child(1){
 }
 section:nth-child(1) > article:nth-child(1) {
   display:flex;
-  flex-flow:row nowrap;
+  flex-flow:column nowrap;
   padding:10px;
   justify-content: center;
   width:100%;
   height:10%;
 }
+section:nth-child(1) > article:nth-child(1) h3{
+  text-align:center;
+  padding:0;
+  margin:0;
+}
 section:nth-child(1) > article:nth-child(2) {
-  overflow:scroll;
-  height:90%;
-  width:auto;
+  overflow-y:scroll;
+  overflow-x:scroll;
+  height:88%;
+  width:100vw;
+}
+table{
+  min-width:150vw;
 }
 section:nth-child(2){
   display:flex;
@@ -34,7 +43,9 @@ form{
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+  width:100%;
 }
 form > *{
   margin:0 10px;
 }
+p{margin:0 10px}

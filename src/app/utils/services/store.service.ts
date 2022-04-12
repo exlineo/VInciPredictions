@@ -87,7 +87,7 @@ export class StoreService {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, data.doc, { merge: true }); // Mettre à jour un objet existant
   }
-  /** Effectuer une requête à partir des filtres */
+  /** Get datas from filters */
   async getFireFiltre(){
     // Exemple
     const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));

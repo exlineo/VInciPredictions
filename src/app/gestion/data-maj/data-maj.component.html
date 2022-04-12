@@ -1,27 +1,31 @@
 <section>
   <article class="jaune">
-    <form [formGroup]="filtres">
     <h3>{{ l.t['FILTRE_TITRE'] }}</h3>
+    <form [formGroup]="filtres">
       <select name="pays" formControlName="pays">
-        <option>{{ l.t['FILTRE_PAYS'] }}</option>
-        <!-- <option *ngFor="let d of [value]="l.t['LANG_ES']">{{  }}</option> -->
-        <option></option>
+        <option value="">{{ l.t['FILTRE_PAYS'] }}</option>
+        <option *ngFor="let p of predServ.listes.pays" [value]="p">{{ p }}</option>
       </select>
+      <!-- <span class="icone">sync</span> -->
       <select name="regions" formControlName="regions">
-        <option>{{ l.t['FILTRE_REGIONS'] }}</option>
-        <option></option>
+        <option value="">{{ l.t['FILTRE_REGIONS'] }}</option>
+        <option *ngFor="let r of predServ.listes.regions" [value]="r">{{ r }}</option>
       </select>
+      <!-- <span class="icone">sync</span> -->
       <select name="pdo" formControlName="pdo">
-        <option>{{ l.t['FILTRE_PDO'] }}</option>
-        <option></option>
+        <option value="">{{ l.t['FILTRE_PDO'] }}</option>
+        <option *ngFor="let o of predServ.listes.pdo" [value]="o">{{ o }}</option>
       </select>
-      <select name="type" formControlName="types">
-        <option>{{ l.t['FILTRE_TOUS'] }}</option>
-        <option>{{ l.t['FILTRE_ROUGE'] }}</option>
-        <option>{{ l.t['FILTRE_BLANC'] }}</option>
-        <option></option>
+      <!-- <span class="icone">sync</span> -->
+      <select name="type" formControlName="type">
+        <option value="">{{ l.t['FILTRE_TYPE'] }}</option>
+        <option value="rouge">{{ l.t['FILTRE_ROUGE'] }}</option>
+        <option value="blanc">{{ l.t['FILTRE_BLANC'] }}</option>
       </select>
-      <!-- <input type="reset" [value]="l.t['FILTRE_BTN']">
+      <input type="number" formControlName="debut" min="1981" max="2015">
+      <input type="number" formControlName="fin" min="2023" max="2032">
+      <!-- <span class="icone">sync</span> -->
+      <!-- <input type="reset" [value]="l.t['FORM_EFFACE']">
       <input type="submit" [value]="l.t['FILTRE_BTN']"> -->
     </form>
   </article>
@@ -31,18 +35,18 @@
       <thead class="grisclair">
         <tr>
           <th colspan="4"></th>
-          <th [attr.colspan]="predServ.dataset[0].rendements.length" class="vert"></th>
-          <th [attr.colspan]="predServ.dataset[0].predictions.length" class="orange"></th>
-          <th [attr.colspan]="predServ.dataset[0].fiabilites.length" class="rouge"></th>
+          <th [attr.colspan]="2022-filtres.get('debut')?.value" class="vert">{{ l.t['FILTRE_RENDEMENTS'] }}</th>
+          <th [attr.colspan]="filtres.get('fin')?.value-2021" class="orange">{{ l.t['FILTRE_PREDICTIONS'] }}</th>
+          <th [attr.colspan]="filtres.get('fin')?.value-2021" class="rouge">{{ l.t['FILTRE_FIABILITE'] }}</th>
         </tr>
         <tr>
           <th>{{ l.t['FILTRE_PAYS'] }}</th>
           <th>{{ l.t['FILTRE_REGIONS'] }}</th>
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of predServ.dataset[0].rendements; let i=index" class="vert">{{ 1981 + i }}</th>
-          <th *ngFor="let r of predServ.dataset[0].predictions; let i=index" class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of predServ.dataset[0].fiabilites; let i=index" class="rouge">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.dataset[0].rendements | ecarts:2022-filtres.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtres.get('debut')?.value - 1983) +i }}</th>
+          <th *ngFor="let r of predServ.dataset[0].predictions | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.dataset[0].fiabilites | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
       <tbody>
@@ -51,9 +55,9 @@
           <td>{{ p.regions }}</td>
           <td>{{ p.pdo }}</td>
           <td>{{ p.type }}</td>
-          <td *ngFor="let r of p.rendements" class="vertclair">{{ r }}</td>
-          <td *ngFor="let pr of p.predictions" class="orangeclair">{{ pr }}</td>
-          <td *ngFor="let f of p.fiabilites" class="rougeclair">{{ f }}</td>
+          <td *ngFor="let r of p.rendements | ecarts:2022-filtres.get('debut')?.value" class="vertclair">{{ r }}</td>
+          <td *ngFor="let pr of p.predictions | ecarts:2032-filtres.get('fin')?.value:1" class="orangeclair">{{ pr }}</td>
+          <td *ngFor="let f of p.fiabilites | ecarts:2032-filtres.get('fin')?.value:1" class="rougeclair">{{ f }}</td>
         </tr>
       </tbody>
     </table>
@@ -61,13 +65,13 @@
 </section>
 <section class="bleu">
   <article>
-    <h3>{{ l.t['GESTION_VERSION'] }}</h3>
+    <p>{{ l.t['GESTION_VERSION'] }}</p>
     <select name="fichiers">
       <option *ngFor="let f of predServ.filesCSV" [value]="f.nom">{{ f.nom }} ({{ f.creation }})</option>
     </select>
   </article>
   <article>
-    <h3>{{ l.t['GESTION_AJOUT'] }}</h3>
+    <p>{{ l.t['GESTION_AJOUT'] }}</p>
     <label for="fichierup"><span class="icone">upload</span>{{ l.t['FICHIER_UP'] }}</label>
     <input type="file" id="fichierup" (change)="upload($event)" accept=".png,.jpg" />
   </article>

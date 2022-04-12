@@ -14,6 +14,7 @@ export class PredictionsService {
 
   dataset: Array<RendementI> = []; // Data from database
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
+  listes:{pays:Array<string>, regions:Array<string>, pdo:Array<string>} = {pays:[], regions:[], pdo:[]}; // Updated lists of countries, regions, pdos and types
 
   constructor(private http: HttpClient) {
     this.listeFiles();
@@ -27,25 +28,35 @@ export class PredictionsService {
       lignes.forEach(l => {
         this.setPredictions(l);
       });
-      // console.log(this.dataset);
     });
   }
   /**
    * Set predictions array
-   * @param l Object to convert in
+   * @param l Object to convert
    */
   setPredictions(l: any) {
     l = l.replace(/[\r]/g, '').trim();
     let m = l.split(',');
     this.dataset.push(this.conversion(m));
+
+
+    // Create lists from data for countries, regions and pdo
+    if(!this.listes.pays.includes(m[0].trim())) this.listes.pays.push(m[0].trim());
+    if(!this.listes.regions.includes(m[1].trim())) this.listes.regions.push(m[1].trim());
+    if(!this.listes.pdo.includes(m[3].trim())) this.listes.pdo.push(m[3].trim());
   }
   /** Convert excel line to JSON object */
   conversion(l: Array<any>):RendementI {
-    // console.log(l);
-    return { pays: l[0], regions: l[1], type: l[2], pdo: l[3], rendements:this.setNumbers(l.slice(4, 43)), predictions:this.setNumbers(l.slice(44, 55)), fiabilites:this.setNumbers(l.slice(56, l.length))};
+
+    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements:this.setNumbers(l.slice(4, 43)), predictions:this.setNumbers(l.slice(44, 55)), fiabilites:this.setNumbers(l.slice(56, l.length))};
   }
+  /** Parse string to integer on dataset */
   setNumbers(a:Array<string>):Array<number>{
     return a.map(c => parseInt(c));
+  }
+  /** Set list of criterias */
+  setListes(){
+
   }
   /** Return JSON object */
   setJSON(d: string) {
@@ -71,4 +82,9 @@ export class PredictionsService {
       console.log(er)
     });
   }
+  /** Filter countries from data and hydrate filters */
+  setFiltres(){
+
+  }
+
 }
