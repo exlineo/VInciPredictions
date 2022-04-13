@@ -67,14 +67,20 @@ fieldset{
   margin-bottom: 10px;
   border:none;
 }
+button{
+  border: none;
+  padding:8px 14px;
+  margin:5px;
+}
 select{
   background-color: #F7C45F;
 }
-select > option{
-  padding:8px 12px;
+select *{
+  padding:14px 10px;
+  line-height:20px;
   transition: all .3s ease;
 }
-select > option:hover{
+select *:hover{
   background-color: #28364A;
   color:white;
 }
@@ -84,14 +90,14 @@ input, select, textarea{
   font-family: 'Raleway', sans-serif;
   overflow-y:auto;
 }
-input[type="submit"]{
+input[type="submit"], button.valide{
   background-color:#33A537;
   color:white;
   text-transform: uppercase;
   cursor: pointer;
   width:fit-content;
 }
-input[type="reset"]{
+input[type="reset"], button.annule{
   background-color:#F7C45F;
   color:white;
   text-transform: uppercase;
@@ -126,9 +132,7 @@ table *{
   margin:0;
   text-align: center;
 }
-thead {
-}
-tbody > tr:nth-child(even){
+thead, tbody > tr:nth-child(even){
   background-color:#E9E9E9;
 }
 table tr, table th{
@@ -170,9 +174,10 @@ form.bleu option:hover{
 .logo a > *{
   margin-top:auto;
 }
-.logo img{
-  width:100px;
-  margin:10px;
+.logo > a img{
+  width:75px;
+  height:90px;
+  margin:0 10px;
 }
 .logo h4{
   margin:10px;
@@ -198,7 +203,7 @@ form.bleu option:hover{
   display:flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  margin-bottom:20px;
+  /* margin-bottom:5%; */
 }
 .menulangues img{
   max-width: 20px;

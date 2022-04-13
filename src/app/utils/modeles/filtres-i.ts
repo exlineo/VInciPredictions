@@ -24,6 +24,9 @@ export class Rendement implements RendementI{
   predictions = []; // new Array(11);
   fiabilites = []; // new Array(11);
 }
+export interface DataI{
+  data:Array<RendementI>;
+}
 export enum Couleur{
   blanc = 'blanc',
   rouge = 'rouge',

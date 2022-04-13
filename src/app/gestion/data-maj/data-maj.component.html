@@ -44,13 +44,13 @@
           <th>{{ l.t['FILTRE_REGIONS'] }}</th>
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of predServ.dataset[0].rendements | ecarts:2022-filtres.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtres.get('debut')?.value - 1983) +i }}</th>
-          <th *ngFor="let r of predServ.dataset[0].predictions | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of predServ.dataset[0].fiabilites | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.dataset[0].rendements | ecarts:2022-filtres.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtres.get('debut')?.value - 1983) +i }}</th>
+          <th *ngFor="let r of predServ.store.dataset[0].predictions | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.dataset[0].fiabilites | ecarts:2032-filtres.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of predServ.dataset | filtres:filtres.value; let i=index">
+        <tr *ngFor="let p of predServ.store.dataset | filtres:filtres.value; let i=index">
           <td>{{ p.pays }}</td>
           <td>{{ p.regions }}</td>
           <td>{{ p.pdo }}</td>
@@ -66,13 +66,16 @@
 <section class="bleu">
   <article>
     <p>{{ l.t['GESTION_VERSION'] }}</p>
-    <select name="fichiers">
-      <option *ngFor="let f of predServ.filesCSV" [value]="f.nom">{{ f.nom }} ({{ f.creation }})</option>
+    <select name="fichiers" (change)="predServ.getData($event)">
+      <option>{{ l.t['GESTION_VOIR'] }}</option>
+      <option *ngFor="let f of predServ.listeVersions" [value]="f">{{ f }}</option>
     </select>
   </article>
   <article>
     <p>{{ l.t['GESTION_AJOUT'] }}</p>
     <label for="fichierup"><span class="icone">upload</span>{{ l.t['FICHIER_UP'] }}</label>
-    <input type="file" id="fichierup" (change)="upload($event)" accept=".png,.jpg" />
+    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file"/>
+    <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
+    <button *ngIf="file" (click)="predServ.docFireAdd()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>
 </section>

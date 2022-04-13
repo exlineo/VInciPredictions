@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
-import { Firestore, collection, getDocs, doc, getDoc, setDoc, docData, query, where } from "@angular/fire/firestore";
+import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where } from "@angular/fire/firestore";
+import { Rendement, RendementI } from '../modeles/filtres-i';
 
 export interface TraductionI {
   langue: string;
@@ -16,10 +17,10 @@ export interface TraductionI {
 export class StoreService {
 
   private doc: any;
-  private dataFiltre:any;
   public filtres:any;
+  public dataset:Array<RendementI>=[new Rendement()];
 
-  constructor(private dbrt: Database, private dbf: Firestore) {}
+  constructor(private dbrt: Database, public dbf: Firestore) {}
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -73,7 +74,7 @@ export class StoreService {
    * @param {string} param Searched object
    * @returns {promise} Send back object
    */
-  async getFireDoc(collec: string, param: string){
+  async getFireDoc<DataI>(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
   }

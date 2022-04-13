@@ -75,11 +75,13 @@
   "FICHIER":"Fichier",
   "FICHIERS":"Fichiers",
   "FICHIER_UP":"Téléverser un fichier",
+  "FICHIER_VALIDE":"Enregistrer ces données",
   "FICHIER_CSV":"Le fichier doit être au format CSV",
   "FICHIER_V":"Revenir à cette version",
   "FICHIER_CHOIX":"Choisir un fichier",
   "FICHIER_PLUS":"Ajouter un fichier",
   "FICHIER_SUPPR":"Supprimer le fichier",
   "GESTION_VERSION":"Liste des versions de données",
-  "GESTION_AJOUT":"Ajouter un nouveau fichier"
+  "GESTION_AJOUT":"Ajouter un nouveau fichier",
+  "GESTION_VOIR":"Voir une version des données"
 }

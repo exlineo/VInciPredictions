@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguesService } from 'src/app/utils/services/langues.service';
+import { PredictionsService } from '../utils/services/predictions.service';
 
 @Component({
   selector: 'app-profils',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public l:LanguesService, public predServ:PredictionsService) { }
 
   ngOnInit(): void {
   }
-
+  selectRange(e:any){
+    console.log(e.target.value);
+  }
 }

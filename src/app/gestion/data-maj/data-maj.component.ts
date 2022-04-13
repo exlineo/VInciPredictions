@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
 
@@ -22,21 +23,28 @@ export class DataMajComponent implements OnInit {
     debut: [1983],
     fin: [2032]
   });
+  /** File to load */
+  file?: string;
+
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
   ngOnInit(): void {
-    this.predServ.getCSV();
+    // this.predServ.getCSV();
   }
   /**
    * Upload CSV file
    * @param e File event
    */
   upload(e:any){
-
-  }
-  /** Filtre data for admin validation */
-  filtreData(){
-
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      console.log('csv content', e.target.result);
+      this.file = e.target.result;
+      // Transform data to Rendement interface array
+      this.predServ.setDataset(this.file as string);
+    };
+    reader.readAsText(e.target.files[0]);
+    console.log(this.file);
   }
   /** Renew countries list */
   majPays(){
@@ -54,6 +62,7 @@ export class DataMajComponent implements OnInit {
   majTypes(){
 
   }
+
   /** Get list of countries, regions, PDOs, types
    * @param {string} f wich filter apply
   */

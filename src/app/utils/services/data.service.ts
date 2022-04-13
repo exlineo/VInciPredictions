@@ -1,10 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-// import { traceUntilFirst } from '@angular/fire/performance';
-
-import { first } from 'rxjs/operators';
-import { Database, objectVal, ref } from '@angular/fire/database';
-import { Firestore, collection, getDocs } from "@angular/fire/firestore";
 import { PageI } from '../modeles/page-i';
 import { StoreService } from './store.service';
 import { LanguesService } from './langues.service';

@@ -6,7 +6,7 @@ marked.setOptions({
   // renderer: new marked.Renderer(),
   pedantic: false,
   gfm: false,
-  headerIds:false,
+  headerIds: false,
   breaks: true,
   smartLists: true,
   smartypants: false,
@@ -24,28 +24,23 @@ export class FiltresPipe implements PipeTransform {
    * @param args List of arguments send from filter forms
    * @returns Array of wine data
    */
-   transform(values: Array<any>, args:any): Array<RendementI> {
-    if(!args) return values;
-    if(!values) return [];
+  transform(values: Array<any>, args: any): Array<RendementI> {
+    if (!args) return values;
+    if (!values) return [];
     // Filters based on Rendement interface
-    let data:Array<RendementI> = [];
-    console.log(args);
-    // for(let a in args){
-    //   if(args[a].length > 0 ){
-        values.filter(v => {
-          if(v.pdo.toLowerCase() == args.pdo.toLowerCase() && args.pdo.length > 0){
-            data.push(v);
-          } else if(v.regions.toLowerCase() == args.regions.toLowerCase() && args.regions.length > 0){
-            data.push(v);
-          } else if(v.pays.toLowerCase() == args.pays.toLowerCase() && args.pays.length > 0){
-            data.push(v);
-          }
-          if(v.type.toLowerCase() == args.type.toLowerCase() && args.type.length > 0){
-            data.push(v);
-          }
-        });
-    //   }
-    // }
+    let data: Array<RendementI> = [];
+    values.filter(v => {
+      if (v.pdo.toLowerCase() == args.pdo.toLowerCase() && args.pdo.length > 0) {
+        data.push(v);
+      } else if (v.regions.toLowerCase() == args.regions.toLowerCase() && args.regions.length > 0) {
+        data.push(v);
+      } else if (v.pays.toLowerCase() == args.pays.toLowerCase() && args.pays.length > 0) {
+        data.push(v);
+      }
+      if (v.type.toLowerCase() == args.type.toLowerCase() && args.type.length > 0) {
+        data.push(v);
+      }
+    });
     return data.length > 0 ? data : values;
   }
 }
@@ -59,9 +54,9 @@ export class EcartsPipe implements PipeTransform {
    * @param args List of arguments send from filter forms
    * @returns Array of wine data
    */
-   transform(values: Array<number>, ecart:number, ordre:number=0): Array<number> {
-    if(!ecart) return values;
-    if(!values) return [];
+  transform(values: Array<number>, ecart: number, ordre: number = 0): Array<number> {
+    if (!ecart) return values;
+    if (!values) return [];
 
     return ordre == 0 ? values.slice(0, ecart) : values.slice(ecart, values.length);
   }
