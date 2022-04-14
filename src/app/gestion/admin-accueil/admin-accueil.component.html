@@ -2,9 +2,10 @@
   <app-entete></app-entete>
   <nav>
     <!-- <span class="icone">pin_drop</span> -->
-    <a routerLink="/gestion/predictions" title=""><span class="icone">cloud_sync</span>Mettre à jour les données</a>
-    <a routerLink="/gestion/utilisateurs" title=""><span class="icone">groups</span>Gérer les utilisateurs</a>
-    <a routerLink="/gestion/traductions" title=""><span class="icone">translate</span>Gérer les traductions</a>
+    <a routerLink="/gestion/predictions" [title]="l.t['MENU_DATA']"><span class="icone">cloud_sync</span>{{ l.t['MENU_DATA'] }}</a>
+    <a routerLink="/gestion/utilisateurs" [title]="l.t['MENU_USERS']"><span class="icone">groups</span>{{ l.t['MENU_USERS'] }}</a>
+    <a routerLink="/gestion/traductions" [title]="l.t['MENU_TRAD']"><span class="icone">translate</span>{{ l.t['MENU_TRAD'] }}</a>
+    <a routerLink="/predictions" [title]="l.t['MENU_PREDICTIONS']"><span class="icone">batch_prediction</span>{{ l.t['MENU_PREDICTIONS'] }}</a>
   </nav>
 </section>
 <section>

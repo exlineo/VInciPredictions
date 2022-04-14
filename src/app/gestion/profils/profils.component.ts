@@ -11,6 +11,7 @@ import { PredictionsService } from '../utils/services/predictions.service';
 export class ProfilsComponent implements OnInit {
 
   profil: ProfilI = <ProfilI>{}; // Selected profil
+  pop:boolean = false; // Boolean to open popup
 
   constructor(public l: LanguesService, public predServ: PredictionsService) { }
 
@@ -91,5 +92,25 @@ export class ProfilsComponent implements OnInit {
     // console.log(statut, classe);
     // return classe;
     return ''
+  }
+  /** Save an account in database
+   * @param {number} i index of account to save
+  */
+  saveProfil(i:number){
+
+  }
+  /** Delete an account
+   * @param {number} i index of account to save
+   */
+  supprProfil(i:number){
+    this.pop = true;
+    this.profil = this.predServ.listeProfils[i];
+  }
+  valideSupprProfil(){
+
+  }
+  /** Close popup */
+  close(){
+    this.pop = false;
   }
 }

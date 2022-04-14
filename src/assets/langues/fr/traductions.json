@@ -106,5 +106,17 @@
   "STATUT_BLOQUE":"Bloqué",
   "STATUT_LEGENDE":"Légende",
   "SELECT_ALL":"Tout sélectionner",
-  "SELECT_UN":"Sélectionne l'élément"
+  "SELECT_UN":"Sélectionne l'élément",
+  "SAUVE":"Sauvegarder",
+  "SUPPR":"Supprimer",
+  "SUPPR_VALIDE":"Êtes-vous sûr de vouloir faire cette suppression ?",
+  "FERMER":"Fermer",
+  "MENU_TRAD":"Gérer les traductions",
+  "MENU_USERS":"Gérer les utilisateur",
+  "MENU_DATA":"Mettre à jour les données",
+  "MENU_PREDICTIONS":"Accéder aux prédictions",
+  "MENU_PETITE":"Données à petite échelle",
+  "MENU_GRANDE":"Données à grande échelle",
+  "MENU_EXPORT":"Aide à l'export",
+  "MENU_EXTERNE":"Lien externe"
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
   selector: 'app-admin-accueil',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminAccueilComponent implements OnInit {
 
-  constructor() { }
+  constructor(public l:LanguesService) { }
 
   ngOnInit(): void {
   }
