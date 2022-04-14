@@ -26,3 +26,6 @@ section:nth-child(3) .icone{
   color:white;
   font-size: 36px;
 }
+section:nth-child(3) a{
+  margin:8px auto;
+}

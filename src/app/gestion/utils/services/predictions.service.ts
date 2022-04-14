@@ -6,6 +6,7 @@ import { writeBatch, doc, getDoc, setDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
 import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { StoreService } from 'src/app/utils/services/store.service';
 
 import { environment } from 'src/environments/environment';
@@ -20,6 +21,7 @@ export class PredictionsService {
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
   listes:{pays:Array<string>, regions:Array<string>, pdo:Array<string>} = {pays:[], regions:[], pdo:[]}; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
+  listeProfils:Array<ProfilI> = [];
 
   constructor(private http: HttpClient, public store:StoreService) {
     this.listeDatas();
@@ -130,7 +132,14 @@ export class PredictionsService {
     .catch(er => console.log(er))
   }
   /** List accounts */
-  listeComptes(){
-
+  getListeProfils(){
+    this.store.getFireCol('comptes')
+    .then(c => {
+      c.forEach(d => {
+        this.listeProfils.push(d.data() as ProfilI);
+        console.log(d.data(), d.id);
+      })
+    })
+    .catch(er => console.log(er));
   }
 }

@@ -1,0 +1,21 @@
+table{
+  width:94vw;
+  margin:0 auto;
+}
+tfoot th{
+  padding-top:30px;
+}
+td > div{
+  width:100%;
+  flex-flow:row nowrap;
+}
+input[type="range"]{
+  position:relative;
+  width:60px;
+  margin:auto;
+}
+th > span{
+  width:25px;
+  height:25px;
+  margin-right:10px;
+}

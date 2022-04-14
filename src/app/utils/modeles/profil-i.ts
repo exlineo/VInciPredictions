@@ -11,17 +11,17 @@ export interface ProfilI {
   mobile?:string;
   mail:string;
   code?:string; // Code promotionnel éventuel
-  droits?:Droits;
+  droits:Droits;
   statut:number;
 }
 /** Interface des droits des utilisateurs */
 export interface Droits{
-  petite:Access;
-  grande:Access;
-  export:Access;
+  petite:number;
+  grande:number;
+  export:number;
 }
 /** Niveau d'accès */
-export enum Access{
+export enum Acces{
   bloque = 0,
   gratuit = 1,
   payant = 2
@@ -35,6 +35,6 @@ export class Profil implements ProfilI{
   mobile = '';
   mail = '';
   code = ''; // Code promotionnel éventuel
-  droits = {petite:Access.bloque, grande:Access.bloque, export:Access.bloque};
+  droits = {petite:0, grande:0, export:0};
   statut = 0;
 }

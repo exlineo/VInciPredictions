@@ -19,11 +19,12 @@
   </section>
   <section class="jaune">
     <article>
-      <a routerLink="/profil" [title]="l.t['DECONNEXION']"><span class="icone">account_circle</span></a>
+      <a routerLink="/profil" [title]="l.t['PROFIL']"><span class="icone">account_circle</span></a>
       <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><span class="icone">person_off</span></a>
     </article>
     <article>
-      <span class="icone">miscellaneous_services</span>
+      <a routerLink="/gestion" [title]="l.t['GESTION']"><span class="icone">admin_panel_settings</span></a>
+      <a><span class="icone">miscellaneous_services</span></a>
     </article>
   </section>
 </main>

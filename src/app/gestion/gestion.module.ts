@@ -10,6 +10,7 @@ import { DataMajComponent } from './data-maj/data-maj.component';
 import { TraductionsComponent } from './traductions/traductions.component';
 import { GestionRoutingModule } from './gestion-routing.module';
 import { InfosAdminComponent } from './infos-admin/infos-admin.component';
+import { StatutPipe, AccesPipe, SetStatePipe } from './utils/tools/statut.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { InfosAdminComponent } from './infos-admin/infos-admin.component';
     ProfilsComponent,
     DataMajComponent,
     TraductionsComponent,
-    InfosAdminComponent
+    InfosAdminComponent,
+    StatutPipe,
+    AccesPipe,
+    SetStatePipe
   ],
   imports: [
     CommonModule,
