@@ -1,5 +1,5 @@
 {
-  "barres":{
+  "bar":{
     "xAxisData":[],
     "data":[],
     "options":{
@@ -34,42 +34,22 @@
       "animationDelayUpdate": 5
     }
   },
-  "lignes":{
-    "xAxisData":[],
-    "data":[],
-    "options":{
-      "legend": {
-        "data": ["Bordeaux", "Sud-ouest"],
-        "align": "left"
-      },
-      "tooltip": {},
+  "line":{
       "xAxis": {
-        "data": "xAxisData",
-        "silent": false,
-        "splitLine": {
-          "show": false
-        }
+        "type": "category",
+        "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
       },
-      "yAxis": {},
+      "yAxis": {
+        "type": "value"
+      },
       "series": [
         {
-          "name": "Bordeaux",
-          "type": "line",
-          "data": [],
-          "animationDelay": 10
-        },
-        {
-          "name": "Sud-ouest",
-          "type": "line",
-          "data": [],
-          "animationDelay": 110
+          "data": [150, 230, 224, 218, 135, 147, 260],
+          "type": "line"
         }
-      ],
-      "animationEasing": "elasticOut",
-      "animationDelayUpdate": 5
-    }
+      ]
   },
-  "camembert":{
+  "pie":{
     "tooltip": {
       "trigger": "item"
     },

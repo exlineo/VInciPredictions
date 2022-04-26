@@ -88,15 +88,15 @@
   <!-- OPTIONS DE CHOIX -->
   <nav>
     <!-- <span class="icone">scatter_plot</span> -->
-    <span class="icone" (click)="setChartType('bar')">area_chart</span>
-    <span class="icone" (click)="setChartType('pie')">pie_chart_outline</span>
+    <span class="icone" (click)="setChartType('barres')">area_chart</span>
+    <span class="icone" (click)="setChartType('camembert')">pie_chart_outline</span>
     <!-- <span class="icone">bubble_chart</span> -->
-    <span class="icone" (click)="setChartType('line')">stacked_line_chart</span>
+    <span class="icone" (click)="setChartType('lignes')">stacked_line_chart</span>
     <!-- <span class="icone">data_object</span> -->
     <!-- <span class="icone">multiline_chart</span> -->
   </nav>
-  <article echarts [options]="options">
-
+  <article>
+    <p-chart type="line" [data]="lineStylesData" [options]="basicOptions"></p-chart>
   </article>
   <article></article>
 

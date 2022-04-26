@@ -55,13 +55,11 @@ export class AuthService {
     signInWithEmailAndPassword(this.auth, connexion.mail, connexion.pass)
       .then((r) => {
         this.profil.uid = r.user.uid;
-        // this.utilisateur = retour.user;
-        console.log('Connexion réussie', this.profil);
         // Get profil from Firestore
         this.store.getFireDoc('comptes', r.user.uid)
           .then(d => d.data())
           .then(u => {
-            console.log("Création du compte réussie", u);
+            // console.log("Création du compte réussie", u);
             this.profil = u as ProfilI;
             this.route.navigateByUrl('/predictions');
           })

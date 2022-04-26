@@ -17,19 +17,19 @@ import { environment } from 'src/environments/environment';
 export class PredictionsService {
 
   loadedDataset: Array<RendementI> = []; // Data from database
-  listeVersions:Array<string> = []; // List of loadedDataset versions in Firestore
+  listeVersions: Array<string> = []; // List of loadedDataset versions in Firestore
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
-  listes:{pays:Array<string>, regions:Array<string>, pdo:Array<string>} = {pays:[], regions:[], pdo:[]}; // Updated lists of countries, regions, pdos and types
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
-  listeProfils:Array<ProfilI> = [];
+  listeProfils: Array<ProfilI> = [];
 
-  constructor(private http: HttpClient, public store:StoreService) {
+  constructor(private http: HttpClient, public store: StoreService) {
     this.listeDatas();
   };
   /**
    * Load CSV and filter data to set the database
    */
-  getCSV(file:string = environment.csvUrl) {
+  getCSV(file: string = environment.csvUrl) {
     this.http.get(file, { responseType: 'text' }).subscribe(d => {
       let lignes = d.split('\n');
       lignes.forEach(l => {
@@ -38,7 +38,7 @@ export class PredictionsService {
     });
   }
   /** Convert CSV data to RendementI array */
-  setDataset(data:string){
+  setDataset(data: string) {
     this.store.dataset = [];
     let lignes = data.split('\n');
     lignes.forEach(l => {
@@ -56,16 +56,16 @@ export class PredictionsService {
     this.store.dataset.push(this.conversion(m));
     console.log(m);
     // Create lists from data for countries, regions and pdo
-    if(!this.listes.pays.includes(m[0].trim())) this.listes.pays.push(m[0].trim());
-    if(!this.listes.regions.includes(m[1].trim())) this.listes.regions.push(m[1].trim());
-    if(!this.listes.pdo.includes(m[3].trim())) this.listes.pdo.push(m[3].trim());
+    if (!this.listes.pays.includes(m[0].trim())) this.listes.pays.push(m[0].trim());
+    if (!this.listes.regions.includes(m[1].trim())) this.listes.regions.push(m[1].trim());
+    if (!this.listes.pdo.includes(m[3].trim())) this.listes.pdo.push(m[3].trim());
   }
   /** Convert excel line to JSON object */
-  conversion(l: Array<any>):RendementI {
-    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements:this.setNumbers(l.slice(4, 43)), predictions:this.setNumbers(l.slice(44, 55)), fiabilites:this.setNumbers(l.slice(56, l.length))};
+  conversion(l: Array<any>): RendementI {
+    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 43)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
   }
   /** Parse string to integer on dataset */
-  setNumbers(a:Array<string>):Array<number>{
+  setNumbers(a: Array<string>): Array<number> {
     return a.map(c => parseInt(c));
   }
   /** List files from fire bucket to get archived datas */
@@ -88,13 +88,13 @@ export class PredictionsService {
     // });
   }
   /** List predictions versions data */
-  listeDatas(){
+  listeDatas() {
     this.store.getFireCol('predictions')
-    .then(d => d.forEach(
-      f => {
-        this.listeVersions.push(f.id);
-      }
-    ));
+      .then(d => d.forEach(
+        f => {
+          this.listeVersions.push(f.id);
+        }
+      ));
   };
   /**
    * Write documents from a new data upload
@@ -102,44 +102,44 @@ export class PredictionsService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-   async batchFireCollecDocs(){
-     let n = 0;
-     this.loadedDataset.forEach(d => {
+  async batchFireCollecDocs() {
+    let n = 0;
+    this.loadedDataset.forEach(d => {
       const customDoc = doc(this.store.dbf, this.setColName(), n.toString());
       this.batch.set(customDoc, d);
       ++n;
-     })
+    })
     return await this.batch.commit(); // Commit data to write
   }
   /** Add loadedDataset formatted as array */
-  docFireAdd(){
-    this.store.setFireDoc('predictions', {uid:this.setColName(), doc:{data:this.store.dataset}})
+  docFireAdd() {
+    this.store.setFireDoc('predictions', { uid: this.setColName(), doc: { data: this.store.dataset, creeLe:Date.now() } })
   }
   /** Create ID for a new loadedDataset version */
-  setColName(){
+  setColName() {
     const date = new Date();
-    return `loadedDataset-${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
+    return `loadedDataset-${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
   }
   /** Get loadedDataset from Firestore
    * @param {event} e Event send by select HtmlElement
    */
-   getData(e:any){
+  getData(e: any) {
     this.store.getFireDoc('predictions', e.target.value)
-    .then(d => d.data() as DataI)
-    .then(d => {
-      this.store.dataset = d.data;
-    })
-    .catch(er => console.log(er))
+      .then(d => d.data() as DataI)
+      .then(d => {
+        this.store.dataset = d.data;
+      })
+      .catch(er => console.log(er))
   }
   /** List accounts */
-  getListeProfils(){
+  getListeProfils() {
     this.store.getFireCol('comptes')
-    .then(c => {
-      c.forEach(d => {
-        this.listeProfils.push(d.data() as ProfilI);
-        console.log(d.data(), d.id);
+      .then(c => {
+        c.forEach(d => {
+          this.listeProfils.push(d.data() as ProfilI);
+          console.log(d.data(), d.id);
+        })
       })
-    })
-    .catch(er => console.log(er));
+      .catch(er => console.log(er));
   }
 }

@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
-import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where } from "@angular/fire/firestore";
-import { Rendement, RendementI } from '../modeles/filtres-i';
+import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
+import { DataI, Rendement, RendementI } from '../modeles/filtres-i';
+import { HttpClient } from '@angular/common/http';
 
 export interface TraductionI {
   langue: string;
@@ -17,10 +18,11 @@ export interface TraductionI {
 export class StoreService {
 
   private doc: any;
-  public filtres:any;
-  public dataset:Array<RendementI>=[new Rendement()];
+  filtres:any;
+  dataset:Array<RendementI>=[new Rendement()];
+  chartConfigs:any = {};
 
-  constructor(private dbrt: Database, public dbf: Firestore) {}
+  constructor(private dbrt: Database, public dbf: Firestore, private http:HttpClient) {}
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -74,7 +76,7 @@ export class StoreService {
    * @param {string} param Searched object
    * @returns {promise} Send back object
    */
-  async getFireDoc<DataI>(collec: string, param: string){
+  async getFireDoc(collec: string, param: string){
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
   }
@@ -92,5 +94,19 @@ export class StoreService {
   async getFireFiltre(){
     // Exemple
     const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));
+  }
+  /**
+   * Get last document in a collection (for data)
+   * @param {string} collection Name of called collection
+   * @param {string} param Searched object
+   * @returns {promise} Send back object
+   */
+   async getLastData(){
+    const q = query(collection(this.dbf, 'predictions'), orderBy('creeLe', 'desc'), limit(1));
+    return await getDocs(q);
+  }
+  /** Local charts config */
+  localChartsConfig(){
+    return this.http.get('assets/data/charts.json');
   }
 }
