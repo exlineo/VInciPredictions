@@ -65,6 +65,8 @@
   "FILTRE_PT":"Portugal",
   "FILTRE_DEBUT":"Début",
   "FILTRE_FIN":"Fin",
+  "FILTRE_PLAGE_REND":"Plage annuelle des rendements",
+  "FILTRE_PLAGE_PREDIC":"Plage annuelle des prédictions",
   "TOUS":"Tous",
   "AUCUN":"Aucun",
   "RES_TITRE":"Données filtrées",
@@ -118,5 +120,10 @@
   "MENU_PETITE":"Données à petite échelle",
   "MENU_GRANDE":"Données à grande échelle",
   "MENU_EXPORT":"Aide à l'export",
-  "MENU_EXTERNE":"Lien externe"
+  "MENU_EXTERNE":"Lien externe",
+  "DONNEES_BRUTES":"Données brutes",
+  "DONNES_FILTREES":"Données brutes filtrées",
+  "DONNEES_LIGNES":"Graphe en lignes",
+  "DONNEES_CAMEMBERT":"Graphe en camembert",
+  "DONNEES_BARRES":"Données en barres"
 }

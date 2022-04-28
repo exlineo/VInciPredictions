@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { PageI } from '../modeles/page-i';
 import { MarkPipe } from '../tools/filtres.pipe';
 import { BucketService } from './bucket.service';
@@ -15,6 +16,7 @@ export class LanguesService {
   t: any = {}; // Traductions téléchargées
   // lang: any; // Langue actuelle
   page: PageI = { nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
+  t$:BehaviorSubject<any> = new BehaviorSubject({})
 
   /**
    * Service de gestion des langues et traductions
@@ -34,6 +36,7 @@ export class LanguesService {
       .then<unknown>(d => {
         let tmp = d['data'];
         this.t = JSON.parse(tmp);
+        this.t$.next(this.t);
         console.log(d);
       }
       )

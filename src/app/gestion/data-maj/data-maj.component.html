@@ -4,17 +4,17 @@
     <form [formGroup]="filtres">
       <select name="pays" formControlName="pays">
         <option value="">{{ l.t['FILTRE_PAYS'] }}</option>
-        <option *ngFor="let p of predServ.listes.pays" [value]="p">{{ p }}</option>
+        <option *ngFor="let p of predServ.store.listes.pays" [value]="p">{{ p }}</option>
       </select>
       <!-- <span class="icone">sync</span> -->
       <select name="regions" formControlName="regions">
         <option value="">{{ l.t['FILTRE_REGIONS'] }}</option>
-        <option *ngFor="let r of predServ.listes.regions" [value]="r">{{ r }}</option>
+        <option *ngFor="let r of predServ.store.listes.regions" [value]="r">{{ r }}</option>
       </select>
       <!-- <span class="icone">sync</span> -->
       <select name="pdo" formControlName="pdo">
         <option value="">{{ l.t['FILTRE_PDO'] }}</option>
-        <option *ngFor="let o of predServ.listes.pdo" [value]="o">{{ o }}</option>
+        <option *ngFor="let o of predServ.store.listes.pdo" [value]="o">{{ o }}</option>
       </select>
       <!-- <span class="icone">sync</span> -->
       <select name="type" formControlName="type">

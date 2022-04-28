@@ -53,12 +53,11 @@ export class PredictionsService {
     l = l.replace(/[\r]/g, '').trim();
     let m = l.split(',');
     // this.loadedDataset.push(this.conversion(m));
-    this.store.dataset.push(this.conversion(m));
+    let tmp = this.conversion(m);
+    this.store.dataset.push(tmp);
     console.log(m);
     // Create lists from data for countries, regions and pdo
-    if (!this.listes.pays.includes(m[0].trim())) this.listes.pays.push(m[0].trim());
-    if (!this.listes.regions.includes(m[1].trim())) this.listes.regions.push(m[1].trim());
-    if (!this.listes.pdo.includes(m[3].trim())) this.listes.pdo.push(m[3].trim());
+    this.store.setFilterFromData(tmp);
   }
   /** Convert excel line to JSON object */
   conversion(l: Array<any>): RendementI {
@@ -127,7 +126,8 @@ export class PredictionsService {
     this.store.getFireDoc('predictions', e.target.value)
       .then(d => d.data() as DataI)
       .then(d => {
-        this.store.dataset = d.data;
+        this.store.dataset = d.data; // Data loaded send to store
+        this.store.setFilters(); // Create filters from data
       })
       .catch(er => console.log(er))
   }

@@ -2,6 +2,12 @@
 /* Variables */
 :root{
   --grisclair:#E9E9E9;
+  --jaune:#F7C45F;
+  --orange:#DFA83A;
+  --vert:#33A537;
+  --bleu:#28364A;
+  --sombre:#202A3A;
+  --rose : #F14668;
 }
 
 html, body  {
@@ -73,7 +79,7 @@ button{
   margin:5px;
 }
 select{
-  background-color: #F7C45F;
+  background-color: var(--jaune);
 }
 select *{
   padding:14px 10px;
@@ -81,7 +87,7 @@ select *{
   transition: all .3s ease;
 }
 select *:hover{
-  background-color: #28364A;
+  background-color: var(--bleu);
   color:white;
 }
 input, select, textarea{
@@ -91,14 +97,14 @@ input, select, textarea{
   overflow-y:auto;
 }
 input[type="submit"], button.valide{
-  background-color:#33A537;
+  background-color:var(--vert);
   color:white;
   text-transform: uppercase;
   cursor: pointer;
   width:fit-content;
 }
 input[type="reset"], button.annule{
-  background-color:#F7C45F;
+  background-color:var(--jaune);
   color:white;
   text-transform: uppercase;
   cursor:pointer;
@@ -113,7 +119,7 @@ input[type="file"]{
 	z-index: -1;
 }
 label[for="fichierup"]{
-  background-color:#33A537;
+  background-color:var(--vert);
   color:white;
   cursor:pointer;
   width:fit-content;
@@ -139,19 +145,22 @@ table tr, table th{
   border-bottom:2px solid white;
 }
 form span{
-  padding:10px;
+  /* padding:0 10px; */
+}
+form.bleu h4{
+  margin:0px;
 }
 /* FORMULAIRE NOIR */
 form.bleu{
   height:calc(100vh - 100px);
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
-form.bleu div{
+form.bleu > div{
   display:flex;
   flex-flow:column nowrap;
 }
 form.bleu textarea, form.bleu select, form.bleu option{
-  background-color:#28364A;
+  background-color:var(--bleu);
   border:0;
   color:white;
 }
@@ -160,7 +169,7 @@ form.bleu option{
   transition:"background-color" .3s ease;
 }
 form.bleu option:hover{
-  background-color:#DFA83A;
+  background-color:var(--orange);
 }
 /* CLASSES PERSONNALISES */
 .logo{
@@ -225,14 +234,7 @@ form.bleu option:hover{
   justify-content:center;
 }
 /* DOUBLE SLIDER
-https://codepen.io/rendykstan/pen/VLqZGO
-https://codepen.io/thebabydino/pen/NWWerZG
-https://codepen.io/tylerama/pen/YwvpBW
-https://codepen.io/enxaneta/pen/YyXKdg
-https://codepen.io/MarioD/pen/WwXbgr
-https://codepen.io/Manitoba/pen/ZWRjye
-https://codepen.io/vsync/pen/mdEJMLv : https://github.com/yairEO/ui-range
-*/
+/*
 section.double-slider{
   display:flex;
   flex-flow:row nowrap;
@@ -306,8 +308,7 @@ input.rangemin::-webkit-slider-runnable-track{
   height: 20px;
   border: none;
   border-radius: 50%;
-  background-color:#DFA83A;
-  /* background-image: linear-gradient(to bottom, #F7C45F 0%, #bd8d2d 100%); */
+  background-color:var(--orange);
   cursor: pointer;
 }
 .range-slider > input[type="range"]::-moz-range-thumb {
@@ -323,8 +324,7 @@ input.rangemin::-webkit-slider-runnable-track{
   height: 20px;
   border: none;
   border-radius: 50%;
-  background-color:#DFA83A;
-  /* background-image: linear-gradient(to bottom, #F7C45F 0%, #bd8d2d 100%); */
+  background-color:var(--orange);
   cursor: pointer;
 }
 .range-slider > input[type="range"]::-ms-thumb {
@@ -340,36 +340,63 @@ input.rangemin::-webkit-slider-runnable-track{
   height: 20px;
   border: none;
   border-radius: 50%;
-  background-color:#DFA83A;
-  /* background-image: linear-gradient(to bottom, #F7C45F 0%, #bd8d2d 100%); */
+  background-color:var(--orange);
   cursor: pointer;
 }
 input[type="range"].bloque::-webkit-slider-thumb {
-  background-color:#F14668;
+  background-color:var(--rose);
 }
 input[type="range"].identifie::-webkit-slider-thumb {
-  background-color:#DFA83A;
+  background-color:var(--orange);
 }
 input[type="range"].ok::-webkit-slider-thumb {
-  background-color:#33A537;
+  background-color:var(--vert);
 }
 .range-slider > input[type="range"]:active::-webkit-slider-thumb{
   background:white;
-  border:3px solid #DFA83A;
+  border:3px solid var(--orange);
 }
 input[type="range"].bloque:active::-webkit-slider-thumb {
   background:white;
-  border:3px solid #F14668;
+  border:3px solid var(--rose);
 }
 input[type="range"].ok:active::-webkit-slider-thumb {
   background:white;
-  border:3px solid #33A537;
+  border:3px solid var(--vert);
 }
 .range-slider > input[type="range"]::-moz-range-track {
   position: relative;
   z-index: -1;
   background-color: rgba(0, 0, 0, 1);
   border: 0;
+} */
+.ecarts{
+  display:flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding:0;
+}
+.ecarts > span{
+  flex:1;
+  padding:0 15px;
+}
+.ecarts > p-slider{
+  flex:8;
+}
+p-listbox{
+  max-height:200px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.p-listbox-header{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+span.p-slider-range{
+  /* margin-top:-5px; */
 }
 td > div.range-slider > input[type="range"]{
   /* position:relative; */
@@ -402,34 +429,34 @@ input[type=range]::-moz-focus-outer {
   background-color: #E9E9E9;
 }
 .jaune{
-  background-color:#F7C45F;
-  color:#202A3A;
+  background-color:var(--jaune);
+  color:var(--sombre);
 }
 .jaune a {
-  color:#202A3A
+  color:var(--sombre)
 }
 .bleu{
-  background-color:#28364A;
+  background-color:var(--bleu);
   color:white;
 }
 .bleufonce{
-  background-color:#202A3A;
+  background-color:var(--sombre);
   color:white;
 }
 .vert{
-  background-color: #33A537;
+  background-color: var(--vert);
 }
 .vertclair{
   background-color: #afccb0;
 }
 .orange{
-  background-color: #DFA83A;
+  background-color: var(--orange);
 }
 .orangeclair{
   background-color: #e7dabf;
 }
 .rouge{
-  background-color: #F14668;
+  background-color: var(--rose);
 }
 .rougeclair{
   background-color: #eccad1;
@@ -487,10 +514,10 @@ nav .icone{
   padding:0 8px;
 }
 input.ng-valid, textarea.ng-valid{
-  border-bottom:2px solid green;
+  border-bottom:2px solid var(--vert);
 }
 input.ng-invalid, textarea.ng-invalid{
-  border-bottom:2px solid red;
+  border-bottom:2px solid var(--rose);
 }
 /* SCROLLBARS */
 ::-webkit-scrollbar {
@@ -508,5 +535,5 @@ input.ng-invalid, textarea.ng-invalid{
   background-color: white;
 }
 ::-webkit-scrollbar-thumb {
-  background-color:#F14668;
+  background-color:var(--rose);
 }

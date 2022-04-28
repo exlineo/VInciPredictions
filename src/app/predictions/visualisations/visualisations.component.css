@@ -13,7 +13,7 @@ section:nth-child(1){
 }
 section:nth-child(2){
   flex:3;
-  overflow-y:auto;
+  overflow:auto;
 }
 section:nth-child(2) nav{
   display:flex;
@@ -28,3 +28,7 @@ section:nth-child(1) > form{
   overflow-x: hidden;
   flex-flow:column nowrap;
 }
+/* #brutes{
+  overflow-x:auto;
+  overflow-y:hidden;
+} */

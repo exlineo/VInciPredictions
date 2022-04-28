@@ -18,9 +18,14 @@ export interface TraductionI {
 export class StoreService {
 
   private doc: any;
+  // Dynamic filters list
   filtres:any;
+  // Set of data
   dataset:Array<RendementI>=[new Rendement()];
+  // Chart configuration
   chartConfigs:any = {};
+  // Updated lists of countries, regions, pdos and types for filters
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
 
   constructor(private dbrt: Database, public dbf: Firestore, private http:HttpClient) {}
   /**
@@ -90,7 +95,7 @@ export class StoreService {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, data.doc, { merge: true }); // Mettre à jour un objet existant
   }
-  /** Get datas from filters */
+  /** Demo query for Firebase */
   async getFireFiltre(){
     // Exemple
     const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));
@@ -108,5 +113,22 @@ export class StoreService {
   /** Local charts config */
   localChartsConfig(){
     return this.http.get('assets/data/charts.json');
+  }
+  /** Set filters from dataset */
+  setFilters(){
+    this.dataset.forEach(d => this.setFilterFromData(d));
+    console.log(this.listes.regions);
+  }
+  /** Set filters from dataset
+   * @param {any} r a array of data received from server or uploaded
+  */
+  setFilterFromData(r:RendementI){
+    // Create lists from data for countries, regions and pdo
+    // if (!this.listes.pays.includes(r.pays)) this.listes.pays.push(r.pays);
+    // if (!this.listes.regions.includes(r.regions)) this.listes.regions.push(r.regions);
+    // if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo.push(r.pdo as string);
+    if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
+    if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
+    if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
   }
 }

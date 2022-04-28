@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import {ChartModule} from 'primeng/chart';
+import {SliderModule} from 'primeng/slider';
+import {ListboxModule} from 'primeng/listbox';
+import {CheckboxModule} from 'primeng/checkbox';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
 import { PopupComponent } from '../structure/popup/popup.component';
 
-import { EcartsPipe, FiltresPipe, MarkPipe } from '../utils/tools/filtres.pipe';
+import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/filtres.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +22,7 @@ import { EcartsPipe, FiltresPipe, MarkPipe } from '../utils/tools/filtres.pipe';
     PopupComponent,
     MarkPipe,
     FiltresPipe,
+    GraphPipe,
     EcartsPipe
   ],
   exports:[
@@ -25,15 +31,26 @@ import { EcartsPipe, FiltresPipe, MarkPipe } from '../utils/tools/filtres.pipe';
     PopupComponent,
     MarkPipe,
     FiltresPipe,
+    GraphPipe,
     EcartsPipe,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartModule,
+    SliderModule,
+    ListboxModule,
+    CheckboxModule,
+    RadioButtonModule
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartModule,
+    SliderModule,
+    ListboxModule,
+    CheckboxModule,
+    RadioButtonModule
   ],
-  providers:[MarkPipe, EcartsPipe]
+  providers:[MarkPipe, EcartsPipe, FiltresPipe, GraphPipe]
 })
 export class UtilsModule { }

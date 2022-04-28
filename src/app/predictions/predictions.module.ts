@@ -9,8 +9,6 @@ import { VisualisationsComponent } from './visualisations/visualisations.compone
 import { ProfilComponent } from './profil/profil.component';
 import { InfosComponent } from './infos/infos.component';
 
-import {ChartModule} from 'primeng/chart';
-
 @NgModule({
   declarations: [
     AccueilComponent,
@@ -21,8 +19,7 @@ import {ChartModule} from 'primeng/chart';
   imports: [
     CommonModule,
     PredictionsRoutingModule,
-    UtilsModule,
-    ChartModule
+    UtilsModule
   ]
 })
 export class PredictionsModule { }

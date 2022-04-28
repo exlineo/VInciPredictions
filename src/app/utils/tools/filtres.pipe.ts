@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
+import { GraphI, GraphSetI } from 'src/app/predictions/utils/modeles/graph-i';
+import { isArray } from 'util';
 import { FiltresI, RendementI } from '../modeles/filtres-i';
 
 marked.setOptions({
@@ -28,22 +30,22 @@ export class FiltresPipe implements PipeTransform {
     if (!args) return values;
     if (!values) return [];
     // Filters based on Rendement interface
-    let data: Array<RendementI> = [];
+    const data: Array<RendementI> = [];
     values.filter(v => {
-      if (v.pdo.toLowerCase() == args.pdo.toLowerCase() && args.pdo.length > 0) {
+      if (args.pdo.indexOf(v.pdo) != -1) {
         data.push(v);
-      } else if (v.regions.toLowerCase() == args.regions.toLowerCase() && args.regions.length > 0) {
+      } else if (args.regions.indexOf(v.regions) != -1) {
         data.push(v);
-      } else if (v.pays.toLowerCase() == args.pays.toLowerCase() && args.pays.length > 0) {
+      } else if (args.pays.indexOf(v.pays) != -1) {
         data.push(v);
-      }
-      if (v.type.toLowerCase() == args.type.toLowerCase() && args.type.length > 0) {
+      } else if (args.type == v.type.toLowerCase()) {
         data.push(v);
       }
     });
     return data.length > 0 ? data : values;
   }
 }
+/** Set range for years filters */
 @Pipe({
   name: 'ecarts'
 })
@@ -77,3 +79,36 @@ export class MarkPipe implements PipeTransform {
     return value;
   }
 }
+/** FIltrer les données Markdown */
+@Pipe({
+  name: 'graph'
+})
+export class GraphPipe implements PipeTransform {
+
+  transform(values: Array<any>, args: any): GraphI {
+    if (!args) return <GraphI>{};
+    if (!values) return <GraphI>{};
+
+    const FP = new FiltresPipe();
+    const data = FP.transform(values, args);
+    const vals:GraphI = {labels:[], datasets:[]};
+
+    data.forEach(d => {
+      let g = <GraphSetI>{};
+      g = {
+        label: `${d.regions} (${d.pdo})`,
+        data: d.rendements.concat(d.predictions),
+        fill: false,
+        borderColor: '#42A5F5',
+        tension: .4
+      };
+      // console.log(g);
+      vals.datasets.push(g);
+    });
+    const tmp = data[0].rendements.length + data[0].predictions.length;
+    for(let i=0;i<tmp;++i) vals.labels.push((1981+i).toString());
+
+    return vals;
+  }
+}
+
