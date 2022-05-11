@@ -27,7 +27,6 @@ export enum Acces{
   payant = 2
 }
 export class Profil implements ProfilI{
-  uid = '';
   nom = '';
   prenom = '';
   adresse = '';

@@ -54,7 +54,7 @@ export class EcartsPipe implements PipeTransform {
    * Filter wine data
    * @param values Array of data to filter
    * @param args List of arguments send from filter forms
-   * @returns Array of wine data
+   * @returns Array of wines data
    */
   transform(values: Array<number>, ecart: number, ordre: number = 0): Array<number> {
     if (!ecart) return values;
@@ -79,7 +79,10 @@ export class MarkPipe implements PipeTransform {
     return value;
   }
 }
-/** FIltrer les données Markdown */
+/** Set data for graph on chartjs
+ * @param {Array<any>} values The initial data to transform
+ * @param {any} args All filters to consider
+*/
 @Pipe({
   name: 'graph'
 })
@@ -99,7 +102,7 @@ export class GraphPipe implements PipeTransform {
         label: `${d.regions} (${d.pdo})`,
         data: d.rendements.concat(d.predictions),
         fill: false,
-        borderColor: '#42A5F5',
+        borderColor: '#'+Math.floor(Math.random()*16777215).toString(16),
         tension: .4
       };
       // console.log(g);
@@ -111,4 +114,3 @@ export class GraphPipe implements PipeTransform {
     return vals;
   }
 }
-

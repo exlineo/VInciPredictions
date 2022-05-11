@@ -25,14 +25,10 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     moyennes: [''],
     croissance: [''],
     type: [''],
-    ecart: this.fbuild.group({
-      debut: [''],
-      fin: ['']
-    })
+    debut: [1983],
+    fin: [2032]
   });
   chartType: string = 'line';
-  basicData: any;
-  lineStylesData: any;
   basicOptions: any;
   graphDataset:GraphI = {labels:[], datasets:[]};
   /** Portées des années à filtrer */
@@ -59,41 +55,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
           d => {
             let ds = d.data() as DataI;
             this.store.dataset = ds.data; // Send data to store
+            // console.log(this.store.dataset);
             this.store.setFilters(); // Set filters from datas
-            // this.setGraphData(); // Set data for graph
           }
         )
       )
       .catch(er => console.log(er));
-    // Liste des pays à afficher dans la sélection
-    this.lineStylesData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          tension: .4,
-          borderColor: '#42A5F5'
-        },
-        {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          borderDash: [5, 5],
-          tension: .4,
-          borderColor: '#66BB6A'
-        },
-        {
-          label: 'Third Dataset',
-          data: [12, 51, 62, 33, 21, 62, 45],
-          fill: true,
-          borderColor: '#FFA726',
-          tension: .4,
-          backgroundColor: 'rgba(255,167,38,0.2)'
-        }
-      ]
-    };
+    // Options for charts
     this.basicOptions = {
       plugins: {
         legend: {

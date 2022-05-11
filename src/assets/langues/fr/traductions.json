@@ -98,6 +98,7 @@
   "PROFIL_PETITE":"Petite échelle",
   "PROFIL_GRANDE":"Grande échelle",
   "PROFIL_EXPORT":"Aide à l'export",
+  "PROFIL_EDIT":"Renseigner mon pofil",
   "STATUT":"Statut",
   "STATUT_INVITE":"Invité",
   "STATUT_IDENTIFIE":"Utilisateur identifié",
@@ -125,5 +126,6 @@
   "DONNES_FILTREES":"Données brutes filtrées",
   "DONNEES_LIGNES":"Graphe en lignes",
   "DONNEES_CAMEMBERT":"Graphe en camembert",
-  "DONNEES_BARRES":"Données en barres"
+  "DONNEES_BARRES":"Données en barres",
+  "ETAPE": "Etape"
 }

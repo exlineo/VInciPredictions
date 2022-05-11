@@ -8,6 +8,8 @@ import {SliderModule} from 'primeng/slider';
 import {ListboxModule} from 'primeng/listbox';
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
+// import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
+import {TabViewModule} from 'primeng/tabview';
 
 import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
@@ -39,7 +41,9 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     SliderModule,
     ListboxModule,
     CheckboxModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TabViewModule
+    // TriStateCheckboxModule
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,9 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     SliderModule,
     ListboxModule,
     CheckboxModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TabViewModule
+    // TriStateCheckboxModule
   ],
   providers:[MarkPipe, EcartsPipe, FiltresPipe, GraphPipe]
 })

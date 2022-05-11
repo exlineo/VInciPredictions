@@ -77,24 +77,20 @@
 <section>
   <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p>
-  <!-- FILTRES SELECTIONNES -->
-  <h3>{{ l.t['RES_FILTRES'] }}</h3>
-  <article>
-  </article>
   <!-- GRAPH -->
   <h3>{{ l.t['RES_VISUAL'] }}</h3>
-  <!-- OPTIONS DE CHOIX -->
-  <nav>
-    <!-- <span class="icone">scatter_plot</span> -->
-    <span class="icone" (click)="this.chartType = 'barres'">area_chart</span>
-    <span class="icone" (click)="this.chartType = 'camembert'">pie_chart_outline</span>
-    <!-- <span class="icone">bubble_chart</span> -->
-    <span class="icone" (click)="this.chartType = 'lignes'">stacked_line_chart</span>
-    <!-- <span class="icone">data_object</span> -->
-    <!-- <span class="icone">multiline_chart</span> -->
-  </nav>
+  <!-- CHART -->
   <article id="chart">
-    <p-chart type="line" [data]="store.dataset | graph:filtresForm.value" [options]="basicOptions"></p-chart>
+    <nav>
+      <!-- <span class="icone">scatter_plot</span> -->
+      <span class="icone" (click)="chartType = 'bar'">area_chart</span>
+      <span class="icone" (click)="chartType = 'radar'">pie_chart_outline</span>
+      <!-- <span class="icone">bubble_chart</span> -->
+      <span class="icone" (click)="chartType = 'line'">stacked_line_chart</span>
+      <!-- <span class="icone">data_object</span> -->
+      <!-- <span class="icone">multiline_chart</span> -->
+    </nav>
+    <p-chart [type]="chartType" [data]="store.dataset | graph:filtresForm.value" [options]="basicOptions"></p-chart>
   </article>
   <article id="brutes">
     <h3>{{ l.t['DONNEES_BRUTES'] }}</h3>

@@ -12,14 +12,15 @@ import { PredictionsService } from '../utils/services/predictions.service';
 export class DataMajComponent implements OnInit {
 
   /** Formulaire d'inscription */
-  filtres = this.fbuild.group({
-    pays: [''],
-    regions: [''],
-    pdo: [''],
+  filtresForm = this.fbuild.group({
+    pays: [[]],
+    regions: [[]],
+    pdo: [[]],
+    rendements: [[1981, 2022]],
+    predictions: [[2023, 2032]],
+    moyennes: [''],
+    croissance: [''],
     type: [''],
-    rendements: [[]],
-    moyennes: [[]],
-    croissance: [[]],
     debut: [1983],
     fin: [2032]
   });

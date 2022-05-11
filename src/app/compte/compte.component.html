@@ -15,119 +15,134 @@
   <!-- FORMULAIRES DE CREATION DE COMPTE -->
   <section class="orange">
     <h2>{{ l.t['COMPTE'] }}</h2>
-    <!-- CONNECTION FORM -->
-    <form [formGroup]="compte" (submit)="creeCompte()">
-      <!-- Name, Surname -->
-      <fieldset>
-        <label>{{ l.t['FORM_NOM'] }} *</label>
-        <input type="text" formControlName="nom" [placeholder]="l.t['FORM_NOM']" required>
-        <span *ngIf="compte.controls['nom'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span>
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_PRENOM'] }} *</label>
-        <input type="text" formControlName="prenom" [placeholder]="l.t['FORM_PRENOM']" required>
-        <span *ngIf="compte.controls['prenom'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span>
-      </fieldset>
-      <!-- ADRESSE -->
-      <fieldset>
-        <label>{{ l.t['FORM_ADR'] }}</label>
-        <input type="text" formControlName="adresse" [placeholder]="l.t['FORM_ADR']">
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_ADR2'] }}</label>
-        <input type="text" formControlName="adresse2" [placeholder]="l.t['FORM_ADR2']">
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_ZIP'] }}</label>
-        <input type="number" formControlName="codePostal" [placeholder]="l.t['FORM_ZIP']">
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_VILLE'] }}</label>
-        <input type="text" formControlName="ville" [placeholder]="l.t['FORM_VILLE']">
-      </fieldset>
-      <!-- ADRESSE -->
-      <fieldset>
-        <label>{{ l.t['FORM_TEL'] }}</label>
-        <input type="text" formControlName="tel" [placeholder]="l.t['FORM_TEL']">
-        <!-- <span *ngIf="compte.controls['tel'].hasError('required')" class="orange">
+    <p-tabView>
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']">
+        <!-- Create account -->
+        <form [formGroup]="account" (submit)="creeCompte()">
+          <fieldset>
+            <label>{{ l.t['FORM_EMAIL'] }} *</label>
+            <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
+            <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+            <span *ngIf="account.get('mail')?.hasError('email') && account.get('mail')?.hasError('required')"
+              class="orange">
+              {{ l.t['FORM_FORMAT_MAIL'] }}
+            </span>
+            <span *ngIf="account.get('mail')?.hasError('required')" class="orange">
+              {{ l.t['FORM_REQUIS'] }}
+            </span>
+            <!-- <span *ngIf="compte.controls['mail'].hasError('required')" class="orange">
+        {{ l.t['FORM_REQUIS'] }}
+      </span> -->
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_EMAIL2'] }} *</label>
+            <input type="email" formControlName="mail2" [placeholder]="l.t['FORM_EMAIL']" required>
+            <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+            <span *ngIf="account.get('mail2')?.hasError('email') && account.get('mail2')?.hasError('required')"
+              class="orange">
+              {{ l.t['FORM_FORMAT_MAIL'] }}
+            </span>
+            <span
+              *ngIf="(account.get('mail2')?.value != account.get('mail2')?.value) && !account.get('mail2')?.hasError('required')"
+              class="orange">
+              {{ l.t['FORM_CORRESPOND'] }}
+            </span>
+            <span *ngIf="account.get('mail2')?.hasError('required')" class="orange">
+              {{ l.t['FORM_REQUIS'] }}
+            </span>
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_PASSE'] }} *</label>
+            <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <span *ngIf="account.get('pass')?.hasError('pattern')" class="orange">
+              {{ l.t['FORM_FORMAT_PASSE'] }}
+            </span>
+            <!-- Requis -->
+            <span *ngIf="account.get('pass')?.hasError('required')" class="orange">{{ l.t['FORM_REQUIS'] }}</span>
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_PASSE2'] }} *</label>
+            <input type="text" formControlName="pass2" [placeholder]="l.t['FORM_PASSE2']" required>
+            <span *ngIf="(account.get('pass')?.value != account.get('pass2')?.value) && !account.hasError('required')"
+              class="orange">
+              {{ l.t['FORM_CORRESPOND'] }}
+            </span>
+            <span *ngIf="account.get('pass2')?.hasError('required')" class="orange">
+              {{ l.t['FORM_REQUIS'] }}
+            </span>
+          </fieldset>
+          <fieldset class="l">
+            <input type="reset" [value]="l.t['FORM_EFFACE']">
+            <input type="submit" [value]="l.t['FORM_VALIDE']">
+          </fieldset>
+        </form>
+
+        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
+      </p-tabPanel>
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.profil.uid ? true : false">
+        <!-- ACCOUNT FORM -->
+        <form [formGroup]="profil" (submit)="creeProfil()">
+          <!-- Name, Surname -->
+          <fieldset>
+            <label>{{ l.t['FORM_NOM'] }} *</label>
+            <input type="text" formControlName="nom" [placeholder]="l.t['FORM_NOM']" required>
+            <span *ngIf="profil.controls['nom'].hasError('required')" class="orange">
+              {{ l.t['FORM_REQUIS'] }}
+            </span>
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_PRENOM'] }} *</label>
+            <input type="text" formControlName="prenom" [placeholder]="l.t['FORM_PRENOM']" required>
+            <span *ngIf="profil.controls['prenom'].hasError('required')" class="orange">
+              {{ l.t['FORM_REQUIS'] }}
+            </span>
+          </fieldset>
+          <!-- ADRESSE -->
+          <fieldset>
+            <label>{{ l.t['FORM_ADR'] }}</label>
+            <input type="text" formControlName="adresse" [placeholder]="l.t['FORM_ADR']">
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_ADR2'] }}</label>
+            <input type="text" formControlName="adresse2" [placeholder]="l.t['FORM_ADR2']">
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_ZIP'] }}</label>
+            <input type="number" formControlName="codePostal" [placeholder]="l.t['FORM_ZIP']">
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_VILLE'] }}</label>
+            <input type="text" formControlName="ville" [placeholder]="l.t['FORM_VILLE']">
+          </fieldset>
+          <!-- ADRESSE -->
+          <fieldset>
+            <label>{{ l.t['FORM_TEL'] }}</label>
+            <input type="text" formControlName="tel" [placeholder]="l.t['FORM_TEL']">
+            <!-- <span *ngIf="compte.controls['tel'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span> -->
-      </fieldset>
-      <fieldset>
-        <label>{{ l.t['FORM_MOBILE'] }}</label>
-        <input type="text" formControlName="mobile" [placeholder]="l.t['FORM_MOBILE']">
-        <!-- <span *ngIf="compte.controls['mobile'].hasError('required')" class="orange">
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_MOBILE'] }}</label>
+            <input type="text" formControlName="mobile" [placeholder]="l.t['FORM_MOBILE']">
+            <!-- <span *ngIf="compte.controls['mobile'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span> -->
-      </fieldset>
-      <!-- EMAIL -->
-      <div formGroupName="mailGroup">
-        <fieldset>
-          <label>{{ l.t['FORM_EMAIL'] }} *</label>
-          <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
-          <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-          <span *ngIf="compte.controls['mailGroup'].get('mail')?.hasError('email') && compte.controls['mailGroup'].get('mail')?.hasError('required')"
-            class="orange">
-            {{ l.t['FORM_FORMAT_MAIL'] }}
-          </span>
-          <!-- <span *ngIf="compte.controls['mail'].hasError('required')" class="orange">
-          {{ l.t['FORM_REQUIS'] }}
-        </span> -->
-        </fieldset>
-        <fieldset>
-          <label>{{ l.t['FORM_EMAIL2'] }} *</label>
-          <input type="email" formControlName="mail2" [placeholder]="l.t['FORM_EMAIL']" required>
-          <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-          <span *ngIf="compte.controls['mailGroup'].get('mail2')?.hasError('email') && compte.controls['mailGroup'].get('mail2')?.hasError('required')"
-            class="orange">
-            {{ l.t['FORM_FORMAT_MAIL'] }}
-          </span>
-          <span
-            *ngIf="(compte.controls['mailGroup'].get('mail2')?.value != compte.controls['mailGroup'].get('mail2')?.value) && !compte.controls['mailGroup'].get('mail2')?.hasError('required')"
-            class="orange">
-            {{ l.t['FORM_CORRESPOND'] }}
-          </span>
-        </fieldset>
-      </div>
-      <!-- PASSE -->
-      <div formGroupName="passGroup">
-        <fieldset>
-          <label>{{ l.t['FORM_PASSE'] }} *</label>
-          <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-          <span *ngIf="compte.controls['passGroup'].get('pass')?.hasError('pattern')" class="orange">
-            {{ l.t['FORM_FORMAT_PASSE'] }}
-          </span>
-          <!-- Requis -->
-          <span *ngIf="compte.controls['passGroup'].get('pass')?.hasError('required')" class="orange">{{ l.t['FORM_REQUIS'] }}</span>
-        </fieldset>
-        <fieldset>
-          <label>{{ l.t['FORM_PASSE2'] }} *</label>
-          <input type="text" formControlName="pass2" [placeholder]="l.t['FORM_PASSE2']" required>
-          <span
-            *ngIf="(compte.controls['passGroup'].get('pass')?.value != compte.controls['passGroup'].get('pass2')?.value) && !compte.controls['pass2'].hasError('required')"
-            class="orange">
-            {{ l.t['FORM_CORRESPOND'] }}
-          </span>
-          <span *ngIf="compte.controls['passGroup'].get('pass2')?.hasError('required')" class="orange">
-            {{ l.t['FORM_REQUIS'] }}
-          </span>
-        </fieldset>
-      </div>
-      <fieldset>
-        <label>{{ l.t['FORM_PROMO'] }}</label>
-        <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']">
-        <span>{{ l.t['FORM_PROMO_INFOS'] }}</span>
-      </fieldset>
-      <fieldset class="l">
-        <input type="reset" [value]="l.t['FORM_EFFACE']">
-        <input type="submit" [value]="l.t['FORM_VALIDE']">
-      </fieldset>
-    </form>
-    <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
+          </fieldset>
+          <fieldset>
+            <label>{{ l.t['FORM_PROMO'] }}</label>
+            <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']">
+            <span>{{ l.t['FORM_PROMO_INFOS'] }}</span>
+          </fieldset>
+          <fieldset class="l">
+            <input type="reset" [value]="l.t['FORM_EFFACE']">
+            <input type="submit" [value]="l.t['FORM_VALIDE']">
+          </fieldset>
+        </form>
+        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
+
+      </p-tabPanel>
+    </p-tabView>
   </section>
 </main>

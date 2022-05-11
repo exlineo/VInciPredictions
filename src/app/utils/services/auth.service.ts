@@ -22,22 +22,27 @@ export class AuthService {
    * @param p Object with email and password transmitted from connection form
    */
   creeUser(p: any) {
-    this.setProfil(this.profil);
     createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
         // Add Firebase UID in user's profil
         console.log(retour, retour.user);
         this.profil.uid = retour.user.uid;
-        // Add profil to firestore
-        this.store.setFireDoc('comptes', { uid: this.profil.uid, doc: this.profil })
-          .then(r => {
-            console.log(r);
-          })
-          .catch(er => console.log(er));
+        this.profil.mail = p.mail;
       })
       .catch((error) => {
         console.log(error.code, error.message);
       });
+  }
+  /** Add profil data to firestore */
+  creeProfil(p:any) {
+    // Add profil to firestore
+    if (this.profil.uid) {
+      this.store.setFireDoc('comptes', { uid: this.profil.uid, doc: this.profil })
+        .then(r => {
+          console.log(r);
+        })
+        .catch(er => console.log(er));
+    }
   }
   /**
    * User connection with email and password in firebase
@@ -86,6 +91,6 @@ export class AuthService {
       if (p.hasOwnProperty(prop)) prop = p[prop];
       console.log(prop, p['prop'], this.profil);
     }
-    this.profil.statut = 0; // Statut invité par défaut. Ce paramètre sera changé dans l'admin
+    this.profil.statut = 0; // Basic status to change in admin
   }
 }

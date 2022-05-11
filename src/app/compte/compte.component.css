@@ -10,3 +10,11 @@ section:nth-child(3) form{
 fieldset{
     width:40%;
 }
+form{
+  width: 100%;
+  justify-content: space-around;
+}
+form span{
+  padding:10px;
+  box-sizing: border-box;
+}

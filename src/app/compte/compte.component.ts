@@ -9,8 +9,17 @@ import { AuthService } from '../utils/services/auth.service';
   styleUrls: ['./compte.component.css']
 })
 export class CompteComponent implements OnInit {
-  /** Formulaire d'inscription */
-  compte = this.fbuild.group({
+  /**
+   * Create un acount
+   */
+  account = this.fbuild.group({
+    mail: ['', [Validators.required, Validators.email]],
+    mail2: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.pattern(`(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
+    pass2: ['', [Validators.required]]
+  });
+  /** Profil data */
+  profil = this.fbuild.group({
     nom: ['', [Validators.required]],
     prenom: ['', [Validators.required]],
     adresse: [''],
@@ -20,14 +29,6 @@ export class CompteComponent implements OnInit {
     pays: [''],
     tel: [''],
     mobile: [''],
-    mailGroup: this.fbuild.group({
-      mail: ['', [Validators.required, Validators.email]],
-      mail2: ['', [Validators.required, Validators.email]]
-    }),
-    passGroup: this.fbuild.group({
-      pass: ['', [Validators.required, Validators.pattern(`(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
-      pass2: ['', [Validators.required]]
-    }),
     code: ['']
   });
   /**
@@ -43,9 +44,12 @@ export class CompteComponent implements OnInit {
   oublie() {
 
   }
-  /** Créer un compte */
+  /** Create user account */
   creeCompte() {
-    this.auth.creeUser(this.compte.value);
+    this.auth.creeUser(this.account.value);
   }
+  /** Create users profil */
+  creeProfil(){
 
+  }
 }

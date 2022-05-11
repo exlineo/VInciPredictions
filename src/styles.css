@@ -144,9 +144,6 @@ thead, tbody > tr:nth-child(even){
 table tr, table th{
   border-bottom:2px solid white;
 }
-form span{
-  /* padding:0 10px; */
-}
 form.bleu h4{
   margin:0px;
 }
@@ -241,7 +238,7 @@ section.double-slider{
 }
 section.double-slider > span{
   flex:1;
-}
+} */
 .range-slider {
   display: flex;
   text-align: center;
@@ -369,7 +366,7 @@ input[type="range"].ok:active::-webkit-slider-thumb {
   z-index: -1;
   background-color: rgba(0, 0, 0, 1);
   border: 0;
-} */
+}
 .ecarts{
   display:flex;
   flex-flow: row nowrap;
