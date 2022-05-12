@@ -16,7 +16,7 @@ export class DataService {
    * Service de gestion des données
    * @param db Accès à la base de données géré directement par Firebase
    */
-  constructor(private store:StoreService, private lServ:LanguesService) {
+  constructor(private store:StoreService, private l:LanguesService) {
 
   }
   /** Créer afficher la popup */

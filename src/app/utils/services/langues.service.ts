@@ -1,9 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PageI } from '../modeles/page-i';
-import { MarkPipe } from '../tools/filtres.pipe';
-import { BucketService } from './bucket.service';
 import { StoreService } from './store.service';
 
 
@@ -23,7 +21,7 @@ export class LanguesService {
    * @param http Opérer des requêtes HTTP
    * @param store Service de gestion des données locales
    */
-  constructor(private http: HttpClient, private store: StoreService) {
+  constructor(private http: HttpClient, public store: StoreService) {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
     this.langue = this.store.getLocalString('langue', 'fr');
     // Récupérer les traductions stockées en local pour éviter des requêtes
@@ -37,7 +35,6 @@ export class LanguesService {
         let tmp = d['data'];
         this.t = JSON.parse(tmp);
         this.t$.next(this.t);
-        console.log(d);
       }
       )
       .catch(er => console.log(er));
@@ -69,7 +66,6 @@ export class LanguesService {
       .then<any>(d => d.data())
       .then<unknown>(p => {
         this.page = p;
-        console.log(p, "Contenus markdown");
       }
       )
       .catch(er => console.log(er));

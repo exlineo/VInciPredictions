@@ -15,8 +15,8 @@
   <!-- FORMULAIRES DE CREATION DE COMPTE -->
   <section class="orange">
     <h2>{{ l.t['COMPTE'] }}</h2>
-    <p-tabView>
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']">
+    <p-tabView [(activeIndex)]="tabI">
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']" [disabled]="this.auth.u.uid ? true : false">
         <!-- Create account -->
         <form [formGroup]="account" (submit)="creeCompte()">
           <fieldset>
@@ -54,7 +54,9 @@
           <fieldset>
             <label>{{ l.t['FORM_PASSE'] }} *</label>
             <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+              pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <!-- <input type="text" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required
+              pattern="^[a-zA-Z0-9_-]{8,}$"> -->
             <span *ngIf="account.get('pass')?.hasError('pattern')" class="orange">
               {{ l.t['FORM_FORMAT_PASSE'] }}
             </span>
@@ -80,7 +82,7 @@
 
         <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
       </p-tabPanel>
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.profil.uid ? true : false">
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.u.uid ? false : true">
         <!-- ACCOUNT FORM -->
         <form [formGroup]="profil" (submit)="creeProfil()">
           <!-- Name, Surname -->

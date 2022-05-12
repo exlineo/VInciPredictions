@@ -6,6 +6,7 @@ import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { DataI, Rendement, RendementI } from '../modeles/filtres-i';
 import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 export interface TraductionI {
   langue: string;
@@ -27,7 +28,7 @@ export class StoreService {
   // Updated lists of countries, regions, pdos and types for filters
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
 
-  constructor(private dbrt: Database, public dbf: Firestore, private http:HttpClient) {}
+  constructor(private dbrt: Database, public dbf: Firestore, private http:HttpClient, public alert:MessageService) {}
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -92,8 +93,9 @@ export class StoreService {
    * @returns {promise} Returns a promise
    */
   async setFireDoc(collec: string, data:{uid:string, doc:any}){
+    console.log(data.doc, JSON.parse(JSON.stringify(data.doc)));
     const customDoc = doc(this.dbf, collec, data.uid);
-    return await setDoc(customDoc, data.doc, { merge: true }); // Mettre à jour un objet existant
+    return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
   /** Demo query for Firebase */
   async getFireFiltre(){
@@ -124,11 +126,46 @@ export class StoreService {
   */
   setFilterFromData(r:RendementI){
     // Create lists from data for countries, regions and pdo
-    // if (!this.listes.pays.includes(r.pays)) this.listes.pays.push(r.pays);
-    // if (!this.listes.regions.includes(r.regions)) this.listes.regions.push(r.regions);
-    // if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo.push(r.pdo as string);
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
+  }
+  /**
+   * Display success message
+   * @param m Message to display
+   * @param d Description to display
+   */
+  msgOk(m:string, d:string=''){
+    this.alert.add({severity:'success', summary:m, detail:d});
+  }
+  /**
+   * Display fail message
+   * @param m Message to display
+   * @param d Description to display
+   */
+  msgFail(m:string, d:string=''){
+    this.alert.add({id:0, severity:'error', summary:m, detail:d});
+  }
+  /**
+   * Display warnin message
+   * @param m Message to display
+   * @param d Description to display
+   */
+  msgGaffe(m:string, d:string=''){
+    this.alert.add({severity:'warn', summary:m, detail:d});
+  }
+  /**
+   * Display information message
+   * @param m Message to display
+   * @param d Description to display
+   */
+  msgInfo(m:string, d:string=''){
+    this.alert.add({severity:'info', summary:m, detail:d});
+  }
+  /**
+   * Clear all messages
+   */
+  msgNo(){
+    this.alert.clear();
   }
 }

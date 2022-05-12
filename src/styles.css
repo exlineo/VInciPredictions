@@ -516,6 +516,13 @@ input.ng-valid, textarea.ng-valid{
 input.ng-invalid, textarea.ng-invalid{
   border-bottom:2px solid var(--rose);
 }
+
+p-messages{
+  position:absolute;
+  z-index:897;
+  top:0;
+  right:0;
+}
 /* SCROLLBARS */
 ::-webkit-scrollbar {
   width: 14px;

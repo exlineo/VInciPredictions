@@ -13,7 +13,9 @@
         <label>{{ l.t['FORM_EMAIL'] }} *</label>
         <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
         <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
-        <span *ngIf="connexionForm.controls['mail'].hasError('email') && !connexionForm.controls['mail'].hasError('required')" class="orange">
+        <span
+          *ngIf="connexionForm.controls['mail'].hasError('email') && !connexionForm.controls['mail'].hasError('required')"
+          class="orange">
           {{ l.t['FORM_FORMAT_MAIL'] }}
         </span>
         <span *ngIf="connexionForm.controls['mail'].hasError('required')" class="orange">
@@ -25,18 +27,22 @@
         <label>{{ l.t['FORM_PASSE'] }} *</label>
         <input type="password" formControlName="pass" require [placeholder]="l.t['FORM_PASSE']" minlength="8" required>
         <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
-        <span *ngIf="connexionForm.controls['pass'].hasError('pattern') && !connexionForm.controls['pass'].hasError('required')" class="orange">
+        <span
+          *ngIf="connexionForm.controls['pass'].hasError('pattern') && !connexionForm.controls['pass'].hasError('required')"
+          class="orange">
           {{ l.t['FORM_FORMAT_PASSE'] }}
         </span>
         <span *ngIf="connexionForm.controls['pass'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
-      <p>
-      <a (click)="oublie()" [title]="l.t['FORM_OUBLIE']"><span class="icone">vpn_key</span>{{ l.t['FORM_OUBLIE'] }}</a>
+      <fieldset>
+        <a (click)="oublie()" [title]="l.t['FORM_OUBLIE']"><span class="icone">vpn_key</span>{{ l.t['FORM_OUBLIE']
+          }}</a>
 
-      <a routerLink="/compte" [title]="l.t['FORM_CREE']"><span class="icone">person_add_alt</span>{{ l.t['FORM_CREE'] }}</a>
-    </p>
+        <a routerLink="/compte" [title]="l.t['FORM_CREE']"><span class="icone">person_add_alt</span>{{ l.t['FORM_CREE']
+          }}</a>
+      </fieldset>
       <fieldset class="h">
         <input type="reset" [value]="l.t['FORM_EFFACE']">
         <input type="submit" [value]="l.t['FORM_CONNECTE']">

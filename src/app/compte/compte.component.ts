@@ -13,24 +13,26 @@ export class CompteComponent implements OnInit {
    * Create un acount
    */
   account = this.fbuild.group({
-    mail: ['', [Validators.required, Validators.email]],
+    mail: [this.auth.u.email, [Validators.required, Validators.email]],
     mail2: ['', [Validators.required, Validators.email]],
-    pass: ['', [Validators.required, Validators.pattern(`(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
+    pass: ['', [Validators.required, Validators.pattern(`(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
     pass2: ['', [Validators.required]]
   });
   /** Profil data */
   profil = this.fbuild.group({
-    nom: ['', [Validators.required]],
-    prenom: ['', [Validators.required]],
-    adresse: [''],
-    adresse2: [''],
-    codePostal: [''],
-    ville: [''],
-    pays: [''],
-    tel: [''],
-    mobile: [''],
-    code: ['']
+    nom: [this.auth.profil.nom, [Validators.required]],
+    prenom: [this.auth.profil.prenom, [Validators.required]],
+    adresse: [this.auth.profil.adresse],
+    adresse2: [this.auth.profil.adresse2],
+    codePostal: [this.auth.profil.codePostal],
+    ville: [this.auth.profil.ville],
+    pays: [this.auth.profil.pays],
+    tel: [this.auth.profil.tel],
+    mobile: [this.auth.profil.mobile],
+    code: [this.auth.profil.tel]
   });
+  // Tab index for account creation on UI
+  tabI:number = 0;
   /**
    * ulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
@@ -39,6 +41,7 @@ export class CompteComponent implements OnInit {
 
   ngOnInit(): void {
     this.l.getPage('compte');
+    console.log(this.auth.u.uid);
   }
   /** Permettre de réinitialiser le mot de passe */
   oublie() {
@@ -47,9 +50,11 @@ export class CompteComponent implements OnInit {
   /** Create user account */
   creeCompte() {
     this.auth.creeUser(this.account.value);
+    this.tabI = 1;
   }
   /** Create users profil */
   creeProfil(){
-
+    console.log(this.profil.value);
+    this.auth.creeProfil(this.profil.value);
   }
 }

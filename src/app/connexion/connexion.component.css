@@ -7,3 +7,14 @@ section:nth-child(2){
 section:nth-child(3){
 
 }
+a{
+  margin:5px;
+}
+a > span{
+  padding-right:10px;
+}
+
+form span{
+  padding:10px;
+  box-sizing: border-box;
+}

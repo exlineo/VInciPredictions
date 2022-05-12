@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { DataService } from './utils/services/data.service';
+import { StoreService } from './utils/services/store.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +11,5 @@ import { DataService } from './utils/services/data.service';
 export class AppComponent {
   title = 'VInci Predictions';
 
-  constructor(public data:DataService){}
+  constructor(public data:DataService, public store:StoreService){}
 }

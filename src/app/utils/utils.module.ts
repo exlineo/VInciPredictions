@@ -10,6 +10,9 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 // import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import {TabViewModule} from 'primeng/tabview';
+// import {MessagesModule} from 'primeng/messages';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
@@ -42,7 +45,9 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     ListboxModule,
     CheckboxModule,
     RadioButtonModule,
-    TabViewModule
+    TabViewModule,
+    ToastModule
+    // MessagesModule
     // TriStateCheckboxModule
   ],
   imports: [
@@ -54,9 +59,11 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     ListboxModule,
     CheckboxModule,
     RadioButtonModule,
-    TabViewModule
+    TabViewModule,
+    ToastModule
+    // MessagesModule
     // TriStateCheckboxModule
   ],
-  providers:[MarkPipe, EcartsPipe, FiltresPipe, GraphPipe]
+  providers:[MarkPipe, EcartsPipe, FiltresPipe, GraphPipe, MessageService]
 })
 export class UtilsModule { }

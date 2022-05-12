@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CustomErrorMatch, CustomPattern } from '../utils/tools/CustomErrorMatch';
+import { CustomPattern } from '../utils/tools/CustomErrorMatch';
 
 import { LanguesService } from '../utils/services/langues.service';
 import { AuthService } from '../utils/services/auth.service';
