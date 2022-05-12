@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UtilsModule } from '../utils/utils.module';
+import { EditorModule } from 'primeng/editor';
 
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { AdminAccueilComponent } from './admin-accueil/admin-accueil.component';
@@ -28,7 +29,8 @@ import { StatutPipe, AccesPipe, SetStatePipe } from './utils/tools/statut.pipe';
   imports: [
     CommonModule,
     GestionRoutingModule,
-    UtilsModule
+    UtilsModule,
+    // EditorModule
   ]
 })
 export class GestionModule { }

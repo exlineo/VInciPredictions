@@ -1,1 +1,71 @@
-<p>profil works!</p>
+<section class="jaune">
+  <h1>{{ l.page.titre }}</h1>
+  <article [innerHTML]="l.page.contenu">
+  </article>
+</section>
+<section>
+<!-- ACCOUNT FORM -->
+<form [formGroup]="profil" (submit)="majProfil()">
+  <!-- Name, Surname -->
+  <fieldset>
+    <label>{{ l.t['FORM_NOM'] }} *</label>
+    <input type="text" formControlName="nom" [placeholder]="l.t['FORM_NOM']" required>
+    <span *ngIf="profil.controls['nom'].hasError('required')" class="orange">
+      {{ l.t['FORM_REQUIS'] }}
+    </span>
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_PRENOM'] }} *</label>
+    <input type="text" formControlName="prenom" [placeholder]="l.t['FORM_PRENOM']" required>
+    <span *ngIf="profil.controls['prenom'].hasError('required')" class="orange">
+      {{ l.t['FORM_REQUIS'] }}
+    </span>
+  </fieldset>
+  <!-- ORGANISATION -->
+  <fieldset>
+    <label>{{ l.t['FORM_ORG'] }}</label>
+    <input type="text" formControlName="organisation" [placeholder]="l.t['FORM_ORG']">
+  </fieldset>
+  <!-- ADRESSE -->
+  <fieldset>
+    <label>{{ l.t['FORM_ADR'] }}</label>
+    <input type="text" formControlName="adresse" [placeholder]="l.t['FORM_ADR']">
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_ADR2'] }}</label>
+    <input type="text" formControlName="adresse2" [placeholder]="l.t['FORM_ADR2']">
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_ZIP'] }}</label>
+    <input type="number" formControlName="codePostal" [placeholder]="l.t['FORM_ZIP']">
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_VILLE'] }}</label>
+    <input type="text" formControlName="ville" [placeholder]="l.t['FORM_VILLE']">
+  </fieldset>
+  <!-- ADRESSE -->
+  <fieldset>
+    <label>{{ l.t['FORM_TEL'] }}</label>
+    <input type="text" formControlName="tel" [placeholder]="l.t['FORM_TEL']">
+    <!-- <span *ngIf="compte.controls['tel'].hasError('required')" class="orange">
+  {{ l.t['FORM_REQUIS'] }}
+</span> -->
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_MOBILE'] }}</label>
+    <input type="text" formControlName="mobile" [placeholder]="l.t['FORM_MOBILE']">
+    <!-- <span *ngIf="compte.controls['mobile'].hasError('required')" class="orange">
+  {{ l.t['FORM_REQUIS'] }}
+</span> -->
+  </fieldset>
+  <fieldset>
+    <label>{{ l.t['FORM_PROMO'] }}</label>
+    <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']" [pTooltip]="l.t['FORM_PROMO_INFOS']">
+  </fieldset>
+  <fieldset class="l">
+    <input type="reset" [value]="l.t['FORM_EFFACE']">
+    <input type="submit" [value]="l.t['FORM_VALIDE']">
+  </fieldset>
+</form>
+<p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
+</section>

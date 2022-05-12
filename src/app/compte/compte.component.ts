@@ -22,6 +22,7 @@ export class CompteComponent implements OnInit {
   profil = this.fbuild.group({
     nom: [this.auth.profil.nom, [Validators.required]],
     prenom: [this.auth.profil.prenom, [Validators.required]],
+    organisation:[this.auth.profil.organisation],
     adresse: [this.auth.profil.adresse],
     adresse2: [this.auth.profil.adresse2],
     codePostal: [this.auth.profil.codePostal],
@@ -52,7 +53,7 @@ export class CompteComponent implements OnInit {
     this.auth.creeUser(this.account.value);
     this.tabI = 1;
   }
-  /** Create users profil */
+  /** Create user's profile */
   creeProfil(){
     console.log(this.profil.value);
     this.auth.creeProfil(this.profil.value);

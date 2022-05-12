@@ -3,6 +3,7 @@ import { UserI } from "./user-i";
 export interface ProfilI {
   nom:string;
   prenom:string;
+  organisation?:string;
   adresse?:string;
   adresse2?:string;
   codePostal?:string;

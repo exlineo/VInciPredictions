@@ -19,6 +19,9 @@ html, body  {
   scroll-behavior: smooth;
   overflow:hidden;
 }
+h1{
+  font-size: 36px;
+}
 h1, h2, h3, h4{
   font-family: 'Playfair Display', serif;
 }
@@ -42,6 +45,10 @@ main{
   display:flex;
   flex-flow:row nowrap;
   justify-content: stretch;
+}
+section{
+  display:flex;
+  flex-flow: column nowrap;
 }
 main > section{
   height:100vh;

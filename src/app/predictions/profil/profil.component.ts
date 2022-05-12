@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/utils/services/auth.service';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
   selector: 'app-profil',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+  /** Profil data */
+  profil = this.fbuild.group({
+    nom: [this.auth.profil.nom, [Validators.required]],
+    prenom: [this.auth.profil.prenom, [Validators.required]],
+    organisation:[this.auth.profil.organisation],
+    adresse: [this.auth.profil.adresse],
+    adresse2: [this.auth.profil.adresse2],
+    codePostal: [this.auth.profil.codePostal],
+    ville: [this.auth.profil.ville],
+    pays: [this.auth.profil.pays],
+    tel: [this.auth.profil.tel],
+    mobile: [this.auth.profil.mobile],
+    code: [this.auth.profil.tel]
+  });
 
-  constructor() { }
+  constructor(public l:LanguesService, public fbuild:FormBuilder, public auth:AuthService) { }
 
   ngOnInit(): void {
+    this.l.getPage('profil');
+  }
+
+  /** Update user's profile */
+  majProfil(){
+    console.log(this.profil.value);
+    this.auth.creeProfil(this.profil.value);
   }
 
 }

@@ -30,9 +30,6 @@
             <span *ngIf="account.get('mail')?.hasError('required')" class="orange">
               {{ l.t['FORM_REQUIS'] }}
             </span>
-            <!-- <span *ngIf="compte.controls['mail'].hasError('required')" class="orange">
-        {{ l.t['FORM_REQUIS'] }}
-      </span> -->
           </fieldset>
           <fieldset>
             <label>{{ l.t['FORM_EMAIL2'] }} *</label>
@@ -100,6 +97,11 @@
               {{ l.t['FORM_REQUIS'] }}
             </span>
           </fieldset>
+          <!-- ORGANISATION -->
+          <fieldset>
+            <label>{{ l.t['FORM_ORG'] }}</label>
+            <input type="text" formControlName="organisation" [placeholder]="l.t['FORM_ORG']">
+          </fieldset>
           <!-- ADRESSE -->
           <fieldset>
             <label>{{ l.t['FORM_ADR'] }}</label>
@@ -134,8 +136,7 @@
           </fieldset>
           <fieldset>
             <label>{{ l.t['FORM_PROMO'] }}</label>
-            <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']">
-            <span>{{ l.t['FORM_PROMO_INFOS'] }}</span>
+            <input type="text" formControlName="code" [placeholder]="l.t['FORM_PROMO']" [pTooltip]="l.t['FORM_PROMO_INFOS']">
           </fieldset>
           <fieldset class="l">
             <input type="reset" [value]="l.t['FORM_EFFACE']">

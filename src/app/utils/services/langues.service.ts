@@ -13,8 +13,9 @@ export class LanguesService {
   langue = 'fr';
   t: any = {}; // Traductions téléchargées
   // lang: any; // Langue actuelle
+  pages: any = {};
   page: PageI = { nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
-  t$:BehaviorSubject<any> = new BehaviorSubject({})
+  t$: BehaviorSubject<any> = new BehaviorSubject({})
 
   /**
    * Service de gestion des langues et traductions
@@ -60,14 +61,19 @@ export class LanguesService {
     // Recharger la langue après la sélection
     this.getTextLangue(l);
   }
-  /** Récupérer les informations de la page en cours */
-  getPage(page: string) {
-    this.store.getFireDoc(this.langue, page)
-      .then<any>(d => d.data())
-      .then<unknown>(p => {
-        this.page = p;
-      }
-      )
-      .catch(er => console.log(er));
+  /** Get texts from Firestore to populate HTML pages */
+  getPage(id: string) {
+    if (this.pages[id]) {
+      this.page = this.pages[id];
+    } else {
+      this.store.getFireDoc(this.langue, id)
+        .then<any>(d => d.data())
+        .then<unknown>(p => {
+          this.page = p;
+          this.pages[id] = p;
+        }
+        )
+        .catch(er => console.log(er));
+    }
   }
 }

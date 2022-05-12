@@ -13,6 +13,7 @@ import {TabViewModule} from 'primeng/tabview';
 // import {MessagesModule} from 'primeng/messages';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
+import {TooltipModule} from 'primeng/tooltip';
 
 import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
@@ -46,7 +47,8 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     CheckboxModule,
     RadioButtonModule,
     TabViewModule,
-    ToastModule
+    ToastModule,
+    TooltipModule
     // MessagesModule
     // TriStateCheckboxModule
   ],
@@ -60,7 +62,8 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     CheckboxModule,
     RadioButtonModule,
     TabViewModule,
-    ToastModule
+    ToastModule,
+    TooltipModule
     // MessagesModule
     // TriStateCheckboxModule
   ],

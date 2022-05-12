@@ -1,0 +1,40 @@
+:host{
+  display:flex;
+  flex-flow:row nowrap;
+  align-items: stretch;
+  height:100%;
+}
+section{
+  padding:20px;
+}
+section:nth-child(1){
+  flex:1;
+  /* justify-content: space-around; */
+}
+section:nth-child(1) > nav{
+  flex-flow:row nowrap;
+  justify-content: center;
+}
+section:nth-child(2){
+  flex:5
+}
+section:nth-child(3){
+  flex:3;
+  overflow-y:auto;
+}
+
+a > img{
+  max-width:55px;
+  height:35px;
+}
+ul{
+
+}
+li{
+  cursor: pointer;
+  list-style: none;
+  padding:6px;
+}
+p-editor{
+  min-height:350px;
+}

@@ -1,1 +1,57 @@
-<p>traductions works!</p>
+<section class="bleu">
+  <article>
+    <h3>{{ l.t['LANG_CHOIX'] }}</h3>
+    <nav class="menulangues">
+      <a (click)="setLang('en')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/uk.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
+      <a (click)="setLang('es')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/es.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
+      <a (click)="setLang('fr')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/fr.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
+      <a (click)="setLang('pt')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/pt.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
+    </nav>
+  </article>
+  <article>
+    <h3>{{ l.t['EDIT_MENU_PAGES'] }}</h3>
+    <ul>
+      <li *ngFor="let p of pages"><a (click)="selectPage($event, p)">{{ p | titlecase }}</a></li>
+    </ul>
+  </article>
+  <article>
+    <h3>{{ l.t['EDIT_MENU_INTERFACE'] }}</h3>
+    <ul>
+      <li><a (click)="selectTrad()">{{ l.t['MENU_TRAD'] }}</a></li>
+    </ul>
+  </article>
+</section>
+<section>
+  <h1>{{ l.t['EDIT_INIT'] }}</h1>
+  <hr>
+  <!-- PAGE -->
+  <article *ngIf="pageId.length > 0">
+    <form [formGroup]="editPage">
+      <input formControlName="titre" [placeholder]="l.t['EDIT_TITRE']">
+      <!-- <p-editor formControlName="contenu"></p-editor> -->
+      <input type="reset" [value]="l.t['FORM_EFFACE']">
+      <input type="submit" [value]="l.t['FORM_VALIDE']">
+    </form>
+  </article>
+  <!-- TRADUCTION -->
+  <article *ngIf="pageId.length == 0"></article>
+</section>
+<!-- DONNEES INITIALES -->
+<section class="jaune">
+  <h1>{{ l.t['EDIT_EDIT'] }}</h1>
+  <!-- PAGE INITIALE -->
+  <article *ngIf="pageId.length > 0">
+    <h2>{{ page.titre }}</h2>
+    <article [innerHTML]="page.contenu"></article>
+  </article>
+  <!-- TRADUCTION INITIALE -->
+  <article *ngIf="pageId.length == 0">
+    <h1>{{ l.t['EDIT_INIT'] }}</h1>
+    <hr>
+    <ul>
+      <li *ngFor="let t of trad | keyvalue">
+        {{ t.key }} : {{ t.value }}
+      </li>
+    </ul>
+  </article>
+</section>

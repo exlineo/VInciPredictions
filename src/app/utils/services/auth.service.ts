@@ -19,7 +19,7 @@ export class AuthService {
   /** Accessing Firebase
    * @param auth Firebase object to authentication
   */
-  constructor(private auth: Auth, private route: Router, private l:LanguesService) { }
+  constructor(private auth: Auth, private route: Router, private l:LanguesService) { this.u.uid = "12"}
   /**
    * Create account on firebase with email and password
    * @param p Object with email and password transmitted from connection form
@@ -44,21 +44,29 @@ export class AuthService {
   }
   /** Add profil data to firestore */
   creeProfil(p:ProfilI) {
-    this.profil = p;
-    this.u.uid = this.u.uid;
+    this.setProfil(p);
     // Add profil to firestore
     if (this.u.uid) {
-      console.log(JSON.parse(JSON.stringify(this.profil)), this.profil);
       this.l.store.setFireDoc('comptes', { uid: this.u.uid, doc:this.profil })
         .then(r => {
           this.l.store.msgOk(this.l.t['MSG_AC_ADD'], this.l.t['MSG_AC_ADD_DESCR']);
-          console.log(r);
+          this.route.navigateByUrl('/');
         })
         .catch(er => {
           this.l.store.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
           console.log(er);
         });
+    }else{
+
     }
+  }
+  /** Set complete profil to create a new one */
+  setProfil(p:ProfilI){
+    this.profil = p;
+    this.profil.u.uid = this.u.uid;
+    this.profil.u.email = this.u.email;
+    this.profil.droits = {petite:0, grande:0, export:0};
+    this.profil.statut = 0;
   }
   /**
    * User connection with email and password in firebase

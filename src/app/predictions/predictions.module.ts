@@ -6,15 +6,15 @@ import { UtilsModule } from '../utils/utils.module';
 
 import { AccueilComponent } from './accueil/accueil.component';
 import { VisualisationsComponent } from './visualisations/visualisations.component';
-import { ProfilComponent } from './profil/profil.component';
 import { InfosComponent } from './infos/infos.component';
+import { ProfilComponent } from './profil/profil.component';
 
 @NgModule({
   declarations: [
     AccueilComponent,
     VisualisationsComponent,
-    ProfilComponent,
-    InfosComponent
+    InfosComponent,
+    ProfilComponent
   ],
   imports: [
     CommonModule,
