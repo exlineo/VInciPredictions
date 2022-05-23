@@ -4,15 +4,18 @@
   <form [formGroup]="filtresForm" (submit)="appliqueFiltres()" class="bleu">
     <div>
       <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
-      <p-listbox [options]="store.listes.pays" formControlName="pays" [multiple]="true" [checkbox]="true" [filter]="true"></p-listbox>
+      <p-listbox [options]="store.listes.pays" formControlName="pays" [multiple]="true" [checkbox]="true"
+        [filter]="true"></p-listbox>
     </div>
     <div>
       <h3>{{ l.t['FILTRE_REGIONS'] }}</h3>
-      <p-listbox [options]="store.listes.regions" formControlName="regions" [multiple]="true" [checkbox]="true" [filter]="true"></p-listbox>
+      <p-listbox [options]="store.listes.regions" formControlName="regions" [multiple]="true" [checkbox]="true"
+        [filter]="true"></p-listbox>
     </div>
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
-      <p-listbox [options]="store.listes.pdo" formControlName="pdo" [multiple]="true" [checkbox]="true" [filter]="true"></p-listbox>
+      <p-listbox [options]="store.listes.pdo" formControlName="pdo" [multiple]="true" [checkbox]="true" [filter]="true">
+      </p-listbox>
     </div>
     <div class="l">
       <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
@@ -75,60 +78,24 @@
 </section>
 <!-- VISUALISATION -->
 <section>
-  <h2>{{ l.t['RES_TITRE'] }}</h2>
-  <p>{{ l.t['RES_DESCR'] }}</p>
+  <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
+  <p>{{ l.t['RES_DESCR'] }}</p> -->
+  <h2>{{ l.page.titre }} <button (click)="infos = !infos" class="annule"><i class="pi pi-plus"></i></button></h2>
+
+  <p-dialog [header]="l.page.titre" [(visible)]="infos">
+    <article [innerHTML]="l.page.contenu"></article>
+  </p-dialog>
   <!-- GRAPH -->
   <h3>{{ l.t['RES_VISUAL'] }}</h3>
   <!-- CHART -->
   <article id="chart">
     <nav>
       <!-- <span class="icone">scatter_plot</span> -->
-      <span class="icone" (click)="chartType = 'bar'">area_chart</span>
-      <span class="icone" (click)="chartType = 'radar'">pie_chart_outline</span>
-      <!-- <span class="icone">bubble_chart</span> -->
-      <span class="icone" (click)="chartType = 'line'">stacked_line_chart</span>
-      <!-- <span class="icone">data_object</span> -->
-      <!-- <span class="icone">multiline_chart</span> -->
+      <i (click)="chartType = 'bar'" class="pi pi-chart-bar"></i>
+      <i (click)="chartType = 'bar'" class="pi pi-chart-pie"></i>
+      <i  (click)="chartType = 'line'" class="pi pi-chart-line"></i>
     </nav>
-    <p-chart [type]="chartType" [data]="store.dataset | graph:filtresForm.value" [options]="basicOptions"></p-chart>
-  </article>
-  <article id="brutes">
-    <h3>{{ l.t['DONNEES_BRUTES'] }}</h3>
-    <table>
-      <thead class="grisclair">
-        <tr>
-          <th colspan="4"></th>
-          <th [attr.colspan]="2022-filtresForm.get('debut')?.value" class="vert">{{ l.t['FILTRE_RENDEMENTS'] }}</th>
-          <th [attr.colspan]="filtresForm.get('fin')?.value-2021" class="orange">{{ l.t['FILTRE_PREDICTIONS'] }}</th>
-          <th [attr.colspan]="filtresForm.get('fin')?.value-2021" class="rouge">{{ l.t['FILTRE_FIABILITE'] }}</th>
-        </tr>
-        <tr>
-          <th>{{ l.t['FILTRE_PAYS'] }}</th>
-          <th>{{ l.t['FILTRE_REGIONS'] }}</th>
-          <th>{{ l.t['FILTRE_PDO'] }}</th>
-          <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of store.dataset[0].rendements | ecarts:2022-filtresForm.get('debut')?.value; let i=index"
-            class="vert">{{ 1983 + (filtresForm.get('debut')?.value - 1983) +i }}</th>
-          <th *ngFor="let r of store.dataset[0].predictions | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index"
-            class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of store.dataset[0].fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index"
-            class="rouge">{{ 2022 + i }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of store.dataset | filtres:filtresForm.value; let i=index">
-          <td>{{ p.pays }}</td>
-          <td>{{ p.regions }}</td>
-          <td>{{ p.pdo }}</td>
-          <td>{{ p.type }}</td>
-          <td *ngFor="let r of p.rendements | ecarts:2022-filtresForm.get('debut')?.value" class="vertclair">{{ r }}
-          </td>
-          <td *ngFor="let pr of p.predictions | ecarts:2032-filtresForm.get('fin')?.value:1" class="orangeclair">{{ pr
-            }}</td>
-          <td *ngFor="let f of p.fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1" class="rougeclair">{{ f }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- <p-chart [type]="chartType" [data]="store.dataset | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
+    <p-chart [type]="chartType" [data]="" [options]="basicOptions"></p-chart>
   </article>
 </section>

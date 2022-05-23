@@ -9,7 +9,7 @@ section{
   box-sizing: border-box;
 }
 section:nth-child(1){
-  flex:1;
+  flex:0.7;
 }
 section:nth-child(2){
   flex:3;

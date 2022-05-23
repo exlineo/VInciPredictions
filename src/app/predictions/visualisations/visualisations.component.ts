@@ -34,10 +34,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** Portées des années à filtrer */
   range: { min: number, max: number } = { min: 1996, max: 2024 };
   pays: Array<any> = [];
+  infos:boolean = false;
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) {}
 
   ngOnInit(): void {
+    // Loading text page content from database
+    this.l.getPage('filtrage');
     // Subscribe to langue to get syncrhonized data
     this.l$ = this.l.t$.subscribe(t => {
       this.pays = [
@@ -47,7 +50,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       ];
     }
     )
-    console.log(this.l.t['FILTRE_FR']);
     /** Load data from server */
     this.store.getLastData()
       .then(
@@ -95,20 +97,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.l$.unsubscribe();
   }
-  /** Select range for custom double slider */
-  // selectRange(e: any, type: string) {
-  //   console.log(e.target.value, e.currentTarget.value);
-  //   let val = 1996 + parseInt(e.target.value);
-  //   if (type == 'min') {
-  //     if (val >= this.range.max) val = this.range.max - 1;
-  //     this.range.min = val;
-  //     e.target.value = val - 1997;
-  //   } else {
-  //     if (val <= this.range.min) val = this.range.min + 1;
-  //     this.range.max = val;
-  //     e.target.value = val - 1995;
-  //   }
-  // }
   /** Set data for graph view */
   setGraphData(){
   }

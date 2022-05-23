@@ -15,6 +15,11 @@ export interface RendementI{
   predictions:Array<number>;
   fiabilites:Array<number>;
 }
+export interface MoyennesI{
+  rendements?:Array<number>;
+  predictions?:Array<number>;
+  fiabilites?:Array<number>;
+}
 export class Rendement implements RendementI{
   pays = "";
   regions = "";
@@ -26,6 +31,8 @@ export class Rendement implements RendementI{
 }
 export interface DataI{
   data:Array<RendementI>;
+  filtres?:{ pays: Array<string>, regions: Array<string>, pdo: Array<string> };
+  moyennes?:{ pays: Array<MoyennesI>, regions: Array<MoyennesI>, pdo: Array<MoyennesI> };
 }
 export enum Couleur{
   blanc = 'blanc',

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { writeBatch, doc, getDoc, setDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { DataI, FiltresI, MoyennesI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { StoreService } from 'src/app/utils/services/store.service';
 
@@ -19,7 +19,7 @@ export class PredictionsService {
   loadedDataset: Array<RendementI> = []; // Data from database
   listeVersions: Array<string> = []; // List of loadedDataset versions in Firestore
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Updated lists of countries, regions, pdos and types
+  moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array<ProfilI> = [];
 
@@ -61,11 +61,36 @@ export class PredictionsService {
   }
   /** Convert excel line to JSON object */
   conversion(l: Array<any>): RendementI {
-    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 43)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
+    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 55)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array<string>): Array<number> {
     return a.map(c => parseInt(c));
+  }
+  /** Set average data from countries and regions
+   * @param {array} ar Array to reduce to get values
+  */
+   av(ar:Array<RendementI>){
+    const truc:any = [];
+     for(let i=0; i<ar[0].rendements.length; ++i){
+        truc.push(Math.round(ar.reduce( ( p, c ) => p + c.rendements[i], 0 ) / ar.length));
+      };
+      return truc;
+  }
+  setAverages(){
+    this.store.listes.pays.forEach(d => {
+      const pays = this.store.dataset.filter(p => p.pays == d);
+      pays.forEach(p => {
+        this.moyennes.pays[p.pays] = this.av(pays);
+      })
+    });
+    this.store.listes.regions.forEach(d => {
+      const regions = this.store.dataset.filter(p => p.regions == d);
+      regions.forEach(r => {
+        this.moyennes.regions[r.regions] = this.av(regions);
+      })
+    });
+    console.log(this.moyennes);
   }
   /** List files from fire bucket to get archived datas */
   listeFiles() {
@@ -96,7 +121,7 @@ export class PredictionsService {
       ));
   };
   /**
-   * Write documents from a new data upload
+   * Write documents from a new data uploaded
    * @param collec Name of collection
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
@@ -112,14 +137,14 @@ export class PredictionsService {
   }
   /** Add loadedDataset formatted as array */
   docFireAdd() {
-    this.store.setFireDoc('predictions', { uid: this.setColName(), doc: { data: this.store.dataset, creeLe:Date.now() } })
+    this.store.setFireDoc('predictions', { uid: this.setColName(), doc: { data: this.store.dataset, moyennes:this.moyennes, creeLe:Date.now() } })
   }
   /** Create ID for a new loadedDataset version */
   setColName() {
     const date = new Date();
-    return `loadedDataset-${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
+    return `dataset-${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
   }
-  /** Get loadedDataset from Firestore
+  /** Get dataset from Firestore
    * @param {event} e Event send by select HtmlElement
    */
   getData(e: any) {
@@ -128,6 +153,7 @@ export class PredictionsService {
       .then(d => {
         this.store.dataset = d.data; // Data loaded send to store
         this.store.setFilters(); // Create filters from data
+        this.setAverages(); // Get average values
       })
       .catch(er => console.log(er))
   }

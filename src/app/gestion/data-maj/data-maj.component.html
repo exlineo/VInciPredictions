@@ -6,17 +6,14 @@
         <option value="">{{ l.t['FILTRE_PAYS'] }}</option>
         <option *ngFor="let p of predServ.store.listes.pays" [value]="p">{{ p }}</option>
       </select>
-      <!-- <span class="icone">sync</span> -->
       <select name="regions" formControlName="regions">
         <option value="">{{ l.t['FILTRE_REGIONS'] }}</option>
         <option *ngFor="let r of predServ.store.listes.regions" [value]="r">{{ r }}</option>
       </select>
-      <!-- <span class="icone">sync</span> -->
       <select name="pdo" formControlName="pdo">
         <option value="">{{ l.t['FILTRE_PDO'] }}</option>
         <option *ngFor="let o of predServ.store.listes.pdo" [value]="o">{{ o }}</option>
       </select>
-      <!-- <span class="icone">sync</span> -->
       <select name="type" formControlName="type">
         <option value="">{{ l.t['FILTRE_TYPE'] }}</option>
         <option value="rouge">{{ l.t['FILTRE_ROUGE'] }}</option>
@@ -24,7 +21,6 @@
       </select>
       <input type="number" formControlName="debut" min="1981" max="2015">
       <input type="number" formControlName="fin" min="2023" max="2032">
-      <!-- <span class="icone">sync</span> -->
       <!-- <input type="reset" [value]="l.t['FORM_EFFACE']">
       <input type="submit" [value]="l.t['FILTRE_BTN']"> -->
     </form>
@@ -73,7 +69,7 @@
   </article>
   <article>
     <p>{{ l.t['GESTION_AJOUT'] }}</p>
-    <label for="fichierup"><span class="icone">upload</span>{{ l.t['FICHIER_UP'] }}</label>
+    <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
     <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file"/>
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
     <button *ngIf="file" (click)="predServ.docFireAdd()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>

@@ -4,11 +4,11 @@
     <app-entete></app-entete>
     <nav>
       <!-- <span class="icone">pin_drop</span> -->
-      <a href="https://exlineo.com" target="_blank" [title]="l.t['MENU_EXTERNE']"><span class="icone">360</span>{{ l.t['MENU_PETITE'] }}<span class="icone">link</span></a>
+      <a href="https://exlineo.com" target="_blank" [title]="l.t['MENU_EXTERNE']"><i class="pi pi-clone"></i>{{ l.t['MENU_PETITE'] }}<i class="pi pi-external-link"></i></a>
       <hr>
-      <a routerLink="/predictions/visualisations" [title]="l.t['MENU_PREDICTIONS']"><span class="icone">layers</span>{{ l.t['MENU_PREDICTIONS'] }}</a>
+      <a routerLink="/predictions/visualisations" [title]="l.t['MENU_PREDICTIONS']"><i class="pi pi-map-marker"></i>{{ l.t['MENU_PREDICTIONS'] }}</a>
       <hr>
-      <a href="https://exlineo.com" target="_blank" [title]="l.t['MENU_EXTERNE']"><span class="icone">alt_route</span>{{ l.t['MENU_EXPORT'] }}<span class="icone">link</span></a>
+      <a href="https://exlineo.com" target="_blank" [title]="l.t['MENU_EXTERNE']"><i class="pi pi-globe"></i>{{ l.t['MENU_EXPORT'] }}<i class="pi pi-external-link"></i></a>
     </nav>
     <!-- MENU DU BAS -->
     <app-pied></app-pied>
@@ -19,12 +19,12 @@
   </section>
   <section class="jaune">
     <article>
-      <a routerLink="/predictions/profil" [title]="l.t['PROFIL']"><span class="icone">account_circle</span></a>
-      <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><span class="icone">person_off</span></a>
+      <a routerLink="/predictions/profil" [title]="l.t['PROFIL']"><i class="pi pi-user-edit"></i></a>
+      <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><i class="pi pi-ban"></i></a>
     </article>
     <article>
-      <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 77 || authServ.profil.statut == 666"><span class="icone">admin_panel_settings</span></a>
-      <a><span class="icone">miscellaneous_services</span></a>
+      <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 77 || authServ.profil.statut == 666"><i class="pi pi-shield"></i></a>
+      <a><i class="pi pi-cog"></i></a>
     </article>
   </section>
 </main>

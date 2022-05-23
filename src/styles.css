@@ -3,8 +3,9 @@
 :root{
   --grisclair:#E9E9E9;
   --jaune:#F7C45F;
-  --orange:#DFA83A;
+  --orange:#b8820f;
   --vert:#33A537;
+  --vertsombre:#1d5a1f;
   --bleu:#28364A;
   --sombre:#202A3A;
   --rose : #F14668;
@@ -84,6 +85,7 @@ button{
   border: none;
   padding:8px 14px;
   margin:5px;
+  width:max-content;
 }
 select{
   background-color: var(--jaune);
@@ -97,11 +99,12 @@ select *:hover{
   background-color: var(--bleu);
   color:white;
 }
-input, select, textarea{
+input, select, textarea, button{
   padding:10px;
   border:1px solid rgba(255,255,255,.4);
   font-family: 'Raleway', sans-serif;
   overflow-y:auto;
+  transition: all .3s ease;
 }
 input[type="submit"], button.valide{
   background-color:var(--vert);
@@ -110,12 +113,18 @@ input[type="submit"], button.valide{
   cursor: pointer;
   width:fit-content;
 }
+input[type="submit"]:hover, button.valide:hover{
+  background-color:var(--vertsombre);
+}
 input[type="reset"], button.annule{
   background-color:var(--jaune);
   color:white;
   text-transform: uppercase;
   cursor:pointer;
   width:fit-content;
+}
+input[type="reset"]:hover, button.annule:hover{
+  background-color:var(--orange);
 }
 input[type="file"]{
   width: 0.1px;
@@ -410,6 +419,9 @@ td > div.range-slider > input[type="range"]::-webkit-slider-runnable-track{
 }
 nav a{
   margin:10px 0;
+  display:flex;
+  /* justify-content: center; */
+  align-items:center;
 }
 nav hr{
   margin:5px;
@@ -467,9 +479,16 @@ input[type=range]::-moz-focus-outer {
 }
 .icone{
   font-family: 'Material Icons' !important;
-  font-size:24px;
+  font-size:18px;
   vertical-align: middle;
   cursor: pointer;
+}
+.pi{
+  font-size: 18px;
+  padding:6px;
+}
+.p-listbox-filter-icon{
+  padding:0;
 }
 .popup{
   position:absolute;
