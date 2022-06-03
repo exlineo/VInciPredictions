@@ -80,7 +80,7 @@
 <section>
   <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p> -->
-  <h2>{{ l.page.titre }} <button (click)="infos = !infos" class="annule"><i class="pi pi-plus"></i></button></h2>
+  <h2>{{ l.page.titre }} <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i></button></h2>
 
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
@@ -95,7 +95,7 @@
       <i (click)="chartType = 'bar'" class="pi pi-chart-pie"></i>
       <i  (click)="chartType = 'line'" class="pi pi-chart-line"></i>
     </nav>
-    <!-- <p-chart [type]="chartType" [data]="store.dataset | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
+    <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
     <p-chart [type]="chartType" [data]="" [options]="basicOptions"></p-chart>
   </article>
 </section>

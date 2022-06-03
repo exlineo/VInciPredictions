@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
 
@@ -39,38 +38,16 @@ export class DataMajComponent implements OnInit {
   upload(e:any){
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      console.log('csv content', e.target.result);
+      // console.log('csv content', e.target.result);
       this.file = e.target.result;
       // Transform data to Rendement interface array
       this.predServ.setDataset(this.file as string);
     };
     reader.readAsText(e.target.files[0]);
-    console.log(this.file);
   }
-  /** Renew countries list */
-  majPays(){
-
-  }
-  /** Renew regions list */
-  majRegions(){
-
-  }
-  /** Renew PDOs list */
-  majPDO(){
-
-  }
-  /** Renew wines types list */
-  majTypes(){
-
-  }
-
-  /** Get list of countries, regions, PDOs, types
-   * @param {string} f wich filter apply
-  */
-  getList(f:string){
-
-  }
-  setFiltres(){
-
+  /** Save data to database */
+  saveData(){
+    this.file = undefined;
+    this.predServ.docFireAdd();
   }
 }

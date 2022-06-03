@@ -56,7 +56,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         data => data.forEach(
           d => {
             let ds = d.data() as DataI;
-            this.store.dataset = ds.data; // Send data to store
+            this.store.set = ds; // Stock data to store
             // console.log(this.store.dataset);
             this.store.setFilters(); // Set filters from datas
           }

@@ -30,9 +30,10 @@ export class Rendement implements RendementI{
   fiabilites = []; // new Array(11);
 }
 export interface DataI{
+  creeLe?:number;
   data:Array<RendementI>;
   filtres?:{ pays: Array<string>, regions: Array<string>, pdo: Array<string> };
-  moyennes?:{ pays: Array<MoyennesI>, regions: Array<MoyennesI>, pdo: Array<MoyennesI> };
+  moyennes?:{ pays: any, regions: any };
 }
 export enum Couleur{
   blanc = 'blanc',

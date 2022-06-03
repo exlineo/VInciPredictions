@@ -16,7 +16,7 @@ export class VisualService {
     this.store.getFireDoc('predictions', e.target.value)
       .then(d => d.data() as DataI)
       .then(d => {
-        this.store.dataset = d.data;
+        this.store.set = d;
       })
       .catch(er => console.log(er))
   }

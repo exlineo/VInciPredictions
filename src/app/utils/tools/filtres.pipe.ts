@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
 import { GraphI, GraphSetI } from 'src/app/predictions/utils/modeles/graph-i';
-import { isArray } from 'util';
-import { FiltresI, RendementI } from '../modeles/filtres-i';
+import { RendementI } from '../modeles/filtres-i';
 
 marked.setOptions({
   // renderer: new marked.Renderer(),
@@ -14,7 +13,6 @@ marked.setOptions({
   smartypants: false,
   xhtml: true
 });
-
 
 @Pipe({
   name: 'filtres'
@@ -59,7 +57,6 @@ export class EcartsPipe implements PipeTransform {
   transform(values: Array<number>, ecart: number, ordre: number = 0): Array<number> {
     if (!ecart) return values;
     if (!values) return [];
-
     return ordre == 0 ? values.slice(0, ecart) : values.slice(ecart, values.length);
   }
 }

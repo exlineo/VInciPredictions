@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
   selector: 'app-infos',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfosComponent implements OnInit {
 
-  constructor() { }
+  constructor(public l: LanguesService) { }
 
   ngOnInit(): void {
+    // Loading text page content from database
+    this.l.getPage('adminprofils');
   }
 
 }

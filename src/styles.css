@@ -485,7 +485,7 @@ input[type=range]::-moz-focus-outer {
 }
 .pi{
   font-size: 18px;
-  padding:6px;
+  margin:0 6px;
 }
 .p-listbox-filter-icon{
   padding:0;

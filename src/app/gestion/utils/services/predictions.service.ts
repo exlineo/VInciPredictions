@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { writeBatch, doc, getDoc, setDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { DataI, FiltresI, MoyennesI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { StoreService } from 'src/app/utils/services/store.service';
 
@@ -16,10 +16,10 @@ import { environment } from 'src/environments/environment';
 })
 export class PredictionsService {
 
-  loadedDataset: Array<RendementI> = []; // Data from database
+  // loadedDataset: Array<RendementI> = []; // Data from database
   listeVersions: Array<string> = []; // List of loadedDataset versions in Firestore
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
-  moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
+  // moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array<ProfilI> = [];
 
@@ -30,6 +30,7 @@ export class PredictionsService {
    * Load CSV and filter data to set the database
    */
   getCSV(file: string = environment.csvUrl) {
+    this.store.set.data = [];
     this.http.get(file, { responseType: 'text' }).subscribe(d => {
       let lignes = d.split('\n');
       lignes.forEach(l => {
@@ -39,7 +40,7 @@ export class PredictionsService {
   }
   /** Convert CSV data to RendementI array */
   setDataset(data: string) {
-    this.store.dataset = [];
+    this.store.set.data = [];
     let lignes = data.split('\n');
     lignes.forEach(l => {
       this.setPredictions(l);
@@ -54,10 +55,10 @@ export class PredictionsService {
     let m = l.split(',');
     // this.loadedDataset.push(this.conversion(m));
     let tmp = this.conversion(m);
-    this.store.dataset.push(tmp);
-    console.log(m);
+    this.store.set.data.push(tmp);
     // Create lists from data for countries, regions and pdo
     this.store.setFilterFromData(tmp);
+    this.setAverages(); // Get average values
   }
   /** Convert excel line to JSON object */
   conversion(l: Array<any>): RendementI {
@@ -73,43 +74,27 @@ export class PredictionsService {
    av(ar:Array<RendementI>){
     const truc:any = [];
      for(let i=0; i<ar[0].rendements.length; ++i){
-        truc.push(Math.round(ar.reduce( ( p, c ) => p + c.rendements[i], 0 ) / ar.length));
+       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
+        truc.push(Math.round(ar.reduce( ( p, c ) => p + c.rendements[i] | 0, 0 ) / ar.length));
       };
       return truc;
   }
+  /** Calculate averages values on countries and regions */
   setAverages(){
+    // Averages on countries in data
     this.store.listes.pays.forEach(d => {
-      const pays = this.store.dataset.filter(p => p.pays == d);
+      const pays = this.store.set.data.filter(p => d && p.pays == d && d.length > 0);
       pays.forEach(p => {
-        this.moyennes.pays[p.pays] = this.av(pays);
+        if(p.pays && p.pays.length > 0) this.store.set.moyennes!.pays[p.pays] = this.av(pays);
       })
     });
+    // Averages on regions
     this.store.listes.regions.forEach(d => {
-      const regions = this.store.dataset.filter(p => p.regions == d);
+      const regions = this.store.set.data.filter(p => d && p.regions == d && d.length > 0);
       regions.forEach(r => {
-        this.moyennes.regions[r.regions] = this.av(regions);
+        if(r.regions && r.regions.length > 0) this.store.set.moyennes!.regions[r.regions] = this.av(regions);
       })
     });
-    console.log(this.moyennes);
-  }
-  /** List files from fire bucket to get archived datas */
-  listeFiles() {
-    // let fireStore = getStorage();
-    // let listRef = ref(fireStore, 'gs://vinciplateforme');
-
-    // listAll(listRef).then((res) => {
-    //   res.prefixes.forEach((folderRef) => {
-    //   });
-    //   res.items.forEach((itemRef) => {
-    //     // console.log('item', itemRef);
-    //     getMetadata(itemRef).then(meta => {
-    //       this.filesCSV.push({ nom: meta.name, creation: meta.timeCreated, maj: meta.updated, taille: meta.size, bucket: meta.bucket });
-    //       console.log('meta', meta);
-    //     });
-    //   });
-    // }).catch((er) => {
-    //   console.log(er)
-    // });
   }
   /** List predictions versions data */
   listeDatas() {
@@ -126,18 +111,20 @@ export class PredictionsService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-  async batchFireCollecDocs() {
-    let n = 0;
-    this.loadedDataset.forEach(d => {
-      const customDoc = doc(this.store.dbf, this.setColName(), n.toString());
-      this.batch.set(customDoc, d);
-      ++n;
-    })
-    return await this.batch.commit(); // Commit data to write
-  }
+  // async batchFireCollecDocs() {
+  //   let n = 0;
+  //   this.loadedDataset.forEach(d => {
+  //     const customDoc = doc(this.store.dbf, this.setColName(), n.toString());
+  //     this.batch.set(customDoc, d);
+  //     ++n;
+  //   })
+  //   return await this.batch.commit(); // Commit data to write
+  // }
   /** Add loadedDataset formatted as array */
   docFireAdd() {
-    this.store.setFireDoc('predictions', { uid: this.setColName(), doc: { data: this.store.dataset, moyennes:this.moyennes, creeLe:Date.now() } })
+    this.store.set.creeLe = Date.now();
+    console.log(this.store.set);
+    this.store.setFireDoc('predictions', { uid: this.setColName(), doc:this.store.set })
   }
   /** Create ID for a new loadedDataset version */
   setColName() {
@@ -151,9 +138,9 @@ export class PredictionsService {
     this.store.getFireDoc('predictions', e.target.value)
       .then(d => d.data() as DataI)
       .then(d => {
-        this.store.dataset = d.data; // Data loaded send to store
+        this.store.set = d; // Data loaded
         this.store.setFilters(); // Create filters from data
-        this.setAverages(); // Get average values
+        this.setAverages(); // Get average values on countries and regions
       })
       .catch(er => console.log(er))
   }
@@ -161,9 +148,9 @@ export class PredictionsService {
   getListeProfils() {
     this.store.getFireCol('comptes')
       .then(c => {
+        this.listeProfils = [];
         c.forEach(d => {
           this.listeProfils.push(d.data() as ProfilI);
-          console.log(d.data(), d.id);
         })
       })
       .catch(er => console.log(er));

@@ -3,10 +3,7 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signO
 import { Router } from '@angular/router';
 import { Profil, ProfilI } from '../modeles/profil-i';
 import { UserI } from '../modeles/user-i';
-import { StoreService } from './store.service';
 import { LanguesService } from './langues.service';
-import { errorPrefix } from '@firebase/util';
-import { timeStamp } from 'console';
 
 @Injectable({
   providedIn: 'root'

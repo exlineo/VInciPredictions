@@ -20,15 +20,15 @@ export class StoreService {
 
   private doc: any;
   // Dynamic filters list
-  filtres:any;
-  // Set of data
-  dataset:Array<RendementI>=[new Rendement()];
+  filtres: any;
+  // Set of data with filters and averages
+  set: DataI = { creeLe: 0, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
   // Chart configuration
-  chartConfigs:any = {};
+  chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
 
-  constructor(private dbrt: Database, public dbf: Firestore, private http:HttpClient, public alert:MessageService) {}
+  constructor(private dbrt: Database, public dbf: Firestore, private http: HttpClient, public alert: MessageService) { }
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -82,7 +82,7 @@ export class StoreService {
    * @param {string} param Searched object
    * @returns {promise} Send back object
    */
-  async getFireDoc(collec: string, param: string){
+  async getFireDoc(collec: string, param: string) {
     const customDoc = doc(this.dbf, collec, param);
     return await getDoc(customDoc);
   }
@@ -92,15 +92,14 @@ export class StoreService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-  async setFireDoc(collec: string, data:{uid:string, doc:any}){
-    console.log(data.doc, JSON.parse(JSON.stringify(data.doc)));
+  async setFireDoc(collec: string, data: { uid: string, doc: any }) {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
   /** Demo query for Firebase */
-  async getFireFiltre(){
+  async getFireFiltre(pays: string, region: string) {
     // Exemple
-    const q = query(collection(this.dbf, ''), where("state", ">=", "CA"), where("population", ">", 100000));
+    const q = query(collection(this.dbf, ''), where("pays", "==", pays), where("region", "==", region));
   }
   /**
    * Get last document in a collection (for data)
@@ -108,64 +107,66 @@ export class StoreService {
    * @param {string} param Searched object
    * @returns {promise} Send back object
    */
-   async getLastData(){
+  async getLastData() {
     const q = query(collection(this.dbf, 'predictions'), orderBy('creeLe', 'desc'), limit(1));
     return await getDocs(q);
   }
   /** Local charts config */
-  localChartsConfig(){
+  localChartsConfig() {
     return this.http.get('assets/data/charts.json');
   }
   /** Set filters from dataset */
-  setFilters(){
-    this.dataset.forEach(d => this.setFilterFromData(d));
-    console.log(this.listes.regions);
+  setFilters() {
+    this.set.data.forEach(d => this.setFilterFromData(d));
   }
   /** Set filters from dataset
    * @param {any} r a array of data received from server or uploaded
   */
-  setFilterFromData(r:RendementI){
+  setFilterFromData(r: RendementI) {
     // Create lists from data for countries, regions and pdo
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
+  }
+  initSet() {
+    this.set = { creeLe: 0, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
   }
   /**
    * Display success message
    * @param m Message to display
    * @param d Description to display
    */
-  msgOk(m:string, d:string=''){
-    this.alert.add({severity:'success', summary:m, detail:d});
+  msgOk(m: string, d: string = '') {
+    this.alert.add({ severity: 'success', summary: m, detail: d });
   }
   /**
    * Display fail message
    * @param m Message to display
    * @param d Description to display
    */
-  msgFail(m:string, d:string=''){
-    this.alert.add({id:0, severity:'error', summary:m, detail:d});
+  msgFail(m: string, d: string = '') {
+    this.alert.add({ id: 0, severity: 'error', summary: m, detail: d });
   }
   /**
    * Display warnin message
    * @param m Message to display
    * @param d Description to display
    */
-  msgGaffe(m:string, d:string=''){
-    this.alert.add({severity:'warn', summary:m, detail:d});
+  msgGaffe(m: string, d: string = '') {
+    this.alert.add({ severity: 'warn', summary: m, detail: d });
   }
   /**
    * Display information message
    * @param m Message to display
    * @param d Description to display
    */
-  msgInfo(m:string, d:string=''){
-    this.alert.add({severity:'info', summary:m, detail:d});
+  msgInfo(m: string, d: string = '') {
+    this.alert.add({ severity: 'info', summary: m, detail: d });
   }
   /**
    * Clear all messages
    */
-  msgNo(){
+  msgNo() {
     this.alert.clear();
   }
 }

@@ -40,13 +40,13 @@
           <th>{{ l.t['FILTRE_REGIONS'] }}</th>
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of predServ.store.dataset[0].rendements | ecarts:2022-filtresForm.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtresForm.get('debut')?.value - 1983) +i }}</th>
-          <th *ngFor="let r of predServ.store.dataset[0].predictions | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of predServ.store.dataset[0].fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].rendements | ecarts:2022-filtresForm.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtresForm.get('debut')?.value - 1983) +i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].predictions | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of predServ.store.dataset | filtres:filtresForm.value; let i=index">
+        <tr *ngFor="let p of predServ.store.set.data | filtres:filtresForm.value; let i=index">
           <td>{{ p.pays }}</td>
           <td>{{ p.regions }}</td>
           <td>{{ p.pdo }}</td>
@@ -72,6 +72,6 @@
     <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
     <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file"/>
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
-    <button *ngIf="file" (click)="predServ.docFireAdd()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
+    <button *ngIf="file" (click)="saveData()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>
 </section>

@@ -17,6 +17,8 @@ export class ProfilsComponent implements OnInit {
 
   ngOnInit(): void {
     this.predServ.getListeProfils();
+    // Loading text page content from database
+    this.l.getPage('adminprofils');
   }
   /** Set individual statuts on access */
   setStatut(e: any, i: number) {
