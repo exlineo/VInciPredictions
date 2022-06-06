@@ -398,6 +398,12 @@ input[type="range"].ok:active::-webkit-slider-thumb {
 .ecarts > p-slider{
   flex:8;
 }
+.inverse .p-slider .p-slider-range {
+  background: var(--sombre);
+}
+.inverse .p-slider{
+  background: var(--jaune);
+}
 p-listbox{
   max-height:200px;
   overflow-x:hidden;

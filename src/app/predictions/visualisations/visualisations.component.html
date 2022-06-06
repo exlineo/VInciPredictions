@@ -1,20 +1,20 @@
 <!-- FILTERS -->
 <section class="bleu">
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
-  <form [formGroup]="filtresForm" (submit)="appliqueFiltres()" class="bleu">
+  <form [formGroup]="filtresForm" class="bleu">
     <div>
       <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
-      <p-listbox [options]="store.listes.pays" formControlName="pays" [multiple]="true" [checkbox]="true"
+      <p-listbox [options]="store.listes.pays" formControlName="pays" (onChange)="filtrePays($event)" [multiple]="true" [checkbox]="true"
         [filter]="true"></p-listbox>
     </div>
     <div>
       <h3>{{ l.t['FILTRE_REGIONS'] }}</h3>
-      <p-listbox [options]="store.listes.regions" formControlName="regions" [multiple]="true" [checkbox]="true"
+      <p-listbox [options]="store.listes.regions" formControlName="regions" (onChange)="filtreRegions($event)" [multiple]="true" [checkbox]="true"
         [filter]="true"></p-listbox>
     </div>
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
-      <p-listbox [options]="store.listes.pdo" formControlName="pdo" [multiple]="true" [checkbox]="true" [filter]="true">
+      <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="appliqueFiltres($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
     <div class="l">
@@ -60,14 +60,19 @@
     <div>
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
-      <p class="ecarts"><span>{{ filtresForm.controls['rendements'].value[0] }}</span>
-        <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider>
-        <span>{{ filtresForm.controls['rendements'].value[1] }}</span>
+      <p class="ecarts">
+        <span>{{ filtresForm.controls['rendements'].value }}</span>
+        <!-- <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider> -->
+        <p-slider formControlName="rendements" [min]="1981" [max]="2022" class="inverse"></p-slider>
+        <!-- <span>{{ filtresForm.controls['rendements'].value }}</span> -->
+        <span>2022</span>
       </p>
       <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
-      <p class="ecarts"><span>{{ filtresForm.controls['predictions'].value[0] }}</span>
-        <p-slider formControlName="predictions" [range]="true" [min]="2023" [max]="2032"></p-slider>
-        <span>{{ filtresForm.controls['predictions'].value[1] }}</span>
+      <p class="ecarts">
+        <span>{{ filtresForm.controls['predictions'].value }}</span>
+        <p-slider formControlName="predictions" [min]="2023" [max]="2032"></p-slider>
+        <!-- <span>{{ filtresForm.controls['predictions'].value[1] }}</span> -->
+        <span>2032</span>
       </p>
     </div>
     <div class="h">
@@ -89,13 +94,12 @@
   <h3>{{ l.t['RES_VISUAL'] }}</h3>
   <!-- CHART -->
   <article id="chart">
-    <nav>
-      <!-- <span class="icone">scatter_plot</span> -->
+    <!-- <nav>
       <i (click)="chartType = 'bar'" class="pi pi-chart-bar"></i>
       <i (click)="chartType = 'bar'" class="pi pi-chart-pie"></i>
       <i  (click)="chartType = 'line'" class="pi pi-chart-line"></i>
-    </nav>
+    </nav> -->
     <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
-    <p-chart [type]="chartType" [data]="" [options]="basicOptions"></p-chart>
+    <p-chart [type]="chartType" [data]="graphDataset" [options]="basicOptions" #chart></p-chart>
   </article>
 </section>

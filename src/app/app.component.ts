@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { DataService } from './utils/services/data.service';
 import { StoreService } from './utils/services/store.service';
 

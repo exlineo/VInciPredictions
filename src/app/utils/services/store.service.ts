@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
-import { DataI, Rendement, RendementI } from '../modeles/filtres-i';
-import { HttpClient } from '@angular/common/http';
+import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
 import { MessageService } from 'primeng/api';
 
 export interface TraductionI {
@@ -21,14 +20,20 @@ export class StoreService {
   private doc: any;
   // Dynamic filters list
   filtres: any;
+  cols: Array<CreeI> = []; // ID of last data loaded in Firestore
   // Set of data with filters and averages
-  set: DataI = { creeLe: 0, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
+  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres:Array<string> } = { pays: [], regions: [], pdo: [], filtres:[] };
 
-  constructor(private dbrt: Database, public dbf: Firestore, private http: HttpClient, public alert: MessageService) { }
+  constructor(public dbf: Firestore, public alert: MessageService) { }
+
+  /** Prepare data */
+  initSet() {
+    this.set = { creeLe: <CreeI>{}, data: [], moyennes: <MoyennesI>{} };
+  }
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -57,16 +62,6 @@ export class StoreService {
    */
   setData(id: string, data: unknown) {
     localStorage.setItem(id, JSON.stringify(data));
-  }
-  /** Get realtime data */
-  getRTDB() {
-    this.doc = ref(this.dbrt, 'fr');
-    objectVal(this.doc).pipe(
-      // traceUntilFirst('database')
-      first()
-    ).subscribe(
-      d => console.log(d)
-    );
   }
   /**
    * Get entire collection
@@ -102,18 +97,56 @@ export class StoreService {
     const q = query(collection(this.dbf, ''), where("pays", "==", pays), where("region", "==", region));
   }
   /**
-   * Get last document in a collection (for data)
+   * (Deprecated) Get last document in a collection (for data)
    * @param {string} collection Name of called collection
    * @param {string} param Searched object
    * @returns {promise} Send back object
    */
   async getLastData() {
+    const q = query(collection(this.dbf, 'data'));
+    await getDocs(q)
+      .then(d => {
+        d.forEach(l => {
+          this.cols.push(l.data());
+        });
+        this.setSet();
+      })
+  }
+  /** Set data from database */
+  setSet() {
+    this.getFireCol(this.cols[this.cols.length-1].collection!)
+      .then(d => {
+        this.initSet();
+        // console.log(d);
+        d.forEach(c => {
+          if (c.id == 'creeLe') {
+            this.set.creeLe = c.data() as CreeI;
+          } else if (c.id == 'moyennes') {
+            this.set.moyennes = c.data() as MoyennesI;
+          } else {
+            this.set.data.push(c.data() as RendementI);
+          }
+        });
+        this.setFilters(); // Set filters from datas
+      });
+  }
+  /**
+   * (Deprecated) Get last ID document
+   */
+  async getLastID() {
     const q = query(collection(this.dbf, 'predictions'), orderBy('creeLe', 'desc'), limit(1));
     return await getDocs(q);
   }
-  /** Local charts config */
-  localChartsConfig() {
-    return this.http.get('assets/data/charts.json');
+  /** Request countries and/or regions
+   * @param {Array<string>} p List of countries
+   * @param {Array<string} r list of regions
+   */
+  async getAverageData(p: Array<string>, r: Array<string>) {
+
+  }
+  /** Request for filtered data */
+  async getFilteredData(f: FiltresI) {
+
   }
   /** Set filters from dataset */
   setFilters() {
@@ -127,9 +160,6 @@ export class StoreService {
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
-  }
-  initSet() {
-    this.set = { creeLe: 0, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
   }
   /**
    * Display success message

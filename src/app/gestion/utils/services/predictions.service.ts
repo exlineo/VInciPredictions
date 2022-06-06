@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { getDownloadURL, getStorage, list, listAll, ref } from '@angular/fire/storage';
-// import { getMetadata } from 'firebase/storage';
-import { writeBatch, doc, getDoc, setDoc } from "@angular/fire/firestore";
+import { doc, writeBatch } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { CreeI, DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { StoreService } from 'src/app/utils/services/store.service';
 
@@ -22,6 +20,8 @@ export class PredictionsService {
   // moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array<ProfilI> = [];
+  creeTmp?:CreeI;
+  listeDataVersions:Array<CreeI> = []; // List of availlable data
 
   constructor(private http: HttpClient, public store: StoreService) {
     this.listeDatas();
@@ -111,25 +111,35 @@ export class PredictionsService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-  // async batchFireCollecDocs() {
-  //   let n = 0;
-  //   this.loadedDataset.forEach(d => {
-  //     const customDoc = doc(this.store.dbf, this.setColName(), n.toString());
-  //     this.batch.set(customDoc, d);
-  //     ++n;
-  //   })
-  //   return await this.batch.commit(); // Commit data to write
-  // }
+  async batchFireCollecDocs() {
+    let n = 0;
+    const col = this.setDate();
+    this.creeTmp = {time:Date.now(), collection:this.setDate()};
+    this.batch.set(doc(this.store.dbf, col, 'creeLe'), this.creeTmp);
+    this.batch.set(doc(this.store.dbf, col, 'moyennes'), this.store.set.moyennes);
+    this.store.set.data.forEach(d => {
+      const customDoc = doc(this.store.dbf, col, n.toString());
+      this.batch.set(customDoc, d);
+      ++n;
+    });
+    // Commit data to write
+    await this.batch.commit()
+    .then(d => {
+      this.store.setFireDoc('data', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
+      console.log(d);
+    })
+    .catch(er => console.log(er));
+  }
   /** Add loadedDataset formatted as array */
   docFireAdd() {
-    this.store.set.creeLe = Date.now();
-    console.log(this.store.set);
-    this.store.setFireDoc('predictions', { uid: this.setColName(), doc:this.store.set })
+    this.store.set.creeLe!.time = Date.now();
+    this.batchFireCollecDocs();
+    // this.store.setFireDoc('predictions', { uid: this.setDate(), doc:this.store.set })
   }
   /** Create ID for a new loadedDataset version */
-  setColName() {
+  setDate(d:string='dataset:'):string {
     const date = new Date();
-    return `dataset-${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
+    return d+`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
   }
   /** Get dataset from Firestore
    * @param {event} e Event send by select HtmlElement

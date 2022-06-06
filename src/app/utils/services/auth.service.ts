@@ -24,9 +24,6 @@ export class AuthService {
   creeUser(p: any) {
     createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
-        // Add Firebase UID in user's profil
-        console.log(retour, retour.user);
-        console.log(retour.user);
         this.u = retour.user;
         this.l.store.msgOk(this.l.t['MSG_US_ADD'], this.l.t['MSG_US_ADD_DESCR']);
       })
