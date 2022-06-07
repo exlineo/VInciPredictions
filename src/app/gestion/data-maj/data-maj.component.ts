@@ -29,7 +29,6 @@ export class DataMajComponent implements OnInit {
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
   ngOnInit(): void {
-    // this.predServ.getCSV();
   }
   /**
    * Upload CSV file

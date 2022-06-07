@@ -5,9 +5,8 @@ import { doc, writeBatch } from "@angular/fire/firestore";
 import { FileI } from 'src/app/utils/modeles/file-i';
 import { CreeI, DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
-
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,21 +22,10 @@ export class PredictionsService {
   creeTmp?:CreeI;
   listeDataVersions:Array<CreeI> = []; // List of availlable data
 
-  constructor(private http: HttpClient, public store: StoreService) {
+  constructor(private http: HttpClient, public store: StoreService, private l:LanguesService) {
     this.listeDatas();
   };
-  /**
-   * Load CSV and filter data to set the database
-   */
-  getCSV(file: string = environment.csvUrl) {
-    this.store.set.data = [];
-    this.http.get(file, { responseType: 'text' }).subscribe(d => {
-      let lignes = d.split('\n');
-      lignes.forEach(l => {
-        this.setPredictions(l);
-      });
-    });
-  }
+
   /** Convert CSV data to RendementI array */
   setDataset(data: string) {
     this.store.set.data = [];
@@ -59,6 +47,7 @@ export class PredictionsService {
     // Create lists from data for countries, regions and pdo
     this.store.setFilterFromData(tmp);
     this.setAverages(); // Get average values
+    this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
   }
   /** Convert excel line to JSON object */
   conversion(l: Array<any>): RendementI {
@@ -126,7 +115,7 @@ export class PredictionsService {
     await this.batch.commit()
     .then(d => {
       this.store.setFireDoc('data', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
-      console.log(d);
+      this.l.msg.msgOk(this.l.t['MSG_MAJ']);
     })
     .catch(er => console.log(er));
   }
@@ -151,8 +140,12 @@ export class PredictionsService {
         this.store.set = d; // Data loaded
         this.store.setFilters(); // Create filters from data
         this.setAverages(); // Get average values on countries and regions
+        this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
       })
-      .catch(er => console.log(er))
+      .catch(er => {
+        console.log(er);
+        this.l.msg.msgOk(this.l.t['MSG_ER_DESCR']);
+      })
   }
   /** List accounts */
   getListeProfils() {
@@ -161,8 +154,12 @@ export class PredictionsService {
         this.listeProfils = [];
         c.forEach(d => {
           this.listeProfils.push(d.data() as ProfilI);
-        })
+        });
+        this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
       })
-      .catch(er => console.log(er));
+      .catch(er => {
+        console.log(er);
+        this.l.msg.msgOk(this.l.t['MSG_ER_DESCR']);
+      });
   }
 }

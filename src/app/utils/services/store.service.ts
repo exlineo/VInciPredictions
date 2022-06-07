@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 // Accès aux bases de données
-import { first } from 'rxjs/operators';
-import { Database, objectVal, ref } from '@angular/fire/database';
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
+import { cpuUsage } from 'process';
+import { BehaviorSubject } from 'rxjs';
 import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
-import { MessageService } from 'primeng/api';
+import { MsgService } from './msg.service';
 
 export interface TraductionI {
   langue: string;
@@ -17,22 +17,35 @@ export interface TraductionI {
 })
 export class StoreService {
 
-  private doc: any;
+  // private doc: any;
+  config$: BehaviorSubject<any> = new BehaviorSubject({});
   // Dynamic filters list
   filtres: any;
-  cols: Array<CreeI> = []; // ID of last data loaded in Firestore
+  lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
   // Set of data with filters and averages
   set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres:Array<string> } = { pays: [], regions: [], pdo: [], filtres:[] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
 
-  constructor(public dbf: Firestore, public alert: MessageService) { }
+  constructor(public dbf: Firestore, private msg: MsgService) {
+    this.getConfig();
+  }
 
   /** Prepare data */
   initSet() {
     this.set = { creeLe: <CreeI>{}, data: [], moyennes: <MoyennesI>{} };
+  }
+  /** Load app config */
+  async getConfig() {
+    await this.getFireDoc('config', 'app').
+      then(c => {
+        this.config$.next(c.data());
+      })
+      .catch(er => {
+        console.log(er);
+      });
   }
   /**
    * Get back data from local storage
@@ -96,6 +109,13 @@ export class StoreService {
     // Exemple
     const q = query(collection(this.dbf, ''), where("pays", "==", pays), where("region", "==", region));
   }
+  /** Get data from PDO
+   * @param {Array<string>} pdo Array on filters to looking for in database
+  */
+  async getPdo(pdo: Array<string>) {
+    const q = query(collection(this.dbf, this.lastData[this.lastData.length - 1].collection!), where("pdo", "in", pdo));
+    return await getDocs(q);
+  }
   /**
    * (Deprecated) Get last document in a collection (for data)
    * @param {string} collection Name of called collection
@@ -107,14 +127,14 @@ export class StoreService {
     await getDocs(q)
       .then(d => {
         d.forEach(l => {
-          this.cols.push(l.data());
+          this.lastData.push(l.data());
         });
         this.setSet();
       })
   }
   /** Set data from database */
   setSet() {
-    this.getFireCol(this.cols[this.cols.length-1].collection!)
+    this.getFireCol(this.lastData[this.lastData.length - 1].collection!)
       .then(d => {
         this.initSet();
         // console.log(d);
@@ -128,6 +148,7 @@ export class StoreService {
           }
         });
         this.setFilters(); // Set filters from datas
+        console.log(this.set);
       });
   }
   /**
@@ -160,43 +181,5 @@ export class StoreService {
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
-  }
-  /**
-   * Display success message
-   * @param m Message to display
-   * @param d Description to display
-   */
-  msgOk(m: string, d: string = '') {
-    this.alert.add({ severity: 'success', summary: m, detail: d });
-  }
-  /**
-   * Display fail message
-   * @param m Message to display
-   * @param d Description to display
-   */
-  msgFail(m: string, d: string = '') {
-    this.alert.add({ id: 0, severity: 'error', summary: m, detail: d });
-  }
-  /**
-   * Display warnin message
-   * @param m Message to display
-   * @param d Description to display
-   */
-  msgGaffe(m: string, d: string = '') {
-    this.alert.add({ severity: 'warn', summary: m, detail: d });
-  }
-  /**
-   * Display information message
-   * @param m Message to display
-   * @param d Description to display
-   */
-  msgInfo(m: string, d: string = '') {
-    this.alert.add({ severity: 'info', summary: m, detail: d });
-  }
-  /**
-   * Clear all messages
-   */
-  msgNo() {
-    this.alert.clear();
   }
 }

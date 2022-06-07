@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PageI } from '../modeles/page-i';
+import { MsgService } from './msg.service';
 import { StoreService } from './store.service';
 
 
@@ -22,7 +23,7 @@ export class LanguesService {
    * @param http Opérer des requêtes HTTP
    * @param store Service de gestion des données locales
    */
-  constructor(private http: HttpClient, public store: StoreService) {
+  constructor(private http: HttpClient, public store: StoreService, public msg:MsgService) {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
     this.langue = this.store.getLocalString('langue', 'fr');
     // Récupérer les traductions stockées en local pour éviter des requêtes

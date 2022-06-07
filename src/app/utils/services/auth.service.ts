@@ -25,13 +25,13 @@ export class AuthService {
     createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
         this.u = retour.user;
-        this.l.store.msgOk(this.l.t['MSG_US_ADD'], this.l.t['MSG_US_ADD_DESCR']);
+        this.l.msg.msgOk(this.l.t['MSG_US_ADD'], this.l.t['MSG_US_ADD_DESCR']);
       })
       .catch((error) => {
         if(error.code == 'auth/email-already-in-use'){
-          this.l.store.msgFail(this.l.t['MSG_ER_US_DEJA'], this.l.t['MSG_ER_US_DEJA_DESCR']);
+          this.l.msg.msgFail(this.l.t['MSG_ER_US_DEJA'], this.l.t['MSG_ER_US_DEJA_DESCR']);
         }else{
-          this.l.store.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
+          this.l.msg.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
         }
         console.log(error.code, error.message);
       });
@@ -43,11 +43,11 @@ export class AuthService {
     if (this.u.uid) {
       this.l.store.setFireDoc('comptes', { uid: this.u.uid, doc:this.profil })
         .then(r => {
-          this.l.store.msgOk(this.l.t['MSG_AC_ADD'], this.l.t['MSG_AC_ADD_DESCR']);
+          this.l.msg.msgOk(this.l.t['MSG_AC_ADD'], this.l.t['MSG_AC_ADD_DESCR']);
           this.route.navigateByUrl('/');
         })
         .catch(er => {
-          this.l.store.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
+          this.l.msg.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
           console.log(er);
         });
     }else{
@@ -85,13 +85,13 @@ export class AuthService {
           .then(p => {
             // console.log("Création du compte réussie", u);
             this.profil = p as ProfilI;
-            this.l.store.msgOk(this.l.t['MSG_LOG'], this.l.t['MSG_LOG_DESCR']);
+            this.l.msg.msgOk(this.l.t['MSG_LOG'], this.l.t['MSG_LOG_DESCR']);
             this.route.navigateByUrl('/predictions');
           })
           .catch(er => console.log(er));
       })
       .catch((error) => {
-        this.l.store.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']);
+        this.l.msg.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']);
         console.log(error.code, error.message);
       });
   }
@@ -100,11 +100,11 @@ export class AuthService {
     signOut(this.auth).then(() => {
       this.u.uid = undefined;
       this.profil.statut = 0;
-      this.l.store.msgOk(this.l.t['MSG_DELOG']);
+      this.l.msg.msgOk(this.l.t['MSG_DELOG']);
       console.log("Déconnexion réussie");
       this.route.navigateByUrl('/');
     }).catch((er) => {
-      this.l.store.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']);
+      this.l.msg.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']);
       console.log('Problème dans la déconnexion', er);
     });
   };

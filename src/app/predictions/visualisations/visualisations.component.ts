@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Dataset } from 'src/app/utils/modeles/filtres-i';
+import { Dataset, Rendement, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { UIChart } from 'primeng/chart';
 })
 export class VisualisationsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('chart') chart!:UIChart;
+  @ViewChild('chart') chart!: UIChart;
 
   filtres: Array<string> = []; // Ensemble des filtres appliqués
   l$!: Subscription;
@@ -33,10 +33,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   });
   chartType: string = 'line';
   basicOptions: any;
-  graphDataset: any = { labels: [1983,1984,1985,1986,1987,1988,1989,1990], datasets: [] };
+  graphDataset: any = { labels: [], datasets: [] };
   /** Portées des années à filtrer */
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
+  config: any; // App config
+  pdo: Array<RendementI> = [];
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
@@ -54,7 +57,17 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     }
     );
     // Get last data from Firebase
-    this.store.getLastData();
+    this.store.config$.subscribe(c => {
+      if (c.rendements) {
+        this.graphDataset.labels = [];
+        const ecart = c.rendements.fin - c.rendements.debut;
+        for (let i = 0; i < ecart; ++i) {
+          this.graphDataset.labels.push(c.rendements.debut + i);
+        };
+        this.config = c;
+      }
+      this.store.getLastData();
+    });
     // Options for charts
     this.basicOptions = {
       plugins: {
@@ -90,54 +103,79 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.l$.unsubscribe();
   }
   /** Set data for graph view */
-  setGraphData(ev:any) {
+  setGraphData(ev: any) {
     this.store.listes.filtres.forEach(f => {
       // ev.value.forEach(e => console.log(e));
     })
   }
-  /** Get average data from countries */
-  filtrePays(e:any){
-    this.setFiltres(e.value, this.store.listes.pays);
-    e.value.forEach((f:string) => {
-      this.setDataset(f, this.store.set.moyennes?.pays[f]);
-    });
+  /** Get data from countries selected countries */
+  filtrePays(e: any) {
+    this.listes.pays = e.value;
+    this.setFiltres();
   }
-  /** Get average data from regions */
-  filtreRegions(e:any){
-    this.setFiltres(e.value, this.store.listes.regions);
-    e.value.forEach((f:string) => {
-      this.setDataset(f, this.store.set.moyennes?.regions[f]);
-    });
+  /** Get data from selected regions */
+  filtreRegions(e: any) {
+    this.listes.regions = e.value;
+    this.setFiltres();
   }
   /** Get average data */
-  filtrePdo(e:any){
-    this.setFiltres(e.value, this.store.listes.regions);
-
+  filtrePdo(e: any) {
+    this.listes.pdo = e.value;
+    this.pdo = [];
+    if (e.value.length > 0) {
+      this.store.getPdo(e.value)
+        .then(d => {
+          d.forEach(p => {
+            // console.log(p.data())
+            // const tmp = p.data() as RendementI;
+            this.pdo.push(p.data() as RendementI);
+          });
+          console.log(this.pdo);
+          this.setFiltres();
+        })
+    }else{
+      this.setFiltres();
+    }
+  }
+  setCouleur(i: number = 0, c: string = 'rouge') {
+    return this.config.couleurs ? this.config.couleurs[c][i] : '#78281F';
   }
   /** Set filters and add data to graph */
-  setFiltres(f:Array<string>, ref:Array<string>){
-    // Get filters not in filter array
-    const l = ref.filter(e => !f.includes(e));
-    // Searcing in data to look for old
-    this.graphDataset.datasets.forEach((d:any, index:number) => {
-      // Transformation en chaîne pour vérifier la présence d'un donnée
-      const tmp = JSON.stringify(d);
-      // Boucle dans les éléments qui n'apparaissent pas dans la liste
-      l.forEach(s => {
-        if(tmp.indexOf(s) != -1) this.graphDataset.datasets.splice(index, 1);
-      });
-    });
+  setFiltres() {
+    this.graphDataset.datasets = [];
+    const data: Array<any> = [];
+    for (let i = 0; i < this.listes.pays.length; ++i) {
+      this.setDataset(this.listes.pays[i], this.store.set.moyennes?.pays[this.listes.pays[i]], this.setCouleur(i, 'bleu'));
+    };
+    for (let i = 0; i < this.listes.regions.length; ++i) {
+      this.setDataset(this.listes.regions[i], this.store.set.moyennes?.regions[this.listes.regions[i]], this.setCouleur(i, 'orange'));
+    };
+    // Add PDO
+    for (let i = 0; i < this.pdo.length; ++i) {
+      this.setDataset(this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'vert'));
+    };
+    // this.graphDataset.datasets.concat(this.pdo);
+    console.log(this.graphDataset.datasets, this.pdo);
+    // Refresh data on graph
     this.chart.refresh();
-    console.log(this.graphDataset);
   }
-  /** Set dataset */
-  setDataset(f:string, d:any){
+  setArrayDataset(ar: Array<any>) {
+    console.log(ar);
+    // ar.forEach(d => {
+
+    // })
+  }
+  /** Set dataset
+   * @param {string} l Label to write on over
+   * @param {any} d Array of data to write on graph
+   * @param {string} c Color of line
+  */
+  setDataset(l: string, d: any, c: string = '#78281F') {
     const tmp = new Dataset();
     tmp.data = d;
-    tmp.label = f;
-    if(!this.graphDataset.datasets.includes(tmp)) this.graphDataset.datasets.push(tmp);
-
-    this.chart.refresh();
+    tmp.label = l;
+    tmp.borderColor = c;
+    if (!this.graphDataset.datasets.includes(tmp)) this.graphDataset.datasets.push(tmp);
   }
   /** Valid filters and create chart */
   appliqueFiltres(e: any) {
