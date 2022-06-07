@@ -102,4 +102,25 @@
     <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
     <p-chart [type]="chartType" [data]="graphDataset" [options]="basicOptions" #chart></p-chart>
   </article>
+  <article>
+    <h3>{{ l.t['FILTRE_FIABILITE'] }}</h3>
+    <table *ngIf="pdo.length > 0">
+      <thead>
+        <tr>
+          <th>{{ l.t['FILTRE_PAYS'] }}</th>
+          <th>{{ l.t['FILTRE_REGIONS'] }}</th>
+          <th>{{ l.t['FILTRE_PDO'] }}</th>
+          <th *ngFor="let a of pdo[0].predictions; let i=index">{{ config.predictions.debut + i }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of pdo">
+          <td>{{ d.pays }}</td>
+          <td>{{ d.regions }}</td>
+          <td>{{ d.pdo }}</td>
+          <td *ngFor="let p of d.predictions">{{ p }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
 </section>

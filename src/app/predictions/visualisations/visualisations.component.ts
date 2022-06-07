@@ -198,4 +198,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   //     })
   //     .catch(er => console.log(er));
   // }
+  setLimits(n:number){
+    return new Array(n);
+  }
 }
