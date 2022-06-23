@@ -67,7 +67,7 @@ export class AuthService {
    * @param mail User's email
    * @param mdp User's password
    */
-  idUser(connexion: { mail: string, pass: string }) {
+  idUser(mail: string, pass: string) {
     console.log("Connexion");
     /**
      * Get authentication from user's credentials
@@ -75,10 +75,10 @@ export class AuthService {
      * @param {string} connexion.mail Email from id form
      * @param {string} connexion.pass Password from id form
      */
-    signInWithEmailAndPassword(this.auth, connexion.mail, connexion.pass)
+    signInWithEmailAndPassword(this.auth, mail, pass)
       .then((r) => {
         this.u.uid = r.user.uid;
-        this.u.email = connexion.mail;
+        this.u.email = mail;
         // Get profil from Firestore
         this.l.store.getFireDoc('comptes', r.user.uid)
           .then(d => d.data())

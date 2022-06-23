@@ -4,6 +4,7 @@ import { CustomPattern } from '../utils/tools/CustomErrorMatch';
 
 import { LanguesService } from '../utils/services/langues.service';
 import { AuthService } from '../utils/services/auth.service';
+import { UserI } from '../utils/modeles/user-i';
 
 @Component({
   selector: 'app-connexion',
@@ -31,6 +32,6 @@ export class ConnexionComponent implements OnInit {
   }
   /** Créer un compte */
   connexion(){
-    this.auth.idUser(this.connexionForm.value);
+    this.auth.idUser(this.connexionForm.value.mail, this.connexionForm.value.pass);
   }
 }

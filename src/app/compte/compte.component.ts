@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LanguesService } from '../utils/services/langues.service';
 import { AuthService } from '../utils/services/auth.service';
+import { Profil } from '../utils/modeles/profil-i';
 
 @Component({
   selector: 'app-compte',
@@ -56,6 +57,6 @@ export class CompteComponent implements OnInit {
   /** Create user's profile */
   creeProfil(){
     console.log(this.profil.value);
-    this.auth.creeProfil(this.profil.value);
+    this.auth.creeProfil(this.profil.value as Profil);
   }
 }
