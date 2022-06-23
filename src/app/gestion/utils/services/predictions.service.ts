@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { doc, writeBatch } from "@angular/fire/firestore";
+import { Firestore, doc, writeBatch, setDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
 import { CreeI, DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
@@ -17,12 +16,12 @@ export class PredictionsService {
   listeVersions: Array<string> = []; // List of loadedDataset versions in Firestore
   filesCSV: Array<FileI> = []; // List of files uploaded with datas
   // moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
-  batch = writeBatch(this.store.dbf); // Prepare write of new loadedDataset collection
+  batch = writeBatch(this.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array<ProfilI> = [];
   creeTmp?:CreeI;
   listeDataVersions:Array<CreeI> = []; // List of availlable data
 
-  constructor(private http: HttpClient, public store: StoreService, private l:LanguesService) {
+  constructor(private dbf:Firestore, public store: StoreService, private l:LanguesService) {
     this.listeDatas();
   };
 
@@ -104,10 +103,10 @@ export class PredictionsService {
     let n = 0;
     const col = this.setDate();
     this.creeTmp = {time:Date.now(), collection:this.setDate()};
-    this.batch.set(doc(this.store.dbf, col, 'creeLe'), this.creeTmp);
-    this.batch.set(doc(this.store.dbf, col, 'moyennes'), this.store.set.moyennes);
+    this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
+    this.batch.set(doc(this.dbf, col, 'moyennes'), this.store.set.moyennes);
     this.store.set.data.forEach(d => {
-      const customDoc = doc(this.store.dbf, col, n.toString());
+      const customDoc = doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
       ++n;
     });
@@ -140,11 +139,11 @@ export class PredictionsService {
         this.store.set = d; // Data loaded
         this.store.setFilters(); // Create filters from data
         this.setAverages(); // Get average values on countries and regions
-        this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
+        // this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
       })
       .catch(er => {
         console.log(er);
-        this.l.msg.msgOk(this.l.t['MSG_ER_DESCR']);
+        this.l.msg.msgFail(this.l.t['MSG_ER'], er);
       })
   }
   /** List accounts */
@@ -155,11 +154,27 @@ export class PredictionsService {
         c.forEach(d => {
           this.listeProfils.push(d.data() as ProfilI);
         });
-        this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
+        // this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
       })
       .catch(er => {
         console.log(er);
-        this.l.msg.msgOk(this.l.t['MSG_ER_DESCR']);
+        this.l.msg.msgFail(this.l.t['MSG_ER'], er);
       });
+  }
+  /**
+   * write a document on Firestore
+   * @param collec Name of collection
+   * @param data Object with UID to write
+   * @returns {promise} Returns a promise
+   */
+   async setFireDoc(collec: string, data: { uid: string, doc: any }) {
+    const customDoc = doc(this.dbf, collec, data.uid);
+    return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
+  }
+  async updateProfil(i:number){
+    const customDoc = doc(this.dbf, 'comptes', this.listeProfils[i].u.uid!);
+    await setDoc(customDoc, JSON.parse(JSON.stringify(this.listeProfils[i])), { merge: true })
+    .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
+    .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
   }
 }

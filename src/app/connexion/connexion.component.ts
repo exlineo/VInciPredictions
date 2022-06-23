@@ -14,8 +14,8 @@ import { UserI } from '../utils/modeles/user-i';
 export class ConnexionComponent implements OnInit {
 
   connexionForm = this.fbuild.group({
-    mail: ['', [Validators.required, Validators.email]],
-    pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
+    mail!: ['', [Validators.required, Validators.email]],
+    pass!: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
   });
   /**
    * Formulaire de connexion des utilisateurs
@@ -32,6 +32,6 @@ export class ConnexionComponent implements OnInit {
   }
   /** Créer un compte */
   connexion(){
-    this.auth.idUser(this.connexionForm.value.mail, this.connexionForm.value.pass);
+    this.auth.idUser(this.connexionForm.value.mail as string, this.connexionForm.value.pass as string);
   }
 }

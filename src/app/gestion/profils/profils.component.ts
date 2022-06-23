@@ -95,11 +95,11 @@ export class ProfilsComponent implements OnInit {
     // return classe;
     return ''
   }
-  /** Save an account in database
-   * @param {number} i index of account to save
+  /** Update an account in database
+   * @param {number} i index of account to update
   */
   saveProfil(i:number){
-
+    this.predServ.updateProfil(i);
   }
   /** Delete an account
    * @param {number} i index of account to save

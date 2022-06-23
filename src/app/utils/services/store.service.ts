@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
-import { cpuUsage } from 'process';
 import { BehaviorSubject } from 'rxjs';
 import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
 import { MsgService } from './msg.service';

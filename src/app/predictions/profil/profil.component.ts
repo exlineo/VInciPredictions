@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { AuthService } from 'src/app/utils/services/auth.service';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 
@@ -33,7 +34,7 @@ export class ProfilComponent implements OnInit {
   /** Update user's profile */
   majProfil(){
     console.log(this.profil.value);
-    this.auth.creeProfil(this.profil.value);
+    this.auth.creeProfil(this.profil.value as ProfilI);
   }
 
 }

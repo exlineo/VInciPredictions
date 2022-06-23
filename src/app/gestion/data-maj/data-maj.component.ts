@@ -20,8 +20,8 @@ export class DataMajComponent implements OnInit {
     moyennes: [''],
     croissance: [''],
     type: [''],
-    debut!: [1983],
-    fin!: [2032]
+    debut: [1983],
+    fin: [2032]
   });
   /** File to load */
   file?: string;

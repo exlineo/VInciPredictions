@@ -31,18 +31,19 @@
       <thead class="grisclair">
         <tr>
           <th colspan="4"></th>
-          <th [attr.colspan]="2022-filtresForm.get('debut').value" class="vert">{{ l.t['FILTRE_RENDEMENTS'] }}</th>
-          <th [attr.colspan]="filtresForm.get('fin')?.value-2021" class="orange">{{ l.t['FILTRE_PREDICTIONS'] }}</th>
-          <th [attr.colspan]="filtresForm.get('fin')?.value-2021" class="rouge">{{ l.t['FILTRE_FIABILITE'] }}</th>
+          <!-- <th [attr.colspan]="2022-filtresForm.get('debut').value" class="vert">{{ l.t['FILTRE_RENDEMENTS'] }}</th> -->
+          <th [attr.colspan]="2022-filtresForm.value.debut!" class="vert">{{ l.t['FILTRE_RENDEMENTS'] }}</th>
+          <th [attr.colspan]="filtresForm.value.fin!-2021" class="orange">{{ l.t['FILTRE_PREDICTIONS'] }}</th>
+          <th [attr.colspan]="filtresForm.value.fin!-2021" class="rouge">{{ l.t['FILTRE_FIABILITE'] }}</th>
         </tr>
         <tr>
           <th>{{ l.t['FILTRE_PAYS'] }}</th>
           <th>{{ l.t['FILTRE_REGIONS'] }}</th>
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].rendements | ecarts:2022-filtresForm.get('debut')?.value; let i=index" class="vert">{{ 1983 + (filtresForm.get('debut')?.value - 1983) +i }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].predictions | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1; let i=index" class="rouge">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].rendements | ecarts:2022-filtresForm.value.debut!; let i=index" class="vert">{{ 1983 + (filtresForm.value.debut! - 1983) +i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].predictions | ecarts:2032-filtresForm.value.fin!:1; let i=index" class="orange">{{ 2022 + i }}</th>
+          <th *ngFor="let r of predServ.store.set.data[0].fiabilites | ecarts:2032-filtresForm.value.fin!:1; let i=index" class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
       <tbody>
@@ -51,9 +52,9 @@
           <td>{{ p.regions }}</td>
           <td>{{ p.pdo }}</td>
           <td>{{ p.type }}</td>
-          <td *ngFor="let r of p.rendements | ecarts:2022-filtresForm.get('debut')?.value" class="vertclair">{{ r }}</td>
-          <td *ngFor="let pr of p.predictions | ecarts:2032-filtresForm.get('fin')?.value:1" class="orangeclair">{{ pr }}</td>
-          <td *ngFor="let f of p.fiabilites | ecarts:2032-filtresForm.get('fin')?.value:1" class="rougeclair">{{ f }}</td>
+          <td *ngFor="let r of p.rendements | ecarts:2022-filtresForm.value.debut!" class="vertclair">{{ r }}</td>
+          <td *ngFor="let pr of p.predictions | ecarts:2032-filtresForm.value.fin!:1" class="orangeclair">{{ pr }}</td>
+          <td *ngFor="let f of p.fiabilites | ecarts:2032-filtresForm.value.fin!:1" class="rougeclair">{{ f }}</td>
         </tr>
       </tbody>
     </table>
