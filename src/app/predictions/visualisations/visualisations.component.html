@@ -102,9 +102,9 @@
     <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
     <p-chart [type]="chartType" [data]="graphDataset" [options]="basicOptions" #chart></p-chart>
   </article>
-  <article>
+  <article *ngIf="pdo.length > 0">
     <h3>{{ l.t['FILTRE_FIABILITE'] }}</h3>
-    <table *ngIf="pdo.length > 0">
+    <table>
       <thead>
         <tr>
           <th>{{ l.t['FILTRE_PAYS'] }}</th>
