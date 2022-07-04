@@ -7,18 +7,18 @@
     <app-entete></app-entete>
     <p>{{ l.page.contenu }}</p>
     <!-- FORMULAIRE DE CONNEXION -->
-    <form [formGroup]="connexionForm" (submit)="connexion()">
+    <form [formGroup]="passForm" (submit)="connexion()">
       <!-- EMAIL -->
       <fieldset>
         <label>{{ l.t['FORM_EMAIL'] }} *</label>
         <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
         <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
         <span
-          *ngIf="connexionForm.controls['mail'].hasError('email') && !connexionForm.controls['mail'].hasError('required')"
+          *ngIf="passForm.controls['mail'].hasError('email') && !passForm.controls['mail'].hasError('required')"
           class="orange">
           {{ l.t['FORM_FORMAT_MAIL'] }}
         </span>
-        <span *ngIf="connexionForm.controls['mail'].hasError('required')" class="orange">
+        <span *ngIf="passForm.controls['mail'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
@@ -28,17 +28,18 @@
         <input type="password" formControlName="pass" require [placeholder]="l.t['FORM_PASSE']" minlength="8" required>
         <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
         <span
-          *ngIf="connexionForm.controls['pass'].hasError('pattern') && !connexionForm.controls['pass'].hasError('required')"
+          *ngIf="passForm.controls['pass'].hasError('pattern') && !passForm.controls['pass'].hasError('required')"
           class="orange">
           {{ l.t['FORM_FORMAT_PASSE'] }}
         </span>
-        <span *ngIf="connexionForm.controls['pass'].hasError('required')" class="orange">
+        <span *ngIf="passForm.controls['pass'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>
       </fieldset>
       <fieldset>
         <a (click)="oublie = true" [title]="l.t['FORM_OUBLIE']"><span class="icone">vpn_key</span>{{ l.t['FORM_OUBLIE']
           }}</a>
+
         <a routerLink="/compte" [title]="l.t['FORM_CREE']"><span class="icone">person_add_alt</span>{{ l.t['FORM_CREE']
           }}</a>
       </fieldset>

@@ -14,7 +14,7 @@
     </div>
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
-      <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
+      <p-listbox [options]="store.listes.pdo | types:filtresForm.controls.type.value" formControlName="pdo" (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
     <div class="l">
@@ -43,13 +43,11 @@
           <!-- <input type="radio" name="couleur" value="rouge"> -->
           {{ l.t['FILTRE_ROUGE'] }}
         </label>
-
         <label>
           <p-radioButton name="type" value="blanc" formControlName="type"></p-radioButton>
           <!-- <input type="radio" name="couleur" value="blanc"> -->
           {{ l.t['FILTRE_BLANC'] }}
         </label>
-
         <label>
           <p-radioButton name="type" value="" formControlName="type"></p-radioButton>
           <!-- <input type="radio" name="couleur" value=""> -->

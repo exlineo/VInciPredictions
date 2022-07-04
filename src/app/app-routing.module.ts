@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompteComponent } from './compte/compte.component';
 import { ConnexionComponent } from './connexion/connexion.component';
+import { OublieComponent } from './connexion/oublie/oublie.component';
 import { ContactComponent } from './contact/contact.component';
 import { ErreurComponent } from './erreur/erreur.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule)},
   {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule)},
   {path:'contact', component:ContactComponent},
+  {path:'oublie/:uid', component:OublieComponent},
   {path:'**', component:ErreurComponent}
 ];
 

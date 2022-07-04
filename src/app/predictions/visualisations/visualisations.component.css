@@ -32,3 +32,6 @@ section:nth-child(1) > form{
   overflow-x:auto;
   overflow-y:hidden;
 } */
+table{
+  width:100%;
+}

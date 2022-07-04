@@ -21,7 +21,7 @@ import { EnteteComponent } from 'src/app/structure/entete/entete.component';
 import { PiedComponent } from 'src/app/structure/pied/pied.component';
 import { PopupComponent } from '../structure/popup/popup.component';
 
-import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/filtres.pipe';
+import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe, TypesPipe } from '../utils/tools/filtres.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     MarkPipe,
     FiltresPipe,
     GraphPipe,
-    EcartsPipe
+    EcartsPipe,
+    TypesPipe
   ],
   exports:[
     EnteteComponent,
@@ -41,6 +42,7 @@ import { EcartsPipe, FiltresPipe, GraphPipe, MarkPipe } from '../utils/tools/fil
     FiltresPipe,
     GraphPipe,
     EcartsPipe,
+    TypesPipe,
     ReactiveFormsModule,
     HttpClientModule,
     ChartModule,

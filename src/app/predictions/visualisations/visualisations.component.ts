@@ -4,8 +4,8 @@ import { Dataset, Rendement, RendementI } from 'src/app/utils/modeles/filtres-i'
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
-import { GraphI } from '../utils/modeles/graph-i';
 import { UIChart } from 'primeng/chart';
+import { AnyAaaaRecord } from 'dns';
 
 @Component({
   selector: 'app-visualisations',
@@ -24,7 +24,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     regions: [[]],
     pdo: [[]],
     rendements: [1981],
-    predictions: [2023],
+    predictions: [2032],
     moyennes: [''],
     croissance: [''],
     type: [''],
@@ -40,6 +40,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
   config: any; // App config
   pdo: Array<RendementI> = [];
+  couleurs:Array<string> = ['ff','ee','dd','cc','bb','aa','90','80','70','60','50','40','30','20']; // Calculate colors for gradients ont graph
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
@@ -126,8 +127,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.store.getPdo(e.value)
         .then(d => {
           d.forEach(p => {
-            // console.log(p.data())
-            // const tmp = p.data() as RendementI;
             this.pdo.push(p.data() as RendementI);
           });
           console.log(this.pdo);
@@ -137,8 +136,21 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.setFiltres();
     }
   }
-  setCouleur(i: number = 0, c: string = 'rouge') {
-    return this.config.couleurs ? this.config.couleurs[c][i] : '#78281F';
+  setCouleur(i: number = 0, coul:string='bleu') {
+    let c = '';
+
+    switch(coul){
+      case 'rouge':
+        c = this.couleurs[i] + '0000';
+        break;
+      case 'vert':
+        c = '00' + this.couleurs[i] + '00';
+        break;
+      case 'bleu':
+        c = '0000' + this.couleurs[i];
+        break;
+    }
+    return '#' + c;
   }
   /** Set filters and add data to graph */
   setFiltres() {
@@ -148,11 +160,11 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.setDataset(this.listes.pays[i], this.store.set.moyennes?.pays[this.listes.pays[i]], this.setCouleur(i, 'bleu'));
     };
     for (let i = 0; i < this.listes.regions.length; ++i) {
-      this.setDataset(this.listes.regions[i], this.store.set.moyennes?.regions[this.listes.regions[i]], this.setCouleur(i, 'orange'));
+      this.setDataset(this.listes.regions[i], this.store.set.moyennes?.regions[this.listes.regions[i]], this.setCouleur(i, 'vert'));
     };
     // Add PDO
     for (let i = 0; i < this.pdo.length; ++i) {
-      this.setDataset(this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'vert'));
+      this.setDataset(this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge'));
     };
     // this.graphDataset.datasets.concat(this.pdo);
     console.log(this.graphDataset.datasets, this.pdo);
@@ -182,22 +194,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     console.log(this.filtresForm.value);
     // this.setGraphData();
   }
-  /** List accounts */
-  // getChartsConfig() {
-  //   this.store.getFireDoc('graphes', 'config')
-  //     .then(c => c.data())
-  //     .then(c => {
-  //       // Get data for charts
-  //       this.store.getLastData()
-  //         .then(
-  //           data => data.forEach(
-  //             d => console.log(d.data())
-  //           )
-  //         )
-  //         .catch(er => console.log(er));
-  //     })
-  //     .catch(er => console.log(er));
-  // }
+  /** Set limits for years filters */
   setLimits(n:number){
     return new Array(n);
   }

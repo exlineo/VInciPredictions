@@ -26,6 +26,7 @@ import { AuthService } from './utils/services/auth.service';
 import { UtilsModule } from './utils/utils.module';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
+import { OublieComponent } from './connexion/oublie/oublie.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MentionsComponent } from './structure/mentions/mentions.component';
     CompteComponent,
     ErreurComponent,
     RgpdComponent,
-    MentionsComponent
+    MentionsComponent,
+    OublieComponent
   ],
   imports: [
     BrowserModule,

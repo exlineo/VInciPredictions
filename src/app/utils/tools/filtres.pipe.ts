@@ -111,3 +111,18 @@ export class GraphPipe implements PipeTransform {
     return vals;
   }
 }
+/**
+ * Filter wine types in visualisation page
+ */
+@Pipe({
+  name: 'types'
+})
+export class TypesPipe implements PipeTransform {
+
+  transform(values: Array<any>, type: string | null) {
+    if (!type || type.length == 0) return values;
+    if (!values) return [];
+
+    return values.filter(v => v.type == type);
+  }
+}

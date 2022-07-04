@@ -16,13 +16,14 @@
   <section class="orange">
     <h2>{{ l.t['COMPTE'] }}</h2>
     <p-tabView [(activeIndex)]="tabI">
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']" [disabled]="this.auth.u.uid ? true : false">
+      <!-- <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']" [disabled]="this.auth.u.uid ? true : false"> -->
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']">
         <!-- Create account -->
         <form [formGroup]="account" (submit)="creeCompte()">
           <fieldset>
             <label>{{ l.t['FORM_EMAIL'] }} *</label>
             <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
-            <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+            <!-- <span class="orange"> -->
             <span *ngIf="account.get('mail')?.hasError('email') && account.get('mail')?.hasError('required')"
               class="orange">
               {{ l.t['FORM_FORMAT_MAIL'] }}
@@ -79,7 +80,8 @@
 
         <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
       </p-tabPanel>
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.u.uid ? false : true">
+      <!-- <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.u.uid ? false : true"> -->
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']">
         <!-- ACCOUNT FORM -->
         <form [formGroup]="profil" (submit)="creeProfil()">
           <!-- Name, Surname -->

@@ -11,6 +11,7 @@
   "FORM_EMAIL2":"Email (confirmer)",
   "FORM_NOM":"Votre nom",
   "FORM_PRENOM":"Votre prénom",
+  "FORM_ORG":"Votre organisation",
   "FORM_ADR":"Adresse",
   "FORM_ADR2":"Adresse (complément)",
   "FORM_ZIP":"Code postal",

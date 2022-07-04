@@ -13,10 +13,12 @@ import { UserI } from '../utils/modeles/user-i';
 })
 export class ConnexionComponent implements OnInit {
 
+  // Connexion form
   connexionForm = this.fbuild.group({
     mail!: ['', [Validators.required, Validators.email]],
     pass!: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
   });
+  oublie:boolean = false; // Boolean to show form for forgotten password
   /**
    * Formulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues
@@ -27,7 +29,7 @@ export class ConnexionComponent implements OnInit {
     this.l.getPage('connexion');
   }
   /** Permettre de réinitialiser le mot de passe */
-  oublie(){
+  oubliePasse(){
 
   }
   /** Créer un compte */
