@@ -156,5 +156,8 @@
   "EDIT_MENU_INTERFACE":"Editer l'interface du logiciel",
   "EDIT_INIT":"Contenu initial",
   "EDIT_EDIT":"Contenu à éditer",
-  "EDIT_TITRE":"Titre à éditer"
+  "EDIT_TITRE":"Titre à éditer",
+  "SUP_MAIL":"Contacter le support",
+  "SUP_MSG":"Envoyer un message au support",
+  "SUP_QUEST":"Poser une question"
 }

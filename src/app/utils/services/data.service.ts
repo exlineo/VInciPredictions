@@ -9,14 +9,11 @@ import { LanguesService } from './langues.service';
 })
 export class DataService {
 
-  private doc:any;
-  pop:boolean = false;
-  page:PageI= {nom:'', titre:'', contenu:''}; // Nom de la page en cours si nécessaire
-  /**
-   * Service de gestion des données
-   * @param db Accès à la base de données géré directement par Firebase
-   */
-  constructor(private store:StoreService, private l:LanguesService) {
+  pop:boolean = false; // Show popup
+  support:boolean = false; // Show support for help or informations
+  page:PageI= {nom:'', titre:'', contenu:''}; // Page name
+
+  constructor() {
 
   }
   /** Créer afficher la popup */

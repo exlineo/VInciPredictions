@@ -21,10 +21,11 @@
     <article>
       <a routerLink="/predictions/profil" [title]="l.t['PROFIL']"><i class="pi pi-user-edit"></i></a>
       <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><i class="pi pi-ban"></i></a>
+      <a><i class="pi pi-send"></i></a>
     </article>
     <article>
       <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 77 || authServ.profil.statut == 666"><i class="pi pi-shield"></i></a>
-      <a><i class="pi pi-cog"></i></a>
+      <a><i class="pi pi-sliders-h"></i></a>
     </article>
   </section>
 </main>

@@ -18,7 +18,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
 
   filtres: Array<string> = []; // Ensemble des filtres appliqués
   l$!: Subscription;
-  // Filter form
+  /** Filter form */
   filtresForm = this.fbuild.group({
     pays: [[]],
     regions: [[]],
@@ -34,13 +34,12 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   chartType: string = 'line';
   basicOptions: any;
   graphDataset: any = { labels: [], datasets: [] };
-  /** Portées des années à filtrer */
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
   config: any; // App config
   pdo: Array<RendementI> = [];
-  couleurs:Array<string> = ['ff','ee','dd','cc','bb','aa','90','80','70','60','50','40','30','20']; // Calculate colors for gradients ont graph
+  couleurs: Array<string> = ['ff', 'ee', 'dd', 'cc', 'bb', 'aa', '90', '80', '70', '60', '50', '40', '30', '20']; // Calculate colors for gradients ont graph
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
@@ -100,46 +99,57 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     };
 
   }
+  /** Clear observable on navigation change */
   ngOnDestroy() {
     this.l$.unsubscribe();
   }
-  /** Set data for graph view */
-  setGraphData(ev: any) {
+  /** Set data for graph view (obsolete)
+   * @param {event} e Event send from HTML
+  */
+  setGraphData(e: any) {
     this.store.listes.filtres.forEach(f => {
       // ev.value.forEach(e => console.log(e));
     })
   }
-  /** Get data from countries selected countries */
+  /** Get data from countries selected countries
+   * @param {event} e Event send from HTML
+  */
   filtrePays(e: any) {
     this.listes.pays = e.value;
     this.setFiltres();
   }
-  /** Get data from selected regions */
+  /** Get data from selected regions
+   * @param {event} e Event send from HTML
+   */
   filtreRegions(e: any) {
     this.listes.regions = e.value;
     this.setFiltres();
   }
-  /** Get average data */
+  /** Get data from PDO filtered
+   * @param {event} e Event send from HTML
+   */
   filtrePdo(e: any) {
-    this.listes.pdo = e.value;
     this.pdo = [];
-    if (e.value.length > 0) {
-      this.store.getPdo(e.value)
+    let ar = this.filtresForm.controls.pdo.value!.map(p => p['name']);
+    if (ar.length > 0) {
+      this.store.getPdo(ar)
         .then(d => {
           d.forEach(p => {
             this.pdo.push(p.data() as RendementI);
           });
-          console.log(this.pdo);
           this.setFiltres();
         })
-    }else{
+    } else {
       this.setFiltres();
     }
   }
-  setCouleur(i: number = 0, coul:string='bleu') {
+  /** Set color of graph with automated gradiant
+   * @param {number} i index of color
+   * @param {string} coul Color base
+   */
+  setCouleur(i: number = 0, coul: string = 'bleu') {
     let c = '';
-
-    switch(coul){
+    switch (coul) {
       case 'rouge':
         c = this.couleurs[i] + '0000';
         break;
@@ -152,7 +162,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     }
     return '#' + c;
   }
-  /** Set filters and add data to graph */
+  /** Set filters and add data to lists (countries, regions, pdo) */
   setFiltres() {
     this.graphDataset.datasets = [];
     const data: Array<any> = [];
@@ -167,7 +177,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.setDataset(this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge'));
     };
     // this.graphDataset.datasets.concat(this.pdo);
-    console.log(this.graphDataset.datasets, this.pdo);
     // Refresh data on graph
     this.chart.refresh();
   }
@@ -195,7 +204,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // this.setGraphData();
   }
   /** Set limits for years filters */
-  setLimits(n:number){
+  setLimits(n: number) {
     return new Array(n);
   }
 }

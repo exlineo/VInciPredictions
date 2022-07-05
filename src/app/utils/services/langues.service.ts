@@ -23,7 +23,7 @@ export class LanguesService {
    * @param http Opérer des requêtes HTTP
    * @param store Service de gestion des données locales
    */
-  constructor(private http: HttpClient, public store: StoreService, public msg:MsgService) {
+  constructor(private http: HttpClient, public store: StoreService, public msg: MsgService) {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
     this.langue = this.store.getLocalString('langue', 'fr');
     // Récupérer les traductions stockées en local pour éviter des requêtes
@@ -37,6 +37,7 @@ export class LanguesService {
         let tmp = d['data'];
         this.t = JSON.parse(tmp);
         this.t$.next(this.t);
+        this.store.setData('traductions', this.t);
       }
       )
       .catch(er => console.log(er));

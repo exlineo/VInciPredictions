@@ -27,6 +27,7 @@ import { UtilsModule } from './utils/utils.module';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
 import { OublieComponent } from './connexion/oublie/oublie.component';
+import { SupportComponent } from './support/support.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { OublieComponent } from './connexion/oublie/oublie.component';
     ErreurComponent,
     RgpdComponent,
     MentionsComponent,
-    OublieComponent
+    OublieComponent,
+    SupportComponent
   ],
   imports: [
     BrowserModule,

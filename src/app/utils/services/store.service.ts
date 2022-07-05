@@ -26,7 +26,7 @@ export class StoreService {
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<{type:string, name:string}>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
 
   constructor(public dbf: Firestore, private msg: MsgService) {
     this.getConfig();
@@ -179,6 +179,6 @@ export class StoreService {
     // Create lists from data for countries, regions and pdo
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
-    if (!this.listes.pdo.includes(r.pdo as string)) this.listes.pdo = [...this.listes.pdo, r.pdo as string];
+    if (!this.listes.pdo.includes({type:r.type as string, name:r.pdo as string})) this.listes.pdo = [...this.listes.pdo, {type:r.type as string, name:r.pdo as string}];
   }
 }
