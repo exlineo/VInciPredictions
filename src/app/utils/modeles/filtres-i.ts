@@ -40,10 +40,10 @@ export interface CreeI{
 }
 export interface DatasetI{
   label: string,
-  fill: boolean,
-  borderColor: string,
-  yAxisID: string,
-  tension: number,
+  fill?: boolean,
+  borderColor?: string,
+  yAxisID?: string,
+  tension?: number,
   data: Array<number>;
 }
 export class Dataset implements DatasetI{

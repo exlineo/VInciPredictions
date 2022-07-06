@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Dataset, Rendement, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { Dataset, DatasetI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
 import { UIChart } from 'primeng/chart';
-import { AnyAaaaRecord } from 'dns';
 
 @Component({
   selector: 'app-visualisations',
@@ -15,29 +14,30 @@ import { AnyAaaaRecord } from 'dns';
 export class VisualisationsComponent implements OnInit, OnDestroy {
 
   @ViewChild('chart') chart!: UIChart;
+  config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}}; // App config
 
   filtres: Array<string> = []; // Ensemble des filtres appliqués
   l$!: Subscription;
   /** Filter form */
-  filtresForm = this.fbuild.group({
+  fF = this.fbuild.group({
     pays: [[]],
     regions: [[]],
     pdo: [[]],
-    rendements: [1981],
-    predictions: [2032],
+    rendements: [this.config.rendements.debut],
+    predictions: [this.config.predictions.fin],
     moyennes: [''],
     croissance: [''],
     type: [''],
-    debut: [1983],
-    fin: [2032]
+    // debut: [this.config.rendements.debut],
+    // fin: [this.config.predictions.fin]
   });
   chartType: string = 'line';
   basicOptions: any;
-  graphDataset: any = { labels: [], datasets: [] };
+  graphDataset: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] };
+  fGDS = this.graphDataset; // Copie du graphDataset pour traiter la taille des tableaux en fonction de l'année
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
-  config: any; // App config
   pdo: Array<RendementI> = [];
   couleurs: Array<string> = ['ff', 'ee', 'dd', 'cc', 'bb', 'aa', '90', '80', '70', '60', '50', '40', '30', '20']; // Calculate colors for gradients ont graph
 
@@ -56,14 +56,10 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       ];
     }
     );
-    // Get last data from Firebase
+    /** Get  */
     this.store.config$.subscribe(c => {
       if (c.rendements) {
-        this.graphDataset.labels = [];
-        const ecart = c.rendements.fin - c.rendements.debut;
-        for (let i = 0; i < ecart; ++i) {
-          this.graphDataset.labels.push(c.rendements.debut + i);
-        };
+        this.setGraphLabels(c.rendements.debut, c.predictions.fin - c.rendements.debut);
         this.config = c;
       }
       this.store.getLastData();
@@ -111,6 +107,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       // ev.value.forEach(e => console.log(e));
     })
   }
+  /** Set labels for graph */
+  setGraphLabels(debut:number, ecart:number){
+    this.graphDataset.labels = [];
+    for (let i = 0; i < ecart; ++i) {
+      this.graphDataset.labels.push(debut + i);
+    };
+  }
   /** Get data from countries selected countries
    * @param {event} e Event send from HTML
   */
@@ -130,7 +133,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
    */
   filtrePdo(e: any) {
     this.pdo = [];
-    let ar = this.filtresForm.controls.pdo.value!.map(p => p['name']);
+    let ar = this.fF.controls.pdo.value!.map(p => p['name']);
     if (ar.length > 0) {
       this.store.getPdo(ar)
         .then(d => {
@@ -142,6 +145,32 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     } else {
       this.setFiltres();
     }
+  }
+  /** Filter dataset to get years */
+  filtreGraphDataset(e:any = null){
+    this.fGDS = this.graphDataset;
+    if(this.fF.controls.rendements.value != this.config.debut || this.fF.controls.predictions.value != this.config.fin){
+      let deb = this.fF.controls.rendements.value ? this.fF.controls.rendements.value : 0;
+      let fin = this.fF.controls.predictions.value ? this.fF.controls.predictions.value : 0;
+      console.log(fin, deb-this.config.rendements.debut, this.fGDS.labels.splice(0, deb-this.config.rendements.debut));
+      this.fGDS.labels.splice(0, this.config.rendements.debut-deb).splice(this.fGDS.labels.length, -(fin - this.config.fin) );
+      // Calculer les nouveaux labels sur le graph
+      this.fGDS.labels = [];
+      for (let i = 0; i < fin-deb; ++i) {
+        this.fGDS.labels.push(deb + i);
+      };
+
+      this.fGDS.datasets.forEach(ds => ds.data.splice(0, this.config.debut - deb).splice(ds.data.length, -(fin - this.config.fin)))
+    }
+    this.chart.refresh();
+  }
+  /** Filter start years on graph */
+  filtreStart(e:any){
+
+  }
+  /** Filter end years on graph */
+  filtreFin(e:any){
+
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color
@@ -178,13 +207,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     };
     // this.graphDataset.datasets.concat(this.pdo);
     // Refresh data on graph
-    this.chart.refresh();
-  }
-  setArrayDataset(ar: Array<any>) {
-    console.log(ar);
-    // ar.forEach(d => {
-
-    // })
+    this.filtreGraphDataset();
   }
   /** Set dataset
    * @param {string} l Label to write on over
@@ -200,7 +223,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Valid filters and create chart */
   appliqueFiltres(e: any) {
-    console.log(this.filtresForm.value);
+    console.log(this.fF.value);
     // this.setGraphData();
   }
   /** Set limits for years filters */

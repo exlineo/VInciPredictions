@@ -1,7 +1,7 @@
 <!-- FILTERS -->
 <section class="bleu">
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
-  <form [formGroup]="filtresForm" class="bleu">
+  <form [formGroup]="fF" class="bleu">
     <div>
       <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
       <p-listbox [options]="store.listes.pays" formControlName="pays" (onChange)="filtrePays($event)" [multiple]="true" [checkbox]="true"
@@ -14,7 +14,7 @@
     </div>
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
-      <p-listbox [options]="store.listes.pdo | types:filtresForm.controls.type.value" formControlName="pdo" optionLabel="name" (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
+      <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name" (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
     <div class="l">
@@ -59,18 +59,18 @@
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
       <p class="ecarts">
-        <span>{{ filtresForm.controls['rendements'].value }}</span>
+        <span>{{ fF.controls.rendements.value }}</span>
         <!-- <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider> -->
-        <p-slider formControlName="rendements" [min]="1981" [max]="2022" class="inverse"></p-slider>
-        <!-- <span>{{ filtresForm.controls['rendements'].value }}</span> -->
-        <span>2022</span>
+        <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin" (onSlideEnd)="filtreGraphDataset($event)" class="inverse"></p-slider>
+        <!-- <span>{{ fF.controls['rendements'].value }}</span> -->
+        <span>{{ config.rendements.fin }}</span>
       </p>
       <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
-        <span>{{ filtresForm.controls['predictions'].value }}</span>
-        <p-slider formControlName="predictions" [min]="2023" [max]="2032"></p-slider>
-        <!-- <span>{{ filtresForm.controls['predictions'].value[1] }}</span> -->
-        <span>2032</span>
+        <span>{{ config.predictions.debut }}</span>
+        <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin" (onSlideEnd)="filtreGraphDataset($event)"></p-slider>
+        <!-- <span>{{ fF.controls['predictions'].value[1] }}</span> -->
+        <span>{{ fF.controls.predictions.value }}</span>
       </p>
     </div>
     <div class="h">
@@ -83,8 +83,8 @@
 <section>
   <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p> -->
-  <h2>{{ l.page.titre }} <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i></button></h2>
-  <h3 *ngIf="l.page.accroche">{{ l.page.accroche }}</h3>
+  <h2>{{ l.page.titre }}</h2>
+  <h3 *ngIf="l.page.accroche">{{ l.page.accroche }} <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i></button></h3>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>
@@ -97,8 +97,8 @@
       <i (click)="chartType = 'bar'" class="pi pi-chart-pie"></i>
       <i  (click)="chartType = 'line'" class="pi pi-chart-line"></i>
     </nav> -->
-    <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:filtresForm.value" [options]="basicOptions"></p-chart> -->
-    <p-chart [type]="chartType" [data]="graphDataset" [options]="basicOptions" #chart></p-chart>
+    <!-- <p-chart [type]="chartType" [data]="store.set.data | graph:fF.value" [options]="basicOptions"></p-chart> -->
+    <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
   </article>
   <article *ngIf="pdo.length > 0">
     <h3>{{ l.t['FILTRE_FIABILITE'] }}</h3>

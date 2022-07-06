@@ -24,7 +24,7 @@ export class AuthService {
   creeUser(p: any) {
     createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
-        this.u = retour.user;
+        this.u = {uid:retour.user.uid, email:retour.user.email, emailVerified:retour.user.emailVerified};
         this.l.msg.msgOk(this.l.t['MSG_US_ADD'], this.l.t['MSG_US_ADD_DESCR']);
       })
       .catch((error) => {
@@ -57,8 +57,9 @@ export class AuthService {
   /** Set complete profil to create a new one */
   setProfil(p:ProfilI){
     this.profil = p;
-    this.profil.u.uid = this.u.uid;
-    this.profil.u.email = this.u.email;
+    this.profil.u = this.u;
+    // this.profil.u.uid = this.u.uid;
+    // this.profil.u.email = this.u.email;
     this.profil.droits = {petite:0, grande:0, export:0};
     this.profil.statut = 0;
   }

@@ -1,7 +1,8 @@
+import { NumberFormatStyle } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
 import { GraphI, GraphSetI } from 'src/app/predictions/utils/modeles/graph-i';
-import { RendementI } from '../modeles/filtres-i';
+import { DatasetI, RendementI } from '../modeles/filtres-i';
 
 marked.setOptions({
   // renderer: new marked.Renderer(),
@@ -85,30 +86,27 @@ export class MarkPipe implements PipeTransform {
 })
 export class GraphPipe implements PipeTransform {
 
-  transform(values: Array<any>, args: any): GraphI {
-    if (!args) return <GraphI>{};
-    if (!values) return <GraphI>{};
+  /**
+   *
+   * @param gds Arrays of graph data
+   * @param config Start and end point from configuration
+   * @param debut Start array reduction
+   * @param fin Shorten the array
+   * @returns graphDataset
+   */
+  transform(gds:{labels:Array<NumberFormatStyle>, datasets:Array<DatasetI>}, config:any, debut:number | null, fin:number | null, chart:any) {
+    if (!debut || debut == 0) return gds;
+    if (!fin || fin == 0) return gds;
+    if(!config) return gds;
+    if (!gds) return [];
 
-    const FP = new FiltresPipe();
-    const data = FP.transform(values, args);
-    const vals:GraphI = {labels:[], datasets:[]};
-
-    data.forEach(d => {
-      let g = <GraphSetI>{};
-      g = {
-        label: `${d.regions} (${d.pdo})`,
-        data: d.rendements.concat(d.predictions),
-        fill: false,
-        borderColor: '#'+Math.floor(Math.random()*16777215).toString(16),
-        tension: .4
-      };
-      // console.log(g);
-      vals.datasets.push(g);
-    });
-    const tmp = data[0].rendements.length + data[0].predictions.length;
-    for(let i=0;i<tmp;++i) vals.labels.push((1981+i).toString());
-
-    return vals;
+    gds.labels.splice(0, config.debut-debut).splice(gds.labels.length, -(fin - config.fin) );
+    gds.datasets.forEach(ds => {
+      ds.data.splice(0, config.debut-debut).splice(ds.data.length, -(fin - config.fin) );
+    }
+    )
+    return gds;
+    chart.refresh();
   }
 }
 /**
