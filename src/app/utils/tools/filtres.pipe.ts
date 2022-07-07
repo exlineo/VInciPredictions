@@ -106,7 +106,6 @@ export class GraphPipe implements PipeTransform {
     }
     )
     return gds;
-    chart.refresh();
   }
 }
 /**
@@ -122,5 +121,20 @@ export class TypesPipe implements PipeTransform {
     if (!values) return [];
 
     return values.filter(v => v.type == type);
+  }
+}
+/**
+ * Filter wine types in visualisation page
+ */
+ @Pipe({
+  name: 'profils'
+})
+export class ProfilsPipe implements PipeTransform {
+
+  transform(profils: Array<any>, str: string | null) {
+    if (!str || str.length == 0) return profils;
+    if (!profils) return [];
+
+    return profils.filter(p => p.nom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.prenom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.ville.toLowerCase().indexOf(str.toLowerCase()) != -1);
   }
 }

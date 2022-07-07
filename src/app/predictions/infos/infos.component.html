@@ -1,5 +1,8 @@
 <section class="jaune">
-  <h1>{{ l.page.titre }}</h1>
+  <article>
+    <h1>{{ l.page.titre }}</h1>
+    <p *ngIf="l.page.accroche">{{ l.page.accroche }}</p>
+  </article>
 </section>
 <section>
   <article [innerHTML]="l.page.contenu">

@@ -43,6 +43,7 @@
   "CONNEXION":"Connexion",
   "INIT":"Initialiser",
   "PLUS":"Plus d'informations",
+  "COMMENT":"Comment ça marche ?",
   "RECHERCHER":"Rechercher",
   "EXPORT":"Exporter les données",
   "FILTRE_BTN":"Filtrer",
@@ -149,9 +150,13 @@
   "MSG_ER_DATA":"Une erreur s'est produite.",
   "MSG_ER_DATA_DESCR":"Merci de vérifier votre saisie.",
   "MSG_U_DESCR":"Données de profil mis à jour.",
+  "MSG_ER_CONFIG_DESCR":"Actualisez la page du navigateur et faite appelle au support si le problème persiste",
+  "MSG_LANG":"Langue non chargée",
+  "MSG_ER_LANG_DESCR":"Les traductions n'ont pas pu être chargées. Merci d'actualiser la page.",
   "MSG_LOAD":"Les données sont prêtes",
   "MSG_MAJ":"Les données ont été mises à jours",
   "MSG_VALID":"Vous pouvez valider les données pour les enregistrer",
+  "MSG_ER_CONFIG":"Erreur dans le chargement de la configuration",
   "EDIT_MENU_PAGES":"Editer les pages de présentation",
   "EDIT_MENU_INTERFACE":"Editer l'interface du logiciel",
   "EDIT_INIT":"Contenu initial",
@@ -159,5 +164,6 @@
   "EDIT_TITRE":"Titre à éditer",
   "SUP_MAIL":"Contacter le support",
   "SUP_MSG":"Envoyer un message au support",
-  "SUP_QUEST":"Poser une question"
+  "SUP_QUEST":"Poser une question",
+  "MAIL_SUB":"Demande d'assistance (Vinci plateforme)"
 }

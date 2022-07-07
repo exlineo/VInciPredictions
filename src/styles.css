@@ -106,6 +106,14 @@ input, select, textarea, button{
   overflow-y:auto;
   transition: all .3s ease;
 }
+button{
+  overflow:hidden;
+  display:flex;
+  align-items: center;
+}
+button > i.pi{
+  margin:0 6px 0 0;
+}
 input[type="submit"], button.valide{
   background-color:var(--vert);
   color:white;
@@ -143,6 +151,9 @@ label[for="fichierup"]{
 }
 label[for="fichierup"] span{
   margin-right:10px;
+}
+::-webkit-input-placeholder {
+  color: var(--grisclair);
 }
 table{
   font-size:80%;

@@ -8,13 +8,13 @@ import { LanguesService } from 'src/app/utils/services/langues.service';
   styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent implements OnInit {
+
+  contact:string = '';
   /** Informations préalables
    * @param {LanguesService} l récupérer les langues et le traitement des données rattachées
   */
   constructor(public l:LanguesService, public authServ:AuthService) { }
 
   ngOnInit(): void {
-    // Récupérer les données de la page des prédictions
-    this.l.getPage('predictions');
   }
 }

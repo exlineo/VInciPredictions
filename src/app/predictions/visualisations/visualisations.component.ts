@@ -23,13 +23,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     pays: [[]],
     regions: [[]],
     pdo: [[]],
-    rendements: [this.config.rendements.debut],
-    predictions: [this.config.predictions.fin],
+    rendements: [this.store.config.rendements.debut],
+    predictions: [this.store.config.predictions.fin],
     moyennes: [''],
     croissance: [''],
-    type: [''],
-    // debut: [this.config.rendements.debut],
-    // fin: [this.config.predictions.fin]
+    type: ['']
+    // debut: [this.store.config.rendements.debut],
+    // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line';
   basicOptions: any;
@@ -60,7 +60,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.store.config$.subscribe(c => {
       if (c.rendements) {
         this.setGraphLabels(c.rendements.debut, c.predictions.fin - c.rendements.debut);
-        this.config = c;
+        this.store.config = c;
       }
       this.store.getLastData();
     });
@@ -149,18 +149,18 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** Filter dataset to get years */
   filtreGraphDataset(e:any = null){
     this.fGDS = this.graphDataset;
-    if(this.fF.controls.rendements.value != this.config.debut || this.fF.controls.predictions.value != this.config.fin){
+    if(this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin){
       let deb = this.fF.controls.rendements.value ? this.fF.controls.rendements.value : 0;
       let fin = this.fF.controls.predictions.value ? this.fF.controls.predictions.value : 0;
-      console.log(fin, deb-this.config.rendements.debut, this.fGDS.labels.splice(0, deb-this.config.rendements.debut));
-      this.fGDS.labels.splice(0, this.config.rendements.debut-deb).splice(this.fGDS.labels.length, -(fin - this.config.fin) );
+      console.log(fin, deb-this.store.config.rendements.debut, this.fGDS.labels.splice(0, deb-this.store.config.rendements.debut));
+      this.fGDS.labels.splice(0, this.store.config.rendements.debut-deb).splice(this.fGDS.labels.length, -(fin - this.store.config.fin) );
       // Calculer les nouveaux labels sur le graph
       this.fGDS.labels = [];
       for (let i = 0; i < fin-deb; ++i) {
         this.fGDS.labels.push(deb + i);
       };
 
-      this.fGDS.datasets.forEach(ds => ds.data.splice(0, this.config.debut - deb).splice(ds.data.length, -(fin - this.config.fin)))
+      this.fGDS.datasets.forEach(ds => ds.data.splice(0, this.store.config.debut - deb).splice(ds.data.length, -(fin - this.store.config.fin)))
     }
     this.chart.refresh();
   }

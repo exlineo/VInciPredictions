@@ -18,6 +18,7 @@ export class StoreService {
 
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
+  config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}, contact:''}; // App config
   // Dynamic filters list
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore

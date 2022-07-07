@@ -1,6 +1,7 @@
 <!-- FILTERS -->
 <section class="bleu">
   <h2>{{ l.t['FILTRE_TITRE'] }}</h2>
+  <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
   <form [formGroup]="fF" class="bleu">
     <div>
       <h3>{{ l.t['FILTRE_PAYS'] }}</h3>
@@ -16,6 +17,44 @@
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
       <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name" (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
+    </div>
+
+      <div class="l">
+        <h3>{{ l.t['FILTRE_TYPE'] }}</h3>
+        <label>
+          <p-radioButton name="type" value="Rouge" formControlName="type"></p-radioButton>
+          <!-- <input type="radio" name="couleur" value="rouge"> -->
+          {{ l.t['FILTRE_ROUGE'] }}
+        </label>
+        <label>
+          <p-radioButton name="type" value="Blanc" formControlName="type"></p-radioButton>
+          <!-- <input type="radio" name="couleur" value="blanc"> -->
+          {{ l.t['FILTRE_BLANC'] }}
+        </label>
+        <label>
+          <p-radioButton name="type" value="" formControlName="type"></p-radioButton>
+          <!-- <input type="radio" name="couleur" value=""> -->
+          {{ l.t['FILTRE_TOUS'] }}
+        </label>
+      </div>
+
+    <div>
+      <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
+      <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
+      <p class="ecarts">
+        <span>{{ fF.controls.rendements.value }}</span>
+        <!-- <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider> -->
+        <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin" (onSlideEnd)="filtreGraphDataset($event)" class="inverse"></p-slider>
+        <!-- <span>{{ fF.controls['rendements'].value }}</span> -->
+        <span>{{ config.rendements.fin }}</span>
+      </p>
+      <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
+      <p class="ecarts">
+        <span>{{ config.predictions.debut }}</span>
+        <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin" (onSlideEnd)="filtreGraphDataset($event)"></p-slider>
+        <!-- <span>{{ fF.controls['predictions'].value[1] }}</span> -->
+        <span>{{ fF.controls.predictions.value }}</span>
+      </p>
     </div>
     <div class="l">
       <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
@@ -36,47 +75,11 @@
         <!-- <input type="radio" name="croissance" formControlName="croissance" value="croissance"> -->
         {{ l.t['FILTRE_CROISSANCE'] }}
       </label>
-      <div class="l">
-        <h3>{{ l.t['FILTRE_TYPE'] }}</h3>
-        <label>
-          <p-radioButton name="type" value="Rouge" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value="rouge"> -->
-          {{ l.t['FILTRE_ROUGE'] }}
-        </label>
-        <label>
-          <p-radioButton name="type" value="Blanc" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value="blanc"> -->
-          {{ l.t['FILTRE_BLANC'] }}
-        </label>
-        <label>
-          <p-radioButton name="type" value="" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value=""> -->
-          {{ l.t['FILTRE_TOUS'] }}
-        </label>
-      </div>
     </div>
-    <div>
-      <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
-      <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
-      <p class="ecarts">
-        <span>{{ fF.controls.rendements.value }}</span>
-        <!-- <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider> -->
-        <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin" (onSlideEnd)="filtreGraphDataset($event)" class="inverse"></p-slider>
-        <!-- <span>{{ fF.controls['rendements'].value }}</span> -->
-        <span>{{ config.rendements.fin }}</span>
-      </p>
-      <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
-      <p class="ecarts">
-        <span>{{ config.predictions.debut }}</span>
-        <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin" (onSlideEnd)="filtreGraphDataset($event)"></p-slider>
-        <!-- <span>{{ fF.controls['predictions'].value[1] }}</span> -->
-        <span>{{ fF.controls.predictions.value }}</span>
-      </p>
-    </div>
-    <div class="h">
+    <!-- <div class="h">
       <input type="reset" [value]="l.t['FORM_EFFACE']">
       <input type="submit" [value]="l.t['FILTRE_VALIDE']">
-    </div>
+    </div> -->
   </form>
 </section>
 <!-- VISUALISATION -->
@@ -84,7 +87,7 @@
   <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p> -->
   <h2>{{ l.page.titre }}</h2>
-  <h3 *ngIf="l.page.accroche">{{ l.page.accroche }} <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i></button></h3>
+  <h3 *ngIf="l.page.accroche">{{ l.page.accroche }}</h3>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Profil, ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
@@ -11,9 +12,13 @@ import { PredictionsService } from '../utils/services/predictions.service';
 export class ProfilsComponent implements OnInit {
 
   profil: ProfilI = <ProfilI>{}; // Selected profil
-  pop:boolean = false; // Boolean to open popup
+  pop:boolean = false; // Boolean to open popup to validate an operation on an user
+  infos:boolean = false; // Boolean to open help popup
+  searchForm:any;
 
-  constructor(public l: LanguesService, public predServ: PredictionsService) { }
+  constructor(public l: LanguesService, public predServ: PredictionsService, private fB:FormBuilder) {
+    this.searchForm = this.fB.group({search:['']});
+  }
 
   ngOnInit(): void {
     this.predServ.getListeProfils();

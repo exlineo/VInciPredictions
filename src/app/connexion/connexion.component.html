@@ -5,7 +5,7 @@
   <section class="bleufonce">
     <!-- ENTETE DE LA COLONNE -->
     <app-entete></app-entete>
-    <p>{{ l.page.contenu }}</p>
+    <p>{{ l.page.accroche }}</p>
     <!-- FORMULAIRE DE CONNEXION -->
     <form [formGroup]="connexionForm" (submit)="connexion()">
       <!-- EMAIL -->
@@ -51,8 +51,6 @@
     <app-pied></app-pied>
   </section>
   <section class="jaune">
-    <article>
-
-    </article>
+    <article [innerHTML]="l.page.contenu"></article>
   </section>
 </main>
