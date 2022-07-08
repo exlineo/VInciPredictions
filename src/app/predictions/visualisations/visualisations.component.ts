@@ -60,7 +60,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.store.config$.subscribe(c => {
       if (c.rendements) {
         this.setGraphLabels(c.rendements.debut, c.predictions.fin - c.rendements.debut);
-        this.store.config = c;
       }
       this.store.getLastData();
     });

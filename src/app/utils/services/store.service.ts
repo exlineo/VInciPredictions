@@ -32,7 +32,6 @@ export class StoreService {
   constructor(public dbf: Firestore, private msg: MsgService) {
     this.getConfig();
   }
-
   /** Prepare data */
   initSet() {
     this.set = { creeLe: <CreeI>{}, data: [], moyennes: <MoyennesI>{} };
@@ -42,6 +41,7 @@ export class StoreService {
     await this.getFireDoc('config', 'app').
       then(c => {
         this.config$.next(c.data());
+        this.config = c.data();
       })
       .catch(er => {
         console.log(er);

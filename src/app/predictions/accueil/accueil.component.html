@@ -20,7 +20,7 @@
   <section class="jaune">
     <article>
       <a routerLink="/predictions/profil" [title]="l.t['PROFIL']"><i class="pi pi-user-edit"></i></a>
-      <a [href]="'mailto:' + l.store.config.email + '?subject=' + l.t['MAIL_SUB']"><i class="pi pi-send"></i></a>
+      <a [href]="'mailto:' + l.store.config.contact + '?subject=' + l.t['MAIL_SUB']"><i class="pi pi-send"></i></a>
       <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><i class="pi pi-ban"></i></a>
     </article>
     <article>

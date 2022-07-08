@@ -1,3 +1,6 @@
+@import url('../../../assets/quill/quill.core.css');
+@import url('../../../assets/quill/quill.snow.css');
+
 :host{
   display:flex;
   flex-flow:column nowrap;

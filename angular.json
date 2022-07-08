@@ -33,6 +33,7 @@
               "src/styles.css"
             ],
             "scripts": [
+              "src/assets/quill/quill.min.js"
             ]
           },
           "configurations": {

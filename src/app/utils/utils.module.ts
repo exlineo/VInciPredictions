@@ -9,6 +9,7 @@ import {ListboxModule} from 'primeng/listbox';
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DialogModule} from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
 
 // import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import {TabViewModule} from 'primeng/tabview';
@@ -53,7 +54,8 @@ import { EcartsPipe, FiltresPipe, MarkPipe, ProfilsPipe, TypesPipe } from '../ut
     TabViewModule,
     ToastModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    EditorModule
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { EcartsPipe, FiltresPipe, MarkPipe, ProfilsPipe, TypesPipe } from '../ut
     TabViewModule,
     ToastModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    EditorModule
   ],
   providers:[MarkPipe, EcartsPipe, FiltresPipe, ProfilsPipe, MessageService]
 })

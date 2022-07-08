@@ -2,7 +2,7 @@
   <article>
     <h3>{{ l.t['LANG_CHOIX'] }}</h3>
     <nav class="menulangues">
-      <a (click)="setLang('en')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/uk.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
+      <a (click)="setLang('uk')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/uk.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
       <a (click)="setLang('es')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/es.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
       <a (click)="setLang('fr')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/fr.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
       <a (click)="setLang('pt')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/pt.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
@@ -22,15 +22,33 @@
   </article>
 </section>
 <section>
-  <h1>{{ l.t['EDIT_INIT'] }}</h1>
+  <h1><img [src]="'/assets/images/pictos/' + editLang + '.png'" *ngIf="editLang"> {{ l.t['EDIT_EDIT'] }}</h1>
   <hr>
   <!-- PAGE -->
-  <article *ngIf="pageId.length > 0">
-    <form [formGroup]="editPage">
-      <input formControlName="titre" [placeholder]="l.t['EDIT_TITRE']">
-      <!-- <p-editor formControlName="contenu"></p-editor> -->
-      <input type="reset" [value]="l.t['FORM_EFFACE']">
-      <input type="submit" [value]="l.t['FORM_VALIDE']">
+  <article *ngIf="!trad">
+    <form [formGroup]="editPageForm" (submit)="sendEditPage()">
+      <label for="titre">{{ l.t['EDIT_TITRE'] }}</label>
+      <input formControlName="titre" name="titre" [placeholder]="l.t['EDIT_TITRE']">
+      <label for="accroche">{{ l.t['EDIT_STITRE'] }}</label>
+      <input formControlName="accroche" name="accroche" [placeholder]="l.t['EDIT_STITRE']">
+      <label for="contenu">{{ l.t['EDIT_CONTENU'] }}</label>
+      <p-editor formControlName="contenu" ngDefaultControl name="contenu"></p-editor>
+      <div class="h">
+        <input type="reset" [value]="l.t['FORM_EFFACE']">
+        <input type="submit" [value]="l.t['FORM_VALIDE']">
+      </div>
+    </form>
+  </article>
+  <article *ngIf="trad">
+    <form [formGroup]="editTradForm" (submit)="sendEditTrad()">
+      <div class="h">
+        <input type="reset" [value]="l.t['FORM_EFFACE']">
+        <input type="submit" [value]="l.t['FORM_VALIDE']">
+      </div>
+      <fieldset *ngFor="let f of editTradForm.controls | keyvalue" >
+        <label>{{ f.key }}</label>
+        <input [formControlName]="f.key">
+      </fieldset>
     </form>
   </article>
   <!-- TRADUCTION -->
@@ -38,18 +56,19 @@
 </section>
 <!-- DONNEES INITIALES -->
 <section class="jaune">
-  <h1>{{ l.t['EDIT_EDIT'] }}</h1>
+  <h1><img [src]="'/assets/images/pictos/' + l.langue + '.png'" *ngIf="l.langue"> {{ l.t['EDIT_INIT'] }}</h1>
   <!-- PAGE INITIALE -->
-  <article *ngIf="pageId.length > 0">
+  <article *ngIf="!trad">
     <h2>{{ page.titre }}</h2>
+    <blockquote>{{ page.accroche }}</blockquote>
     <article [innerHTML]="page.contenu"></article>
   </article>
   <!-- TRADUCTION INITIALE -->
-  <article *ngIf="pageId.length == 0">
-    <h1>{{ l.t['EDIT_INIT'] }}</h1>
+  <article *ngIf="trad">
+    <h2>{{ l.t['EDIT_SOFT'] }}</h2>
     <hr>
     <ul>
-      <li *ngFor="let t of trad | keyvalue">
+      <li *ngFor="let t of trad.data | keyvalue">
         {{ t.key }} : {{ t.value }}
       </li>
     </ul>

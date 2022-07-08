@@ -4,6 +4,10 @@
   align-items: stretch;
   height:100%;
 }
+h1{
+  display:flex;
+  align-items: center;
+}
 section{
   padding:20px;
 }
@@ -16,25 +20,32 @@ section:nth-child(1) > nav{
   justify-content: center;
 }
 section:nth-child(2){
-  flex:5
+  flex:5;
+  overflow-y:auto;
 }
 section:nth-child(3){
   flex:3;
   overflow-y:auto;
 }
 
-a > img{
+a > img, h1 > img{
   max-width:55px;
   height:35px;
 }
-ul{
-
+h1 > img{
+  margin-right:20px;
 }
 li{
   cursor: pointer;
   list-style: none;
   padding:6px;
 }
-p-editor{
-  min-height:350px;
+form > label{
+  margin:25px 0 10px;
+}
+form > div {
+  margin-top:30px;
+}
+form > fieldset{
+  display:row nowrap;
 }
