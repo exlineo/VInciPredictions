@@ -36,5 +36,4 @@ export class ProfilComponent implements OnInit {
     console.log(this.profil.value);
     this.auth.creeProfil(this.profil.value as ProfilI);
   }
-
 }

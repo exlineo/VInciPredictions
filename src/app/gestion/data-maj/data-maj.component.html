@@ -1,7 +1,7 @@
 <section>
   <article class="jaune">
-    <h3>{{ l.t['FILTRE_TITRE'] }}</h3>
     <form [formGroup]="filtresForm">
+      <h3>{{ l.t['FILTRE_TITRE'] }}</h3>
       <select name="pays" formControlName="pays">
         <option value="">{{ l.t['FILTRE_PAYS'] }}</option>
         <option *ngFor="let p of predServ.store.listes.pays" [value]="p">{{ p }}</option>
@@ -21,8 +21,7 @@
       </select>
       <input type="number" formControlName="debut" min="1981" max="2015">
       <input type="number" formControlName="fin" min="2023" max="2032">
-      <!-- <input type="reset" [value]="l.t['FORM_EFFACE']">
-      <input type="submit" [value]="l.t['FILTRE_BTN']"> -->
+      <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
     </form>
   </article>
   <!-- DATA -->
@@ -41,9 +40,15 @@
           <th>{{ l.t['FILTRE_REGIONS'] }}</th>
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].rendements | ecarts:2022-filtresForm.value.debut!; let i=index" class="vert">{{ 1983 + (filtresForm.value.debut! - 1983) +i }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].predictions | ecarts:2032-filtresForm.value.fin!:1; let i=index" class="orange">{{ 2022 + i }}</th>
-          <th *ngFor="let r of predServ.store.set.data[0].fiabilites | ecarts:2032-filtresForm.value.fin!:1; let i=index" class="rouge">{{ 2022 + i }}</th>
+          <th
+            *ngFor="let r of predServ.store.set.data[0].rendements | ecarts:2022-filtresForm.value.debut!; let i=index"
+            class="vert">{{ 1983 + (filtresForm.value.debut! - 1983) +i }}</th>
+          <th
+            *ngFor="let r of predServ.store.set.data[0].predictions | ecarts:2032-filtresForm.value.fin!:1; let i=index"
+            class="orange">{{ 2022 + i }}</th>
+          <th
+            *ngFor="let r of predServ.store.set.data[0].fiabilites | ecarts:2032-filtresForm.value.fin!:1; let i=index"
+            class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
       <tbody>
@@ -71,8 +76,12 @@
   <article>
     <p>{{ l.t['GESTION_AJOUT'] }}</p>
     <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
-    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file"/>
+    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file" />
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
     <button *ngIf="file" (click)="saveData()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>
 </section>
+
+<p-dialog [header]="l.page.titre" [(visible)]="infos">
+  <article [innerHTML]="l.page.contenu"></article>
+</p-dialog>

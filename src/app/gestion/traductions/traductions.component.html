@@ -1,5 +1,6 @@
 <section class="bleu">
   <article>
+    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
     <h3>{{ l.t['LANG_CHOIX'] }}</h3>
     <nav class="menulangues">
       <a (click)="setLang('uk')" [title]="l.t['LANG_CHOIX']"><img src="/assets/images/pictos/uk.png" [alt]="l.t['LANG_IMG']+' '+l.t['LANG_L']"></a>
@@ -74,3 +75,6 @@
     </ul>
   </article>
 </section>
+<p-dialog [header]="l.page.titre" [(visible)]="infos">
+  <article [innerHTML]="l.page.contenu"></article>
+</p-dialog>

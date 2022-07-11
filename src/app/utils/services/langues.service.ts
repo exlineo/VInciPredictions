@@ -25,7 +25,7 @@ export class LanguesService {
    */
   constructor(private http: HttpClient, public store: StoreService, public msg: MsgService) {
     // Récupérer la langue par défaut de l'utilisateur ou indiquer en français sinon
-    this.langue = JSON.parse(this.store.getLocalString('langue', 'fr'));
+    this.langue = this.store.getLocalString('langue', 'fr');
     // Récupérer les traductions stockées en local pour éviter des requêtes
     this.store.getLocalData('traductions') ? this.t = this.store.getLocalData('traductions') : this.loadLangue();
   }

@@ -1,14 +1,14 @@
 <main>
 <section>
   <h2>{{ l.page.titre }}</h2>
-  <p [innerHTML]="l.page.contenu"></p>
-  <!-- <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
+
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
-  </p-dialog> -->
+  </p-dialog>
   <form [formGroup]="searchForm">
     <label>{{ l.t['FILTRE_BTN'] }}</label>
     <input type="text" formControlName="search" [placeholder]="l.t['FILTRE_BTN']">
+    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
   </form>
 
   <article>

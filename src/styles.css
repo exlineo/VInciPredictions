@@ -1,4 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Raleway:wght@300&display=swap&family=Material+Icons'); */
+@import url('./assets/quill/quill.core.css');
+@import url('./assets/quill/quill.snow.css');
 /* Variables */
 :root{
   --grisclair:#E9E9E9;
@@ -246,7 +248,7 @@ form.bleu option:hover{
 .h{
   display:flex;
   flex-flow:row nowrap !important;
-  justify-content:flex-end;
+  /* justify-content:flex-end; */
 }
 .v{
   display:flex;

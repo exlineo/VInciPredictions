@@ -25,10 +25,14 @@ export class DataMajComponent implements OnInit {
   });
   /** File to load */
   file?: string;
+  /** Show/hide pages infos */
+  infos:boolean = false;
 
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
   ngOnInit(): void {
+    // Loading text page content from database
+    this.l.getPage('adminvisualisation');
   }
   /**
    * Upload CSV file

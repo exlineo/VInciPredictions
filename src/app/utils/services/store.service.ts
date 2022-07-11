@@ -52,7 +52,7 @@ export class StoreService {
    * @param {string} id IID of the data
    * @returns {promise} Renvoie une chaîne de caractères
    */
-  getLocalString(id: string, defaut: string): string {
+  getLocalString(id: string, defaut:string='fr'): string {
     if (localStorage.getItem(id)) {
       return localStorage.getItem(id) as string
     } else { return defaut };

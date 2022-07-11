@@ -110,7 +110,7 @@ export class PredictionsService {
       this.batch.set(customDoc, d);
       ++n;
     });
-    // Commit data to write
+    /** Commit data to write */
     await this.batch.commit()
     .then(d => {
       this.store.setFireDoc('data', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
@@ -118,11 +118,10 @@ export class PredictionsService {
     })
     .catch(er => console.log(er));
   }
-  /** Add loadedDataset formatted as array */
+  /** Add loadedDataset formatted as array in Firebase */
   docFireAdd() {
     this.store.set.creeLe!.time = Date.now();
     this.batchFireCollecDocs();
-    // this.store.setFireDoc('predictions', { uid: this.setDate(), doc:this.store.set })
   }
   /** Create ID for a new loadedDataset version */
   setDate(d:string='dataset:'):string {

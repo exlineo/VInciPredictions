@@ -12,7 +12,6 @@ export class InfosComponent implements OnInit {
 
   ngOnInit(): void {
     // Loading text page content from database
-    this.l.getPage('adminprofils');
+    this.l.getPage('adminaccueil');
   }
-
 }

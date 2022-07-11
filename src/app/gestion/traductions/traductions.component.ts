@@ -31,6 +31,7 @@ export class TraductionsComponent implements OnInit {
   trad:any;
   /** Copy software texts edited */
   tradEdit:any = {};
+  infos:boolean = false;
 
   constructor(public l:LanguesService, public fB:FormBuilder) { }
 
@@ -43,6 +44,8 @@ export class TraductionsComponent implements OnInit {
         }
       );
     });
+    // Loading text page content from database
+    this.l.getPage('admintraductions');
   }
   /**
    * Set language to edit
