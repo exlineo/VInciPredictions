@@ -1,27 +1,16 @@
-# VInciPredictions
+# Vinci Predictions
+Le logiciel a été développé pour la visualisation des données de rendements et de prédictions du projet [VINCI](https://vincisudoe.eu).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
+## Technologies
+### Partie utilisateurs
+La partie utilisateurs (Front) a été développée avec [Angular 14](https://angular.io/). Il répond à tous les critères de la technologie. Certains composants s'appuient sur [PrimeNG](https://www.primefaces.org/).
 
-## Development server
+### Partie données
+La gestion des données ainsi que l'hébergement sont assurés par Firebase :
+- 'Firestore' stocke les données en version NoSQL. Ceci comprend : les traductions, les comptes utilisateurs, les données à visualiser ainsi que les paramètres de configuration ;
+- 'Authentication' gère les comptes utilisateurs pour l'identification des utilisateurs (Firestore pour les niveaux d'accès) ;
+- 'Hosting' pour l'hébergement de l'[application et la gestion du domaine](https://vinciplateforme.web.app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Code et documentation
+Le code et la documentation sont inclus dans le présent dépôt. Il peuvent être téléchargés.  
+Le code est commenté, la documentation reprend l'ensemble des explications sur le code.
