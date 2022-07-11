@@ -4,7 +4,6 @@ import { CustomPattern } from '../utils/tools/CustomErrorMatch';
 
 import { LanguesService } from '../utils/services/langues.service';
 import { AuthService } from '../utils/services/auth.service';
-import { UserI } from '../utils/modeles/user-i';
 
 @Component({
   selector: 'app-connexion',
@@ -28,11 +27,12 @@ export class ConnexionComponent implements OnInit {
   ngOnInit(): void {
     this.l.getPage('connexion');
   }
-  /** Permettre de réinitialiser le mot de passe */
+  /** Reset password */
   oubliePasse(){
-
+    this.oublie = false;
+    this.auth.resetPassword(this.connexionForm.controls.mail.value!);
   }
-  /** Créer un compte */
+  /** Connect user */
   connexion(){
     this.auth.idUser(this.connexionForm.value.mail as string, this.connexionForm.value.pass as string);
   }

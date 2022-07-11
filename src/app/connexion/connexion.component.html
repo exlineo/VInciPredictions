@@ -53,4 +53,26 @@
   <section class="jaune">
     <article [innerHTML]="l.page.contenu"></article>
   </section>
+  <p-dialog [header]="l.t['INIT_PW']" [(visible)]="oublie">
+    <p>{{ l.t['INIT_PW_DESCR'] }}</p>
+    <form [formGroup]="connexionForm" (submit)="oubliePasse()">
+      <fieldset>
+        <label>{{ l.t['FORM_EMAIL'] }} *</label>
+        <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
+        <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
+        <span
+          *ngIf="connexionForm.controls['mail'].hasError('email') && !connexionForm.controls['mail'].hasError('required')"
+          class="orange">
+          {{ l.t['FORM_FORMAT_MAIL'] }}
+        </span>
+        <span *ngIf="connexionForm.controls['mail'].hasError('required')" class="orange">
+          {{ l.t['FORM_REQUIS'] }}
+        </span>
+      </fieldset>
+      <div class="h">
+        <button (click)="oublie = false" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
+        <button class="valide">{{ l.t['FORM_VALIDE'] }}</button>
+      </div>
+    </form>
+  </p-dialog>
 </main>

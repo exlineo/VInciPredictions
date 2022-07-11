@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@angular/fire/auth";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "@angular/fire/auth";
 import { Router } from '@angular/router';
 import { Profil, ProfilI } from '../modeles/profil-i';
 import { UserI } from '../modeles/user-i';
@@ -95,6 +95,15 @@ export class AuthService {
         this.l.msg.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']);
         console.log(error.code, error.message);
       });
+  }
+  /** Reset password process */
+  resetPassword(email:string){
+    sendPasswordResetEmail(this.auth, email, {url:`${window.location.protocol}//${window.location.hostname}/?email=${email}`})
+    .then(id =>{
+      this.l.msg.msgOk(this.l.t['MSG_PW'], this.l.t['MSG_PW_DESCR']);
+      // https://firebase.google.com/docs/reference/js/auth.md#sendpasswordresetemail
+    })
+    .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER_LOG'], this.l.t['MSG_ER_LOG_DESCR']))
   }
   /** User di */
   deconnexion() {

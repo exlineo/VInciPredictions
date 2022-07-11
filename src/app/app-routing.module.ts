@@ -10,6 +10,7 @@ import { RgpdComponent } from './structure/rgpd/rgpd.component';
 
 const routes: Routes = [
   {path:'', component:ConnexionComponent},
+  {path:':email', component:ConnexionComponent},
   {path:'compte', component:CompteComponent},
   {path:'rgpd', component:RgpdComponent},
   {path:'mentions', component:MentionsComponent},
