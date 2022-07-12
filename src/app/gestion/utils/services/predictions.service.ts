@@ -170,6 +170,9 @@ export class PredictionsService {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
+  /** Update user's profil
+   * @param {number} i index of the user in the user's list
+  */
   async updateProfil(i:number){
     const customDoc = doc(this.dbf, 'comptes', this.listeProfils[i].u.uid!);
     await setDoc(customDoc, JSON.parse(JSON.stringify(this.listeProfils[i])), { merge: true })

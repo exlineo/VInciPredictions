@@ -1,10 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ConnexionComponent } from './connexion/connexion.component';
 import { ContactComponent } from './contact/contact.component';
@@ -26,8 +25,6 @@ import { AuthService } from './utils/services/auth.service';
 import { UtilsModule } from './utils/utils.module';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
-import { OublieComponent } from './connexion/oublie/oublie.component';
-import { SupportComponent } from './support/support.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +34,7 @@ import { SupportComponent } from './support/support.component';
     CompteComponent,
     ErreurComponent,
     RgpdComponent,
-    MentionsComponent,
-    OublieComponent,
-    SupportComponent
+    MentionsComponent
   ],
   imports: [
     BrowserModule,
