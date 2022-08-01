@@ -18,16 +18,16 @@ export class PredictionsService {
   // moyennes: { pays:any, regions:any } = {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
   batch = writeBatch(this.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array<ProfilI> = [];
-  creeTmp?:CreeI;
-  listeDataVersions:Array<CreeI> = []; // List of availlable data
+  creeTmp?: CreeI;
+  listeDataVersions: Array<CreeI> = []; // List of availlable data
 
-  constructor(private dbf:Firestore, public store: StoreService, private l:LanguesService) {
+  constructor(private dbf: Firestore, public l: LanguesService) {
     this.listeDatas();
   };
 
   /** Convert CSV data to RendementI array */
   setDataset(data: string) {
-    this.store.set.data = [];
+    this.l.store.set.data = [];
     let lignes = data.split('\n');
     lignes.forEach(l => {
       this.setPredictions(l);
@@ -35,16 +35,16 @@ export class PredictionsService {
   }
   /**
    * Set predictions array
-   * @param l Object to convert
+   * @param p Object to convert
    */
-  setPredictions(l: any) {
-    l = l.replace(/[\r]/g, '').trim();
-    let m = l.split(',');
+  setPredictions(p: any) {
+    p = p.replace(/[\r]/g, '').trim();
+    let m = p.split(',');
     // this.loadedDataset.push(this.conversion(m));
     let tmp = this.conversion(m);
-    this.store.set.data.push(tmp);
+    this.l.store.set.data.push(tmp);
     // Create lists from data for countries, regions and pdo
-    this.store.setFilterFromData(tmp);
+    this.l.store.setFilterFromData(tmp);
     this.setAverages(); // Get average values
     this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
   }
@@ -59,34 +59,34 @@ export class PredictionsService {
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
   */
-   av(ar:Array<RendementI>){
-    const truc:any = [];
-     for(let i=0; i<ar[0].rendements.length; ++i){
-       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
-        truc.push(Math.round(ar.reduce( ( p, c ) => p + c.rendements[i] | 0, 0 ) / ar.length));
-      };
-      return truc;
+  av(ar: Array<RendementI>) {
+    const truc: any = [];
+    for (let i = 0; i < ar[0].rendements.length; ++i) {
+      // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
+      truc.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
+    };
+    return truc;
   }
   /** Calculate averages values on countries and regions */
-  setAverages(){
+  setAverages() {
     // Averages on countries in data
-    this.store.listes.pays.forEach(d => {
-      const pays = this.store.set.data.filter(p => d && p.pays == d && d.length > 0);
+    this.l.store.listes.pays.forEach(d => {
+      const pays = this.l.store.set.data.filter(p => d && p.pays == d && d.length > 0);
       pays.forEach(p => {
-        if(p.pays && p.pays.length > 0) this.store.set.moyennes!.pays[p.pays] = this.av(pays);
+        if (p.pays && p.pays.length > 0) this.l.store.set.moyennes!.pays[p.pays] = this.av(pays);
       })
     });
     // Averages on regions
-    this.store.listes.regions.forEach(d => {
-      const regions = this.store.set.data.filter(p => d && p.regions == d && d.length > 0);
+    this.l.store.listes.regions.forEach(d => {
+      const regions = this.l.store.set.data.filter(p => d && p.regions == d && d.length > 0);
       regions.forEach(r => {
-        if(r.regions && r.regions.length > 0) this.store.set.moyennes!.regions[r.regions] = this.av(regions);
+        if (r.regions && r.regions.length > 0) this.l.store.set.moyennes!.regions[r.regions] = this.av(regions);
       })
     });
   }
   /** List predictions versions data */
   listeDatas() {
-    this.store.getFireCol('predictions')
+    this.l.store.getFireCol('predictions')
       .then(d => d.forEach(
         f => {
           this.listeVersions.push(f.id);
@@ -102,41 +102,41 @@ export class PredictionsService {
   async batchFireCollecDocs() {
     let n = 0;
     const col = this.setDate();
-    this.creeTmp = {time:Date.now(), collection:this.setDate()};
+    this.creeTmp = { time: Date.now(), collection: this.setDate() };
     this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
-    this.batch.set(doc(this.dbf, col, 'moyennes'), this.store.set.moyennes);
-    this.store.set.data.forEach(d => {
+    this.batch.set(doc(this.dbf, col, 'moyennes'), this.l.store.set.moyennes);
+    this.l.store.set.data.forEach(d => {
       const customDoc = doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
       ++n;
     });
     /** Commit data to write */
     await this.batch.commit()
-    .then(d => {
-      this.store.setFireDoc('data', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
-      this.l.msg.msgOk(this.l.t['MSG_MAJ']);
-    })
-    .catch(er => console.log(er));
+      .then(d => {
+        this.l.store.setFireDoc('data', { uid: String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.msg.msgOk(this.l.t['MSG_MAJ']);
+      })
+      .catch(er => console.log(er));
   }
   /** Add loadedDataset formatted as array in Firebase */
   docFireAdd() {
-    this.store.set.creeLe!.time = Date.now();
+    this.l.store.set.creeLe!.time = Date.now();
     this.batchFireCollecDocs();
   }
   /** Create ID for a new loadedDataset version */
-  setDate(d:string='dataset:'):string {
+  setDate(d: string = 'dataset:'): string {
     const date = new Date();
-    return d+`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
+    return d + `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
   }
   /** Get dataset from Firestore
    * @param {event} e Event send by select HtmlElement
    */
   getData(e: any) {
-    this.store.getFireDoc('predictions', e.target.value)
+    this.l.store.getFireDoc('predictions', e.target.value)
       .then(d => d.data() as DataI)
       .then(d => {
-        this.store.set = d; // Data loaded
-        this.store.setFilters(); // Create filters from data
+        this.l.store.set = d; // Data loaded
+        this.l.store.setFilters(); // Create filters from data
         this.setAverages(); // Get average values on countries and regions
         // this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
       })
@@ -147,7 +147,7 @@ export class PredictionsService {
   }
   /** List accounts */
   getListeProfils() {
-    this.store.getFireCol('comptes')
+    this.l.store.getFireCol('comptes')
       .then(c => {
         this.listeProfils = [];
         c.forEach(d => {
@@ -166,17 +166,25 @@ export class PredictionsService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-   async setFireDoc(collec: string, data: { uid: string, doc: any }) {
+  async setFireDoc(collec: string, data: { uid: string, doc: any }) {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
   /** Update user's profil
    * @param {number} i index of the user in the user's list
   */
-  async updateProfil(i:number){
+  async updateProfil(i: number) {
     const customDoc = doc(this.dbf, 'comptes', this.listeProfils[i].u.uid!);
     await setDoc(customDoc, JSON.parse(JSON.stringify(this.listeProfils[i])), { merge: true })
-    .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
-    .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
+      .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
+      .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
+  }
+  /** Get access from promotionnal code
+   * @param { string } code Promotionnal code
+  */
+  getAccessFromCode(code: string) {
+    const infos:Array<string> = code.split('-');
+    const access = JSON.parse(atob(infos[1]));
+    return access;
   }
 }

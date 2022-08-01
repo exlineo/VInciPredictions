@@ -12,12 +12,12 @@ export interface ProfilI {
   tel?:string;
   mobile?:string;
   code?:string; // Code promotionnel éventuel
-  droits:Droits;
+  droits:DroitsI;
   statut:number;
   u:UserI;
 }
 /** Interface des droits des utilisateurs */
-export interface Droits{
+export interface DroitsI{
   petite:number;
   grande:number;
   export:number;

@@ -468,13 +468,7 @@ p-listbox{
 p-checkbox{
   margin:0 auto;
 }
-span.p-slider-range{
-  /* margin-top:-5px; */
-}
-td > div.range-slider > input[type="range"]{
-  /* position:relative; */
-}
-td > div.range-slider > input[type="range"]::-webkit-slider-runnable-track{
+div.range-slider > input[type="range"]::-webkit-slider-runnable-track{
   background-color:rgba(0, 0, 0, .1);
 }
 nav a{
@@ -491,6 +485,11 @@ nav hr{
   border:0;
   height:1px;
   background-color: rgb(255,255,255,.5);
+}
+input[type="checkbox"]{
+  padding:4px;
+  min-height:20px;
+  min-width:20px;
 }
 input[type=range]:last-of-type::-moz-range-track {
   -moz-appearance: none;
