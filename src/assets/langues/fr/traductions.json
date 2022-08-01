@@ -174,9 +174,12 @@
   "SUP_MSG":"Envoyer un message au support",
   "SUP_QUEST":"Poser une question",
   "MAIL_SUB":"Demande d'assistance (Vinci plateforme)",
-  "MENU_PROMO":"Gérer les code promo",
+  "MENU_PROMO":"Gérer les codes promo",
   "VALIDITE":"Validité",
   "PROMO_CREE":"Créer un code promotionnel",
   "PROMO_CREE_DESCR":"Choisissez les paramètres du code promotionnel à créer",
-  "MSG_DEL":"Les données ont été supprimées avec succès"
+  "MSG_DEL":"Les données ont été supprimées avec succès",
+  "MSG_COPY":"Le texte a été copié",
+  "COPY":"Copier",
+  "MODIF":"Modifier"
 }

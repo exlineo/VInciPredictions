@@ -13,6 +13,8 @@ table{
 tfoot th{
   padding-top:30px;
 }
+td{
+}
 td > div{
   width:100%;
   flex-flow:row nowrap;

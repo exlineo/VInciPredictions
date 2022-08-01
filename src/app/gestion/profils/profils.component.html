@@ -1,89 +1,96 @@
 <main>
-<section>
-  <h2>{{ l.page.titre }}</h2>
+  <section>
+    <h2>{{ l.page.titre }}</h2>
 
-  <p-dialog [header]="l.page.titre" [(visible)]="infos">
-    <article [innerHTML]="l.page.contenu"></article>
-  </p-dialog>
-  <form [formGroup]="searchForm">
-    <label>{{ l.t['FILTRE_BTN'] }}</label>
-    <input type="text" formControlName="search" [placeholder]="l.t['FILTRE_BTN']">
-    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
-  </form>
+    <p-dialog [header]="l.page.titre" [(visible)]="infos">
+      <article [innerHTML]="l.page.contenu"></article>
+    </p-dialog>
+    <form [formGroup]="searchForm">
+      <label>{{ l.t['FILTRE_BTN'] }}</label>
+      <input type="text" formControlName="search" [placeholder]="l.t['FILTRE_BTN']">
+      <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
+    </form>
 
-  <article>
-    <table>
-      <thead>
-        <tr>
-          <th colspan="3"></th>
-          <th colspan="4"></th>
-        </tr>
-        <tr>
-          <!-- <th><input type="checkbox" (change)="selectAll($event)" class="rangemin"></th> -->
-          <th>{{ l.t['PROFIL_NOM'] }}, {{ l.t['PROFIL_PRENOM'] }}</th>
-          <th>{{ l.t['PROFIL_VILLE'] }}</th>
-          <th>{{ l.t['FORM_PROMO'] }}</th>
-          <th>{{ l.t['PROFIL_PETITE'] }}</th>
-          <th>{{ l.t['PROFIL_GRANDE'] }}</th>
-          <th>{{ l.t['PROFIL_EXPORT'] }}</th>
-          <th>{{ l.t['STATUT'] }}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of predServ.listeProfils | profils:searchForm.controls.search.value; let i=index">
-          <!-- <td><input type="checkbox" (change)="selectUn($event, i)" [value]="i"></td> -->
-          <td>{{ p.nom }} {{ p.prenom }}</td>
-          <td>{{ p.ville }}</td>
-          <td>{{ p.code }}</td>
-          <td>
-            <div class="range-slider">
-              <input [value]="p.droits.petite" min=0 max=2 step=1 type="range" (change)="setAcces($event, i, 'petite')"
-                #petite [ngClass]="p.droits.petite | setState">
-            </div>
-          </td>
-          <td>
-            <div class="range-slider">
-              <input [value]="p.droits.grande" min="0" max="2" step="1" type="range"
-                (change)="setAcces($event, i, 'grande')" [ngClass]="p.droits.grande | setState">
-            </div>
-          </td>
-          <td>
-            <div class="range-slider">
-              <input [value]="p.droits.export" min="0" max="2" step="1" type="range"
-                (change)="setAcces($event, i, 'export')" [ngClass]="p.droits.export | setState">
-            </div>
-          </td>
-          <td>
-            <div class="range-slider">
-              <input [value]="setStatutBack(i)" min="0" max="2" step="1" type="range" (change)="setStatut($event, i)"
-                [ngClass]="p.statut | setState">
-            </div>
-          </td>
-          <td>
-            <a [title]="l.t['SAUVE']" (click)="saveProfil(i)"><i class="pi pi-save vert"></i></a>
-            <a [title]="l.t['SUPPR']" (click)="supprProfil(i)"><i class="pi pi-trash rouge"></i></a>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th></th>
-          <th>{{ l.t['STATUT_LEGENDE'] }} : </th>
-          <th colspan="2"><span class="rouge"></span>{{ l.t['STATUT_BLOQUE'] }}/{{ l.t['STATUT_IDENTIFIE'] }}</th>
-          <th colspan="2"><span class="orange"></span>{{ l.t['STATUT_GRATUIT'] }}/{{ l.t['STATUT_ADMIN'] }}</th>
-          <th colspan="2"><span class="vert"></span>{{ l.t['STATUT_PAYANT'] }}/{{ l.t['STATUT_SU'] }}</th>
-        </tr>
-      </tfoot>
-    </table>
-  </article>
-</section>
-<section #popup *ngIf="pop" class="popup">
-  <a [title]="" class="croix" (click)="close()"></a>
-  <article>
-    <h3>{{ l.t['SUPPR_VALIDE'] }}</h3>
-    <button class="valide" (click)="valideSupprProfil()">{{ l.t['SUPPR'] }}</button>
-    <button class="annule" (click)="close()">{{ l.t['FORM_ANNULE'] }}</button>
-  </article>
-</section>
+    <article>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3"></th>
+            <th colspan="4"></th>
+          </tr>
+          <tr>
+            <!-- <th><input type="checkbox" (change)="selectAll($event)" class="rangemin"></th> -->
+            <th>{{ l.t['PROFIL_NOM'] }}, {{ l.t['PROFIL_PRENOM'] }}</th>
+            <th>{{ l.t['PROFIL_VILLE'] }}</th>
+            <th>{{ l.t['FORM_PROMO'] }}</th>
+            <th>{{ l.t['PROFIL_PETITE'] }}</th>
+            <th>{{ l.t['PROFIL_GRANDE'] }}</th>
+            <th>{{ l.t['PROFIL_EXPORT'] }}</th>
+            <th>{{ l.t['STATUT'] }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of predServ.listeProfils | profils:searchForm.controls.search.value; let i=index">
+            <!-- <td><input type="checkbox" (change)="selectUn($event, i)" [value]="i"></td> -->
+            <td>{{ p.nom }} {{ p.prenom }}</td>
+            <td>{{ p.ville }}</td>
+            <td>
+              <div>
+                <span *ngIf="!edit">{{ p.code }}</span>
+                <span *ngIf="edit"><input name="code" [(ngModel)]="p.code"></span>
+                <a [title]="l.t['MODIF']" *ngIf="p.code" (click)="edit = !edit"><i
+                    class="pi pi-pencil textsombre"></i></a>
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [value]="p.droits.petite" min=0 max=2 step=1 type="range"
+                  (change)="setAcces($event, i, 'petite')" #petite [ngClass]="p.droits.petite | setState">
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [value]="p.droits.grande" min="0" max="2" step="1" type="range"
+                  (change)="setAcces($event, i, 'grande')" [ngClass]="p.droits.grande | setState">
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [value]="p.droits.export" min="0" max="2" step="1" type="range"
+                  (change)="setAcces($event, i, 'export')" [ngClass]="p.droits.export | setState">
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [value]="setStatutBack(i)" min="0" max="2" step="1" type="range" (change)="setStatut($event, i)"
+                  [ngClass]="p.statut | setState">
+              </div>
+            </td>
+            <td>
+              <a [title]="l.t['SAUVE']" (click)="saveProfil(i)"><i class="pi pi-save vert"></i></a>
+              <a [title]="l.t['SUPPR']" (click)="supprProfil(i)"><i class="pi pi-trash rouge"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>{{ l.t['STATUT_LEGENDE'] }} : </th>
+            <th colspan="2"><span class="rouge"></span>{{ l.t['STATUT_BLOQUE'] }}/{{ l.t['STATUT_IDENTIFIE'] }}</th>
+            <th colspan="2"><span class="orange"></span>{{ l.t['STATUT_GRATUIT'] }}/{{ l.t['STATUT_ADMIN'] }}</th>
+            <th colspan="2"><span class="vert"></span>{{ l.t['STATUT_PAYANT'] }}/{{ l.t['STATUT_SU'] }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+  </section>
+  <section #popup *ngIf="pop" class="popup">
+    <a [title]="" class="croix" (click)="close()"></a>
+    <article>
+      <h3>{{ l.t['SUPPR_VALIDE'] }}</h3>
+      <button class="valide" (click)="valideSupprProfil()">{{ l.t['SUPPR'] }}</button>
+      <button class="annule" (click)="close()">{{ l.t['FORM_ANNULE'] }}</button>
+    </article>
+  </section>
 </main>

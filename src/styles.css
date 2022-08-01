@@ -536,6 +536,9 @@ input[type=range]::-moz-focus-outer {
 .rougeclair{
   background-color: #eccad1;
 }
+.textsombre{
+  color:var(--sombre);
+}
 .icone{
   font-family: 'Material Icons' !important;
   font-size:18px;

@@ -14,7 +14,8 @@ export class ProfilsComponent implements OnInit {
   profil: ProfilI = <ProfilI>{}; // Selected profil
   pop:boolean = false; // Boolean to open popup to validate an operation on an user
   infos:boolean = false; // Boolean to open help popup
-  searchForm:any;
+  edit:boolean = false; // Show/hide edition on codes
+  searchForm:any; // Search form to filter users
 
   constructor(public l: LanguesService, public predServ: PredictionsService, private fB:FormBuilder) {
     this.searchForm = this.fB.group({search:['']});
