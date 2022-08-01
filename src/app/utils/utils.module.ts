@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {ChartModule} from 'primeng/chart';
 import {SliderModule} from 'primeng/slider';
 import {ListboxModule} from 'primeng/listbox';
@@ -45,6 +45,7 @@ import { EcartsPipe, FiltresPipe, MarkPipe, ProfilsPipe, TypesPipe } from '../ut
     EcartsPipe,
     TypesPipe,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     ChartModule,
     SliderModule,

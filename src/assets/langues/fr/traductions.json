@@ -173,5 +173,9 @@
   "SUP_MAIL":"Contacter le support",
   "SUP_MSG":"Envoyer un message au support",
   "SUP_QUEST":"Poser une question",
-  "MAIL_SUB":"Demande d'assistance (Vinci plateforme)"
+  "MAIL_SUB":"Demande d'assistance (Vinci plateforme)",
+  "MENU_PROMO":"Gérer les code promo",
+  "VALIDITE":"Validité",
+  "PROMO_CREE":"Créer un code promotionnel",
+  "PROMO_ACCES":"Choisissez les paramètres du code prmotionnel"
 }

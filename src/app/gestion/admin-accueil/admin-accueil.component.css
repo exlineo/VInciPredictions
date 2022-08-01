@@ -9,7 +9,7 @@ section:nth-child(1){
   flex-flow:row nowrap;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding:0 10px;
 }
 section:nth-child(2){

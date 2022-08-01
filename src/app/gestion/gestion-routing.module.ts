@@ -4,6 +4,7 @@ import { AdminAccueilComponent } from './admin-accueil/admin-accueil.component';
 import { DataMajComponent } from './data-maj/data-maj.component';
 import { InfosComponent } from './infos/infos.component';
 import { ProfilsComponent } from './profils/profils.component';
+import { PromoComponent } from './promo/promo.component';
 import { TraductionsComponent } from './traductions/traductions.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
       { path: 'predictions', component: DataMajComponent },
       { path: 'utilisateurs', component: ProfilsComponent },
       { path: 'traductions', component: TraductionsComponent },
+      { path: 'promo', component:PromoComponent}
     ]
   }
 ];

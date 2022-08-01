@@ -22,12 +22,7 @@ export interface Droits{
   grande:number;
   export:number;
 }
-/** Niveau d'accès */
-export enum Acces{
-  bloque = 0,
-  gratuit = 1,
-  payant = 2
-}
+/** Create en empty profil */
 export class Profil implements ProfilI{
   nom = '';
   prenom = '';

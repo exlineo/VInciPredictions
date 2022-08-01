@@ -7,6 +7,7 @@ import { ProfilsComponent } from './profils/profils.component';
 import { DataMajComponent } from './data-maj/data-maj.component';
 import { TraductionsComponent } from './traductions/traductions.component';
 import { GestionRoutingModule } from './gestion-routing.module';
+import { PromoComponent } from './promo/promo.component';
 import { StatutPipe, AccesPipe, SetStatePipe } from './utils/tools/statut.pipe';
 
 @NgModule({
@@ -17,7 +18,8 @@ import { StatutPipe, AccesPipe, SetStatePipe } from './utils/tools/statut.pipe';
     TraductionsComponent,
     StatutPipe,
     AccesPipe,
-    SetStatePipe
+    SetStatePipe,
+    PromoComponent
   ],
   imports: [
     CommonModule,

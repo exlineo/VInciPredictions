@@ -73,6 +73,44 @@ main.public > section:nth-child(2){
 main.public > section:nth-child(3){
   flex:2;
 }
+li{
+  position:relative;
+  list-style: none;
+}
+li > img{
+  max-width:50px;
+}
+li > ul {
+  position:absolute;
+  width:max-content;
+  z-index:999;
+  height:0;
+  opacity:0;
+  right:0;
+  transition:all .3s ease;
+  color:var(--sombre);
+  background-color: var(--grisclair);
+  padding:10px 20px;
+  display:flex;
+  flex-flow: column nowrap;
+  margin:0;
+  pointer-events: none;
+}
+li > ul > a{
+  color:var(--sombre);
+}
+li > ul > a:hover{
+  color:var(--rose);
+}
+li > ul > li{
+  padding:5px 0;
+}
+li:hover > ul{
+  height:max-content;
+  opacity: 1;
+  pointer-events: auto;
+}
+
 form{
   display:flex;
   flex-flow:column wrap;
@@ -426,6 +464,9 @@ p-listbox{
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+p-checkbox{
+  margin:0 auto;
 }
 span.p-slider-range{
   /* margin-top:-5px; */

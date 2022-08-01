@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { AuthService } from 'src/app/utils/services/auth.service';
 import { LanguesService } from 'src/app/utils/services/langues.service';
+import { VisualService } from '../utils/services/visual.service';
 
 @Component({
   selector: 'app-profil',
@@ -25,7 +26,7 @@ export class ProfilComponent implements OnInit {
     code: [this.auth.profil.tel]
   });
 
-  constructor(public l:LanguesService, public fbuild:FormBuilder, public auth:AuthService) { }
+  constructor(public l:LanguesService, public fbuild:FormBuilder, private visual:VisualService, private auth:AuthService ) { }
 
   ngOnInit(): void {
     this.l.getPage('profil');
@@ -33,7 +34,7 @@ export class ProfilComponent implements OnInit {
 
   /** Update user's profile */
   majProfil(){
-    console.log(this.profil.value);
-    this.auth.creeProfil(this.profil.value as ProfilI);
+    console.log(this.auth.profil.u.uid!, this.auth.profil);
+    this.visual.updateOwnProfil(this.auth.profil.u.uid!, this.auth.profil);
   }
 }
