@@ -165,10 +165,6 @@ export class StoreService {
   async getAverageData(p: Array<string>, r: Array<string>) {
 
   }
-  /** Request for filtered data */
-  async getFilteredData(f: FiltresI) {
-
-  }
   /** Set filters from dataset */
   setFilters() {
     this.set.data.forEach(d => this.setFilterFromData(d));

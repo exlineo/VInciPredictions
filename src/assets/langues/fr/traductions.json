@@ -177,5 +177,6 @@
   "MENU_PROMO":"Gérer les code promo",
   "VALIDITE":"Validité",
   "PROMO_CREE":"Créer un code promotionnel",
-  "PROMO_CREE_DESCR":"Choisissez les paramètres du code promotionnel à créer"
+  "PROMO_CREE_DESCR":"Choisissez les paramètres du code promotionnel à créer",
+  "MSG_DEL":"Les données ont été supprimées avec succès"
 }

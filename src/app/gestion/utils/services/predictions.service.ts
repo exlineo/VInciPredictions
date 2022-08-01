@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, writeBatch, setDoc } from "@angular/fire/firestore";
+import { Firestore, doc, writeBatch, setDoc, deleteDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
 import { CreeI, DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
-import { StoreService } from 'src/app/utils/services/store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -122,6 +121,13 @@ export class PredictionsService {
   docFireAdd() {
     this.l.store.set.creeLe!.time = Date.now();
     this.batchFireCollecDocs();
+  }
+  /**
+   * Delete a document
+   * @param doc Document to delete
+   */
+  async delFireDoc(collec:string, id:string){
+    await deleteDoc(doc(this.dbf, collec, id));
   }
   /** Create ID for a new loadedDataset version */
   setDate(d: string = 'dataset:'): string {
