@@ -1,0 +1,113 @@
+<main>
+  <section>
+    <h2>{{ l.page.titre }}
+      <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
+      <button (click)="add = !add" class="valide"><i class="pi pi-plus"></i>{{ l.t['PROMO_CREE'] }}</button>
+    </h2>
+    <div>
+    </div>
+    <p-dialog [header]="l.page.titre" [(visible)]="infos">
+      <article [innerHTML]="l.page.contenu"></article>
+    </p-dialog>
+    <!-- <form [formGroup]="searchForm">
+      <label>{{ l.t['FILTRE_BTN'] }}</label>
+      <input type="text" formControlName="search" [placeholder]="l.t['FILTRE_BTN']">
+      <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
+    </form> -->
+    <!-- Add a promotionnal code -->
+    <article *ngIf="add">
+      <h3>{{ l.t['PROMO_CREE_DESCR'] }}</h3>
+      <form [formGroup]="accessForm" (submit)="addPromo()">
+        <fieldset>
+          <label>{{ l.t['PROFIL_PETITE'] }}</label>
+          <div class="range-slider" formGroupName="droits">
+            <input name="petite" formControlName="petite" min="0" max="2" step="1" type="range"
+              [ngClass]="accessForm.controls.droits.controls.petite.value | setState">
+          </div>
+        </fieldset>
+        <fieldset>
+          <label>{{ l.t['PROFIL_GRANDE'] }}</label>
+          <div class="range-slider" formGroupName="droits">
+            <input name="grande" formControlName="grande" min="0" max="2" step="1" type="range"
+              [ngClass]="accessForm.controls.droits.controls.grande.value | setState">
+          </div>
+        </fieldset>
+        <fieldset>
+          <label>{{ l.t['PROFIL_EXPORT']}}</label>
+          <div class="range-slider" formGroupName="droits">
+            <input name="export" formControlName="export" min="0" max="2" step="1" type="range"
+              [ngClass]="accessForm.controls.droits.controls.export.value | setState">
+          </div>
+        </fieldset>
+        <fieldset>
+          <label>{{ l.t['STATUT'] }}</label>
+          <div>
+            <p-checkbox formControlName="validite" [binary]="true"></p-checkbox>
+          </div>
+        </fieldset>
+        <fieldset>
+          <input type="submit" [value]="l.t['FORM_VALIDE']">
+          <input type="reset" [value]="l.t['FORM_ANNULE']">
+        </fieldset>
+      </form>
+    </article>
+    <!-- Liste of all codes -->
+    <article>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ l.t['FORM_PROMO'] }}</th>
+            <th>{{ l.t['PROFIL_PETITE'] }}</th>
+            <th>{{ l.t['PROFIL_GRANDE'] }}</th>
+            <th>{{ l.t['PROFIL_EXPORT'] }}</th>
+            <th>{{ l.t['STATUT'] }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of promos | profils:searchForm.controls.search.value; let i=index">
+            <td>{{ p.code }}
+              <a [title]="l.t['COPY']" (click)="copyCode(p.code)"><i class="pi pi-copy textsombre"></i></a>
+            </td>
+            <!-- <td>{{ p.validite }}</td> -->
+            <td>
+              <div class="range-slider">
+                <input [(ngModel)]="p.droits.petite" min="0" max="2" step="1" type="range"
+                  [ngClass]="p.droits.petite | setState">
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [(ngModel)]="p.droits.grande" min="0" max="2" step="1" type="range"
+                  [ngClass]="p.droits.grande | setState">
+              </div>
+            </td>
+            <td>
+              <div class="range-slider">
+                <input [(ngModel)]="p.droits.export" min="0" max="2" step="1" type="range"
+                  [ngClass]="p.droits.export | setState">
+              </div>
+            </td>
+            <td>
+              <p-checkbox name="validite" [(ngModel)]="p.validite" [binary]="true"></p-checkbox>
+              <!-- <input type="checkbox" name="validite" [(ngModel)]="p.validite" [checked]="p.validite"> -->
+            </td>
+            <td>
+              <a [title]="l.t['SAUVE']" (click)="saveCode(p.id, i)"><i class="pi pi-save vert"></i></a>
+              <a [title]="l.t['SUPPR']" (click)="supprCode(p.id, i)"><i class="pi pi-trash rouge"></i></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="6">{{ l.t['STATUT_LEGENDE'] }} :
+              <span class="rouge"></span>{{ l.t['STATUT_BLOQUE'] }}/{{ l.t['STATUT_IDENTIFIE'] }}
+              <span class="orange"></span>{{ l.t['STATUT_GRATUIT'] }}/{{ l.t['STATUT_ADMIN'] }}
+              <span class="vert"></span>{{ l.t['STATUT_PAYANT'] }}/{{ l.t['STATUT_SU'] }}
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </article>
+  </section>
+</main>

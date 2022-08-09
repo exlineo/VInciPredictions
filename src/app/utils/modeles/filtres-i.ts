@@ -52,7 +52,7 @@ export class Dataset implements DatasetI{
   borderColor = '#42A5F5';
   yAxisID = 'y';
   tension = .4;
-  data = [];
+  data:Array<number> = [];
 }
 export enum Couleur{
   blanc = 'blanc',

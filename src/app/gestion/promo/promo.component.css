@@ -1,0 +1,52 @@
+h2, p{
+  margin:0 10px;
+}
+h2{
+  display:flex;
+  flex-flow:row nowrap;
+  align-items: center;
+}
+article{
+  margin:15px 0;
+}
+table{
+  width:94vw;
+  margin:0 auto;
+}
+tfoot th{
+  padding-top:30px;
+}
+tfoot span{
+  margin:0 5px 0 15px;
+}
+td > div{
+  width:100%;
+  flex-flow:row nowrap;
+}
+input[type="range"]{
+  position:relative;
+  width:60px;
+  margin:0 auto;
+}
+th > span{
+  width:25px;
+  height:25px;
+  margin-right:10px;
+}
+form{
+  margin:0 auto;
+  flex-flow:row nowrap;
+  align-items: center;
+  width:100%;
+  justify-content:space-around;
+}
+form > *{
+  margin:5px;
+  display:flex;
+  flex-flow:row nowrap;
+  align-items: center;
+  width:20%;
+}
+label{
+  padding-right:10px;
+}

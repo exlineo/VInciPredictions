@@ -13,7 +13,11 @@ import { UIChart } from 'primeng/chart';
 })
 export class VisualisationsComponent implements OnInit, OnDestroy {
 
+  /** Charts */
   @ViewChild('chart') chart!: UIChart;
+  @ViewChild('average') average!: UIChart;
+  @ViewChild('growth') growth!: UIChart;
+
   config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}}; // App config
 
   filtres: Array<string> = []; // Ensemble des filtres appliqués
@@ -32,19 +36,20 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line';
-  basicOptions: any;
+  basicOptions: any; // Options of the charts
   graphDataset: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] };
   fGDS = this.graphDataset; // Copie du graphDataset pour traiter la taille des tableaux en fonction de l'année
+  avDS: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] }; // Average data
+  growDS: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] }; // Growth data
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
   pdo: Array<RendementI> = [];
   couleurs: Array<string> = ['ff', 'ee', 'dd', 'cc', 'bb', 'aa', '90', '80', '70', '60', '50', '40', '30', '20']; // Calculate colors for gradients ont graph
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
   ngOnInit(): void {
-    console.log(this.chart);
     // Loading text page content from database
     this.l.getPage('visualisation');
     // Subscribe to langue to get syncrhonized data
@@ -98,14 +103,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.l$.unsubscribe();
   }
-  /** Set data for graph view (obsolete)
-   * @param {event} e Event send from HTML
-  */
-  setGraphData(e: any) {
-    this.store.listes.filtres.forEach(f => {
-      // ev.value.forEach(e => console.log(e));
-    })
-  }
   /** Set labels for graph */
   setGraphLabels(debut:number, ecart:number){
     this.graphDataset.labels = [];
@@ -151,25 +148,40 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     if(this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin){
       let deb = this.fF.controls.rendements.value ? this.fF.controls.rendements.value : 0;
       let fin = this.fF.controls.predictions.value ? this.fF.controls.predictions.value : 0;
-      console.log(fin, deb-this.store.config.rendements.debut, this.fGDS.labels.splice(0, deb-this.store.config.rendements.debut));
+      // console.log(fin, deb-this.store.config.rendements.debut, this.fGDS.labels.splice(0, deb-this.store.config.rendements.debut));
       this.fGDS.labels.splice(0, this.store.config.rendements.debut-deb).splice(this.fGDS.labels.length, -(fin - this.store.config.fin) );
       // Calculer les nouveaux labels sur le graph
       this.fGDS.labels = [];
       for (let i = 0; i < fin-deb; ++i) {
         this.fGDS.labels.push(deb + i);
       };
-
+      // Cut datasets from years
       this.fGDS.datasets.forEach(ds => ds.data.splice(0, this.store.config.debut - deb).splice(ds.data.length, -(fin - this.store.config.fin)))
     }
     this.chart.refresh();
+    this.setAverage();
   }
-  /** Filter start years on graph */
-  filtreStart(e:any){
-
+  /** Calculate and show the average data */
+  setAverage(){
+    // Create empty object
+    this.avDS.labels = this.fGDS.labels.splice(2, this.fGDS.labels.length);
+    this.fGDS.datasets.forEach(av => {
+      // Empty dataset to push in empty
+      const ds = new Dataset();
+      ds.label = av.label;
+      av.data.forEach((d, i)=>{
+        if(i > 1){
+          // Add average data to data array
+          ds.data.push(Math.round((av.data[i-2] + av.data[i-1] + av.data[i])/3));
+        }
+      });
+      this.avDS.datasets.push(ds);
+    });
+    this.average.refresh();
   }
-  /** Filter end years on graph */
-  filtreFin(e:any){
-
+  /** show the average data */
+  setGrowth(){
+    this.growDS = this.fGDS;
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color
@@ -219,11 +231,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     tmp.label = l;
     tmp.borderColor = c;
     if (!this.graphDataset.datasets.includes(tmp)) this.graphDataset.datasets.push(tmp);
-  }
-  /** Valid filters and create chart */
-  appliqueFiltres(e: any) {
-    console.log(this.fF.value);
-    // this.setGraphData();
   }
   /** Set limits for years filters */
   setLimits(n: number) {

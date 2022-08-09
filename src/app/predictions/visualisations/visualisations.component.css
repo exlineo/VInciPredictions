@@ -35,3 +35,15 @@ section:nth-child(1) > form{
 table{
   width:100%;
 }
+#chart{
+  width:100%;
+}
+#chartsecond{
+  display:flex;
+  flex-flow:row nowrap;
+}
+#chartsecond > div{
+  width:50%;
+  margin-right:10px;
+  box-sizing: border-box;
+}
