@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { BehaviorSubject } from 'rxjs';
 import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
+import { ProfilI } from '../modeles/profil-i';
 import { MsgService } from './msg.service';
 
 export interface TraductionI {
@@ -75,6 +76,20 @@ export class StoreService {
    */
   setLocalData(id: string, data: unknown) {
     typeof data == 'string' ? localStorage.setItem(id, data) : localStorage.setItem(id, JSON.stringify(data));
+  }
+  /** Get profil from session storage */
+  getSessionProfil(){
+    if (sessionStorage.getItem('profil')) {
+      return JSON.parse(sessionStorage.getItem('profil') as string);
+    }
+    return null;
+  }
+  /**
+   * Save profil on session storage to help identification when refresh
+   * @param data Profil to write on session
+   */
+  setSessionProfil(data:ProfilI){
+    sessionStorage.setItem('profil', JSON.stringify(data));
   }
   /**
    * Get entire collection

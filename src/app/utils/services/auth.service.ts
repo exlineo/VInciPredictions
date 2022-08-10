@@ -16,7 +16,14 @@ export class AuthService {
   /** Accessing Firebase
    * @param auth Firebase object to authentication
   */
-  constructor(private auth: Auth, private route: Router, private l:LanguesService) { this.u.uid = "12"}
+  constructor(private auth: Auth, private route: Router, private l:LanguesService) {
+    if(this.l.store.getSessionProfil()) {
+      this.profil = this.l.store.getSessionProfil() as ProfilI;
+      this.u = this.profil.u;
+    }else{
+      this.u.uid = "12";
+    }
+  }
   /**
    * Create account on firebase with email and password
    * @param p Object with email and password transmitted from connection form
@@ -50,8 +57,6 @@ export class AuthService {
           this.l.msg.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER_DATA_DESCR']);
           console.log(er);
         });
-    }else{
-
     }
   }
   /** Set complete profil to create a new one */
@@ -86,6 +91,7 @@ export class AuthService {
           .then(p => {
             // console.log("Création du compte réussie", u);
             this.profil = p as ProfilI;
+            this.l.store.setSessionProfil(this.profil);
             this.l.msg.msgOk(this.l.t['MSG_LOG'], this.l.t['MSG_LOG_DESCR']);
             this.route.navigateByUrl('/predictions');
           })
