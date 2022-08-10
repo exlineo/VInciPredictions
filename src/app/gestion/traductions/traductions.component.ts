@@ -51,7 +51,7 @@ export class TraductionsComponent implements OnInit {
    * Set language to edit
    * @param {string} lang Language of texts to edit
    */
-  setLang(lang:string){
+  setEditLang(lang:string){
     this.editLang = lang;
   }
   /**

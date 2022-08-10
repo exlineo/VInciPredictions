@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Dataset, DatasetI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
@@ -29,18 +29,21 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     pdo: [[]],
     rendements: [this.store.config.rendements.debut],
     predictions: [this.store.config.predictions.fin],
-    moyennes: [''],
-    croissance: [''],
-    type: ['']
+    donnees:[true],
+    moyennes: [true],
+    croissance: [true],
+    type: [''],
     // debut: [this.store.config.rendements.debut],
     // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line';
   basicOptions: any; // Options of the charts
+
   graphDataset: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] };
   fGDS = this.graphDataset; // Copie du graphDataset pour traiter la taille des tableaux en fonction de l'année
   avDS: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] }; // Average data
   growDS: {labels:Array<number>, datasets:Array<DatasetI>} = { labels: [], datasets: [] }; // Growth data
+
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
@@ -163,25 +166,39 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Calculate and show the average data */
   setAverage(){
-    // Create empty object
-    this.avDS.labels = this.fGDS.labels.splice(2, this.fGDS.labels.length);
+    // Calculate average data, 3 years and purcent growth on years
+    this.avDS.labels = this.fGDS.labels.slice(2, this.fGDS.labels.length);
+    this.growDS.labels = this.fGDS.labels.slice(1, this.fGDS.labels.length);
+    this.avDS.datasets = [];
+    this.growDS.datasets = []
+
+    // Calculate purcent growth on years
+    // this.growDS.labels = this.fGDS.labels.splice(2, this.fGDS.labels.length);
+    // this.growDS.datasets = [];
     this.fGDS.datasets.forEach(av => {
       // Empty dataset to push in empty
       const ds = new Dataset();
+      const dg = new Dataset();
       ds.label = av.label;
+      dg.label = av.label;
       av.data.forEach((d, i)=>{
         if(i > 1){
           // Add average data to data array
           ds.data.push(Math.round((av.data[i-2] + av.data[i-1] + av.data[i])/3));
-        }
+        };
+        if(i > 0){
+          dg.data.push((av.data[i] * 100 / av.data[i-1])-100);
+        };
       });
       this.avDS.datasets.push(ds);
+      this.growDS.datasets.push(dg);
     });
     this.average.refresh();
+    this.growth.refresh();
   }
   /** show the average data */
   setGrowth(){
-    this.growDS = this.fGDS;
+    this.growth.refresh();
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color

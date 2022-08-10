@@ -11,7 +11,7 @@ export class DataService {
 
   pop:boolean = false; // Show popup
   support:boolean = false; // Show support for help or informations
-  page:PageI= {nom:'', titre:'', contenu:''}; // Page name
+  page:PageI= {id:'', nom:'', titre:'', contenu:''}; // Page name
 
   constructor() {
 

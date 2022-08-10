@@ -181,5 +181,8 @@
   "MSG_DEL":"Les données ont été supprimées avec succès",
   "MSG_COPY":"Le texte a été copié",
   "COPY":"Copier",
-  "MODIF":"Modifier"
+  "MODIF":"Modifier",
+  "DONNEES_D_DESCR":"Rendements annuels calculés en hectolitres / hectares",
+  "DONNEES_M_DESCR":"Moyennes calculées sur trois années",
+  "DONNEES_C_DESCR":"Pourcentage de croissance/décroissance d'une année sur l'autre"
 }

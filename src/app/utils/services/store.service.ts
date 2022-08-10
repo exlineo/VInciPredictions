@@ -73,8 +73,8 @@ export class StoreService {
    * @param id {string} ID of the data
    * @param data {unknown} data to write
    */
-  setData(id: string, data: unknown) {
-    localStorage.setItem(id, JSON.stringify(data));
+  setLocalData(id: string, data: unknown) {
+    typeof data == 'string' ? localStorage.setItem(id, data) : localStorage.setItem(id, JSON.stringify(data));
   }
   /**
    * Get entire collection

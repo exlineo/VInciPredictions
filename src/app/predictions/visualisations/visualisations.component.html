@@ -40,7 +40,6 @@
         </label>
       </div>
     </div>
-
     <div>
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
@@ -67,14 +66,16 @@
         <p-checkbox name="rendements" value="rendements" formControlName="rendements"></p-checkbox>
         {{ l.t['FILTRE_RENDEMENTS'] }}
       </label> -->
-
       <label>
-        <p-checkbox name="moyennes" value="moyennes" formControlName="moyennes"></p-checkbox>
+        <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
+        {{ l.t['FILTRE_PREDICTIONS'] }}
+      </label>
+      <label>
+        <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
         {{ l.t['FILTRE_MOYENNES'] }}
       </label>
-
       <label>
-        <p-checkbox name="croissance" value="croissance" formControlName="croissance"></p-checkbox>
+        <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
         {{ l.t['FILTRE_CROISSANCE'] }}
       </label>
     </div>
@@ -89,17 +90,16 @@
   <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p> -->
   <h2>{{ l.page.titre }}</h2>
-  <h3 *ngIf="l.page.accroche">{{ l.page.accroche }}</h3>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>
-  <!-- GRAPH -->
-  <h3>{{ l.t['RES_VISUAL'] }}</h3>
   <!-- CHART -->
-  <article id="chart">
+  <article id="chart" *ngIf="fF.controls.donnees.value">
+    <h3>{{ l.t['RES_VISUAL'] }}</h3>
+    <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
     <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
   </article>
-  <article *ngIf="pdo.length > 0">
+  <article *ngIf="pdo.length > 0 && fF.controls.predictions.value">
     <h3>{{ l.t['FILTRE_FIABILITE'] }}</h3>
     <table>
       <thead>
@@ -120,14 +120,14 @@
       </tbody>
     </table>
   </article>
-  <article id="chartsecond">
-    <div>
+  <article *ngIf="fF.controls.moyennes.value">
       <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
+      <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
       <p-chart [type]="chartType" [data]="avDS" [options]="basicOptions" #average></p-chart>
-    </div>
-    <div>
+  </article>
+  <article *ngIf="fF.controls.croissance.value">
       <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
+      <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
       <p-chart type="bar" [data]="growDS" [options]="basicOptions" #growth></p-chart>
-    </div>
   </article>
 </section>
