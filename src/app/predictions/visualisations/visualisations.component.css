@@ -2,18 +2,35 @@
   display:flex;
   flex-flow:row nowrap;
   justify-content: stretch;
+  background-color: #E9E9E9;
+}
+h2{
+  text-align: center;
 }
 section{
   height:100vh;
-  padding:20px 0 20px 20px;
   box-sizing: border-box;
 }
 section:nth-child(1){
   flex:0.7;
+  padding:10px 0 10px 10px;
 }
 section:nth-child(2){
   flex:3;
-  overflow:auto;
+  padding:0;
+  overflow-x:hidden;
+  overflow-y: auto;
+}
+section:nth-child(2) > article{
+  background-color: white;
+  padding:0 15px 10px;
+  margin-bottom:15px;
+  box-sizing: border-box;
+}
+section:nth-child(2) > form{
+  padding:10px;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 }
 section:nth-child(2) nav{
   display:flex;

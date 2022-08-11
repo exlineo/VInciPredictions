@@ -20,26 +20,23 @@
       </p-listbox>
     </div>
 
-    <div class="l">
+    <!-- <div class="l">
       <h3>{{ l.t['FILTRE_TYPE'] }}</h3>
       <div class="h">
         <label>
           <p-radioButton name="type" value="Rouge" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value="rouge"> -->
           {{ l.t['FILTRE_ROUGE'] }}
         </label>
         <label>
           <p-radioButton name="type" value="Blanc" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value="blanc"> -->
           {{ l.t['FILTRE_BLANC'] }}
         </label>
         <label>
           <p-radioButton name="type" value="" formControlName="type"></p-radioButton>
-          <!-- <input type="radio" name="couleur" value=""> -->
           {{ l.t['FILTRE_TOUS'] }}
         </label>
       </div>
-    </div>
+    </div> -->
     <div>
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
@@ -60,12 +57,8 @@
         <span>{{ fF.controls.predictions.value }}</span>
       </p>
     </div>
-    <div class="l">
+    <!-- <div class="l">
       <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
-      <!-- <label>
-        <p-checkbox name="rendements" value="rendements" formControlName="rendements"></p-checkbox>
-        {{ l.t['FILTRE_RENDEMENTS'] }}
-      </label> -->
       <label>
         <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
         {{ l.t['FILTRE_PREDICTIONS'] }}
@@ -78,7 +71,7 @@
         <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
         {{ l.t['FILTRE_CROISSANCE'] }}
       </label>
-    </div>
+    </div> -->
     <!-- <div class="h">
       <input type="reset" [value]="l.t['FORM_EFFACE']">
       <input type="submit" [value]="l.t['FILTRE_VALIDE']">
@@ -93,6 +86,20 @@
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>
+  <form [formGroup]="fF">
+      <label>
+        <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
+        {{ l.t['FILTRE_PREDICTIONS'] }}
+      </label>
+      <label>
+        <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
+        {{ l.t['FILTRE_MOYENNES'] }}
+      </label>
+      <label>
+        <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
+        {{ l.t['FILTRE_CROISSANCE'] }}
+      </label>
+  </form>
   <!-- CHART -->
   <article id="chart" *ngIf="fF.controls.donnees.value">
     <h3>{{ l.t['RES_VISUAL'] }}</h3>
