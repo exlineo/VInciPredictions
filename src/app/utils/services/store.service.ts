@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { BehaviorSubject } from 'rxjs';
-import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
+import { CreeI, DataI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
 import { ProfilI } from '../modeles/profil-i';
 import { MsgService } from './msg.service';
 
@@ -19,7 +19,7 @@ export class StoreService {
 
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
-  config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}, contact:'', cle:''}; // App config
+  config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}, contact:'', cle:'', liens:{petite:'', grande:''}}; // App config
   // Dynamic filters list
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
