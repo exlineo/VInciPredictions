@@ -184,5 +184,9 @@
   "MODIF":"Modifier",
   "DONNEES_D_DESCR":"Rendements annuels calculés en hectolitres / hectares",
   "DONNEES_M_DESCR":"Moyennes calculées sur trois années",
-  "DONNEES_C_DESCR":"Pourcentage de croissance/décroissance d'une année sur l'autre"
+  "DONNEES_C_DESCR":"Pourcentage de croissance/décroissance d'une année sur l'autre",
+  "MSG_ER_AUTH":"Problème d'authentification, vous avez été déconnecté",
+  "MSG_ER_404":"Ressource serveur non trouvée",
+  "MSG_ER_500":"Problème avec le serveur, veuillez vous reconnecter ultérieurement",
+  "MSG_ER_HTTP":"Une erreur réseau indéfinie s'est produite, merci de vous reconnecter ultérieurement"
 }

@@ -8,7 +8,7 @@
       <hr>
       <a routerLink="/predictions/visualisations" [title]="l.t['MENU_PREDICTIONS']"><i class="pi pi-map-marker"></i>{{ l.t['MENU_PREDICTIONS'] }}</a>
       <hr>
-      <a [href]="l.store.config.liens.petite" target="_blank" [title]="l.t['MENU_EXTERNE']"><i class="pi pi-globe"></i>{{ l.t['MENU_EXPORT'] }}<i class="pi pi-external-link"></i></a>
+      <a [href]="l.store.config.liens.grande" target="_blank" [title]="l.t['MENU_EXTERNE']"><i class="pi pi-globe"></i>{{ l.t['MENU_EXPORT'] }}<i class="pi pi-external-link"></i></a>
     </nav>
     <!-- MENU DU BAS -->
     <app-pied></app-pied>
@@ -20,7 +20,7 @@
   <section class="jaune">
     <article>
       <a routerLink="/predictions/profil" [title]="l.t['PROFIL']"><i class="pi pi-user-edit"></i></a>
-      <a [href]="'mailto:' + l.store.config.contact + '?subject=' + l.t['MAIL_SUB']"><i class="pi pi-send"></i></a>
+      <a [href]="'mailto:' + l.store.config.contact + '?subject=' + l.t['MAIL_SUB']" [title]="l.t['SUP_MAIL']"><i class="pi pi-send"></i></a>
       <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><i class="pi pi-ban"></i></a>
     </article>
     <article>

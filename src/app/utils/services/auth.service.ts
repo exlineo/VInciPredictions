@@ -16,7 +16,7 @@ export class AuthService {
   /** Accessing Firebase
    * @param auth Firebase object to authentication
   */
-  constructor(private auth: Auth, private route: Router, private l:LanguesService) {
+  constructor(private auth: Auth, private route: Router, public l:LanguesService) {
     if(this.l.store.getSessionProfil()) {
       this.profil = this.l.store.getSessionProfil() as ProfilI;
       this.u = this.profil.u;
@@ -124,4 +124,14 @@ export class AuthService {
       console.log('Problème dans la déconnexion', er);
     });
   };
+  /** Giving admin access to contents */
+  getAdmin(){
+    if(this.u.uid && this.u.uid != "12" && this.profil.statut == 666) return true;
+    return false;
+  }
+  /** Giving user access to contents */
+  getAccess(){
+    if(this.u.uid && this.u.uid != "12" && (this.profil.statut == 666 || this.profil.statut == 77)) return true;
+    return false;
+  }
 }

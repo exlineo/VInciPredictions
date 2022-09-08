@@ -76,7 +76,6 @@ export class LanguesService {
         .then<unknown>(p => {
           this.page = p;
           if(!this.page.id) this.page.id = id;
-          console.log(this.page);
           this.pages[this.langue][id] = p;
         }
         )

@@ -163,7 +163,6 @@ export class StoreService {
           }
         });
         this.setFilters(); // Set filters from datas
-        console.log(this.set);
       });
   }
   /**

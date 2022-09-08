@@ -25,6 +25,8 @@ import { AuthService } from './utils/services/auth.service';
 import { UtilsModule } from './utils/utils.module';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './utils/securite/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,7 @@ import { MentionsComponent } from './structure/mentions/mentions.component';
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage())
   ],
-  providers: [LanguesService, AuthService],
+  providers: [LanguesService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
