@@ -188,5 +188,10 @@
   "MSG_ER_AUTH":"Problème d'authentification, vous avez été déconnecté",
   "MSG_ER_404":"Ressource serveur non trouvée",
   "MSG_ER_500":"Problème avec le serveur, veuillez vous reconnecter ultérieurement",
-  "MSG_ER_HTTP":"Une erreur réseau indéfinie s'est produite, merci de vous reconnecter ultérieurement"
+  "MSG_ER_HTTP":"Une erreur réseau indéfinie s'est produite, merci de vous reconnecter ultérieurement",
+  "MSG_VERIFIE":"Validez votre email",
+  "MSG_VERIFIE_DESCR":"Vous devais valider votre email avec le lien qui vous a été envoyé pour pouvoir vous connecter",
+  "VERIFICATION":"Renvoyer un mail de vérification",
+  "VERIF_TITRE":"Renvoyer un email de vérification",
+  "VERIF_DESCR":"Renseignez votre email pour renvoyer un message contenant un lien de pour valider votre compte."
 }

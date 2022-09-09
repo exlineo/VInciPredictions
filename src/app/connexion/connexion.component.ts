@@ -14,10 +14,11 @@ export class ConnexionComponent implements OnInit {
 
   // Connexion form
   connexionForm = this.fbuild.group({
-    mail!: ['', [Validators.required, Validators.email]],
-    pass!: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
+    mail: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.pattern(CustomPattern), Validators.minLength(8)]]
   });
   oublie:boolean = false; // Boolean to show form for forgotten password
+  resend:boolean = false; // Boolean to show form to resend a verification email
   /**
    * Formulaire de connexion des utilisateurs
    * @param l {LanguesService} Pointeur vers le service de langues

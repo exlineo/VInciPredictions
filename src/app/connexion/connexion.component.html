@@ -37,10 +37,8 @@
         </span>
       </fieldset>
       <fieldset>
-        <a (click)="oublie = true" [title]="l.t['FORM_OUBLIE']"><span class="icone">vpn_key</span>{{ l.t['FORM_OUBLIE']
-          }}</a>
-        <a routerLink="/compte" [title]="l.t['FORM_CREE']"><span class="icone">person_add_alt</span>{{ l.t['FORM_CREE']
-          }}</a>
+        <a (click)="oublie = true" [title]="l.t['FORM_OUBLIE']"><i class="pi pi-key"></i>{{ l.t['FORM_OUBLIE'] }}</a>
+        <a routerLink="/compte" [title]="l.t['FORM_CREE']"><i class="pi pi-user-plus"></i>{{ l.t['FORM_CREE'] }}</a>
       </fieldset>
       <fieldset class="h">
         <input type="reset" [value]="l.t['FORM_EFFACE']">

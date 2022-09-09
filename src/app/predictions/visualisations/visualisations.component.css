@@ -26,6 +26,7 @@ section:nth-child(2) > article{
   padding:0 15px 10px;
   margin-bottom:15px;
   box-sizing: border-box;
+  position:relative;
 }
 section:nth-child(2) > form{
   padding:10px;

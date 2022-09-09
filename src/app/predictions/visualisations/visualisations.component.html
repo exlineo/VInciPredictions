@@ -104,6 +104,7 @@
   <article id="chart" *ngIf="fF.controls.donnees.value">
     <h3>{{ l.t['RES_VISUAL'] }}</h3>
     <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
+    <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
     <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
   </article>
   <article *ngIf="pdo.length > 0 && fF.controls.predictions.value">
@@ -130,11 +131,13 @@
   <article *ngIf="fF.controls.moyennes.value">
       <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
       <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
+      <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
       <p-chart [type]="chartType" [data]="avDS" [options]="basicOptions" #average></p-chart>
   </article>
   <article *ngIf="fF.controls.croissance.value">
       <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
       <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
+      <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
       <p-chart type="bar" [data]="growDS" [options]="basicOptions" #growth></p-chart>
   </article>
 </section>

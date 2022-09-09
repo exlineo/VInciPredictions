@@ -126,6 +126,13 @@ button{
   padding:8px 14px;
   margin:5px;
   width:max-content;
+  cursor: pointer;
+  overflow:hidden;
+  display:flex;
+  align-items: center;
+}
+button:hover{
+  background-color: var(--jaune);
 }
 select{
   background-color: var(--jaune);
@@ -145,11 +152,6 @@ input, select, textarea, button{
   font-family: 'Raleway', sans-serif;
   overflow-y:auto;
   transition: all .3s ease;
-}
-button{
-  overflow:hidden;
-  display:flex;
-  align-items: center;
 }
 button > i.pi{
   margin:0 6px 0 0;
@@ -296,6 +298,15 @@ form.bleu option:hover{
   width:100% !important;
   flex-flow:row nowrap;
   justify-content:center;
+}
+.download{
+  align-self:flex-end;
+  position:absolute;
+  right:0;
+  top:10px;
+}
+.download > i.pi{
+  margin:0;
 }
 /* DOUBLE SLIDER
 /*

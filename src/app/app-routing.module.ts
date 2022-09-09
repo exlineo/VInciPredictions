@@ -8,16 +8,18 @@ import { MentionsComponent } from './structure/mentions/mentions.component';
 import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { AdminGuard } from './utils/securite/admin.guard';
 import { AuthGuard } from './utils/securite/auth.guard';
+import { VerificationComponent } from './verification/verification.component';
 
 const routes: Routes = [
   {path:'', component:ConnexionComponent},
   {path:'compte', component:CompteComponent},
   {path:'rgpd', component:RgpdComponent},
+  {path:'verification', component:VerificationComponent},
   {path:'mentions', component:MentionsComponent},
-  // {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule), canActivate:[AuthGuard], canLoad:[AuthGuard]},
-  // {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate:[AdminGuard], canLoad:[AdminGuard]},
-  {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule)},
-  {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule)},
+  {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule), canActivate:[AuthGuard], canLoad:[AuthGuard]},
+  {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate:[AdminGuard], canLoad:[AdminGuard]},
+  // {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule)},
+  // {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule)},
   {path:'contact', component:ContactComponent},
   {path:'**', component:ErreurComponent}
 ];

@@ -5,6 +5,7 @@ import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
 import { UIChart } from 'primeng/chart';
+import { LinearScale } from 'chart.js';
 
 @Component({
   selector: 'app-visualisations',
@@ -252,5 +253,29 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** Set limits for years filters */
   setLimits(n: number) {
     return new Array(n);
+  }
+  /** Download img */
+  downloadStats(el:string){
+    console.log(el);
+    let img;
+    const lien = document.createElement('a');
+    // this.chart.toDataURL('image/png');
+    switch(el){
+      case 'chart':
+        // console.log(this.chart.getCanvas());
+        img = this.chart.getBase64Image();
+        lien.setAttribute('download', 'predictions.png')
+        break;
+      case 'average':
+        img = this.average.getBase64Image();
+        lien.setAttribute('download', 'averages.png')
+        break;
+      case 'growth':
+        img = this.growth.getBase64Image();
+        lien.setAttribute('download', 'growths.png')
+        break;
+    };
+    lien.setAttribute('href', img.replace("image/png", "image/octet-stream"));
+    lien.click();
   }
 }

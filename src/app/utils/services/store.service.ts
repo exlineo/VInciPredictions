@@ -88,8 +88,8 @@ export class StoreService {
    * Save profil on session storage to help identification when refresh
    * @param data Profil to write on session
    */
-  setSessionProfil(data:ProfilI){
-    sessionStorage.setItem('profil', JSON.stringify(data));
+  setSessionProfil(data:ProfilI | null){
+    data ? sessionStorage.setItem('profil', JSON.stringify(data)) : sessionStorage.removeItem('profil');
   }
   /**
    * Get entire collection

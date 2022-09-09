@@ -1,3 +1,4 @@
+import { User } from "firebase/auth";
 import { UserI } from "./user-i";
 
 export interface ProfilI {
@@ -14,7 +15,7 @@ export interface ProfilI {
   code?:string; // Code promotionnel éventuel
   droits:DroitsI;
   statut:number;
-  u:UserI;
+  u:User;
 }
 /** Interface des droits des utilisateurs */
 export interface DroitsI{
@@ -35,5 +36,5 @@ export class Profil implements ProfilI{
   code = ''; // Code promotionnel éventuel
   droits = {petite:0, grande:0, export:0};
   statut = 0;
-  u = {}
+  u = <User>{}
 }

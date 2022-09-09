@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ConnexionComponent } from './connexion/connexion.component';
-import { ContactComponent } from './contact/contact.component';
 import { CompteComponent } from './compte/compte.component';
 import { ErreurComponent } from './erreur/erreur.component';
 // FIREBASE
@@ -27,16 +26,17 @@ import { RgpdComponent } from './structure/rgpd/rgpd.component';
 import { MentionsComponent } from './structure/mentions/mentions.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './utils/securite/auth.interceptor';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConnexionComponent,
-    ContactComponent,
     CompteComponent,
     ErreurComponent,
     RgpdComponent,
-    MentionsComponent
+    MentionsComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,
