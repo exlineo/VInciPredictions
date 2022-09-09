@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { AuthService } from 'src/app/utils/services/auth.service';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { VisualService } from '../utils/services/visual.service';

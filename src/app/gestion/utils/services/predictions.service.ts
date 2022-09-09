@@ -83,7 +83,7 @@ export class PredictionsService {
       })
     });
   }
-  /** List predictions versions data */
+  /** List predictions versions data in SELECT on data-maj */
   listeDatas() {
     this.l.store.getFireCol('predictions')
       .then(d => d.forEach(
@@ -134,7 +134,7 @@ export class PredictionsService {
     const date = new Date();
     return d + `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s`;
   }
-  /** Get dataset from Firestore
+  /** Get complete dataset from Firestore
    * @param {event} e Event send by select HtmlElement
    */
   getData(e: any) {

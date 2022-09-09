@@ -64,8 +64,8 @@ export class PromoComponent implements OnInit {
    * secret key to validate
   */
   gnCode() {
-    console.log(this.auth.u.uid, this.accessForm.value, this.l.store.config.cle);
-    return btoa(this.auth.u.uid!) + '-' + btoa(JSON.stringify(this.accessForm.controls.droits.value)) + '-' + btoa(this.l.store.config.cle);
+    console.log(this.auth.profil.u.uid, this.accessForm.value, this.l.store.config.cle);
+    return btoa(this.auth.profil.u.uid!) + '-' + btoa(JSON.stringify(this.accessForm.controls.droits.value)) + '-' + btoa(this.l.store.config.cle);
   }
   /** Validate code */
   validCode(code:string){
@@ -78,7 +78,7 @@ export class PromoComponent implements OnInit {
     promo.validite = this.accessForm.controls.validite.value;
 
     console.log(promo);
-    this.predServ.setFireDoc('promos', {uid:this.auth.u.uid + '-' + Date.now(), doc:promo})
+    this.predServ.setFireDoc('promos', {uid:this.auth.profil.u.uid + '-' + Date.now(), doc:promo})
     .then(ok => {
       this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       this.promos.push(promo);

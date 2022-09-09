@@ -25,13 +25,12 @@
       <!-- PASSE -->
       <fieldset>
         <label>{{ l.t['FORM_PASSE'] }} *</label>
-        <input type="password" formControlName="pass" require [placeholder]="l.t['FORM_PASSE']" minlength="8" required>
-        <!-- <span  class="orange">{{ l.t['FORM_PASSE'] }}</span> -->
-        <span
+        <input type="password" formControlName="pass" [placeholder]="l.t['FORM_PASSE']" required>
+        <!-- <span
           *ngIf="connexionForm.controls['pass'].hasError('pattern') && !connexionForm.controls['pass'].hasError('required')"
           class="orange">
           {{ l.t['FORM_FORMAT_PASSE'] }}
-        </span>
+        </span> -->
         <span *ngIf="connexionForm.controls['pass'].hasError('required')" class="orange">
           {{ l.t['FORM_REQUIS'] }}
         </span>

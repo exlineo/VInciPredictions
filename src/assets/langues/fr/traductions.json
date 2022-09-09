@@ -193,5 +193,7 @@
   "MSG_VERIFIE_DESCR":"Vous devais valider votre email avec le lien qui vous a été envoyé pour pouvoir vous connecter",
   "VERIFICATION":"Renvoyer un mail de vérification",
   "VERIF_TITRE":"Renvoyer un email de vérification",
-  "VERIF_DESCR":"Renseignez votre email pour renvoyer un message contenant un lien de pour valider votre compte."
+  "VERIF_DESCR":"Renseignez votre email pour renvoyer un message contenant un lien de pour valider votre compte.",
+  "VERIF_MAIL_TITRE":"Un email vous a été envoyé",
+  "VERIF_MAIL_DESCR":"Un email vient de vous être envoyé, merci de cliquer sur le lien pour activer votre compte."
 }

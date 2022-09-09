@@ -14,7 +14,7 @@ export class CompteComponent implements OnInit {
    * Create un acount
    */
   account = this.fbuild.group({
-    mail: [this.auth.u.email, [Validators.required, Validators.email]],
+    mail: [this.auth.profil.u.email, [Validators.required, Validators.email]],
     mail2: ['', [Validators.required, Validators.email]],
     pass: ['', [Validators.required, Validators.pattern(`(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}`), Validators.minLength(8)]],
     pass2: ['', [Validators.required]]
@@ -43,7 +43,7 @@ export class CompteComponent implements OnInit {
 
   ngOnInit(): void {
     this.l.getPage('compte');
-    console.log(this.auth.u.uid);
+    console.log(this.auth.profil.u.uid);
   }
   /** Permettre de réinitialiser le mot de passe */
   oublie() {

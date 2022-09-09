@@ -16,7 +16,7 @@
   <section class="orange">
     <h2>{{ l.t['COMPTE'] }}</h2>
     <p-tabView [(activeIndex)]="tabI">
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']" [disabled]="this.auth.u ? false : true">
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 1 : ' + l.t['COMPTE']" [disabled]="this.auth.profil.u ? false : true">
         <!-- Create account -->
         <form [formGroup]="account" (submit)="creeCompte()">
           <fieldset>
@@ -79,7 +79,7 @@
 
         <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>
       </p-tabPanel>
-      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.u.email ? true : false">
+      <p-tabPanel [header]="l.t['ETAPE'] + ' 2 : ' + l.t['PROFIL_EDIT']" [disabled]="this.auth.profil.u ? true : false">
         <!-- ACCOUNT FORM -->
         <form [formGroup]="profil" (submit)="creeProfil()">
           <!-- Name, Surname -->

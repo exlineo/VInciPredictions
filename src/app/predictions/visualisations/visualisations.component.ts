@@ -135,6 +135,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.pdo = [];
     let ar = this.fF.controls.pdo.value!.map(p => p['name']);
     if (ar.length > 0) {
+      // Get PDO data
       this.store.getPdo(ar)
         .then(d => {
           d.forEach(p => {

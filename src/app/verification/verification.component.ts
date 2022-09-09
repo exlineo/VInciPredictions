@@ -13,7 +13,7 @@ export class VerificationComponent implements OnInit {
 
   // Connexion form
   verifForm = this.fbuild.group({
-    mail: [this.auth.u.email, [Validators.required, Validators.email]],
+    mail: [this.auth.profil.u.email, [Validators.required, Validators.email]],
   });
   /**
    * Formulaire de connexion des utilisateurs
