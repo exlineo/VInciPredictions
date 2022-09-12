@@ -70,8 +70,9 @@
     <p>{{ l.t['GESTION_VERSION'] }}</p>
     <select name="fichiers" (change)="predServ.getData($event)">
       <option>{{ l.t['GESTION_VOIR'] }}</option>
-      <option *ngFor="let f of predServ.listeVersions" [value]="f">{{ f }}</option>
+      <option *ngFor="let f of l.store.lastData" [value]="f.collection">{{ f.collection }}</option>
     </select>
+    <button (click)="predServ.docFireAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
   </article>
   <article>
     <p>{{ l.t['GESTION_AJOUT'] }}</p>

@@ -19,7 +19,7 @@ export class StoreService {
 
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
-  config: any = {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}, contact:'', cle:'', liens:{petite:'', grande:''}}; // App config
+  config: any = {couleurs:{}, predictions:{debut:2020, fin:2032}, rendements:{debut:1981, fin:2019}, contact:'', cle:'', liens:{petite:'', grande:''}}; // App config
   // Dynamic filters list
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
@@ -28,14 +28,15 @@ export class StoreService {
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<{type:string, name:string}>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
+  // listes: { pays: Array<string>, regions: Array<string>, pdo: Array<{type:string, name:string}>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
 
   constructor(public dbf: Firestore, private msg: MsgService) {
     this.getConfig();
   }
   /** Prepare data */
   initSet() {
-    this.set = { creeLe: <CreeI>{}, data: [], moyennes: <MoyennesI>{} };
+    this.set = { creeLe: <CreeI>{}, data: <Array<RendementI>>[], moyennes: <MoyennesI>{} };
   }
   /** Load app config */
   async getConfig() {
@@ -144,12 +145,12 @@ export class StoreService {
         d.forEach(l => {
           this.lastData.push(l.data());
         });
-        this.setSet();
+        this.setSet(this.lastData[this.lastData.length - 1].collection!);
       })
   }
   /** Set data from database */
-  setSet() {
-    this.getFireCol(this.lastData[this.lastData.length - 1].collection!)
+  setSet(collection:string) {
+    this.getFireCol(collection)
       .then(d => {
         this.initSet();
         // console.log(d);
@@ -162,6 +163,7 @@ export class StoreService {
             this.set.data.push(c.data() as RendementI);
           }
         });
+        // console.log(this.set);
         this.setFilters(); // Set filters from datas
       });
   }
@@ -187,9 +189,11 @@ export class StoreService {
    * @param {any} r a array of data received from server or uploaded
   */
   setFilterFromData(r: RendementI) {
+    console.log(r);
     // Create lists from data for countries, regions and pdo
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
-    if (!this.listes.pdo.includes({type:r.type as string, name:r.pdo as string})) this.listes.pdo = [...this.listes.pdo, {type:r.type as string, name:r.pdo as string}];
+    if (!this.listes.pdo.includes(r.pdo!)) this.listes.pdo = [...this.listes.pdo, r.pdo!];
+    // if (!this.listes.pdo.includes({type:r.type as string, name:r.pdo as string})) this.listes.pdo = [...this.listes.pdo, {type:r.type as string, name:r.pdo as string}];
   }
 }

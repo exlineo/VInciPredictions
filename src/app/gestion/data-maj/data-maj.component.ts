@@ -31,8 +31,10 @@ export class DataMajComponent implements OnInit {
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
   ngOnInit(): void {
+    this.predServ.saveVersion = false;
     // Loading text page content from database
     this.l.getPage('adminvisualisation');
+    this.l.store.getLastData();
   }
   /**
    * Upload CSV file

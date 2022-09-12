@@ -133,10 +133,10 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
    */
   filtrePdo(e: any) {
     this.pdo = [];
-    let ar = this.fF.controls.pdo.value!.map(p => p['name']);
-    if (ar.length > 0) {
+    // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
+    if (this.fF.controls.pdo.value!.length > 0) {
       // Get PDO data
-      this.store.getPdo(ar)
+      this.store.getPdo(this.fF.controls.pdo.value as Array<string>)
         .then(d => {
           d.forEach(p => {
             this.pdo.push(p.data() as RendementI);
@@ -161,7 +161,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         this.fGDS.labels.push(deb + i);
       };
       // Cut datasets from years
-      this.fGDS.datasets.forEach(ds => ds.data.splice(0, this.store.config.debut - deb).splice(ds.data.length, -(fin - this.store.config.fin)))
+      this.fGDS.datasets.forEach(ds => {
+        if(ds.data) ds.data.splice(0, this.store.config.debut - deb).splice(ds.data.length, -(fin - this.store.config.fin));
+      });
     }
     this.chart.refresh();
     this.setAverage();
@@ -207,19 +209,23 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
    * @param {string} coul Color base
    */
   setCouleur(i: number = 0, coul: string = 'bleu') {
-    let c = '';
-    switch (coul) {
-      case 'rouge':
-        c = this.couleurs[i] + '0000';
-        break;
-      case 'vert':
-        c = '00' + this.couleurs[i] + '00';
-        break;
-      case 'bleu':
-        c = '0000' + this.couleurs[i];
-        break;
-    }
-    return '#' + c;
+    if(i > this.store.config.couleurs[coul].length-1) i -= this.store.config.couleurs[coul].length-1;
+    return this.store.config.couleurs[coul][i];
+
+    // let c = '';
+
+    // switch (coul) {
+    //   case 'rouge':
+    //     c = this.couleurs[i] + '0000';
+    //     break;
+    //   case 'vert':
+    //     c = '00' + this.couleurs[i] + '00';
+    //     break;
+    //   case 'bleu':
+    //     c = '0000' + this.couleurs[i];
+    //     break;
+    // }
+    // return '#' + c;
   }
   /** Set filters and add data to lists (countries, regions, pdo) */
   setFiltres() {

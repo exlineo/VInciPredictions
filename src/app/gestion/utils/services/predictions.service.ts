@@ -19,9 +19,10 @@ export class PredictionsService {
   listeProfils: Array<ProfilI> = [];
   creeTmp?: CreeI;
   listeDataVersions: Array<CreeI> = []; // List of availlable data
+  saveVersion:boolean = false; //
 
   constructor(private dbf: Firestore, public l: LanguesService) {
-    this.listeDatas();
+    // this.listeDatas();
   };
 
   /** Convert CSV data to RendementI array */
@@ -31,6 +32,7 @@ export class PredictionsService {
     lignes.forEach(l => {
       this.setPredictions(l);
     });
+    this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
   }
   /**
    * Set predictions array
@@ -45,15 +47,18 @@ export class PredictionsService {
     // Create lists from data for countries, regions and pdo
     this.l.store.setFilterFromData(tmp);
     this.setAverages(); // Get average values
-    this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
   }
   /** Convert excel line to JSON object */
-  conversion(l: Array<any>): RendementI {
-    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 55)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
+  conversion(d: Array<any>): RendementI {
+    const er:number = this.l.store.config.rendements.fin-this.l.store.config.rendements.debut+1;
+    const ep:number = this.l.store.config.predictions.fin-this.l.store.config.rendements.debut+1;
+    console.log(er, ep);
+    return { pays: d[0].trim(), regions: d[1].trim(), pdo: d[2].trim(), rendements: this.setNumbers(d.slice(3, 3+er)), predictions: this.setNumbers(d.slice(3+er, 3+ep)), fiabilites: this.setNumbers(d.slice(3+ep, d.length)) };
+    // return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 55)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array<string>): Array<number> {
-    return a.map(c => parseInt(c));
+    return a.map(c => parseFloat(c));
   }
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
@@ -63,6 +68,10 @@ export class PredictionsService {
     for (let i = 0; i < ar[0].rendements.length; ++i) {
       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
       truc.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
+    };
+    for (let i = 0; i < ar[0].predictions.length; ++i) {
+      // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
+      truc.push(Math.round(ar.reduce((p, c) => p + c.predictions[i] | 0, 0) / ar.length));
     };
     return truc;
   }
@@ -85,23 +94,24 @@ export class PredictionsService {
   }
   /** List predictions versions data in SELECT on data-maj */
   listeDatas() {
-    this.l.store.getFireCol('predictions')
+    this.l.store.getFireCol('data')
       .then(d => d.forEach(
         f => {
-          this.listeVersions.push(f.id);
+          // const d = f.data() as CrreI;
+          // this.listeVersions.push(d.collection);
         }
-      ));
+      ))
+      .catch(er => console.log(er));
   };
   /**
    * Write documents from a new data uploaded
-   * @param collec Name of collection
-   * @param data Object with UID to write
+   * @param time time to set name time of the collection, globally not useful
    * @returns {promise} Returns a promise
    */
-  async batchFireCollecDocs() {
+  async batchFireCollecDocs(time:number = -1) {
     let n = 0;
     const col = this.setDate();
-    this.creeTmp = { time: Date.now(), collection: this.setDate() };
+    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
     this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
     this.batch.set(doc(this.dbf, col, 'moyennes'), this.l.store.set.moyennes);
     this.l.store.set.data.forEach(d => {
@@ -138,18 +148,8 @@ export class PredictionsService {
    * @param {event} e Event send by select HtmlElement
    */
   getData(e: any) {
-    this.l.store.getFireDoc('predictions', e.target.value)
-      .then(d => d.data() as DataI)
-      .then(d => {
-        this.l.store.set = d; // Data loaded
-        this.l.store.setFilters(); // Create filters from data
-        this.setAverages(); // Get average values on countries and regions
-        // this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
-      })
-      .catch(er => {
-        console.log(er);
-        this.l.msg.msgFail(this.l.t['MSG_ER'], er);
-      })
+    this.saveVersion = true;
+    this.l.store.setSet(e.target.value);
   }
   /** List accounts */
   getListeProfils() {

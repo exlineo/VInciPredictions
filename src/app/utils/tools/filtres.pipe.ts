@@ -37,9 +37,10 @@ export class FiltresPipe implements PipeTransform {
         data.push(v);
       } else if (args.pays.indexOf(v.pays) != -1) {
         data.push(v);
-      } else if (args.type == v.type.toLowerCase()) {
-        data.push(v);
       }
+      // } else if (args.type == v.type.toLowerCase()) {
+      //   data.push(v);
+      // }
     });
     return data.length > 0 ? data : values;
   }

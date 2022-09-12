@@ -15,7 +15,8 @@
     </div>
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
-      <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name"
+      <!-- <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
+      <p-listbox [options]="store.listes.pdo" formControlName="pdo"
         (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
@@ -42,7 +43,6 @@
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
       <p class="ecarts">
         <span>{{ fF.controls.rendements.value }}</span>
-        <!-- <p-slider formControlName="rendements" [range]="true" [min]="1981" [max]="2022"></p-slider> -->
         <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin"
           (onSlideEnd)="filtreGraphDataset($event)" class="inverse"></p-slider>
         <!-- <span>{{ fF.controls['rendements'].value }}</span> -->

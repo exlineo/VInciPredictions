@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, sendEmailVerification, User, IdTokenResult } from "@angular/fire/auth";
-import { Router, UrlSegment } from '@angular/router';
-import { user } from 'rxfire/auth';
+import { Router } from '@angular/router';
 import { Profil, ProfilI } from '../modeles/profil-i';
-import { UserI } from '../modeles/user-i';
 import { LanguesService } from './langues.service';
 
 @Injectable({
@@ -134,7 +132,9 @@ export class AuthService {
   }
   /** Giving admin access to contents */
   getAdmin() {
-    if (!this.profil.u.emailVerified) {
+    if (!this.auth.currentUser!) {
+      this.route.navigateByUrl('/verification');
+    }else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
       this.route.navigateByUrl('/verification');
     };
     if (this.auth.currentUser! && this.profil.statut == 666) return true;
@@ -142,7 +142,9 @@ export class AuthService {
   }
   /** Giving user access to contents */
   getAccess() {
-    if (!this.auth.currentUser!.emailVerified) {
+    if (!this.auth.currentUser!) {
+      this.route.navigateByUrl('/verification');
+    }else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
       this.route.navigateByUrl('/verification');
     };
     if (this.auth.currentUser!) return true;
