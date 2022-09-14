@@ -42,6 +42,7 @@ export interface DatasetI{
   label: string,
   fill?: boolean,
   borderColor?: string,
+  backgroundColor?:string,
   yAxisID?: string,
   tension?: number,
   data: Array<number>;
@@ -50,6 +51,7 @@ export class Dataset implements DatasetI{
   label = '';
   fill = false;
   borderColor = '#42A5F5';
+  backgroundColor = '#42A5F5';
   yAxisID = 'y';
   tension = .4;
   data:Array<number> = [];

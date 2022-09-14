@@ -42,7 +42,7 @@ export class AuthService {
   creeProfil(p: ProfilI) {
     this.setProfil(p);
     // Add profil to firestore
-    if (this.auth.currentUser!.uid) {
+    if (this.auth.currentUser!) {
       this.l.store.setFireDoc('comptes', { uid: this.auth.currentUser!.uid, doc: this.profil })
         .then(r => {
           this.l.msg.msgOk(this.l.t['MSG_AC_ADD'], this.l.t['MSG_AC_ADD_DESCR']);
@@ -60,8 +60,8 @@ export class AuthService {
     this.profil.u = this.auth.currentUser!;
     // this.profil.u.uid = this.auth.currentUser!.uid;
     // this.profil.u.email = this.u.email;
-    this.profil.droits = { petite: 0, grande: 0, export: 0 };
-    this.profil.statut = 0;
+    this.profil.droits = { petite: 1, grande: 1, export: 1 };
+    this.profil.statut = 77;
   }
   /**
    * User connection with email and password in firebase
@@ -133,21 +133,19 @@ export class AuthService {
   /** Giving admin access to contents */
   getAdmin() {
     if (!this.auth.currentUser!) {
+      this.route.navigateByUrl('/');
+    } else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
       this.route.navigateByUrl('/verification');
-    }else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
-      this.route.navigateByUrl('/verification');
-    };
-    if (this.auth.currentUser! && this.profil.statut == 666) return true;
+    } else if (this.auth.currentUser! && this.profil.statut == 666) return true;
     return false;
   }
   /** Giving user access to contents */
   getAccess() {
     if (!this.auth.currentUser!) {
+      this.route.navigateByUrl('/');
+    } else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
       this.route.navigateByUrl('/verification');
-    }else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
-      this.route.navigateByUrl('/verification');
-    };
-    if (this.auth.currentUser!) return true;
+    } else if (this.auth.currentUser!) return true;
     return false;
   }
 }

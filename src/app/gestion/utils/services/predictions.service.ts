@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, writeBatch, setDoc, deleteDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { CreeI, DataI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { CreeI, RendementI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 

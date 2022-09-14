@@ -189,7 +189,6 @@ export class StoreService {
    * @param {any} r a array of data received from server or uploaded
   */
   setFilterFromData(r: RendementI) {
-    console.log(r);
     // Create lists from data for countries, regions and pdo
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];

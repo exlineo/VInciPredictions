@@ -34,7 +34,7 @@ export class Profil implements ProfilI{
   pays = '';
   mail = '';
   code = ''; // Code promotionnel éventuel
-  droits = {petite:0, grande:0, export:0};
+  droits = {petite:1, grande:1, export:1};
   statut = 0;
   u = <User>{}
 }

@@ -184,7 +184,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       const ds = new Dataset();
       const dg = new Dataset();
       ds.label = av.label;
+      ds.borderColor = av.borderColor!;
       dg.label = av.label;
+      dg.backgroundColor = av.borderColor!;
       av.data.forEach((d, i)=>{
         if(i > 1){
           // Add average data to data array
