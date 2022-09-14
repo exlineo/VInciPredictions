@@ -1,9 +1,16 @@
 <!-- MENU DU BAS -->
+<a href="https://docs.google.com/presentation/d/12vS3cGwbbcjABptYbAwYpcbile1t1M7IONnxWvy9igU/edit?usp=sharing"
+  target="_blank" [title]="l.t['COMMENT']">
+  <i class="pi pi-question"></i>
+  {{ l.t['COMMENT'] }}
+</a>
+
 <article class="menupied">
-    <nav>
-      <a routerLink="/rgpd" [title]="l.t['MENTIONS']"><span class="icone">gavel</span></a>
-      <a routerLink="/mentions" [title]="l.t['RGPD']"><span class="icone">record_voice_over</span></a>
-      <a href="https://exlineo.com" [title]="l.t['COPYRIGHT']" target="_blank"><span class="icone">copyright</span></a>
-    </nav>
-    <a href="https://www.interreg-sudoe.eu/" [title]="l.t['LIEN']+' Inerreg Sudoe'" target="_blank"><img src="/assets/images/logos/logo_interreg.png" [alt]="l.t['LOGO']"></a>
-  </article>
+  <nav>
+    <a href="http://vincisudoe.eu/mentionslegales" [title]="l.t['MENTIONS']" target="_blank"><i class="pi pi-info-circle"></i></a>
+    <a routerLink="/rgpd" [title]="l.t['RGPD']"><i class="pi pi-directions"></i></a>
+    <a href="https://exlineo.com" [title]="l.t['COPYRIGHT']" target="_blank"><i class="pi pi-hashtag"></i></a>
+  </nav>
+  <a href="https://www.interreg-sudoe.eu/" [title]="l.t['LIEN']+' Inerreg Sudoe'" target="_blank"><img
+      src="/assets/images/logos/logo_interreg.png" [alt]="l.t['LOGO']"></a>
+</article>

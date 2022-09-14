@@ -18,8 +18,6 @@ const routes: Routes = [
   {path:'mentions', component:MentionsComponent},
   {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule), canActivate:[AuthGuard], canLoad:[AuthGuard]},
   {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate:[AdminGuard], canLoad:[AdminGuard]},
-  // {path:'predictions', loadChildren: () => import('./predictions/predictions.module').then(m => m.PredictionsModule)},
-  // {path:'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule)},
   {path:'contact', component:ContactComponent},
   {path:'**', component:ErreurComponent}
 ];
