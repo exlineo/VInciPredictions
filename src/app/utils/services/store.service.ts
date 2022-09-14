@@ -19,7 +19,7 @@ export class StoreService {
 
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
-  config: any = {couleurs:{}, predictions:{debut:2020, fin:2032}, rendements:{debut:1981, fin:2019}, contact:'', cle:'', liens:{petite:'', grande:''}}; // App config
+  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' } }; // App config
   // Dynamic filters list
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
@@ -54,7 +54,7 @@ export class StoreService {
    * @param {string} id IID of the data
    * @returns {promise} Renvoie une chaîne de caractères
    */
-  getLocalString(id: string, defaut:string='fr'): string {
+  getLocalString(id: string, defaut: string = 'fr'): string {
     if (localStorage.getItem(id)) {
       return localStorage.getItem(id) as string
     } else { return defaut };
@@ -79,7 +79,7 @@ export class StoreService {
     typeof data == 'string' ? localStorage.setItem(id, data) : localStorage.setItem(id, JSON.stringify(data));
   }
   /** Get profil from session storage */
-  getSessionProfil(){
+  getSessionProfil() {
     if (sessionStorage.getItem('profil')) {
       return JSON.parse(sessionStorage.getItem('profil') as string);
     }
@@ -89,7 +89,7 @@ export class StoreService {
    * Save profil on session storage to help identification when refresh
    * @param data Profil to write on session
    */
-  setSessionProfil(data:ProfilI | null){
+  setSessionProfil(data: ProfilI | null) {
     data ? sessionStorage.setItem('profil', JSON.stringify(data)) : sessionStorage.removeItem('profil');
   }
   /**
@@ -142,6 +142,7 @@ export class StoreService {
     const q = query(collection(this.dbf, 'data'));
     await getDocs(q)
       .then(d => {
+        this.lastData = [];
         d.forEach(l => {
           this.lastData.push(l.data());
         });
@@ -149,7 +150,7 @@ export class StoreService {
       })
   }
   /** Set data from database */
-  setSet(collection:string) {
+  setSet(collection: string) {
     this.getFireCol(collection)
       .then(d => {
         this.initSet();
