@@ -17,7 +17,7 @@
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
       <!-- <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
       <p-listbox [options]="store.listes.pdo" formControlName="pdo"
-        (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
+        (onChange)="filtrePdo()" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
     <!-- FILTERS FOR YEARS GAP -->
@@ -68,8 +68,9 @@
     <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
     <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
     <div>
-      <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
-      <p-chart [type]="chartType" [data]="" [options]="basicOptions" #chartPredictions></p-chart>
+      <!-- <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart> -->
+      <p-chart [type]="chartType" [data]="DATA.RD" [options]="basicOptions" #chart></p-chart>
+      <p-chart [type]="chartType" [data]="DATA.PR" [options]="basicOptions" #chartPredictions></p-chart>
     </div>
   </article>
   <article *ngIf="pdo.length > 0 && fF.controls.predictions.value">

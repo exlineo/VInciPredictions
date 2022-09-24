@@ -44,9 +44,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   basicOptions: any; // Options of the charts
 
   /** Labels for charts */
-  LABELS: any = { DS: Array<string>, PR: Array<string> };
+  LABELS: any = { RD: Array<string>, PR: Array<string> };
   // Array of objects listing datas for yield charts and predictions
-  DATA: any = { DS: Array<DatasetI>, PR: Array<DatasetI>, DSAV: Array<DatasetI>, DSAVPR: Array<DatasetI>, DSGR: Array<DatasetI>, DSGRPR: Array<DatasetI> };
+  DATA: any = { RD: Array<DatasetI>, PR: Array<DatasetI>, RDAV: Array<DatasetI>, PRAV: Array<DatasetI>, RDGR: Array<DatasetI>, RPGR: Array<DatasetI> };
 
   rendementsDS: { labels: Array<number>, datasets: Array<DatasetI> } = { labels: [], datasets: [] };
   fGDS = this.rendementsDS; // Copie du rendementsDS pour traiter la taille des tableaux en fonction de l'année
@@ -114,14 +114,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       }
     };
   }
-  /** Set labels for graph
+  /** Set labels for graph at start with configuration load
    * DEPRECATED
   */
   setGraphLabels(debut: number, ecart: number) {
     this.rendementsDS.labels = [];
     for (let i = 0; i < ecart; ++i) {
       this.rendementsDS.labels.push(debut + i);
-      this.LABELS.DS.push(debut + i);
     };
   }
   /** Set labels for graph */
@@ -152,10 +151,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.listes.regions = e.value;
     this.setFiltres();
   }
-  /** Get data from PDO filtered
-   * @param {event} e Event send from HTML
+  /** Load PDO data from database
    */
-  filtrePdo(e: any) {
+  filtrePdo() {
     this.pdo = [];
     // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
     if (this.fF.controls.pdo.value!.length > 0) {
@@ -197,26 +195,24 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   setGap(start: number, end: number) {
     return { deb: 0, fin: 0 }
   }
-  /** Filter yields in years gap */
-  /** Filter predictions in years gap */
-  filtrePR() {
-
-  }
   /** Calculate and show the average data */
   setAverage() {
-    // Calculate average data, 3 years and purcent growth on years
-    this.avDS.labels = this.fGDS.labels.slice(2, this.fGDS.labels.length);
+    // Calculate average data, 5 years and purcent growth on years
+    this.DATA.RDAV.labels = this.LABELS.RD.slice(4, this.LABELS.RD.length);
+    this.DATA.PRAV.labels = this.LABELS.PR.slice(4, this.LABELS.PR.length);
+    this.DATA.RDAV.datasets = [];
+    this.DATA.PRAV.datasets = [];
+
+    this.avDS.labels = this.fGDS.labels.slice(4, this.fGDS.labels.length);
     this.growDS.labels = this.fGDS.labels.slice(1, this.fGDS.labels.length);
     this.avDS.datasets = [];
     this.growDS.datasets = []
 
     // Calculate purcent growth on years
-    // this.growDS.labels = this.fGDS.labels.splice(2, this.fGDS.labels.length);
-    // this.growDS.datasets = [];
     this.fGDS.datasets.forEach(av => {
-      // Empty dataset to push in empty
-      const ds = new Dataset();
-      const dg = new Dataset();
+      // Empty datasets containers
+      const ds = new Dataset(); // Dataset for Average
+      const dg = new Dataset(); // Dataset for growth
       ds.label = av.label;
       ds.borderColor = av.borderColor!;
       dg.label = av.label;
@@ -224,7 +220,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       av.data.forEach((d, i) => {
         if (i > 1) {
           // Add average data to data array
-          ds.data.push(Math.round((av.data[i - 2] + av.data[i - 1] + av.data[i]) / 3));
+          ds.data.push(Math.round((av.data[i - 4] +av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 3));
         };
         if (i > 0) {
           dg.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
@@ -251,23 +247,29 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** Set filters and add data to lists (countries, regions, pdo) */
   setFiltres() {
     this.rendementsDS.datasets = [];
-    const data: Array<any> = [];
+    this.DATA.DS = [];
+    // const data: Array<any> = [];
     // Set region if some was selected in filters
     if (this.listes.pays.length > 0) {
       for (let i = 0; i < this.listes.pays.length; ++i) {
-        this.setDataset(this.rendementsDS, this.listes.pays[i], this.store.set.moyennes?.pays[this.listes.pays[i]], this.setCouleur(i, 'bleu'));
-      };
+        this.setDataset(this.rendementsDS, this.listes.pays[i], this.store.set.moyennes?.pays.RD[this.listes.pays[i]], this.setCouleur(i, 'bleu')); // DEPRECATED
+        this.setDataset(this.DATA.RD, this.listes.pays[i], this.store.set.moyennes?.pays.RD[this.listes.pays[i]], this.setCouleur(i, 'bleu'));
+        this.setDataset(this.DATA.PR, this.listes.pays[i], this.store.set.moyennes?.pays.PR[this.listes.pays[i]], this.setCouleur(i, 'bleu'));      };
     }
     // Set region if some was selected in filters
     if (this.listes.regions.length > 0) {
       for (let i = 0; i < this.listes.regions.length; ++i) {
-        this.setDataset(this.rendementsDS, this.listes.regions[i], this.store.set.moyennes?.regions[this.listes.regions[i]], this.setCouleur(i, 'vert'));
+        this.setDataset(this.rendementsDS, this.listes.regions[i], this.store.set.moyennes?.regions.RD[this.listes.regions[i]], this.setCouleur(i, 'vert')); // DEPRECATED
+        this.setDataset(this.DATA.RD, this.listes.regions[i], this.store.set.moyennes?.regions.RD[this.listes.regions[i]], this.setCouleur(i, 'vert'));
+        this.setDataset(this.DATA.PR, this.listes.regions[i], this.store.set.moyennes?.regions.PR[this.listes.regions[i]], this.setCouleur(i, 'vert'));
       };
     }
     // Add PDO
-    if (this.listes.pays.length > 0) {
+    if (this.pdo.length > 0) {
       for (let i = 0; i < this.pdo.length; ++i) {
-        this.setDataset(this.rendementsDS, this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge'));
+        this.setDataset(this.rendementsDS, this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge')); // DEPRECATED
+        this.setDataset(this.DATA.RD, this.pdo[i].pdo!, this.pdo[i].rendements, this.setCouleur(i, 'rouge'));
+        this.setDataset(this.DATA.PR, this.pdo[i].pdo!, this.pdo[i].predictions, this.setCouleur(i, 'rouge'));
       };
     }
     // this.rendementsDS.datasets.concat(this.pdo);

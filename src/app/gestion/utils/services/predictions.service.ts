@@ -77,14 +77,14 @@ export class PredictionsService {
   }
   /** Calculate averages values on countries and regions */
   setAverages() {
-    // Averages on countries in data
+    // Set averages for countries
     this.l.store.listes.pays.forEach(d => {
       const pays = this.l.store.set.data.filter(p => d && p.pays == d && d.length > 0);
       pays.forEach(p => {
         if (p.pays && p.pays.length > 0) this.l.store.set.moyennes!.pays[p.pays] = this.av(pays);
       })
     });
-    // Averages on regions
+    // Set averages for regions
     this.l.store.listes.regions.forEach(d => {
       const regions = this.l.store.set.data.filter(p => d && p.regions == d && d.length > 0);
       regions.forEach(r => {
