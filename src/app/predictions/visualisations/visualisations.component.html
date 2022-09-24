@@ -20,31 +20,14 @@
         (onChange)="filtrePdo($event)" [multiple]="true" [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
-
-    <!-- <div class="l">
-      <h3>{{ l.t['FILTRE_TYPE'] }}</h3>
-      <div class="h">
-        <label>
-          <p-radioButton name="type" value="Rouge" formControlName="type"></p-radioButton>
-          {{ l.t['FILTRE_ROUGE'] }}
-        </label>
-        <label>
-          <p-radioButton name="type" value="Blanc" formControlName="type"></p-radioButton>
-          {{ l.t['FILTRE_BLANC'] }}
-        </label>
-        <label>
-          <p-radioButton name="type" value="" formControlName="type"></p-radioButton>
-          {{ l.t['FILTRE_TOUS'] }}
-        </label>
-      </div>
-    </div> -->
+    <!-- FILTERS FOR YEARS GAP -->
     <div>
       <h3>{{ l.t['FILTRE_ANNEES'] }}</h3>
       <h4>{{ l.t['FILTRE_PLAGE_REND'] }}</h4>
       <p class="ecarts">
         <span>{{ fF.controls.rendements.value }}</span>
         <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin"
-          (onSlideEnd)="filtreGraphDataset($event)" class="inverse"></p-slider>
+          (onSlideEnd)="filtreRendementsDS($event)" class="inverse"></p-slider>
         <!-- <span>{{ fF.controls['rendements'].value }}</span> -->
         <span>{{ config.rendements.fin }}</span>
       </p>
@@ -52,35 +35,14 @@
       <p class="ecarts">
         <span>{{ config.predictions.debut }}</span>
         <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin"
-          (onSlideEnd)="filtreGraphDataset($event)"></p-slider>
-        <!-- <span>{{ fF.controls['predictions'].value[1] }}</span> -->
+          (onSlideEnd)="filtreRendementsDS($event)"></p-slider>
         <span>{{ fF.controls.predictions.value }}</span>
       </p>
     </div>
-    <!-- <div class="l">
-      <h3>{{ l.t['FILTRE_INDICATEURS'] }}</h3>
-      <label>
-        <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_PREDICTIONS'] }}
-      </label>
-      <label>
-        <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_MOYENNES'] }}
-      </label>
-      <label>
-        <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_CROISSANCE'] }}
-      </label>
-    </div> -->
-    <!-- <div class="h">
-      <input type="reset" [value]="l.t['FORM_EFFACE']">
-      <input type="submit" [value]="l.t['FILTRE_VALIDE']">
-    </div> -->
   </form>
 </section>
 <!-- VISUALISATION -->
 <section>
-  <!-- <h2>{{ l.t['RES_TITRE'] }}</h2>
   <p>{{ l.t['RES_DESCR'] }}</p> -->
   <h2>{{ l.page.titre }}</h2>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
@@ -105,7 +67,10 @@
     <h3>{{ l.t['RES_VISUAL'] }}</h3>
     <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
     <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
-    <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
+    <div>
+      <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart>
+      <p-chart [type]="chartType" [data]="" [options]="basicOptions" #chartPredictions></p-chart>
+    </div>
   </article>
   <article *ngIf="pdo.length > 0 && fF.controls.predictions.value">
     <h3>{{ l.t['FILTRE_FIABILITE'] }}</h3>
@@ -132,12 +97,17 @@
       <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
       <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
       <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
-      <p-chart [type]="chartType" [data]="avDS" [options]="basicOptions" #average></p-chart>
+      <div>
+        <p-chart [type]="chartType" [data]="avDS" [options]="basicOptions" #average></p-chart>
+        <p-chart [type]="chartType" [data]="" [options]="basicOptions" #averagePreictions></p-chart>
+      </div>
   </article>
   <article *ngIf="fF.controls.croissance.value">
       <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
       <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
       <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
-      <p-chart type="bar" [data]="growDS" [options]="basicOptions" #growth></p-chart>
+      <div>
+        <p-chart type="bar" [data]="growDS" [options]="basicOptions" #growth></p-chart>
+      </div>
   </article>
 </section>

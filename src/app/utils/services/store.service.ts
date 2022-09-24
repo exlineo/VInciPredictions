@@ -24,7 +24,7 @@ export class StoreService {
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
   // Set of data with filters and averages
-  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
+  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], moyennes: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
@@ -154,8 +154,8 @@ export class StoreService {
     this.getFireCol(collection)
       .then(d => {
         this.initSet();
-        // console.log(d);
         d.forEach(c => {
+          // console.log("Données brutes", c.data());
           if (c.id == 'creeLe') {
             this.set.creeLe = c.data() as CreeI;
           } else if (c.id == 'moyennes') {
@@ -164,8 +164,8 @@ export class StoreService {
             this.set.data.push(c.data() as RendementI);
           }
         });
-        // console.log(this.set);
-        this.setFilters(); // Set filters from datas
+        // Filter data for useness
+        this.set.data.forEach(d => this.setFilterFromData(d));
       });
   }
   /**
@@ -182,10 +182,6 @@ export class StoreService {
   async getAverageData(p: Array<string>, r: Array<string>) {
 
   }
-  /** Set filters from dataset */
-  setFilters() {
-    this.set.data.forEach(d => this.setFilterFromData(d));
-  }
   /** Set filters from dataset
    * @param {any} r a array of data received from server or uploaded
   */
@@ -194,6 +190,5 @@ export class StoreService {
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo!)) this.listes.pdo = [...this.listes.pdo, r.pdo!];
-    // if (!this.listes.pdo.includes({type:r.type as string, name:r.pdo as string})) this.listes.pdo = [...this.listes.pdo, {type:r.type as string, name:r.pdo as string}];
   }
 }

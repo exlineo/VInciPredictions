@@ -31,4 +31,5 @@ export class VisualService {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
+  /** Dispatch data for charts */
 }

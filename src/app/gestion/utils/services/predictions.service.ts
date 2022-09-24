@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, writeBatch, setDoc, deleteDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { CreeI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { CreeI, MoyennesI, RendementI, YeildI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 
@@ -63,15 +63,15 @@ export class PredictionsService {
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
   */
-  av(ar: Array<RendementI>) {
-    const truc: any = [];
+  av(ar: Array<RendementI>):YeildI {
+    const truc: YeildI = {RD:[], PR:[]};
     for (let i = 0; i < ar[0].rendements.length; ++i) {
       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
-      truc.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
+      truc.RD.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
     };
     for (let i = 0; i < ar[0].predictions.length; ++i) {
       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
-      truc.push(Math.round(ar.reduce((p, c) => p + c.predictions[i] | 0, 0) / ar.length));
+      truc.PR.push(Math.round(ar.reduce((p, c) => p + c.predictions[i] | 0, 0) / ar.length));
     };
     return truc;
   }

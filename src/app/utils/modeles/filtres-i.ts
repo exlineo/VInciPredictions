@@ -16,8 +16,12 @@ export interface RendementI{
   fiabilites:Array<number>;
 }
 export interface MoyennesI{
-  pays: any;
-  regions: any;
+  pays:any; // List of countries averages
+  regions:any; // List of regions averages
+}
+export interface YeildI{
+  RD:Array<any>; // Array of yields
+  PR:Array<any>; // Array of predictions
 }
 export class Rendement implements RendementI{
   pays = "";
@@ -35,8 +39,8 @@ export interface DataI{
   moyennes?:MoyennesI;
 }
 export interface CreeI{
-  time?:number;
-  collection?:string;
+  time?:number; // Timestamp
+  collection?:string; // name of the set (collection) in Firebase
 }
 export interface DatasetI{
   label: string,
