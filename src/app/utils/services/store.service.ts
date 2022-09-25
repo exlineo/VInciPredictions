@@ -159,12 +159,15 @@ export class StoreService {
           if (c.id == 'creeLe') {
             this.set.creeLe = c.data() as CreeI;
           } else if (c.id == 'moyennes') {
-            this.set.moyennes = c.data() as MoyennesI;
+            console.log("Moyennes", c.data()['regions']);
+            this.set.moyennes.regions = c.data()['regions'];
+            this.set.moyennes.pays = c.data()['pays'];
           } else {
             this.set.data.push(c.data() as RendementI);
           }
         });
-        // Filter data for useness
+        console.log(this.set);
+        // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.data.forEach(d => this.setFilterFromData(d));
       });
   }

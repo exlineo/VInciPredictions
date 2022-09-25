@@ -36,7 +36,7 @@ export interface DataI{
   creeLe?:CreeI;
   data:Array<RendementI>;
   filtres?:{ pays: Array<string>, regions: Array<string>, pdo: Array<string> };
-  moyennes?:MoyennesI;
+  moyennes:MoyennesI;
 }
 export interface CreeI{
   time?:number; // Timestamp
@@ -65,4 +65,8 @@ export enum Couleur{
   rouge = 'rouge',
   tous = 'tous',
   aucun = ''
+}
+export interface ChartI{
+  labels:Array<number>;
+  datasets:Array<DatasetI>;
 }

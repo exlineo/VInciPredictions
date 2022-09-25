@@ -28,7 +28,6 @@
         <span>{{ fF.controls.rendements.value }}</span>
         <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin"
           (onSlideEnd)="filtreRendementsDS($event)" class="inverse"></p-slider>
-        <!-- <span>{{ fF.controls['rendements'].value }}</span> -->
         <span>{{ config.rendements.fin }}</span>
       </p>
       <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
@@ -43,7 +42,7 @@
 </section>
 <!-- VISUALISATION -->
 <section>
-  <p>{{ l.t['RES_DESCR'] }}</p> -->
+  <p>{{ l.t['RES_DESCR'] }}</p>
   <h2>{{ l.page.titre }}</h2>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
@@ -68,7 +67,6 @@
     <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
     <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
     <div>
-      <!-- <p-chart [type]="chartType" [data]="fGDS" [options]="basicOptions" #chart></p-chart> -->
       <p-chart [type]="chartType" [data]="DATA.RD" [options]="basicOptions" #chart></p-chart>
       <p-chart [type]="chartType" [data]="DATA.PR" [options]="basicOptions" #chartPredictions></p-chart>
     </div>
@@ -99,8 +97,8 @@
       <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
       <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
       <div>
-        <p-chart [type]="chartType" [data]="avDS" [options]="basicOptions" #average></p-chart>
-        <p-chart [type]="chartType" [data]="" [options]="basicOptions" #averagePreictions></p-chart>
+        <p-chart [type]="chartType" [data]="DATA.RDAV" [options]="basicOptions" #average></p-chart>
+        <p-chart [type]="chartType" [data]="DATA.PRAV" [options]="basicOptions" #averagePredictions></p-chart>
       </div>
   </article>
   <article *ngIf="fF.controls.croissance.value">
@@ -108,7 +106,9 @@
       <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
       <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
       <div>
-        <p-chart type="bar" [data]="growDS" [options]="basicOptions" #growth></p-chart>
+        <p-chart type="bar" [data]="DATA.RDGR" [options]="basicOptions" #growth></p-chart>
+        <p-chart type="bar" [data]="DATA.PRGR" [options]="basicOptions" #growthPredictions></p-chart>
+
       </div>
   </article>
 </section>

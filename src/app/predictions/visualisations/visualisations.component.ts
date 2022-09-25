@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Dataset, DatasetI, RendementI } from 'src/app/utils/modeles/filtres-i';
+import { Dataset, DatasetI, RendementI, ChartI, YeildI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
@@ -15,12 +15,12 @@ import { VisualService } from '../utils/services/visual.service';
 export class VisualisationsComponent implements OnInit, OnDestroy {
 
   /** Charts */
-  @ViewChild('chart') chart!: UIChart;
-  @ViewChild('average') average!: UIChart;
-  @ViewChild('growth') growth!: UIChart;
-  @ViewChild('chartPrediction') chartPrediction!: UIChart;
-  @ViewChild('averagePrediction') averagePrediction!: UIChart;
-  @ViewChild('growthPrediction') growthPrediction!: UIChart;
+  @ViewChild('chart') chartrd!: UIChart;
+  @ViewChild('average') chartAvrd!: UIChart;
+  @ViewChild('growth') chartGrowthrd!: UIChart;
+  @ViewChild('chartPredictions') chartpr!: UIChart;
+  @ViewChild('averagePredictions') chartAvpr!: UIChart;
+  @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
 
   config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 } }; // App config
 
@@ -44,14 +44,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   basicOptions: any; // Options of the charts
 
   /** Labels for charts */
-  LABELS: any = { RD: Array<string>, PR: Array<string> };
+  // LABELS: any = { RD: Array<string>, PR: Array<string>, RDAV:Array<string>, PRAV:Array<string>, RDGR:Array<string>, RPGR:Array<string> };
   // Array of objects listing datas for yield charts and predictions
-  DATA: any = { RD: Array<DatasetI>, PR: Array<DatasetI>, RDAV: Array<DatasetI>, PRAV: Array<DatasetI>, RDGR: Array<DatasetI>, RPGR: Array<DatasetI> };
-
-  rendementsDS: { labels: Array<number>, datasets: Array<DatasetI> } = { labels: [], datasets: [] };
-  fGDS = this.rendementsDS; // Copie du rendementsDS pour traiter la taille des tableaux en fonction de l'année
-  avDS: { labels: Array<number>, datasets: Array<DatasetI> } = { labels: [], datasets: [] }; // Average data
-  growDS: { labels: Array<number>, datasets: Array<DatasetI> } = { labels: [], datasets: [] }; // Growth data
+  DATA: any = { RD: <ChartI>{}, PR: <ChartI>{}, RDAV: <ChartI>{}, PRAV: <ChartI>{}, RDGR: <ChartI>{}, PRGR: <ChartI>{} };
 
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
@@ -75,7 +70,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     /** Get config and   */
     this.store.config$.subscribe(c => {
       if (c.rendements) {
-        this.setGraphLabels(c.rendements.debut, c.predictions.fin - c.rendements.debut);
         // Set labels for yields
         this.setDSLabels(c.rendements.debut, c.rendements.fin - c.rendements.debut);
         // Set labels for predictions
@@ -114,28 +108,22 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       }
     };
   }
-  /** Set labels for graph at start with configuration load
-   * DEPRECATED
-  */
-  setGraphLabels(debut: number, ecart: number) {
-    this.rendementsDS.labels = [];
-    for (let i = 0; i < ecart; ++i) {
-      this.rendementsDS.labels.push(debut + i);
-    };
-  }
   /** Set labels for graph */
   setDSLabels(debut: number, ecart: number) {
-    this.LABELS.DS = [];
-    for (let i = 0; i < ecart; ++i) {
-      this.LABELS.DS.push(debut + i);
+    this.DATA.RD.labels = [];
+    console.log(debut, ecart);
+    for (let i = 0; i < ecart+1; ++i) {
+      this.DATA.RD.labels.push(debut + i);
     };
+    console.log("RD Labels", this.DATA.RD.labels);
   }
   /** Set labels for graph */
   setPRLabels(debut: number, ecart: number) {
-    this.LABELS.PR = [];
-    for (let i = 0; i < ecart; ++i) {
-      this.LABELS.PR.push(debut + i);
+    this.DATA.PR.labels = [];
+    for (let i = 0; i < ecart+1; ++i) {
+      this.DATA.PR.labels.push(debut + i);
     };
+    console.log("RD Labels", this.DATA.PR.labels);
   }
   /** Get data from countries selected countries
    * @param {event} e Event send from HTML
@@ -171,70 +159,77 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Filter dataset to get years */
   filtreRendementsDS(e: any = null) {
-    this.fGDS = this.rendementsDS;
-    if (this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin) {
-      let deb = this.fF.controls.rendements.value ? this.fF.controls.rendements.value : 0;
-      let fin = this.fF.controls.predictions.value ? this.fF.controls.predictions.value : 0;
-      // const {deb, fin} = this.setGap(this.fF.controls.rendements.value, this.fF.controls.predictions.value);
 
-      this.fGDS.labels.splice(0, this.store.config.rendements.debut - deb).splice(this.fGDS.labels.length, -(fin - this.store.config.fin));
+    if (this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin) {
+      const rd = this.fF.controls.rendements.value ? this.fF.controls.rendements.value - this.store.config.rendements.debut : 0;
+      const rdLength = (this.store.config.rendements.fin - this.store.config.rendements.debut) - rd;
+      const pr = this.fF.controls.predictions.value ? this.store.config.predictions.fin - this.fF.controls.predictions.value : 0;
+      const prLength = (this.store.config.predictions.fin - this.store.config.predictions.debut) - pr;
+
+      this.DATA.RD.labels = [];
+      this.DATA.PR.labels = [];
       // Calculer les nouveaux labels sur le graph
-      this.fGDS.labels = [];
-      for (let i = 0; i < fin - deb; ++i) {
-        this.fGDS.labels.push(deb + i);
+      for (let i = 0; i < rdLength; ++i) {
+        this.DATA.RD.labels.push(this.fF.controls.rendements.value + i);
+      };
+      for (let i = 0; i < prLength; ++i) {
+        this.DATA.PR.labels.push(this.store.config.predictions.debut + i);
       };
       // Cut datasets from years
-      this.fGDS.datasets.forEach(ds => {
-        if (ds.data) ds.data.splice(0, this.store.config.debut - deb).splice(ds.data.length, -(fin - this.store.config.fin));
+      this.DATA.RD.datasets.forEach((ds:DatasetI) => {
+        if (ds.data) ds.data.splice(rd, ds.data.length);
+      });
+      this.DATA.PR.datasets.forEach((ds:DatasetI) => {
+        if (ds.data) ds.data.splice(0, prLength);
       });
     }
-    this.chart.refresh();
-    this.setAverage();
-  }
-  /** Set GAP for years */
-  setGap(start: number, end: number) {
-    return { deb: 0, fin: 0 }
+    this.chartrd.refresh();
+    this.chartpr.refresh();
+    if(this.fF.controls.moyennes.value || this.fF.controls.croissance.value) this.setAverage();
   }
   /** Calculate and show the average data */
   setAverage() {
     // Calculate average data, 5 years and purcent growth on years
-    this.DATA.RDAV.labels = this.LABELS.RD.slice(4, this.LABELS.RD.length);
-    this.DATA.PRAV.labels = this.LABELS.PR.slice(4, this.LABELS.PR.length);
+    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(4, this.DATA.RD.labels.length);
+    this.DATA.PRAV.labels = this.DATA.PR.labels.slice(4, this.DATA.PR.labels.length);
+
     this.DATA.RDAV.datasets = [];
     this.DATA.PRAV.datasets = [];
 
-    this.avDS.labels = this.fGDS.labels.slice(4, this.fGDS.labels.length);
-    this.growDS.labels = this.fGDS.labels.slice(1, this.fGDS.labels.length);
-    this.avDS.datasets = [];
-    this.growDS.datasets = []
-
     // Calculate purcent growth on years
-    this.fGDS.datasets.forEach(av => {
+    this.DATA.RD.datasets.forEach((av:DatasetI) => {
       // Empty datasets containers
-      const ds = new Dataset(); // Dataset for Average
-      const dg = new Dataset(); // Dataset for growth
-      ds.label = av.label;
-      ds.borderColor = av.borderColor!;
-      dg.label = av.label;
-      dg.backgroundColor = av.borderColor!;
+      const dsrd = new Dataset(); // Dataset for Average
+      const dgrd = new Dataset(); // Dataset for growth
+
+      dsrd.label = av.label;
+      dsrd.borderColor = av.borderColor!;
+      dgrd.label = av.label;
+      dgrd.backgroundColor = av.borderColor!;
+
       av.data.forEach((d, i) => {
         if (i > 1) {
           // Add average data to data array
-          ds.data.push(Math.round((av.data[i - 4] +av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 3));
+          dsrd.data.push(Math.round((av.data[i - 4] +av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 3));
         };
         if (i > 0) {
-          dg.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
+          dgrd.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
         };
       });
-      this.avDS.datasets.push(ds);
-      this.growDS.datasets.push(dg);
+      this.DATA.RDAV.datasets.push(dsrd);
+      this.DATA.RDGR.datasets.push(dgrd);
     });
-    this.average.refresh();
-    this.growth.refresh();
+    this.chartAvrd.refresh();
+    this.chartAvpr.refresh();
+    this.chartGrowthrd.refresh();
+    this.chartGrowthpr.refresh();
   }
-  /** show the average data */
-  setGrowth() {
-    this.growth.refresh();
+  /** Create an element in list of dataset */
+  setDatasetElement(av:DatasetI){
+    return {
+      label : av.label,
+      borderColor : av.borderColor!
+    }
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color
@@ -246,33 +241,45 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Set filters and add data to lists (countries, regions, pdo) */
   setFiltres() {
-    this.rendementsDS.datasets = [];
-    this.DATA.DS = [];
+    console.log(this.store.set);
+    this.DATA.RD.datasets = [];
+    this.DATA.PR.datasets = [];
     // const data: Array<any> = [];
     // Set region if some was selected in filters
     if (this.listes.pays.length > 0) {
+      console.log(this.listes.pays);
       for (let i = 0; i < this.listes.pays.length; ++i) {
-        this.setDataset(this.rendementsDS, this.listes.pays[i], this.store.set.moyennes?.pays.RD[this.listes.pays[i]], this.setCouleur(i, 'bleu')); // DEPRECATED
-        this.setDataset(this.DATA.RD, this.listes.pays[i], this.store.set.moyennes?.pays.RD[this.listes.pays[i]], this.setCouleur(i, 'bleu'));
-        this.setDataset(this.DATA.PR, this.listes.pays[i], this.store.set.moyennes?.pays.PR[this.listes.pays[i]], this.setCouleur(i, 'bleu'));      };
+
+        console.log(this.listes.pays[i], this.store.set.moyennes.pays[this.listes.pays[i]]);
+        if(this.store.set.moyennes.pays[this.listes.pays[i]]){
+          this.setDataset(this.DATA.RD.datasets, this.listes.pays[i], this.setCouleur(i, 'bleu'), this.store.set.moyennes.pays[this.listes.pays[i]]['RD']);
+          console.log(this.store.set.moyennes.pays[this.listes.pays[i]]);
+        }
+        if(this.store.set.moyennes.pays[this.listes.pays[i]])
+          this.setDataset(this.DATA.PR.datasets, this.listes.pays[i], this.setCouleur(i, 'bleu'), this.store.set.moyennes.pays[this.listes.pays[i]]['PR']);
+      };
     }
     // Set region if some was selected in filters
     if (this.listes.regions.length > 0) {
       for (let i = 0; i < this.listes.regions.length; ++i) {
-        this.setDataset(this.rendementsDS, this.listes.regions[i], this.store.set.moyennes?.regions.RD[this.listes.regions[i]], this.setCouleur(i, 'vert')); // DEPRECATED
-        this.setDataset(this.DATA.RD, this.listes.regions[i], this.store.set.moyennes?.regions.RD[this.listes.regions[i]], this.setCouleur(i, 'vert'));
-        this.setDataset(this.DATA.PR, this.listes.regions[i], this.store.set.moyennes?.regions.PR[this.listes.regions[i]], this.setCouleur(i, 'vert'));
+        if(this.store.set.moyennes.regions[this.listes.regions[i]])
+          this.setDataset(this.DATA.RD.datasets, this.listes.regions[i], this.setCouleur(i, 'vert'), this.store.set.moyennes.regions[this.listes.regions[i]].RD);
+        if(this.store.set.moyennes.regions[this.listes.regions[i]])
+          this.setDataset(this.DATA.PR.datasets, this.listes.regions[i], this.setCouleur(i, 'vert'), this.store.set.moyennes.regions[this.listes.regions[i]].PR);
       };
     }
     // Add PDO
     if (this.pdo.length > 0) {
       for (let i = 0; i < this.pdo.length; ++i) {
-        this.setDataset(this.rendementsDS, this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge')); // DEPRECATED
-        this.setDataset(this.DATA.RD, this.pdo[i].pdo!, this.pdo[i].rendements, this.setCouleur(i, 'rouge'));
-        this.setDataset(this.DATA.PR, this.pdo[i].pdo!, this.pdo[i].predictions, this.setCouleur(i, 'rouge'));
+        // this.setDataset(this.rendementsDS, this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge')); // DEPRECATED
+        if(this.pdo[i])
+          this.setDataset(this.DATA.RD.datasets, this.pdo[i].pdo!, this.setCouleur(i, 'rouge'), this.pdo[i].rendements);
+        if(this.pdo[i])
+          this.setDataset(this.DATA.PR.datasets, this.pdo[i].pdo!, this.setCouleur(i, 'rouge'), this.pdo[i].predictions);
       };
     }
     // this.rendementsDS.datasets.concat(this.pdo);
+    console.log(this.DATA);
     // Refresh data on graph
     this.filtreRendementsDS();
   }
@@ -281,12 +288,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
    * @param {any} d Array of data to write on graph
    * @param {string} c Color of line
   */
-  setDataset(target:any, l: string, d: any, c: string = '#78281F') {
+  setDataset(target:any, l: string, c: string = '#78281F', d:Array<number>) {
+    console.log(d);
     const tmp = new Dataset();
     tmp.label = l;
     tmp.data = d;
     tmp.borderColor = c;
-    if (!target.datasets.includes(tmp)) target.datasets.push(tmp);
+    if (!target.includes(tmp)) target.push(tmp);
   }
   /** Set limits for years filters */
   setLimits(n: number) {
@@ -301,15 +309,15 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     switch (el) {
       case 'chart':
         // console.log(this.chart.getCanvas());
-        img = this.chart.getBase64Image();
+        img = this.chartrd.getBase64Image();
         lien.setAttribute('download', 'predictions.png')
         break;
       case 'average':
-        img = this.average.getBase64Image();
+        img = this.chartAvrd.getBase64Image();
         lien.setAttribute('download', 'averages.png')
         break;
       case 'growth':
-        img = this.growth.getBase64Image();
+        img = this.chartGrowthrd.getBase64Image();
         lien.setAttribute('download', 'growths.png')
         break;
     };
