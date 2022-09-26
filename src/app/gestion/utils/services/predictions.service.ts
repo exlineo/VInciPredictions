@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, writeBatch, setDoc, deleteDoc } from "@angular/fire/firestore";
 
 import { FileI } from 'src/app/utils/modeles/file-i';
-import { CreeI, MoyennesI, RendementI, YeildI } from 'src/app/utils/modeles/filtres-i';
+import { CreeI, DatasetI, ZonesI, RendementI, YieldI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 
@@ -26,7 +26,7 @@ export class PredictionsService {
   };
 
   /** Convert CSV data to RendementI array */
-  setDataset(data: string) {
+  setData(data: string) {
     this.l.store.set.data = [];
     let lignes = data.split('\n');
     lignes.forEach(l => {
@@ -54,7 +54,6 @@ export class PredictionsService {
     const ep:number = this.l.store.config.predictions.fin-this.l.store.config.rendements.debut+1;
     console.log(er, ep);
     return { pays: d[0].trim(), regions: d[1].trim(), pdo: d[2].trim(), rendements: this.setNumbers(d.slice(3, 3+er)), predictions: this.setNumbers(d.slice(3+er, 3+ep)), fiabilites: this.setNumbers(d.slice(3+ep, d.length)) };
-    // return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 55)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array<string>): Array<number> {
@@ -63,8 +62,8 @@ export class PredictionsService {
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
   */
-  av(ar: Array<RendementI>):YeildI {
-    const truc: YeildI = {RD:[], PR:[]};
+  av(ar: Array<RendementI>):YieldI {
+    const truc: YieldI = {RD:[], PR:[]};
     for (let i = 0; i < ar[0].rendements.length; ++i) {
       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
       truc.RD.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
@@ -81,14 +80,14 @@ export class PredictionsService {
     this.l.store.listes.pays.forEach(d => {
       const pays = this.l.store.set.data.filter(p => d && p.pays == d && d.length > 0);
       pays.forEach(p => {
-        if (p.pays && p.pays.length > 0) this.l.store.set.moyennes!.pays[p.pays] = this.av(pays);
+        if (p.pays && p.pays.length > 0) this.l.store.set.zones.pays[p.pays] = this.av(pays);
       })
     });
     // Set averages for regions
     this.l.store.listes.regions.forEach(d => {
       const regions = this.l.store.set.data.filter(p => d && p.regions == d && d.length > 0);
       regions.forEach(r => {
-        if (r.regions && r.regions.length > 0) this.l.store.set.moyennes!.regions[r.regions] = this.av(regions);
+        if (r.regions && r.regions.length > 0) this.l.store.set.zones.regions[r.regions] = this.av(regions);
       })
     });
   }
@@ -113,7 +112,7 @@ export class PredictionsService {
     const col = this.setDate();
     this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
     this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
-    this.batch.set(doc(this.dbf, col, 'moyennes'), this.l.store.set.moyennes);
+    this.batch.set(doc(this.dbf, col, 'zones'), this.l.store.set.zones);
     this.l.store.set.data.forEach(d => {
       const customDoc = doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
@@ -192,5 +191,26 @@ export class PredictionsService {
     const infos:Array<string> = code.split('-');
     const access = JSON.parse(atob(infos[1]));
     return access;
+  }
+  /** Set dataset
+   * @param {string} l Label to write on over
+   * @param {any} d Array of data to write on graph
+   * @param {string} c Color of line
+  */
+   setDataset(l: string, c: string = '#78281F', d: any):DatasetI {
+    console.log(l, d, d.length);
+    const tmp = <DatasetI>{};
+    tmp.label = l;
+    tmp.data = new Array();
+    tmp.borderColor = c;
+    for (let i = 0; i < d.length; ++i) {
+      tmp.data.push(d[i]);
+      console.log(i, d[i], tmp.data);
+    }
+    console.log(tmp);
+    return tmp;
+    // tmp.data.splice(1, d.length);
+    // if (!target.includes(tmp)) target.push(tmp);
+    // console.log(target);
   }
 }

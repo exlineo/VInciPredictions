@@ -46,7 +46,7 @@ export class DataMajComponent implements OnInit {
       // console.log('csv content', e.target.result);
       this.file = e.target.result;
       // Transform data to Rendement interface array
-      this.predServ.setDataset(this.file as string);
+      this.predServ.setData(this.file as string);
     };
     reader.readAsText(e.target.files[0]);
   }

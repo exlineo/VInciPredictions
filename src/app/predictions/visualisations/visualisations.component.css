@@ -56,12 +56,19 @@ table{
 #chart{
   width:100%;
 }
-#chartsecond{
+div.legende{
   display:flex;
-  flex-flow:row nowrap;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 }
-#chartsecond > div{
-  width:50%;
+legend{
+  display: flex;
+  flex-flow:row nowrap;
+  width:max-content;
+  align-items: center;
+}
+legend > span{
+  height:15px;
+  width:15px;
   margin-right:10px;
-  box-sizing: border-box;
 }

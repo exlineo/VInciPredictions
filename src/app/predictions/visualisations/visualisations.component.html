@@ -27,14 +27,14 @@
       <p class="ecarts">
         <span>{{ fF.controls.rendements.value }}</span>
         <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin"
-          (onSlideEnd)="filtreRendementsDS($event)" class="inverse"></p-slider>
+          (onSlideEnd)="applyFilters($event)" class="inverse"></p-slider>
         <span>{{ config.rendements.fin }}</span>
       </p>
       <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
         <span>{{ config.predictions.debut }}</span>
         <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin"
-          (onSlideEnd)="filtreRendementsDS($event)"></p-slider>
+          (onSlideEnd)="applyFilters($event)"></p-slider>
         <span>{{ fF.controls.predictions.value }}</span>
       </p>
     </div>
@@ -62,13 +62,18 @@
       </label>
   </form>
   <!-- CHART -->
-  <article id="chart" *ngIf="fF.controls.donnees.value">
+  <article id="chartdata" *ngIf="fF.controls.donnees.value">
     <h3>{{ l.t['RES_VISUAL'] }}</h3>
     <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
     <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
     <div>
-      <p-chart [type]="chartType" [data]="DATA.RD" [options]="basicOptions" #chart></p-chart>
-      <p-chart [type]="chartType" [data]="DATA.PR" [options]="basicOptions" #chartPredictions></p-chart>
+      <p-chart [type]="chartType" [data]="DATA.RD" [options]="chartOpLeft" #chart></p-chart>
+      <p-chart [type]="chartType" [data]="DATA.PR" [options]="chartOpRight" #chartPredictions></p-chart>
+    </div>
+    <div class="legende">
+      <legend *ngFor="let d of DATA.RD.datasets">
+        <span [ngStyle]="{'background-color': d.borderColor}"></span><p>{{ d.label }}</p>
+      </legend>
     </div>
   </article>
   <article *ngIf="pdo.length > 0 && fF.controls.predictions.value">
@@ -92,22 +97,22 @@
       </tbody>
     </table>
   </article>
-  <article *ngIf="fF.controls.moyennes.value">
+  <article *ngIf="fF.controls.moyennes.value" class="chart">
       <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
       <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
       <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
       <div>
-        <p-chart [type]="chartType" [data]="DATA.RDAV" [options]="basicOptions" #average></p-chart>
-        <p-chart [type]="chartType" [data]="DATA.PRAV" [options]="basicOptions" #averagePredictions></p-chart>
+        <p-chart [type]="chartType" [data]="DATA.RDAV" [options]="chartOpLeft" #average></p-chart>
+        <!-- <p-chart [type]="chartType" [data]="DATA.PRAV" [options]="basicRight" #averagePredictions></p-chart> -->
       </div>
   </article>
-  <article *ngIf="fF.controls.croissance.value">
+  <article *ngIf="fF.controls.croissance.value" class="chart">
       <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
       <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
       <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
       <div>
-        <p-chart type="bar" [data]="DATA.RDGR" [options]="basicOptions" #growth></p-chart>
-        <p-chart type="bar" [data]="DATA.PRGR" [options]="basicOptions" #growthPredictions></p-chart>
+        <p-chart type="bar" [data]="DATA.RDGR" [options]="chartOpNu" #growth></p-chart>
+        <!-- <p-chart type="bar" [data]="DATA.PRGR" [options]="basicRight" #growthPredictions></p-chart> -->
 
       </div>
   </article>

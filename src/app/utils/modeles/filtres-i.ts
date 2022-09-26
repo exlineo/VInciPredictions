@@ -15,13 +15,13 @@ export interface RendementI{
   predictions:Array<number>;
   fiabilites:Array<number>;
 }
-export interface MoyennesI{
+export interface ZonesI{
   pays:any; // List of countries averages
   regions:any; // List of regions averages
 }
-export interface YeildI{
-  RD:Array<any>; // Array of yields
-  PR:Array<any>; // Array of predictions
+export interface YieldI{
+  RD:any; // Array of yields
+  PR:any; // Array of predictions
 }
 export class Rendement implements RendementI{
   pays = "";
@@ -36,7 +36,7 @@ export interface DataI{
   creeLe?:CreeI;
   data:Array<RendementI>;
   filtres?:{ pays: Array<string>, regions: Array<string>, pdo: Array<string> };
-  moyennes:MoyennesI;
+  zones:ZonesI;
 }
 export interface CreeI{
   time?:number; // Timestamp
@@ -49,7 +49,7 @@ export interface DatasetI{
   backgroundColor?:string,
   yAxisID?: string,
   tension?: number,
-  data: Array<number>;
+  data: Array<any>;
 }
 export class Dataset implements DatasetI{
   label = '';
@@ -58,7 +58,7 @@ export class Dataset implements DatasetI{
   backgroundColor = '#42A5F5';
   yAxisID = 'y';
   tension = .4;
-  data:Array<number> = [];
+  data = <Array<any>>[];
 }
 export enum Couleur{
   blanc = 'blanc',

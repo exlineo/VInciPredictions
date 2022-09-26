@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Dataset, DatasetI, RendementI, ChartI, YeildI } from 'src/app/utils/modeles/filtres-i';
+import { Dataset, DatasetI, RendementI, ChartI, YieldI } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
 import { UIChart } from 'primeng/chart';
-import { VisualService } from '../utils/services/visual.service';
+import { options } from '../utils/chartOptions';
 
 @Component({
   selector: 'app-visualisations',
@@ -19,8 +19,8 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   @ViewChild('average') chartAvrd!: UIChart;
   @ViewChild('growth') chartGrowthrd!: UIChart;
   @ViewChild('chartPredictions') chartpr!: UIChart;
-  @ViewChild('averagePredictions') chartAvpr!: UIChart;
-  @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
+  // @ViewChild('averagePredictions') chartAvpr!: UIChart;
+  // @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
 
   config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 } }; // App config
 
@@ -41,7 +41,9 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line';
-  basicOptions: any; // Options of the charts
+  chartOpLeft: any; // Options of the charts
+  chartOpRight:any;
+  chartOpNu:any;
 
   /** Labels for charts */
   // LABELS: any = { RD: Array<string>, PR: Array<string>, RDAV:Array<string>, PRAV:Array<string>, RDGR:Array<string>, RPGR:Array<string> };
@@ -53,7 +55,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
   pdo: Array<RendementI> = [];
 
-  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService, public visualSer: VisualService) { }
+  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
   ngOnInit(): void {
     // Loading text page content from database
@@ -65,65 +67,16 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         { nom: this.l.t['FILTRE_FR'], value: "fr" },
         { nom: this.l.t['FILTRE_PT'], value: "pt" }
       ];
+      this.chartOpLeft = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], 'left', 0, 100);
+      this.chartOpRight = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], 'right', 0, 100);
+      this.chartOpNu = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS']);
     }
     );
     /** Get config and   */
     this.store.config$.subscribe(c => {
-      if (c.rendements) {
-        // Set labels for yields
-        this.setDSLabels(c.rendements.debut, c.rendements.fin - c.rendements.debut);
-        // Set labels for predictions
-        this.setPRLabels(c.predictions.debut, c.predictions.fin - c.predictions.debut);
-      }
       // Get last version of data from database
       this.store.getLastData();
     });
-    // Options for charts
-    this.basicOptions = {
-      plugins: {
-        legend: {
-          display: false,
-          labels: {
-            color: '#495057'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#495057'
-          },
-          grid: {
-            color: '#ebedef'
-          }
-        },
-        y: {
-          ticks: {
-            color: '#495057'
-          },
-          grid: {
-            color: '#ebedef'
-          }
-        }
-      }
-    };
-  }
-  /** Set labels for graph */
-  setDSLabels(debut: number, ecart: number) {
-    this.DATA.RD.labels = [];
-    console.log(debut, ecart);
-    for (let i = 0; i < ecart+1; ++i) {
-      this.DATA.RD.labels.push(debut + i);
-    };
-    console.log("RD Labels", this.DATA.RD.labels);
-  }
-  /** Set labels for graph */
-  setPRLabels(debut: number, ecart: number) {
-    this.DATA.PR.labels = [];
-    for (let i = 0; i < ecart+1; ++i) {
-      this.DATA.PR.labels.push(debut + i);
-    };
-    console.log("RD Labels", this.DATA.PR.labels);
   }
   /** Get data from countries selected countries
    * @param {event} e Event send from HTML
@@ -157,78 +110,113 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.setFiltres();
     }
   }
+  /** Set data and show for yields and predictions on charts */
+  setFiltres() {
+    this.DATA.RD.labels = [...this.store.charts.labels.RD];
+    this.DATA.PR.labels = [...this.store.charts.labels.PR];
+    this.DATA.RD.datasets = [];
+    this.DATA.PR.datasets = [];
+    // const data: Array<any> = [];
+    // Set region if some was selected in filters
+    if (this.listes.pays.length > 0) {
+      for (let i = 0; i < this.listes.pays.length; ++i) {
+        this.getDatasets(this.listes.pays[i]);
+      };
+    }
+    // Set region if some was selected in filters
+    if (this.listes.regions.length > 0) {
+      for (let i = 0; i < this.listes.regions.length; ++i) {
+        this.getDatasets(this.listes.regions[i]);
+      };
+    }
+    // Add PDO
+    if (this.pdo.length > 0) {
+      for (let i = 0; i < this.pdo.length; ++i) {
+        this.getDatasets(this.pdo[i].pdo!);
+      };
+    }
+    console.log(this.DATA.RD, this.DATA.PR);
+    // Refresh data on graph
+    this.applyFilters();
+  }
+  /** Get datasets from  */
+  getDatasets(i:string){
+    const rd = {...this.store.charts.datasets.RD[i]};
+    this.DATA.RD.datasets.push(rd);
+    const pr = {...this.store.charts.datasets.PR[i]};
+    this.DATA.PR.datasets.push(pr);
+  }
   /** Filter dataset to get years */
-  filtreRendementsDS(e: any = null) {
+  applyFilters(e: any = null) {
 
     if (this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin) {
-      const rd = this.fF.controls.rendements.value ? this.fF.controls.rendements.value - this.store.config.rendements.debut : 0;
-      const rdLength = (this.store.config.rendements.fin - this.store.config.rendements.debut) - rd;
-      const pr = this.fF.controls.predictions.value ? this.store.config.predictions.fin - this.fF.controls.predictions.value : 0;
-      const prLength = (this.store.config.predictions.fin - this.store.config.predictions.debut) - pr;
+      // const rd = this.fF.controls.rendements.value ? this.fF.controls.rendements.value - this.store.config.rendements.debut : 0;
+      // const rdLength = (this.store.config.rendements.fin - this.store.config.rendements.debut) - rd;
+      // const pr = this.fF.controls.predictions.value ? this.store.config.predictions.fin - this.fF.controls.predictions.value : 0;
+      // const prLength = (this.store.config.predictions.fin - this.store.config.predictions.debut) - pr;
 
-      this.DATA.RD.labels = [];
-      this.DATA.PR.labels = [];
-      // Calculer les nouveaux labels sur le graph
-      for (let i = 0; i < rdLength; ++i) {
-        this.DATA.RD.labels.push(this.fF.controls.rendements.value + i);
-      };
-      for (let i = 0; i < prLength; ++i) {
-        this.DATA.PR.labels.push(this.store.config.predictions.debut + i);
-      };
-      // Cut datasets from years
-      this.DATA.RD.datasets.forEach((ds:DatasetI) => {
-        if (ds.data) ds.data.splice(rd, ds.data.length);
-      });
-      this.DATA.PR.datasets.forEach((ds:DatasetI) => {
-        if (ds.data) ds.data.splice(0, prLength);
-      });
+      // this.DATA.RD.labels = [];
+      // this.DATA.PR.labels = [];
+      // // Calculer les nouveaux labels sur le graph
+      // for (let i = 0; i < rdLength; ++i) {
+      //   this.DATA.RD.labels.push(this.fF.controls.rendements.value + i);
+      // };
+      // for (let i = 0; i < prLength; ++i) {
+      //   this.DATA.PR.labels.push(this.store.config.predictions.debut + i);
+      // };
+      // // Cut datasets from years
+      // this.DATA.RD.datasets.forEach((ds: DatasetI) => {
+      //   console.log("Data RD", ds);
+      //   if (ds.data) ds.data.splice(0, ds.data.length);
+      // });
+      // this.DATA.PR.datasets.forEach((ds: DatasetI) => {
+      //   if (ds.data) ds.data.splice(0, prLength);
+      // });
     }
     this.chartrd.refresh();
     this.chartpr.refresh();
-    if(this.fF.controls.moyennes.value || this.fF.controls.croissance.value) this.setAverage();
+    if (this.fF.controls.moyennes.value || this.fF.controls.croissance.value) this.setAverage();
   }
   /** Calculate and show the average data */
   setAverage() {
     // Calculate average data, 5 years and purcent growth on years
-    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(4, this.DATA.RD.labels.length);
-    this.DATA.PRAV.labels = this.DATA.PR.labels.slice(4, this.DATA.PR.labels.length);
+    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(3, this.DATA.RD.labels.length);
+    this.DATA.RDGR.labels = this.DATA.RD.labels.slice(1, this.DATA.RD.labels.length);
+    // this.DATA.PRAV.labels = this.DATA.RD.labels.slice(3, this.DATA.PR.labels.length);
+    // this.DATA.PRGR.labels = this.DATA.PR.labels.slice(1, this.DATA.PR.labels.length);
 
     this.DATA.RDAV.datasets = [];
-    this.DATA.PRAV.datasets = [];
+    this.DATA.RDGR.datasets = [];
 
     // Calculate purcent growth on years
-    this.DATA.RD.datasets.forEach((av:DatasetI) => {
+    this.DATA.RD.datasets.forEach((av: DatasetI) => {
       // Empty datasets containers
-      const dsrd = new Dataset(); // Dataset for Average
-      const dgrd = new Dataset(); // Dataset for growth
-
-      dsrd.label = av.label;
-      dsrd.borderColor = av.borderColor!;
-      dgrd.label = av.label;
-      dgrd.backgroundColor = av.borderColor!;
+      const rd:DatasetI= { label:av.label, borderColor:av.borderColor, data:[] }; // Yields datas average
+      const gr:DatasetI= { label:av.label, backgroundColor:av.borderColor, data:[] }; // Growth data purcent
 
       av.data.forEach((d, i) => {
-        if (i > 1) {
+        if (i > 3) {
           // Add average data to data array
-          dsrd.data.push(Math.round((av.data[i - 4] +av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 3));
+          rd.data.push(Math.round((av.data[i - 4] + av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 5));
         };
         if (i > 0) {
-          dgrd.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
+          gr.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
         };
       });
-      this.DATA.RDAV.datasets.push(dsrd);
-      this.DATA.RDGR.datasets.push(dgrd);
+      this.DATA.RDAV.datasets.push(rd);
+      this.DATA.RDGR.datasets.push(gr);
     });
+
     this.chartAvrd.refresh();
-    this.chartAvpr.refresh();
+    // this.chartAvpr.refresh();
     this.chartGrowthrd.refresh();
-    this.chartGrowthpr.refresh();
+    // this.chartGrowthpr.refresh();
   }
   /** Create an element in list of dataset */
-  setDatasetElement(av:DatasetI){
+  setDatasetElement(av: DatasetI) {
     return {
-      label : av.label,
-      borderColor : av.borderColor!
+      label: av.label,
+      borderColor: av.borderColor!
     }
   }
   /** Set color of graph with automated gradiant
@@ -239,62 +227,24 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     if (i > this.store.config.couleurs[coul].length - 1) i -= this.store.config.couleurs[coul].length - 1;
     return this.store.config.couleurs[coul][i];
   }
-  /** Set filters and add data to lists (countries, regions, pdo) */
-  setFiltres() {
-    console.log(this.store.set);
-    this.DATA.RD.datasets = [];
-    this.DATA.PR.datasets = [];
-    // const data: Array<any> = [];
-    // Set region if some was selected in filters
-    if (this.listes.pays.length > 0) {
-      console.log(this.listes.pays);
-      for (let i = 0; i < this.listes.pays.length; ++i) {
 
-        console.log(this.listes.pays[i], this.store.set.moyennes.pays[this.listes.pays[i]]);
-        if(this.store.set.moyennes.pays[this.listes.pays[i]]){
-          this.setDataset(this.DATA.RD.datasets, this.listes.pays[i], this.setCouleur(i, 'bleu'), this.store.set.moyennes.pays[this.listes.pays[i]]['RD']);
-          console.log(this.store.set.moyennes.pays[this.listes.pays[i]]);
-        }
-        if(this.store.set.moyennes.pays[this.listes.pays[i]])
-          this.setDataset(this.DATA.PR.datasets, this.listes.pays[i], this.setCouleur(i, 'bleu'), this.store.set.moyennes.pays[this.listes.pays[i]]['PR']);
-      };
-    }
-    // Set region if some was selected in filters
-    if (this.listes.regions.length > 0) {
-      for (let i = 0; i < this.listes.regions.length; ++i) {
-        if(this.store.set.moyennes.regions[this.listes.regions[i]])
-          this.setDataset(this.DATA.RD.datasets, this.listes.regions[i], this.setCouleur(i, 'vert'), this.store.set.moyennes.regions[this.listes.regions[i]].RD);
-        if(this.store.set.moyennes.regions[this.listes.regions[i]])
-          this.setDataset(this.DATA.PR.datasets, this.listes.regions[i], this.setCouleur(i, 'vert'), this.store.set.moyennes.regions[this.listes.regions[i]].PR);
-      };
-    }
-    // Add PDO
-    if (this.pdo.length > 0) {
-      for (let i = 0; i < this.pdo.length; ++i) {
-        // this.setDataset(this.rendementsDS, this.pdo[i].pdo!, this.pdo[i].rendements.concat(this.pdo[i].predictions), this.setCouleur(i, 'rouge')); // DEPRECATED
-        if(this.pdo[i])
-          this.setDataset(this.DATA.RD.datasets, this.pdo[i].pdo!, this.setCouleur(i, 'rouge'), this.pdo[i].rendements);
-        if(this.pdo[i])
-          this.setDataset(this.DATA.PR.datasets, this.pdo[i].pdo!, this.setCouleur(i, 'rouge'), this.pdo[i].predictions);
-      };
-    }
-    // this.rendementsDS.datasets.concat(this.pdo);
-    console.log(this.DATA);
-    // Refresh data on graph
-    this.filtreRendementsDS();
-  }
   /** Set dataset
    * @param {string} l Label to write on over
    * @param {any} d Array of data to write on graph
    * @param {string} c Color of line
   */
-  setDataset(target:any, l: string, c: string = '#78281F', d:Array<number>) {
-    console.log(d);
-    const tmp = new Dataset();
+  setDataset(l: string, c: string = '#78281F', d: any) {
+    const tmp = <DatasetI>{};
     tmp.label = l;
-    tmp.data = d;
+    tmp.data = new Array();
     tmp.borderColor = c;
-    if (!target.includes(tmp)) target.push(tmp);
+    for (let i = 0; i < d.length; ++i) {
+      tmp.data.push(d[i]);
+    }
+    return tmp;
+    // tmp.data.splice(1, d.length);
+    // if (!target.includes(tmp)) target.push(tmp);
+    // console.log(target);
   }
   /** Set limits for years filters */
   setLimits(n: number) {
@@ -302,7 +252,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Download img */
   downloadStats(el: string) {
-    console.log(el);
     let img;
     const lien = document.createElement('a');
     // this.chart.toDataURL('image/png');

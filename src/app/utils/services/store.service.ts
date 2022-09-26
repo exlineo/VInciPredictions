@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { BehaviorSubject } from 'rxjs';
-import { CreeI, DataI, MoyennesI, Rendement, RendementI } from '../modeles/filtres-i';
+import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI, DatasetI } from '../modeles/filtres-i';
 import { ProfilI } from '../modeles/profil-i';
 import { MsgService } from './msg.service';
 
@@ -24,7 +24,9 @@ export class StoreService {
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
   // Set of data with filters and averages
-  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], moyennes: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
+  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], zones: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
+  // Save list of labels from config and create datasets when data are loaded
+  charts:any = {labels:<YieldI>{RD:[],PR:[]}, datasets:<YieldI>{RD:{},PR:{}}};
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
@@ -36,7 +38,7 @@ export class StoreService {
   }
   /** Prepare data */
   initSet() {
-    this.set = { creeLe: <CreeI>{}, data: <Array<RendementI>>[], moyennes: <MoyennesI>{} };
+    this.set = { creeLe: <CreeI>{}, data: <Array<RendementI>>[], zones: <ZonesI>{} };
   }
   /** Load app config */
   async getConfig() {
@@ -44,6 +46,13 @@ export class StoreService {
       then(c => {
         this.config$.next(c.data());
         this.config = c.data();
+        // Set labels for charts : yields and predictions
+        for(let i=0; i<this.config.rendements.fin - this.config.rendements.debut + 1; ++i){
+          this.charts.labels.RD.push(this.config.rendements.debut + i);
+        }
+        for(let i=0; i<this.config.predictions.fin - this.config.predictions.debut +1; ++i){
+          this.charts.labels.PR.push(this.config.predictions.debut + i);
+        }
       })
       .catch(er => {
         console.log(er);
@@ -158,18 +167,33 @@ export class StoreService {
           // console.log("Données brutes", c.data());
           if (c.id == 'creeLe') {
             this.set.creeLe = c.data() as CreeI;
-          } else if (c.id == 'moyennes') {
-            console.log("Moyennes", c.data()['regions']);
-            this.set.moyennes.regions = c.data()['regions'];
-            this.set.moyennes.pays = c.data()['pays'];
+          } else if (c.id == 'zones') {
+            // console.log("Moyennes", c.data()['regions']);
+            this.set.zones.regions = c.data()['regions'];
+            this.set.zones.pays = c.data()['pays'];
+            this.setAvDataSets(this.config.couleurs['vert'][Math.floor(Math.random()*this.config.couleurs['vert'].length)], this.set.zones.regions);
+            this.setAvDataSets(this.config.couleurs['bleu'][Math.floor(Math.random()*this.config.couleurs['bleu'].length)], this.set.zones.pays);
+            console.log(this.charts);
           } else {
             this.set.data.push(c.data() as RendementI);
+            this.setPdoDataSets(this.config.couleurs['violet'][Math.floor(Math.random()*this.config.couleurs['violet'].length)], c.data() as RendementI)
           }
         });
         console.log(this.set);
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.data.forEach(d => this.setFilterFromData(d));
       });
+  }
+  /** Add dataset objects to loaded data for charts */
+  setAvDataSets(couleur:string, obj:any){
+    for(let i in obj){
+      this.charts.datasets.RD[i] = {label:i, borderColor:couleur, data:obj[i].RD};
+      this.charts.datasets.PR[i] = {label:i, borderColor:couleur, backgroundColor:'rgba(255, 0, 0, .3)', data:obj[i].PR};
+    }
+  }
+  setPdoDataSets(couleur:string, obj:RendementI){
+      this.charts.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, data:obj.rendements};
+      this.charts.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:'rgba(255, 0, 0, .3)', data:obj.predictions};
   }
   /**
    * (Deprecated) Get last ID document
@@ -185,7 +209,7 @@ export class StoreService {
   async getAverageData(p: Array<string>, r: Array<string>) {
 
   }
-  /** Set filters from dataset
+  /** Set filters lists (in listbox from visualisation) from dataset
    * @param {any} r a array of data received from server or uploaded
   */
   setFilterFromData(r: RendementI) {
