@@ -46,11 +46,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
 
   /** All data for charts */
   DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
+  /** Year's gaps for yields and predictions */
+  gap: any = {rd:0, pr:0};
 
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
   listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
-  pdo: Array<RendementI> = [];
+  pdo: Array<RendementI> = []; // List of loaded PDOs in session
 
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
 
@@ -109,10 +111,17 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.setFiltres();
     }
   }
+  /** Filter dataset to get years */
+  filtrePlages(e: any = null) {
+    this.gap.rd = this.fF.controls.rendements.value - this.config.rendements.debut;
+    this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
+
+    this.setFiltres();
+}
   /** Set data and show for yields and predictions on charts */
   setFiltres() {
-    this.DATA.RD.labels = [...this.store.charts.labels.RD];
-    this.DATA.PR.labels = [...this.store.charts.labels.PR];
+    this.DATA.RD.labels = this.gap.rd != 0 ? this.store.charts.labels.RD.slice(this.gap.rd, this.store.charts.labels.RD.length) : [...this.store.charts.labels.RD];
+    this.DATA.PR.labels = this.gap.pr != 0 ? this.store.charts.labels.PR.slice(0, this.gap.pr) : [...this.store.charts.labels.PR];
     this.DATA.RD.datasets = [];
     this.DATA.PR.datasets = [];
     // const data: Array<any> = [];
@@ -134,46 +143,33 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         this.getDatasets(this.pdo[i].pdo!);
       };
     }
-    // Refresh data on graph
-    this.applyFilters();
+    this.chartrd.refresh();
+    this.chartpr.refresh();
+
+    this.setAverage();
   }
   /** Get datasets from  */
   getDatasets(i: string) {
+    console.log(i);
     const rd = { ...this.store.charts.datasets.RD[i] };
-    this.DATA.RD.datasets.push(rd);
+    // this.DATA.RD.datasets.push(rd);
+    this.DATA.RD.datasets.push(this.setPlageRd(rd));
     const pr = { ...this.store.charts.datasets.PR[i] };
-    this.DATA.PR.datasets.push(pr);
+    this.DATA.PR.datasets.push(this.setPlagePr(pr));
   }
-  /** Filter dataset to get years */
-  applyFilters(e: any = null) {
-
-    if (this.fF.controls.rendements.value != this.store.config.debut || this.fF.controls.predictions.value != this.store.config.fin) {
-      // const rd = this.fF.controls.rendements.value ? this.fF.controls.rendements.value - this.store.config.rendements.debut : 0;
-      // const rdLength = (this.store.config.rendements.fin - this.store.config.rendements.debut) - rd;
-      // const pr = this.fF.controls.predictions.value ? this.store.config.predictions.fin - this.fF.controls.predictions.value : 0;
-      // const prLength = (this.store.config.predictions.fin - this.store.config.predictions.debut) - pr;
-
-      // this.DATA.RD.labels = [];
-      // this.DATA.PR.labels = [];
-      // // Calculer les nouveaux labels sur le graph
-      // for (let i = 0; i < rdLength; ++i) {
-      //   this.DATA.RD.labels.push(this.fF.controls.rendements.value + i);
-      // };
-      // for (let i = 0; i < prLength; ++i) {
-      //   this.DATA.PR.labels.push(this.store.config.predictions.debut + i);
-      // };
-      // // Cut datasets from years
-      // this.DATA.RD.datasets.forEach((ds: DatasetI) => {
-      //   console.log("Data RD", ds);
-      //   if (ds.data) ds.data.splice(0, ds.data.length);
-      // });
-      // this.DATA.PR.datasets.forEach((ds: DatasetI) => {
-      //   if (ds.data) ds.data.splice(0, prLength);
-      // });
+  /** Calculate gap in years with slides filters for yields  */
+  setPlageRd(d:DatasetI){
+    if(this.gap.rd != 0) {
+      d.data.slice(this.gap.rd, d.data.length);
     }
-    this.chartrd.refresh();
-    this.chartpr.refresh();
-    if (this.fF.controls.moyennes.value || this.fF.controls.croissance.value) this.setAverage();
+    return d;
+  }
+  /** Calculate gap in years with slides filters for predictions  */
+  setPlagePr(d:DatasetI){
+    if(this.gap.pr != 0) {
+      d.data.slice(0, this.gap.pr);
+    }
+    return d;
   }
   /** Calculate and show the average data */
   setAverage() {

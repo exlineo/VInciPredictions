@@ -27,14 +27,14 @@
       <p class="ecarts">
         <span>{{ fF.controls.rendements.value }}</span>
         <p-slider formControlName="rendements" [min]="config.rendements.debut" [max]="config.rendements.fin"
-          (onSlideEnd)="applyFilters($event)" class="inverse"></p-slider>
+          (onSlideEnd)="filtrePlages($event)" class="inverse"></p-slider>
         <span>{{ config.rendements.fin }}</span>
       </p>
       <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
         <span>{{ config.predictions.debut }}</span>
         <p-slider formControlName="predictions" [min]="config.predictions.debut" [max]="config.predictions.fin"
-          (onSlideEnd)="applyFilters($event)"></p-slider>
+          (onSlideEnd)="filtrePlages($event)"></p-slider>
         <span>{{ fF.controls.predictions.value }}</span>
       </p>
     </div>
