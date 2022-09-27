@@ -70,3 +70,7 @@ export interface ChartI{
   labels:Array<number>;
   datasets:Array<DatasetI>;
 }
+export class Chart implements ChartI {
+  labels = [];
+  datasets = [];
+}

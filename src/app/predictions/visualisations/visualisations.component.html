@@ -16,8 +16,8 @@
     <div>
       <h3>{{ l.t['FILTRE_PDO'] }}</h3>
       <!-- <p-listbox [options]="store.listes.pdo | types:fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
-      <p-listbox [options]="store.listes.pdo" formControlName="pdo"
-        (onChange)="filtrePdo()" [multiple]="true" [checkbox]="true" [filter]="true">
+      <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="filtrePdo()" [multiple]="true"
+        [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
     <!-- FILTERS FOR YEARS GAP -->
@@ -48,31 +48,38 @@
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>
   <form [formGroup]="fF">
-      <label>
-        <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_PREDICTIONS'] }}
-      </label>
-      <label>
-        <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_MOYENNES'] }}
-      </label>
-      <label>
-        <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
-        {{ l.t['FILTRE_CROISSANCE'] }}
-      </label>
+    <label>
+      <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
+      {{ l.t['FILTRE_PREDICTIONS'] }}
+    </label>
+    <label>
+      <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
+      {{ l.t['FILTRE_MOYENNES'] }}
+    </label>
+    <label>
+      <p-checkbox name="croissance" formControlName="croissance" [binary]="true"></p-checkbox>
+      {{ l.t['FILTRE_CROISSANCE'] }}
+    </label>
   </form>
   <!-- CHART -->
-  <article id="chartdata" *ngIf="fF.controls.donnees.value">
+  <article id="chartdata">
     <h3>{{ l.t['RES_VISUAL'] }}</h3>
-    <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
-    <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
     <div>
-      <p-chart [type]="chartType" [data]="DATA.RD" [options]="chartOpLeft" #chart></p-chart>
-      <p-chart [type]="chartType" [data]="DATA.PR" [options]="chartOpRight" #chartPredictions></p-chart>
+      <div>
+        <h4>{{ l.t['DONNEES_D_DESCR'] }}</h4>
+        <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
+        <p-chart [type]="chartType" [data]="DATA.RD" [options]="chartOp.left" #chart></p-chart>
+      </div>
+      <div>
+        <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
+        <button (click)="downloadStats('chartPredictions')" class="download"><i class="pi pi-download"></i></button>
+        <p-chart [type]="chartType" [data]="DATA.PR" [options]="chartOp.right" #chartPredictions></p-chart>
+      </div>
     </div>
     <div class="legende">
       <legend *ngFor="let d of DATA.RD.datasets">
-        <span [ngStyle]="{'background-color': d.borderColor}"></span><p>{{ d.label }}</p>
+        <span [ngStyle]="{'background-color': d.borderColor}"></span>
+        <p>{{ d.label }}</p>
       </legend>
     </div>
   </article>
@@ -98,22 +105,29 @@
     </table>
   </article>
   <article *ngIf="fF.controls.moyennes.value" class="chart">
-      <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
-      <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
-      <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
-      <div>
-        <p-chart [type]="chartType" [data]="DATA.RDAV" [options]="chartOpLeft" #average></p-chart>
-        <!-- <p-chart [type]="chartType" [data]="DATA.PRAV" [options]="basicRight" #averagePredictions></p-chart> -->
-      </div>
+    <h3>{{ l.t['FILTRE_MOYENNES'] }}</h3>
+        <h4>{{ l.t['DONNEES_M_DESCR'] }}</h4>
+        <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
+        <p-chart [type]="chartType" [data]="DATA.RDAV" [options]="chartOp.left" #average></p-chart>
+      <!--
+        <div>
+          <p-chart [type]="chartType" [data]="DATA.PRAV" [options]="basicRight" #averagePredictions></p-chart>
+        </div>
+      -->
   </article>
   <article *ngIf="fF.controls.croissance.value" class="chart">
-      <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
-      <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
-      <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
+    <h3>{{ l.t['FILTRE_CROISSANCE'] }}</h3>
+    <div>
       <div>
-        <p-chart type="bar" [data]="DATA.RDGR" [options]="chartOpNu" #growth></p-chart>
-        <!-- <p-chart type="bar" [data]="DATA.PRGR" [options]="basicRight" #growthPredictions></p-chart> -->
-
+        <h4>{{ l.t['DONNEES_C_DESCR'] }}</h4>
+        <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
+        <p-chart type="bar" [data]="DATA.RDGR" [options]="chartOp.barLeft" #growth></p-chart>
       </div>
+      <div>
+        <h4>{{ l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
+        <button (click)="downloadStats('growthPredictions')" class="download"><i class="pi pi-download"></i></button>
+        <p-chart type="bar" [data]="DATA.PRGR" [options]="chartOp.barRight" #growthPredictions></p-chart>
+      </div>
+    </div>
   </article>
 </section>

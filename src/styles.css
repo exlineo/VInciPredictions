@@ -301,9 +301,9 @@ form.bleu option:hover{
   justify-content:center;
 }
 .download{
-  align-self:flex-end;
+  /* align-self:flex-end; */
   position:absolute;
-  right:0;
+  right:20px;
   top:10px;
 }
 .download > i.pi{
@@ -480,23 +480,9 @@ p-listbox{
 p-checkbox{
   margin:0 auto;
 }
-.chart > div, #chartdata > div{
-  display:flex;
-  flex-flow:row nowrap;
-  width:100%;
-}
 p-chart, p-chart canvas{
   min-height:300px !important;
-}
-.chart > div p-chart{
-  width:100%;
-}
-#chartdata > div p-chart:first-child{
-  width:75%;
-}
-#chartdata > div p-chart:last-child{
-  width:25%;
-  background-color: var(--jaunea);
+  height:300px !important;
 }
 div.range-slider > input[type="range"]::-webkit-slider-runnable-track{
   background-color:rgba(0, 0, 0, .1);

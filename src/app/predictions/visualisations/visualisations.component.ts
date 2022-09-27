@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Dataset, DatasetI, RendementI, ChartI, YieldI } from 'src/app/utils/modeles/filtres-i';
+import { DatasetI, RendementI, ChartI, Chart } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
@@ -20,12 +20,13 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   @ViewChild('growth') chartGrowthrd!: UIChart;
   @ViewChild('chartPredictions') chartpr!: UIChart;
   // @ViewChild('averagePredictions') chartAvpr!: UIChart;
-  // @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
+  @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
 
   config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 } }; // App config
 
   filtres: Array<string> = []; // Ensemble des filtres appliqués
-  l$!: Subscription;
+  l$!: Subscription; // Subscribe to translation loading
+  config$!: Subscription; // Subscribe to configuration loading observable
   /** Filter form */
   fF = this.fbuild.group({
     pays: [[]],
@@ -41,14 +42,10 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line';
-  chartOpLeft: any; // Options of the charts
-  chartOpRight:any;
-  chartOpNu:any;
+  chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
 
-  /** Labels for charts */
-  // LABELS: any = { RD: Array<string>, PR: Array<string>, RDAV:Array<string>, PRAV:Array<string>, RDGR:Array<string>, RPGR:Array<string> };
-  // Array of objects listing datas for yield charts and predictions
-  DATA: any = { RD: <ChartI>{}, PR: <ChartI>{}, RDAV: <ChartI>{}, PRAV: <ChartI>{}, RDGR: <ChartI>{}, PRGR: <ChartI>{} };
+  /** All data for charts */
+  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
 
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
@@ -67,13 +64,15 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         { nom: this.l.t['FILTRE_FR'], value: "fr" },
         { nom: this.l.t['FILTRE_PT'], value: "pt" }
       ];
-      this.chartOpLeft = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], 'left', 0, 100);
-      this.chartOpRight = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], 'right', 0, 100);
-      this.chartOpNu = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS']);
+      this.chartOp.left = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
+      this.chartOp.right = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
+      this.chartOp.nu = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false);
+      this.chartOp.barLeft = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
+      this.chartOp.barRight = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
     }
     );
     /** Get config and   */
-    this.store.config$.subscribe(c => {
+    this.config$ = this.store.config$.subscribe(c => {
       // Get last version of data from database
       this.store.getLastData();
     });
@@ -135,15 +134,14 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         this.getDatasets(this.pdo[i].pdo!);
       };
     }
-    console.log(this.DATA.RD, this.DATA.PR);
     // Refresh data on graph
     this.applyFilters();
   }
   /** Get datasets from  */
-  getDatasets(i:string){
-    const rd = {...this.store.charts.datasets.RD[i]};
+  getDatasets(i: string) {
+    const rd = { ...this.store.charts.datasets.RD[i] };
     this.DATA.RD.datasets.push(rd);
-    const pr = {...this.store.charts.datasets.PR[i]};
+    const pr = { ...this.store.charts.datasets.PR[i] };
     this.DATA.PR.datasets.push(pr);
   }
   /** Filter dataset to get years */
@@ -180,19 +178,21 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** Calculate and show the average data */
   setAverage() {
     // Calculate average data, 5 years and purcent growth on years
-    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(3, this.DATA.RD.labels.length);
+    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(4, this.DATA.RD.labels.length);
     this.DATA.RDGR.labels = this.DATA.RD.labels.slice(1, this.DATA.RD.labels.length);
     // this.DATA.PRAV.labels = this.DATA.RD.labels.slice(3, this.DATA.PR.labels.length);
-    // this.DATA.PRGR.labels = this.DATA.PR.labels.slice(1, this.DATA.PR.labels.length);
+    this.DATA.PRGR.labels = this.DATA.PR.labels;
 
     this.DATA.RDAV.datasets = [];
     this.DATA.RDGR.datasets = [];
 
+    this.DATA.PRGR.datasets = [];
+
     // Calculate purcent growth on years
     this.DATA.RD.datasets.forEach((av: DatasetI) => {
       // Empty datasets containers
-      const rd:DatasetI= { label:av.label, borderColor:av.borderColor, data:[] }; // Yields datas average
-      const gr:DatasetI= { label:av.label, backgroundColor:av.borderColor, data:[] }; // Growth data purcent
+      const rd: DatasetI = { label: av.label, borderColor: av.borderColor, backgroundColor: av.borderColor, data: [] }; // Yields datas average
+      const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
 
       av.data.forEach((d, i) => {
         if (i > 3) {
@@ -206,18 +206,28 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       this.DATA.RDAV.datasets.push(rd);
       this.DATA.RDGR.datasets.push(gr);
     });
+    /** Calculate growth prediction in purcent */
+    this.DATA.PR.datasets.forEach((av: DatasetI) => {
+      // Empty datasets containers
+      const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
+
+      av.data.forEach((d, i) => {
+        if (i == 0) {
+          const tmp = this.DATA.PR.datasets[this.DATA.PR.datasets.length - 1];
+          console.log(av.data[i], tmp.data[tmp.data.length - 1]);
+          gr.data.push(Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100));
+        } else {
+          gr.data.push(Math.round((av.data[i] * 100 / av.data[i - 1]) - 100));
+        };
+      });
+      this.DATA.PRGR.datasets.push(gr);
+    });
 
     this.chartAvrd.refresh();
     // this.chartAvpr.refresh();
     this.chartGrowthrd.refresh();
-    // this.chartGrowthpr.refresh();
-  }
-  /** Create an element in list of dataset */
-  setDatasetElement(av: DatasetI) {
-    return {
-      label: av.label,
-      borderColor: av.borderColor!
-    }
+    this.chartGrowthpr.refresh();
+    console.log(this.DATA.PRGR.datasets);
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color
@@ -226,29 +236,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   setCouleur(i: number = 0, coul: string = 'bleu') {
     if (i > this.store.config.couleurs[coul].length - 1) i -= this.store.config.couleurs[coul].length - 1;
     return this.store.config.couleurs[coul][i];
-  }
-
-  /** Set dataset
-   * @param {string} l Label to write on over
-   * @param {any} d Array of data to write on graph
-   * @param {string} c Color of line
-  */
-  setDataset(l: string, c: string = '#78281F', d: any) {
-    const tmp = <DatasetI>{};
-    tmp.label = l;
-    tmp.data = new Array();
-    tmp.borderColor = c;
-    for (let i = 0; i < d.length; ++i) {
-      tmp.data.push(d[i]);
-    }
-    return tmp;
-    // tmp.data.splice(1, d.length);
-    // if (!target.includes(tmp)) target.push(tmp);
-    // console.log(target);
-  }
-  /** Set limits for years filters */
-  setLimits(n: number) {
-    return new Array(n);
   }
   /** Download img */
   downloadStats(el: string) {
@@ -259,23 +246,37 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       case 'chart':
         // console.log(this.chart.getCanvas());
         img = this.chartrd.getBase64Image();
-        lien.setAttribute('download', 'predictions.png')
+        lien.setAttribute('download', 'yields.png')
+        break;
+      case 'chartPredictions':
+        // console.log(this.chart.getCanvas());
+        img = this.chartpr.getBase64Image();
+        lien.setAttribute('download', 'yieldsPredictions.png')
         break;
       case 'average':
         img = this.chartAvrd.getBase64Image();
         lien.setAttribute('download', 'averages.png')
         break;
+      case 'averagePredictions':
+        img = this.chartAvrd.getBase64Image();
+        lien.setAttribute('download', 'averagesPredictions.png')
+        break;
       case 'growth':
         img = this.chartGrowthrd.getBase64Image();
         lien.setAttribute('download', 'growths.png')
+        break;
+      case 'chartPredictions':
+        // console.log(this.chart.getCanvas());
+        img = this.chartGrowthpr.getBase64Image();
+        lien.setAttribute('download', 'growthPredictions.png')
         break;
     };
     lien.setAttribute('href', img.replace("image/png", "image/octet-stream"));
     lien.click();
   }
-  /** Clear observable on navigation change */
+  /** Clear observable on navigation change to avoid data overload */
   ngOnDestroy() {
     this.l$.unsubscribe();
-    this.store.config$.unsubscribe();
+    this.config$.unsubscribe();
   }
 }

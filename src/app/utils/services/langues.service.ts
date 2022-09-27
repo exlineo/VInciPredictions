@@ -66,11 +66,9 @@ export class LanguesService {
   }
   /** Get texts from Firestore to populate HTML pages */
   getPage(id: string) {
-    console.log(id);
     if(this.pages[this.langue][id]){
       this.page = this.pages[this.langue][id];
     }else{
-      console.log(this.langue, id);
       this.store.getFireDoc(this.langue, id)
         .then<any>(d => d.data())
         .then<unknown>(p => {

@@ -183,7 +183,7 @@
   "COPY":"Copier",
   "MODIF":"Modifier",
   "DONNEES_D_DESCR":"Rendements annuels calculés en hectolitres / hectares",
-  "DONNEES_M_DESCR":"Moyennes calculées sur trois années",
+  "DONNEES_M_DESCR":"Moyennes calculées sur cinq années",
   "DONNEES_C_DESCR":"Pourcentage de croissance/décroissance d'une année sur l'autre",
   "MSG_ER_AUTH":"Problème d'authentification, vous avez été déconnecté",
   "MSG_ER_404":"Ressource serveur non trouvée",
