@@ -47,7 +47,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   /** All data for charts */
   DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
   /** Year's gaps for yields and predictions */
-  gap: any = {rd:0, pr:0};
+  gap: any = { rd: 0, pr: 0 };
 
   pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
@@ -84,14 +84,16 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   */
   filtrePays(e: any) {
     this.listes.pays = e.value;
-    this.setFiltres();
+    this.filtrePlages();
+    // this.setFiltres();
   }
   /** Get data from selected regions
    * @param {event} e Event send from HTML
    */
   filtreRegions(e: any) {
     this.listes.regions = e.value;
-    this.setFiltres();
+    this.filtrePlages();
+    // this.setFiltres();
   }
   /** Load PDO data from database
    */
@@ -105,10 +107,12 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
           d.forEach(p => {
             this.pdo.push(p.data() as RendementI);
           });
-          this.setFiltres();
+          this.filtrePlages();
+          // this.setFiltres();
         })
     } else {
-      this.setFiltres();
+      this.filtrePlages();
+      // this.setFiltres();
     }
   }
   /** Filter dataset to get years */
@@ -117,7 +121,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
 
     this.setFiltres();
-}
+  }
   /** Set data and show for yields and predictions on charts */
   setFiltres() {
     this.DATA.RD.labels = this.gap.rd != 0 ? this.store.charts.labels.RD.slice(this.gap.rd, this.store.charts.labels.RD.length) : [...this.store.charts.labels.RD];
@@ -158,15 +162,15 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     this.DATA.PR.datasets.push(this.setPlagePr(pr));
   }
   /** Calculate gap in years with slides filters for yields  */
-  setPlageRd(d:DatasetI){
-    if(this.gap.rd != 0) {
+  setPlageRd(d: DatasetI) {
+    if (this.gap.rd != 0) {
       d.data.slice(this.gap.rd, d.data.length);
     }
     return d;
   }
   /** Calculate gap in years with slides filters for predictions  */
-  setPlagePr(d:DatasetI){
-    if(this.gap.pr != 0) {
+  setPlagePr(d: DatasetI) {
+    if (this.gap.pr != 0) {
       d.data.slice(0, this.gap.pr);
     }
     return d;
@@ -261,7 +265,7 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         img = this.chartGrowthrd.getBase64Image();
         lien.setAttribute('download', 'growths.png')
         break;
-      case 'chartPredictions':
+      case 'growthPredictions':
         // console.log(this.chart.getCanvas());
         img = this.chartGrowthpr.getBase64Image();
         lien.setAttribute('download', 'growthPredictions.png')

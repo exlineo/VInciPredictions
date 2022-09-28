@@ -24,7 +24,7 @@
       <a (click)="authServ.deconnexion()" [title]="l.t['DECONNEXION']"><i class="pi pi-ban"></i></a>
     </article>
     <article>
-      <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 77 || authServ.profil.statut == 666"><i class="pi pi-shield"></i></a>
+      <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 666"><i class="pi pi-shield"></i></a>
       <!-- <a><i class="pi pi-sliders-h"></i></a> -->
     </article>
   </section>

@@ -26,7 +26,6 @@ export class AuthService {
   creeUser(p: any) {
     createUserWithEmailAndPassword(this.auth, p.mail, p.pass)
       .then((retour) => {
-        // this.profil.u = retour.user;
         this.l.msg.msgOk(this.l.t['MSG_US_ADD'], this.l.t['MSG_US_ADD_DESCR']);
       })
       .catch((error) => {
@@ -143,7 +142,7 @@ export class AuthService {
   getAccess() {
     if (!this.auth.currentUser!) {
       this.route.navigateByUrl('/');
-    } else if(this.auth.currentUser! && !this.auth.currentUser!.hasOwnProperty('emailVerified')){
+    } else if(this.auth.currentUser! && this.auth.currentUser!.emailVerified == false){
       this.route.navigateByUrl('/verification');
     } else if (this.auth.currentUser!) return true;
     return false;

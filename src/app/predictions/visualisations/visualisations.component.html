@@ -42,16 +42,16 @@
 </section>
 <!-- VISUALISATION -->
 <section>
-  <p>{{ l.t['RES_DESCR'] }}</p>
+  <!-- <p>{{ l.t['RES_DESCR'] }}</p> -->
   <h2>{{ l.page.titre }}</h2>
   <p-dialog [header]="l.page.titre" [(visible)]="infos">
     <article [innerHTML]="l.page.contenu"></article>
   </p-dialog>
   <form [formGroup]="fF">
-    <label>
+    <!-- <label>
       <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
       {{ l.t['FILTRE_PREDICTIONS'] }}
-    </label>
+    </label> -->
     <label>
       <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
       {{ l.t['FILTRE_MOYENNES'] }}
