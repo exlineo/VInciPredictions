@@ -181,5 +181,19 @@
   "MSG_DEL":"Data has been successfully deleted",
   "MSG_COPY":"The text has been copied",
   "COPY":"Copy",
-  "MODIF":"Edit"
+  "MODIF":"Edit" ,
+  "DONNEES_D_DESCR":"Annual yields observed in hectoliters/hectares",
+  "DONNEES_M_DESCR":"Averages calculated over five years",
+  "DONNEES_C_DESCR":"Increase/decrease percentage year over year",
+  "MSG_ER_AUTH":"Authentication problem, you have been disconnected",
+  "MSG_ER_404":"Server resource not found",
+  "MSG_ER_500":"Problem with the server, please reconnect later",
+  "MSG_ER_HTTP":"An undefined network error has occurred, please reconnect later",
+  "MSG_VERIFIE":"Validate your email",
+  "MSG_VERIFIE_DESCR":"You must validate your email with the link sent to you to be able to connect",
+  "VERIFICATION":"Resend verification email",
+  "VERIF_TITRE":"Resend verification email",
+  "VERIF_DESCR":"Fill in your email to send a message containing a link to validate your account.",
+  "VERIF_MAIL_TITRE":"An email has been sent to you",
+  "VERIF_MAIL_DESCR":"An email has just been sent to you, please click on the link to activate your account."
 }

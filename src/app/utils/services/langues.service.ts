@@ -14,8 +14,8 @@ export class LanguesService {
   langue = 'fr';
   t: any = {}; // Traductions téléchargées
   // lang: any; // Langue actuelle
-  pages: any = {fr:[],es:[],pt:[],uk:[]};
-  page: PageI = { id:'', nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
+  pages: any = { fr: [], es: [], pt: [], uk: [] };
+  page: PageI = { id: '', nom: '', titre: '', contenu: '' }; // Nom de la page en cours si nécessaire
   t$: BehaviorSubject<any> = new BehaviorSubject({})
 
   /**
@@ -39,15 +39,16 @@ export class LanguesService {
       })
       .then<unknown>(d => {
         console.log(d);
-        if(d){
+        if (d) {
           let tmp = d['data'];
           this.t = JSON.parse(tmp);
           this.t$.next(this.t);
           this.store.setLocalData('t-' + this.langue, this.t);
         }
-      }
-      )
-      // .catch(er => console.log(er));
+      })
+      .catch(er => {
+        this.msg.msgFail(this.t['MSG_ER_DATA'], this.t['MSG_ER_HTTP']);
+        console.log(er)});
   }
   /** Get translations from local or online data */
   getTraductions() {
@@ -66,14 +67,14 @@ export class LanguesService {
   }
   /** Get texts from Firestore to populate HTML pages */
   getPage(id: string) {
-    if(this.pages[this.langue][id]){
+    if (this.pages[this.langue][id]) {
       this.page = this.pages[this.langue][id];
-    }else{
+    } else {
       this.store.getFireDoc(this.langue, id)
         .then<any>(d => d.data())
         .then<unknown>(p => {
           this.page = p;
-          if(!this.page.id) this.page.id = id;
+          if (!this.page.id) this.page.id = id;
           this.pages[this.langue][id] = p;
         }
         )

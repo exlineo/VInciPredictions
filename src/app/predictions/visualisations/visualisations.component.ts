@@ -154,7 +154,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
   }
   /** Get datasets from  */
   getDatasets(i: string) {
-    console.log(i);
     const rd = { ...this.store.charts.datasets.RD[i] };
     // this.DATA.RD.datasets.push(rd);
     this.DATA.RD.datasets.push(this.setPlageRd(rd));
@@ -214,7 +213,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       av.data.forEach((d, i) => {
         if (i == 0) {
           const tmp = this.DATA.PR.datasets[this.DATA.PR.datasets.length - 1];
-          console.log(av.data[i], tmp.data[tmp.data.length - 1]);
           gr.data.push(Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100));
         } else {
           gr.data.push(Math.round((av.data[i] * 100 / av.data[i - 1]) - 100));
@@ -227,7 +225,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // this.chartAvpr.refresh();
     this.chartGrowthrd.refresh();
     this.chartGrowthpr.refresh();
-    console.log(this.DATA.PRGR.datasets);
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color
@@ -244,12 +241,10 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
     // this.chart.toDataURL('image/png');
     switch (el) {
       case 'chart':
-        // console.log(this.chart.getCanvas());
         img = this.chartrd.getBase64Image();
         lien.setAttribute('download', 'yields.png')
         break;
       case 'chartPredictions':
-        // console.log(this.chart.getCanvas());
         img = this.chartpr.getBase64Image();
         lien.setAttribute('download', 'yieldsPredictions.png')
         break;
@@ -266,7 +261,6 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
         lien.setAttribute('download', 'growths.png')
         break;
       case 'growthPredictions':
-        // console.log(this.chart.getCanvas());
         img = this.chartGrowthpr.getBase64Image();
         lien.setAttribute('download', 'growthPredictions.png')
         break;

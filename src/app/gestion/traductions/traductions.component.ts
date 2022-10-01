@@ -11,14 +11,6 @@ import { LanguesService } from 'src/app/utils/services/langues.service';
 export class TraductionsComponent implements OnInit {
   /** Liste of pages to edit */
   pages:Array<string> = [];
-  /** Selected language for translation */
-  editLang:string = 'fr';
-  /** Edition form for pages content */
-  editPageForm = this.fB.group({
-    titre:[''],
-    contenu:[''],
-    accroche:['']
-  });
   /** Edition form for software */
   editTradForm = this.fB.group({});
   /** ID of page to edit */
@@ -32,6 +24,14 @@ export class TraductionsComponent implements OnInit {
   /** Copy software texts edited */
   tradEdit:any = {};
   infos:boolean = false;
+  /** Selected language for translation */
+  editLang:string = 'fr';
+  /** Edition form for pages content */
+  editPageForm = this.fB.group({
+    titre:[this.pageEdit.titre],
+    contenu:[this.pageEdit.contenu],
+    accroche:[this.pageEdit.accroche]
+  });
 
   constructor(public l:LanguesService, public fB:FormBuilder) { }
 
@@ -53,6 +53,8 @@ export class TraductionsComponent implements OnInit {
    */
   setEditLang(lang:string){
     this.editLang = lang;
+    this.pageEdit = {...this.page};
+    console.log(this.pageEdit);
   }
   /**
    * Get the page to translate
@@ -64,8 +66,15 @@ export class TraductionsComponent implements OnInit {
     .then(p => p.data() as PageI)
     .then(p => {
       this.page = p;
+      this.setPageEdit();
     })
     .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER_DATA'], this.l.t['MSG_ER'] +' : '+ er));
+  }
+  /** Set fields for page edition */
+  setPageEdit(){
+    this.editPageForm.controls.titre.setValue(this.page.titre);
+    this.editPageForm.controls.accroche.setValue(this.page.accroche);
+    this.editPageForm.controls.contenu.setValue(this.page.contenu);
   }
   /**
    * Select traduction
@@ -96,7 +105,6 @@ export class TraductionsComponent implements OnInit {
   }
   /** Save page edition to database and reset form */
   sendEditPage(){
-    console.log(this.editLang, this.pageId, this.editPageForm.value);
     this.l.store.setFireDoc(this.editLang, {uid:this.pageId, doc:this.editPageForm.value})
     .then(ok => {
       this.l.msg.msgOk(this.l.t['MSG_MAJ']);

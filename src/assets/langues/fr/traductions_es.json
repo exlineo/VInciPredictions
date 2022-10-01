@@ -181,5 +181,19 @@
   "MSG_DEL":"Los datos se han eliminado correctamente",
   "MSG_COPY":"El texto ha sido copiado",
   "COPY":"Copiar",
-  "MODIF":"Editar"
+  "MODIF":"Editar",
+  "DONNEES_D_DESCR":"Rendimientos anuales observado en hectolitros/ha",
+  "DONNEES_M_DESCR":"Promedios calculados durante cinco años",
+  "DONNEES_C_DESCR":"Porcentaje de aumento/disminución año tras año",
+  "MSG_ER_AUTH":"Problema de autenticación, te han desconectado",
+  "MSG_ER_404":"Recurso del servidor no encontrado",
+  "MSG_ER_500":"Problema con el servidor, vuelva a conectarse más tarde",
+  "MSG_ER_HTTP":"Se ha producido un error de red indefinido, vuelva a conectarse más tarde",
+  "MSG_VERIFIE":"Valida su correo electrónico",
+  "MSG_VERIFIE_DESCR":"Tenías que validar tu correo electrónico con el enlace que te enviaron para poder conectarte",
+  "VERIFICATION":"Reenviar correo electrónico de verificación",
+  "VERIF_TITRE":"Reenviar correo electrónico de verificación",
+  "VERIF_DESCR":"Complete su correo electrónico para enviar un mensaje que contenga un enlace para validar su cuenta.",
+  "VERIF_MAIL_TITRE":"Se le ha enviado un correo electrónico",
+  "VERIF_MAIL_DESCR":"Se le acaba de enviar un correo electrónico, haga clic en el enlace para activar su cuenta."
 }

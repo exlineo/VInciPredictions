@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { BehaviorSubject } from 'rxjs';
-import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI, DatasetI } from '../modeles/filtres-i';
+import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI } from '../modeles/filtres-i';
 import { ProfilI } from '../modeles/profil-i';
 import { MsgService } from './msg.service';
 
@@ -19,7 +19,7 @@ export class StoreService {
 
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
-  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' } }; // App config
+  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' }, version:0.9 }; // App config
   // Dynamic filters list
   filtres: any;
   lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
@@ -59,6 +59,15 @@ export class StoreService {
         console.log(er);
       });
   }
+  /** Get local version for data update */
+  getVersion(){
+    if(localStorage.getItem('version')){
+      if(parseInt(localStorage.getItem('version')!) >= this.config.version) {
+        return true;
+      };
+    }
+    return false;
+  }
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -67,7 +76,8 @@ export class StoreService {
   getLocalString(id: string, defaut: string = 'fr'): string {
     if (localStorage.getItem(id)) {
       return localStorage.getItem(id) as string
-    } else { return defaut };
+    }
+    return defaut;
   }
   /**
    * Get JSON data
@@ -172,17 +182,19 @@ export class StoreService {
             // console.log("Moyennes", c.data()['regions']);
             this.set.zones.regions = c.data()['regions'];
             this.set.zones.pays = c.data()['pays'];
-            this.setAvDataSets(this.config.couleurs['vert'][Math.floor(Math.random()*this.config.couleurs['vert'].length)], this.set.zones.regions);
-            this.setAvDataSets(this.config.couleurs['bleu'][Math.floor(Math.random()*this.config.couleurs['bleu'].length)], this.set.zones.pays);
-            console.log(this.charts);
+            this.setAvDataSets(this.setCouleur('vert'), this.set.zones.regions);
+            this.setAvDataSets(this.setCouleur('bleu'), this.set.zones.pays);
           } else {
             this.set.data.push(c.data() as RendementI);
-            this.setPdoDataSets(this.config.couleurs['violet'][Math.floor(Math.random()*this.config.couleurs['violet'].length)], c.data() as RendementI)
+            this.setPdoDataSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
-        console.log(this.set);
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.data.forEach(d => this.setFilterFromData(d));
+        this.orderLists();
+      })
+      .catch(er => {
+        console.log(er);
       });
   }
   /** Add dataset objects to loaded data for charts */
@@ -196,11 +208,11 @@ export class StoreService {
       this.charts.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
       this.charts.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
-  setCouleur(c:string){
+  setCouleur(c:string):string{
     const l = this.config.couleurs[c].length;
     const math = Math.floor(Math.random()*l);
     const couleur = this.config.couleurs[c][math];
-    console.log(l, math, couleur);
+    return couleur;
   }
   /**
    * (Deprecated) Get last ID document
@@ -224,5 +236,11 @@ export class StoreService {
     if (!this.listes.pays.includes(r.pays)) this.listes.pays = [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo!)) this.listes.pdo = [...this.listes.pdo, r.pdo!];
+  }
+  /** Order list in alphabetic */
+  orderLists(){
+    this.listes.pays.sort();
+    this.listes.regions.sort();
+    this.listes.pdo.sort();
   }
 }

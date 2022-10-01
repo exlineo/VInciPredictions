@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguesService } from 'src/app/utils/services/langues.service';
 
 @Component({
   selector: 'app-rgpd',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RgpdComponent implements OnInit {
 
-  constructor() { }
+  /**
+   * Formulaire de connexion des utilisateurs
+   * @param l {LanguesService} Pointeur vers le service de langues
+   */
+   constructor(public l:LanguesService) {}
 
-  ngOnInit(): void {
-  }
+   ngOnInit(): void {
+     this.l.getPage('rgpd');
+   }
 
 }
