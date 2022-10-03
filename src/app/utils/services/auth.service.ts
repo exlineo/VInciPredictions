@@ -57,8 +57,6 @@ export class AuthService {
   setProfil(p: ProfilI) {
     this.profil = p;
     this.profil.u = this.auth.currentUser!;
-    // this.profil.u.uid = this.auth.currentUser!.uid;
-    // this.profil.u.email = this.u.email;
     this.profil.droits = { petite: 1, grande: 1, export: 1 };
     this.profil.statut = 77;
   }

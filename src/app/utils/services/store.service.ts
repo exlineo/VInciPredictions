@@ -53,7 +53,6 @@ export class StoreService {
         for(let i=0; i<this.config.predictions.fin - this.config.predictions.debut +1; ++i){
           this.charts.labels.PR.push(this.config.predictions.debut + i);
         }
-        this.setCouleur('bleu');
       })
       .catch(er => {
         console.log(er);
@@ -182,8 +181,8 @@ export class StoreService {
             // console.log("Moyennes", c.data()['regions']);
             this.set.zones.regions = c.data()['regions'];
             this.set.zones.pays = c.data()['pays'];
-            this.setAvDataSets(this.setCouleur('vert'), this.set.zones.regions);
-            this.setAvDataSets(this.setCouleur('bleu'), this.set.zones.pays);
+            this.setAvDataSets('vert', this.set.zones.regions);
+            this.setAvDataSets('bleu', this.set.zones.pays);
           } else {
             this.set.data.push(c.data() as RendementI);
             this.setPdoDataSets(this.setCouleur('violet'), c.data() as RendementI)
@@ -200,14 +199,16 @@ export class StoreService {
   /** Add dataset objects to loaded data for charts */
   setAvDataSets(couleur:string, obj:any){
     for(let i in obj){
-      this.charts.datasets.RD[i] = {label:i, borderColor:couleur, backgroundColor:couleur, data:obj[i].RD};
-      this.charts.datasets.PR[i] = {label:i, borderColor:couleur, backgroundColor:couleur, data:obj[i].PR};
+      const c = this.setCouleur(couleur);
+      this.charts.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+      this.charts.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
     }
   }
   setPdoDataSets(couleur:string, obj:RendementI){
       this.charts.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
       this.charts.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
+  /** Set colors from list of colors in config data */
   setCouleur(c:string):string{
     const l = this.config.couleurs[c].length;
     const math = Math.floor(Math.random()*l);
