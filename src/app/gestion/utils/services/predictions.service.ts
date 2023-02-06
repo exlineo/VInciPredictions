@@ -96,7 +96,7 @@ export class PredictionsService {
     this.l.store.getFireCol('data')
       .then(d => d.forEach(
         f => {
-          // const d = f.data() as CrreI;
+          // const d = f.data() as CreeI;
           // this.listeVersions.push(d.collection);
         }
       ))
@@ -107,7 +107,7 @@ export class PredictionsService {
    * @param time time to set name time of the collection, globally not useful
    * @returns {promise} Returns a promise
    */
-  async batchFireCollecDocs(time:number = -1) {
+  async batchFireSudoeDocs(time:number = -1) {
     let n = 0;
     const col = this.setDate();
     this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
@@ -121,15 +121,44 @@ export class PredictionsService {
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {
-        this.l.store.setFireDoc('data', { uid: String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.store.setFireDoc('data', { uid: 'sudoe' + String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.msg.msgOk(this.l.t['MSG_MAJ']);
+      })
+      .catch(er => console.log(er));
+  }
+  /**
+   * Write documents from a new data uploaded
+   * @param time time to set name time of the collection, globally not useful
+   * @returns {promise} Returns a promise
+   */
+  async batchFireBordeauxDocs(time:number = -1) {
+    let n = 0;
+    const col = this.setDate();
+    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
+    this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
+    // this.batch.set(doc(this.dbf, col, 'zones'), this.l.store.set.zones);
+    this.l.store.set.data.forEach(d => {
+      const customDoc = doc(this.dbf, col, n.toString());
+      this.batch.set(customDoc, d);
+      ++n;
+    });
+    /** Commit data to write */
+    await this.batch.commit()
+      .then(d => {
+        this.l.store.setFireDoc('data', { uid: 'bordeaux' + String(this.creeTmp?.time), doc: this.creeTmp })
         this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       })
       .catch(er => console.log(er));
   }
   /** Add loadedDataset formatted as array in Firebase */
-  docFireAdd() {
+  fireSudoeAdd() {
     this.l.store.set.creeLe!.time = Date.now();
-    this.batchFireCollecDocs();
+    this.batchFireSudoeDocs();
+  }
+  /** Add loadedDataset formatted as array in Firebase */
+  fireBordeauxAdd() {
+    this.l.store.set.creeLe!.time = Date.now();
+    this.batchFireBordeauxDocs();
   }
   /**
    * Delete a document

@@ -50,9 +50,14 @@ export class DataMajComponent implements OnInit {
     };
     reader.readAsText(e.target.files[0]);
   }
-  /** Save data to database */
-  saveData(){
+  /** Save data for harvests (SUDOE) */
+  saveSudoe(){
     this.file = undefined;
-    this.predServ.docFireAdd();
+    this.predServ.fireSudoeAdd();
+  }
+  /** Save data for yields (Bordeaux) */
+  saveBordeaux(){
+    this.file = undefined;
+    this.predServ.fireBordeauxAdd();
   }
 }

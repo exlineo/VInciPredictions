@@ -1,76 +1,49 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DatasetI, RendementI, ChartI, Chart } from 'src/app/utils/modeles/filtres-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
 import { Subscription } from 'rxjs';
 import { UIChart } from 'primeng/chart';
 import { options } from '../utils/chartOptions';
+import { VisualService } from '../utils/services/visual.service';
 
 @Component({
   selector: 'app-visualisations',
   templateUrl: './visualisations.component.html',
   styleUrls: ['./visualisations.component.css']
 })
-export class VisualisationsComponent implements OnInit, OnDestroy {
+export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Charts */
-  @ViewChild('chart') chartrd!: UIChart;
-  @ViewChild('average') chartAvrd!: UIChart;
-  @ViewChild('growth') chartGrowthrd!: UIChart;
-  @ViewChild('chartPredictions') chartpr!: UIChart;
+  @ViewChild('chart') chartrd!: UIChart; // HTML Chart for yields
+  @ViewChild('average') chartAvrd!: UIChart; // HTML Chart for aveage yields
+  @ViewChild('growth') chartGrowthrd!: UIChart; // HTML Chart for growth
+  @ViewChild('chartPredictions') chartpr!: UIChart; // HTML Chart for predictions
   // @ViewChild('averagePredictions') chartAvpr!: UIChart;
-  @ViewChild('growthPredictions') chartGrowthpr!: UIChart;
+  @ViewChild('growthPredictions') chartGrowthpr!: UIChart; // HTML Chart for growth predictions
 
-  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 } }; // App config
-
-  filtres: Array<string> = []; // Ensemble des filtres appliqués
   l$!: Subscription; // Subscribe to translation loading
   config$!: Subscription; // Subscribe to configuration loading observable
-  /** Filter form */
-  fF = this.fbuild.group({
-    pays: [[]],
-    regions: [[]],
-    pdo: [[]],
-    rendements: [this.store.config.rendements.debut],
-    predictions: [this.store.config.predictions.fin],
-    donnees: [true],
-    moyennes: [true],
-    croissance: [true],
-    type: [''],
-    // debut: [this.store.config.rendements.debut],
-    // fin: [this.store.config.predictions.fin]
-  });
-  chartType: string = 'line';
-  chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
-
-  /** All data for charts */
-  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
-  /** Year's gaps for yields and predictions */
-  gap: any = { rd: 0, pr: 0 };
-
-  pays: Array<any> = []; // List of countries
   infos: boolean = false; // Show / hide infos on click
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
-  pdo: Array<RendementI> = []; // List of loaded PDOs in session
+  sudoe:boolean = true; // Showing SUDOE's data or Bordeaux's data
 
-  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService) { }
+  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService, public visual: VisualService) { }
 
   ngOnInit(): void {
     // Loading text page content from database
-    this.l.getPage('visualisation');
-    // Subscribe to langue to get syncrhonized data
-    this.l$ = this.l.t$.subscribe(t => {
-      this.pays = [
-        { nom: this.l.t['FILTRE_ES'], value: "es" },
-        { nom: this.l.t['FILTRE_FR'], value: "fr" },
-        { nom: this.l.t['FILTRE_PT'], value: "pt" }
+    this.visual.l.getPage('visualisation');
+    // Subscribe to langue to get syncrhonized data and translats text and charts
+    this.l$ = this.visual.l.t$.subscribe(t => {
+      this.visual.pays = [
+        { nom: this.visual.l.t['FILTRE_ES'], value: "es" },
+        { nom: this.visual.l.t['FILTRE_FR'], value: "fr" },
+        { nom: this.visual.l.t['FILTRE_PT'], value: "pt" }
       ];
-      this.chartOp.left = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
-      this.chartOp.right = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
-      this.chartOp.nu = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false);
-      this.chartOp.barLeft = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
-      this.chartOp.barRight = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
+      this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
+      this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
+      this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
+      this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
+      this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
     }
     );
     /** Get config and   */
@@ -78,195 +51,61 @@ export class VisualisationsComponent implements OnInit, OnDestroy {
       // Get last version of data from database
       this.store.getLastData();
     });
+  };
+  /** Get HTML ELements */
+  ngAfterViewInit(){
+    // Get list of charts to refresh
+    this.visual.chartsEls = [this.chartrd, this.chartAvrd, this.chartGrowthrd, this.chartpr, this.chartGrowthpr];
+    console.log(this.visual.chartsEls);
   }
+  // ======================= FORMS INTERACTIONS =====================
   /** Get data from countries selected countries
    * @param {event} e Event send from HTML
   */
   filtrePays(e: any) {
-    this.listes.pays = e.value;
-    this.filtrePlages();
-    // this.setFiltres();
+    this.visual.listes.pays = e.value;
+    this.visual.filtrePlages();
   }
   /** Get data from selected regions
    * @param {event} e Event send from HTML
    */
   filtreRegions(e: any) {
-    this.listes.regions = e.value;
-    this.filtrePlages();
-    // this.setFiltres();
+    this.visual.listes.regions = e.value;
+    this.visual.filtrePlages();
   }
-  /** Load PDO data from database
-   */
+  /** Get PDO */
   filtrePdo() {
-    this.pdo = [];
-    // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
-    if (this.fF.controls.pdo.value!.length > 0) {
-      // Get PDO data
-      this.store.getPdo(this.fF.controls.pdo.value as Array<string>)
-        .then(d => {
-          d.forEach(p => {
-            this.pdo.push(p.data() as RendementI);
-          });
-          this.filtrePlages();
-          // this.setFiltres();
-        })
-    } else {
-      this.filtrePlages();
-      // this.setFiltres();
-    }
-  }
-  /** Filter dataset to get years */
-  filtrePlages(e: any = null) {
-    this.gap.rd = this.fF.controls.rendements.value - this.config.rendements.debut;
-    this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
-
-    this.setFiltres();
-  }
-  /** Set data and show for yields and predictions on charts */
-  setFiltres() {
-    this.DATA.RD.labels = this.gap.rd != 0 ? this.store.charts.labels.RD.slice(this.gap.rd, this.store.charts.labels.RD.length) : [...this.store.charts.labels.RD];
-    this.DATA.PR.labels = this.gap.pr != 0 ? this.store.charts.labels.PR.slice(0, this.gap.pr) : [...this.store.charts.labels.PR];
-    this.DATA.RD.datasets = [];
-    this.DATA.PR.datasets = [];
-    // const data: Array<any> = [];
-    // Set region if some was selected in filters
-    if (this.listes.pays.length > 0) {
-      for (let i = 0; i < this.listes.pays.length; ++i) {
-        this.getDatasets(this.listes.pays[i]);
-      };
-    }
-    // Set region if some was selected in filters
-    if (this.listes.regions.length > 0) {
-      for (let i = 0; i < this.listes.regions.length; ++i) {
-        this.getDatasets(this.listes.regions[i]);
-      };
-    }
-    // Add PDO
-    if (this.pdo.length > 0) {
-      for (let i = 0; i < this.pdo.length; ++i) {
-        this.getDatasets(this.pdo[i].pdo!);
-      };
-    }
-    this.chartrd.refresh();
-    this.chartpr.refresh();
-
-    this.setAverage();
-  }
-  /** Get datasets from  */
-  getDatasets(i: string) {
-    const rd = { ...this.store.charts.datasets.RD[i] };
-    // this.DATA.RD.datasets.push(rd);
-    this.DATA.RD.datasets.push(this.setPlageRd(rd));
-    const pr = { ...this.store.charts.datasets.PR[i] };
-    this.DATA.PR.datasets.push(this.setPlagePr(pr));
-  }
-  /** Calculate gap in years with slides filters for yields  */
-  setPlageRd(d: DatasetI) {
-    if (this.gap.rd != 0) {
-      d.data.slice(this.gap.rd, d.data.length);
-    }
-    return d;
-  }
-  /** Calculate gap in years with slides filters for predictions  */
-  setPlagePr(d: DatasetI) {
-    if (this.gap.pr != 0) {
-      d.data.slice(0, this.gap.pr);
-    }
-    return d;
-  }
-  /** Calculate and show the average data */
-  setAverage() {
-    // Calculate average data, 5 years and purcent growth on years
-    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(4, this.DATA.RD.labels.length);
-    this.DATA.RDGR.labels = this.DATA.RD.labels.slice(1, this.DATA.RD.labels.length);
-    // this.DATA.PRAV.labels = this.DATA.RD.labels.slice(3, this.DATA.PR.labels.length);
-    this.DATA.PRGR.labels = this.DATA.PR.labels;
-
-    this.DATA.RDAV.datasets = [];
-    this.DATA.RDGR.datasets = [];
-
-    this.DATA.PRGR.datasets = [];
-
-    // Calculate purcent growth on years
-    this.DATA.RD.datasets.forEach((av: DatasetI) => {
-      // Empty datasets containers
-      const rd: DatasetI = { label: av.label, borderColor: av.borderColor, backgroundColor: av.borderColor, data: [] }; // Yields datas average
-      const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
-
-      av.data.forEach((d, i) => {
-        if (i > 3) {
-          // Add average data to data array
-          rd.data.push(Math.round((av.data[i - 4] + av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 5));
-        };
-        if (i > 0) {
-          gr.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
-        };
-      });
-      this.DATA.RDAV.datasets.push(rd);
-      this.DATA.RDGR.datasets.push(gr);
-    });
-    /** Calculate growth prediction in purcent */
-    this.DATA.PR.datasets.forEach((av: DatasetI) => {
-      // Empty datasets containers
-      const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
-
-      av.data.forEach((d, i) => {
-        if (i == 0) {
-          const tmp = this.DATA.PR.datasets[this.DATA.PR.datasets.length - 1];
-          gr.data.push(Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100));
-        } else {
-          gr.data.push(Math.round((av.data[i] * 100 / av.data[i - 1]) - 100));
-        };
-      });
-      this.DATA.PRGR.datasets.push(gr);
-    });
-
-    this.chartAvrd.refresh();
-    // this.chartAvpr.refresh();
-    this.chartGrowthrd.refresh();
-    this.chartGrowthpr.refresh();
-  }
-  /** Set color of graph with automated gradiant
-   * @param {number} i index of color
-   * @param {string} coul Color base
-   */
-  setCouleur(i: number = 0, coul: string = 'bleu') {
-    if (i > this.store.config.couleurs[coul].length - 1) i -= this.store.config.couleurs[coul].length - 1;
-    return this.store.config.couleurs[coul][i];
+    this.visual.filtrePdo();
   }
   /** Download img */
   downloadStats(el: string) {
-    let img;
-    const lien = document.createElement('a');
-    // this.chart.toDataURL('image/png');
     switch (el) {
       case 'chart':
-        img = this.chartrd.getBase64Image();
-        lien.setAttribute('download', 'yields.png')
+        this.visual.imgDownloadStats(this.chartrd, 'yields.png');
         break;
       case 'chartPredictions':
-        img = this.chartpr.getBase64Image();
-        lien.setAttribute('download', 'yieldsPredictions.png')
+        this.visual.imgDownloadStats(this.chartpr, 'yieldsPredictions.png');
         break;
       case 'average':
-        img = this.chartAvrd.getBase64Image();
-        lien.setAttribute('download', 'averages.png')
+        this.visual.imgDownloadStats(this.chartAvrd, 'averages.png');
         break;
       case 'averagePredictions':
-        img = this.chartAvrd.getBase64Image();
-        lien.setAttribute('download', 'averagesPredictions.png')
+        this.visual.imgDownloadStats(this.chartAvrd, 'averagesPredictions.png');
         break;
       case 'growth':
-        img = this.chartGrowthrd.getBase64Image();
-        lien.setAttribute('download', 'growths.png')
+        this.visual.imgDownloadStats(this.chartGrowthrd, 'growths.png');
         break;
       case 'growthPredictions':
-        img = this.chartGrowthpr.getBase64Image();
-        lien.setAttribute('download', 'growthPredictions.png')
+        this.visual.imgDownloadStats(this.chartGrowthpr, 'growthPredictions.png');
         break;
     };
-    lien.setAttribute('href', img.replace("image/png", "image/octet-stream"));
-    lien.click();
+  }
+  /** Panes to show SUDOE data or Bordeaux */
+  showSudoe(){
+    this.sudoe = true;
+  }
+  showBordeaux(){
+    this.sudoe = false;
   }
   /** Clear observable on navigation change to avoid data overload */
   ngOnDestroy() {

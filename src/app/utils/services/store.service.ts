@@ -53,6 +53,7 @@ export class StoreService {
         for(let i=0; i<this.config.predictions.fin - this.config.predictions.debut +1; ++i){
           this.charts.labels.PR.push(this.config.predictions.debut + i);
         }
+        console.log("Config chargée", this.config);
       })
       .catch(er => {
         console.log(er);

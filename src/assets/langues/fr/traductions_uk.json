@@ -195,5 +195,7 @@
   "VERIF_TITRE":"Resend verification email",
   "VERIF_DESCR":"Fill in your email to send a message containing a link to validate your account.",
   "VERIF_MAIL_TITRE":"An email has been sent to you",
-  "VERIF_MAIL_DESCR":"An email has just been sent to you, please click on the link to activate your account."
+  "VERIF_MAIL_DESCR":"An email has just been sent to you, please click on the link to activate your account.",
+  "VISU_SUDOE":"Données des vignobles SUDOE",
+  "VISU_BORDELAIS":"Données du vignoble bordelais"
 }

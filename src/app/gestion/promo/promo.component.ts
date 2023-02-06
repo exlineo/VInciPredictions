@@ -96,7 +96,7 @@ export class PromoComponent implements OnInit {
   }
   /**
    * Delte code
-   * @param index INdex of the document to delete
+   * @param index Index of the document to delete
    */
   supprCode(id:string, index:number){
     this.predServ.delFireDoc('promos', id)

@@ -72,14 +72,27 @@
       <option>{{ l.t['GESTION_VOIR'] }}</option>
       <option *ngFor="let f of l.store.lastData" [value]="f.collection">{{ f.collection }}</option>
     </select>
-    <button (click)="predServ.docFireAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
+    <button (click)="predServ.fireSudoeAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
   </article>
   <article>
-    <p>{{ l.t['GESTION_AJOUT'] }}</p>
     <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
     <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file" />
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
-    <button *ngIf="file" (click)="saveData()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
+    <button *ngIf="file" (click)="saveSudoe()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
+  </article>
+  <article>
+    <p>{{ l.t['GESTION_VERSION_REND'] }}</p>
+    <select name="fichiers" (change)="predServ.getData($event)">
+      <option>{{ l.t['GESTION_VOIR'] }}</option>
+      <option *ngFor="let f of l.store.lastData" [value]="f.collection">{{ f.collection }}</option>
+    </select>
+    <button (click)="predServ.fireBordeauxAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
+  </article>
+  <article>
+    <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP_REND'] }}</label>
+    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file" />
+    <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
+    <button *ngIf="file" (click)="saveBordeaux()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>
 </section>
 
