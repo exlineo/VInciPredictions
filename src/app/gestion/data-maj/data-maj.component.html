@@ -70,7 +70,7 @@
     <p>{{ l.t['GESTION_VERSION'] }}</p>
     <select name="fichiers" (change)="predServ.getData($event)">
       <option>{{ l.t['GESTION_VOIR'] }}</option>
-      <option *ngFor="let f of l.store.lastData" [value]="f.collection">{{ f.collection }}</option>
+      <option *ngFor="let f of l.store.lastSudoe" [value]="f.collection">{{ f.collection }}</option>
     </select>
     <button (click)="predServ.fireSudoeAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
   </article>
@@ -84,7 +84,7 @@
     <p>{{ l.t['GESTION_VERSION_REND'] }}</p>
     <select name="fichiers" (change)="predServ.getData($event)">
       <option>{{ l.t['GESTION_VOIR'] }}</option>
-      <option *ngFor="let f of l.store.lastData" [value]="f.collection">{{ f.collection }}</option>
+      <option *ngFor="let f of l.store.lastBordeaux" [value]="f.collection">{{ f.collection }}</option>
     </select>
     <button (click)="predServ.fireBordeauxAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
   </article>

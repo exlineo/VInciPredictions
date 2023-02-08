@@ -34,7 +34,7 @@ export class DataMajComponent implements OnInit {
     this.predServ.saveVersion = false;
     // Loading text page content from database
     this.l.getPage('adminvisualisation');
-    this.l.store.getLastData();
+    if(this.l.store.lastSudoe.length == 0) this.l.store.getLastSudoe();
   }
   /**
    * Upload CSV file

@@ -22,7 +22,8 @@ export class StoreService {
   config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' }, version:0.9 }; // App config
   // Dynamic filters list
   filtres: any;
-  lastData: Array<CreeI> = []; // ID of last data loaded in Firestore
+  lastSudoe: Array<CreeI> = []; // ID of last data loaded in Firestore
+  lastBordeaux:Array<CreeI> = []; // Last data for boreaux yields
   // Set of data with filters and averages
   set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], zones: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
   // Save list of labels from config and create datasets when data are loaded
@@ -149,24 +150,31 @@ export class StoreService {
    * @param {Array<string>} pdo Array on filters to looking for in database
   */
   async getPdo(pdo: Array<string>) {
-    const q = query(collection(this.dbf, this.lastData[this.lastData.length - 1].collection!), where("pdo", "in", pdo));
+    const q = query(collection(this.dbf, this.lastSudoe[this.lastSudoe.length - 1].collection!), where("pdo", "in", pdo));
     return await getDocs(q);
   }
-  /**
-   * (Deprecated) Get last document in a collection (for data)
-   * @param {string} collection Name of called collection
-   * @param {string} param Searched object
-   * @returns {promise} Send back object
-   */
-  async getLastData() {
-    const q = query(collection(this.dbf, 'data'));
+  /** Get last data for harvests in SUDOE (for data) */
+  async getLastSudoe() {
+    const q = query(collection(this.dbf, 'data-sudoe'));
     await getDocs(q)
       .then(d => {
-        this.lastData = [];
+        this.lastSudoe = [];
         d.forEach(l => {
-          this.lastData.push(l.data());
+          this.lastSudoe.push(l.data());
         });
-        this.setSet(this.lastData[this.lastData.length - 1].collection!);
+        this.setSet(this.lastSudoe[this.lastSudoe.length - 1].collection!);
+      })
+  }
+  /** Get last data for harvests in SUDOE (for data) */
+  async getLastBordeaux() {
+    const q = query(collection(this.dbf, 'data-bordeaux'));
+    await getDocs(q)
+      .then(d => {
+        this.lastBordeaux = [];
+        d.forEach(l => {
+          this.lastBordeaux.push(l.data());
+        });
+        this.setSet(this.lastBordeaux[this.lastBordeaux.length - 1].collection!);
       })
   }
   /** Set data from database */

@@ -20,7 +20,7 @@
         [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
-    <div *ngIf="!sudoe">
+    <div *ngIf="!sudoe" class="pdo-allonge">
       <h3>{{ visual.l.t['FILTRE_BORDELAIS'] }}</h3>
       <!-- <p-listbox [options]="store.listes.pdo | types:visual.fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
       <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="filtrePdo()" [multiple]="true"

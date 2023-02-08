@@ -49,7 +49,7 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
     /** Get config and   */
     this.config$ = this.store.config$.subscribe(c => {
       // Get last version of data from database
-      this.store.getLastData();
+      this.store.getLastSudoe();
     });
   };
   /** Get HTML ELements */
@@ -106,6 +106,7 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   }
   showBordeaux(){
     this.sudoe = false;
+    if(this.store.lastBordeaux.length == 0) this.store.getLastBordeaux();
   }
   /** Clear observable on navigation change to avoid data overload */
   ngOnDestroy() {

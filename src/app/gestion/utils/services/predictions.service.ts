@@ -91,17 +91,6 @@ export class PredictionsService {
       })
     });
   }
-  /** List predictions versions data in SELECT on data-maj */
-  listeDatas() {
-    this.l.store.getFireCol('data')
-      .then(d => d.forEach(
-        f => {
-          // const d = f.data() as CreeI;
-          // this.listeVersions.push(d.collection);
-        }
-      ))
-      .catch(er => console.log(er));
-  };
   /**
    * Write documents from a new data uploaded
    * @param time time to set name time of the collection, globally not useful
@@ -121,7 +110,7 @@ export class PredictionsService {
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {
-        this.l.store.setFireDoc('data', { uid: 'sudoe' + String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.store.setFireDoc('data-sudoe', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
         this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       })
       .catch(er => console.log(er));
@@ -145,7 +134,7 @@ export class PredictionsService {
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {
-        this.l.store.setFireDoc('data', { uid: 'bordeaux' + String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.store.setFireDoc('data-bordeaux', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
         this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       })
       .catch(er => console.log(er));

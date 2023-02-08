@@ -326,6 +326,12 @@ form.bleu option:hover{
 .onglets a.active{
   background: var(--jaune);
 }
+.pdo-allonge{
+  height:450px;
+}
+.pdo-allonge p-listbox{
+  max-height:400px;
+}
 /* DOUBLE SLIDER
 /*
 section.double-slider{
