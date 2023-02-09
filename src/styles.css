@@ -310,6 +310,7 @@ form.bleu option:hover{
   margin:0;
 }
 .onglets{
+  display:flex;
   flex-flow: row nowrap;
   justify-content: flex-start !important;
   width:100%;

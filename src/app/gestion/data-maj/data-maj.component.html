@@ -25,7 +25,12 @@
     </form>
   </article>
   <!-- DATA -->
-  <article>
+  <!-- Change view -->
+  <nav class="onglets">
+    <a (click)="getSudoe()" [class.active]="sudoe">{{ l.t['VISU_SUDOE'] }}</a>
+    <a (click)="getBordeaux()" [class.active]="!sudoe">{{ l.t['VISU_BORDELAIS'] }}</a>
+  </nav>
+  <article id="data">
     <table>
       <thead class="grisclair">
         <tr>
@@ -41,18 +46,31 @@
           <th>{{ l.t['FILTRE_PDO'] }}</th>
           <th>{{ l.t['FILTRE_TYPE'] }}</th>
           <th
-            *ngFor="let r of predServ.l.store.set.data[0].rendements | ecarts:2022-filtresForm.value.debut!; let i=index"
+            *ngFor="let r of predServ.l.store.set.sudoe[0].rendements | ecarts:2022-filtresForm.value.debut!; let i=index"
             class="vert">{{ 1983 + (filtresForm.value.debut! - 1983) +i }}</th>
           <th
-            *ngFor="let r of predServ.l.store.set.data[0].predictions | ecarts:2032-filtresForm.value.fin!:1; let i=index"
+            *ngFor="let r of predServ.l.store.set.sudoe[0].predictions | ecarts:2032-filtresForm.value.fin!:1; let i=index"
             class="orange">{{ 2022 + i }}</th>
           <th
-            *ngFor="let r of predServ.l.store.set.data[0].fiabilites | ecarts:2032-filtresForm.value.fin!:1; let i=index"
+            *ngFor="let r of predServ.l.store.set.sudoe[0].fiabilites | ecarts:2032-filtresForm.value.fin!:1; let i=index"
             class="rouge">{{ 2022 + i }}</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let p of predServ.l.store.set.data | filtres:filtresForm.value; let i=index">
+      <!-- SHOW DATA FROM SUDOE -->
+      <tbody *ngIf="sudoe">
+        <tr *ngFor="let p of l.store.set.sudoe | filtres:filtresForm.value; let i=index">
+          <td>{{ p.pays }}</td>
+          <td>{{ p.regions }}</td>
+          <td>{{ p.pdo }}</td>
+          <td>{{ p.type }}</td>
+          <td *ngFor="let r of p.rendements | ecarts:2022-filtresForm.value.debut!" class="vertclair">{{ r }}</td>
+          <td *ngFor="let pr of p.predictions | ecarts:2032-filtresForm.value.fin!:1" class="orangeclair">{{ pr }}</td>
+          <td *ngFor="let f of p.fiabilites | ecarts:2032-filtresForm.value.fin!:1" class="rougeclair">{{ f }}</td>
+        </tr>
+      </tbody>
+      <!-- SHOW DATA FROM BORDEAUX -->
+      <tbody *ngIf="!sudoe">
+        <tr *ngFor="let p of l.store.set.bordeaux | filtres:filtresForm.value; let i=index">
           <td>{{ p.pays }}</td>
           <td>{{ p.regions }}</td>
           <td>{{ p.pdo }}</td>
@@ -66,31 +84,32 @@
   </article>
 </section>
 <section class="bleu">
-  <article>
-    <p>{{ l.t['GESTION_VERSION'] }}</p>
+
+  <!-- UPLOAD DATA FOR SUDOE ZONE -->
+  <article *ngIf="sudoe">
+    <p>{{ l.t['VISU_SUDOE'] }}</p>
     <select name="fichiers" (change)="predServ.getData($event)">
       <option>{{ l.t['GESTION_VOIR'] }}</option>
       <option *ngFor="let f of l.store.lastSudoe" [value]="f.collection">{{ f.collection }}</option>
     </select>
     <button (click)="predServ.fireSudoeAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
-  </article>
-  <article>
+
     <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
-    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file" />
+    <input type="file" id="fichierup" (change)="uploadSudoe($event)" accept=".csv" *ngIf="!file" />
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
     <button *ngIf="file" (click)="saveSudoe()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>
-  <article>
-    <p>{{ l.t['GESTION_VERSION_REND'] }}</p>
+  <!-- UPLOAD DATA FOR BORDEAUX'S YIELDS -->
+  <article *ngIf="!sudoe">
+    <p>{{ l.t['VISU_BORDELAIS'] }}</p>
     <select name="fichiers" (change)="predServ.getData($event)">
       <option>{{ l.t['GESTION_VOIR'] }}</option>
       <option *ngFor="let f of l.store.lastBordeaux" [value]="f.collection">{{ f.collection }}</option>
     </select>
     <button (click)="predServ.fireBordeauxAdd()" *ngIf="predServ.saveVersion" class="valide">{{ l.t['FICHIER_V'] }}</button>
-  </article>
-  <article>
-    <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP_REND'] }}</label>
-    <input type="file" id="fichierup" (change)="upload($event)" accept=".csv" *ngIf="!file" />
+
+    <label for="fichierup"><i class="pi pi-upload"></i>{{ l.t['FICHIER_UP'] }}</label>
+    <input type="file" id="fichierup" (change)="uploadBordeaux($event)" accept=".csv" *ngIf="!file" />
     <button *ngIf="file" (click)="file=undefined" class="annule">{{ l.t['FORM_ANNULE'] }}</button>
     <button *ngIf="file" (click)="saveBordeaux()" class="valide">{{ l.t['FICHIER_VALIDE'] }}</button>
   </article>

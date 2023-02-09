@@ -34,7 +34,7 @@ section:nth-child(2){
   height:7vh;
 }
 section:nth-child(2) > article{
-  width:50%;
+  /* width:50%; */
   display:flex;
   flex-flow:row nowrap;
   align-items: center;
@@ -49,3 +49,6 @@ form > *{
   margin:0 10px;
 }
 p{margin:0 10px}
+#data {
+  overflow:auto;
+}

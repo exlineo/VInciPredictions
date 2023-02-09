@@ -109,8 +109,8 @@ export class VisualService {
   }
   /** Set data and show for yields and predictions on charts */
   setFiltres() {
-    this.DATA.RD.labels = this.gap.rd != 0 ? this.store.charts.labels.RD.slice(this.gap.rd, this.store.charts.labels.RD.length) : [...this.store.charts.labels.RD];
-    this.DATA.PR.labels = this.gap.pr != 0 ? this.store.charts.labels.PR.slice(0, this.gap.pr) : [...this.store.charts.labels.PR];
+    this.DATA.RD.labels = this.gap.rd != 0 ? this.store.chartsSudoe.labels.RD.slice(this.gap.rd, this.store.chartsSudoe.labels.RD.length) : [...this.store.chartsSudoe.labels.RD];
+    this.DATA.PR.labels = this.gap.pr != 0 ? this.store.chartsSudoe.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
     this.DATA.RD.datasets = [];
     this.DATA.PR.datasets = [];
     // const data: Array<any> = [];
@@ -137,10 +137,10 @@ export class VisualService {
   }
   /** Get datasets from  */
   getDatasets(i: string) {
-    const rd = { ...this.store.charts.datasets.RD[i] };
+    const rd = { ...this.store.chartsSudoe.datasets.RD[i] };
     // this.DATA.RD.datasets.push(rd);
     this.DATA.RD.datasets.push(this.setPlageRd(rd));
-    const pr = { ...this.store.charts.datasets.PR[i] };
+    const pr = { ...this.store.chartsSudoe.datasets.PR[i] };
     this.DATA.PR.datasets.push(this.setPlagePr(pr));
   }
   /** Calculate gap in years with slides filters for yields  */

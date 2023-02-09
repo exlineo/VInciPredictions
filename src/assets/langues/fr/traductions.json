@@ -81,7 +81,6 @@
   "COPYRIGHT":"Réalisation exlineo.com",
   "FICHIER":"Fichier",
   "FICHIERS":"Fichiers",
-  "FICHIER_UP":"Téléverser des récoltes (SUDOE)",
   "FICHIER_VALIDE":"Enregistrer ces données",
   "FICHIER_CSV":"Le fichier doit être au format CSV",
   "FICHIER_V":"Revenir à cette version",
@@ -200,8 +199,8 @@
   "FILTRE_PLAGE_PROD":"Plage annuelle des récoltes",
   "FILTRE_PROD":"Récoltes",
   "DONNEES_P_DESCR":"Récoltes annuelles constatées en hectolitres",
-  "VISU_SUDOE":"Récoltes & prédictions (réion SUDOE)",
+  "VISU_SUDOE":"Récoltes & prédictions (région SUDOE)",
   "VISU_BORDELAIS":"Rendements & prédictions (région bordelaise)",
-  "GESTION_VERSION_REND":"Historique rendements Bordelais",
-  "FICHIER_UP_REND":"Téléverser des rendements (Bordelais)"
+  "GESTION_VERSION_REND":"Rendements & prédictions (Bordelais)",
+  "FICHIER_UP":"Téléverser"
 }

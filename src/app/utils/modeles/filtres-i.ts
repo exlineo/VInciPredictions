@@ -34,7 +34,8 @@ export class Rendement implements RendementI{
 }
 export interface DataI{
   creeLe?:CreeI;
-  data:Array<RendementI>;
+  sudoe:Array<RendementI>;
+  bordeaux:Array<RendementI>;
   filtres?:{ pays: Array<string>, regions: Array<string>, pdo: Array<string> };
   zones:ZonesI;
 }

@@ -19,18 +19,26 @@ export class PredictionsService {
   listeProfils: Array<ProfilI> = [];
   creeTmp?: CreeI;
   listeDataVersions: Array<CreeI> = []; // List of availlable data
-  saveVersion:boolean = false; //
+  saveVersion: boolean = false; //
 
   constructor(private dbf: Firestore, public l: LanguesService) {
     // this.listeDatas();
   };
 
   /** Convert CSV data to RendementI array */
-  setData(data: string) {
-    this.l.store.set.data = [];
+  setDataSudoe(data: string) {
+    this.l.store.set.sudoe = [];
     let lignes = data.split('\n');
     lignes.forEach(l => {
       this.setPredictions(l);
+    });
+    this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
+  };
+  setDataBordeaux(data: string) {
+    this.l.store.set.bordeaux = [];
+    let lignes = data.split('\n');
+    lignes.forEach(l => {
+      this.setPredictions(l, 'bordeaux');
     });
     this.l.msg.msgOk(this.l.t['MSG_LOAD'], this.l.t['MSG_VALID']);
   }
@@ -38,22 +46,27 @@ export class PredictionsService {
    * Set predictions array
    * @param p Object to convert
    */
-  setPredictions(p: any) {
+  setPredictions(p: any, type: string = 'sudoe') {
     p = p.replace(/[\r]/g, '').trim();
     let m = p.split(',');
-    // this.loadedDataset.push(this.conversion(m));
+    // Convert data to RendementI
     let tmp = this.conversion(m);
-    this.l.store.set.data.push(tmp);
-    // Create lists from data for countries, regions and pdo
-    this.l.store.setFilterFromData(tmp);
-    this.setAverages(); // Get average values
+    if (type == 'sudoe') {
+      this.l.store.set.sudoe.push(tmp);
+      // Create lists from data for countries, regions and pdo
+      this.l.store.setFilterFromData(tmp);
+      this.setAverages(); // Get average values
+    }
+    else {
+      this.l.store.set.bordeaux.push(tmp);
+      this.l.store.setFilterFromBordeaux(tmp);
+    }
   }
   /** Convert excel line to JSON object */
   conversion(d: Array<any>): RendementI {
-    const er:number = this.l.store.config.rendements.fin-this.l.store.config.rendements.debut+1;
-    const ep:number = this.l.store.config.predictions.fin-this.l.store.config.rendements.debut+1;
-    console.log(er, ep);
-    return { pays: d[0].trim(), regions: d[1].trim(), pdo: d[2].trim(), rendements: this.setNumbers(d.slice(3, 3+er)), predictions: this.setNumbers(d.slice(3+er, 3+ep)), fiabilites: this.setNumbers(d.slice(3+ep, d.length)) };
+    const er: number = this.l.store.config.rendements.fin - this.l.store.config.rendements.debut + 1;
+    const ep: number = this.l.store.config.predictions.fin - this.l.store.config.rendements.debut + 1;
+    return { pays: d[0].trim(), regions: d[1].trim(), pdo: d[2].trim(), rendements: this.setNumbers(d.slice(3, 3 + er)), predictions: this.setNumbers(d.slice(3 + er, 3 + ep)), fiabilites: this.setNumbers(d.slice(3 + ep, d.length)) };
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array<string>): Array<number> {
@@ -62,8 +75,8 @@ export class PredictionsService {
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
   */
-  av(ar: Array<RendementI>):YieldI {
-    const truc: YieldI = {RD:[], PR:[]};
+  av(ar: Array<RendementI>): YieldI {
+    const truc: YieldI = { RD: [], PR: [] };
     for (let i = 0; i < ar[0].rendements.length; ++i) {
       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N'EST PAS RENSEIGNEE
       truc.RD.push(Math.round(ar.reduce((p, c) => p + c.rendements[i] | 0, 0) / ar.length));
@@ -78,14 +91,14 @@ export class PredictionsService {
   setAverages() {
     // Set averages for countries
     this.l.store.listes.pays.forEach(d => {
-      const pays = this.l.store.set.data.filter(p => d && p.pays == d && d.length > 0);
+      const pays = this.l.store.set.sudoe.filter(p => d && p.pays == d && d.length > 0);
       pays.forEach(p => {
         if (p.pays && p.pays.length > 0) this.l.store.set.zones.pays[p.pays] = this.av(pays);
       })
     });
     // Set averages for regions
     this.l.store.listes.regions.forEach(d => {
-      const regions = this.l.store.set.data.filter(p => d && p.regions == d && d.length > 0);
+      const regions = this.l.store.set.sudoe.filter(p => d && p.regions == d && d.length > 0);
       regions.forEach(r => {
         if (r.regions && r.regions.length > 0) this.l.store.set.zones.regions[r.regions] = this.av(regions);
       })
@@ -96,13 +109,13 @@ export class PredictionsService {
    * @param time time to set name time of the collection, globally not useful
    * @returns {promise} Returns a promise
    */
-  async batchFireSudoeDocs(time:number = -1) {
+  async batchFireSudoeDocs(time: number = -1) {
     let n = 0;
-    const col = this.setDate();
-    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
+    const col = this.setDate('dataset-sudoe:');
+    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: col };
     this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
     this.batch.set(doc(this.dbf, col, 'zones'), this.l.store.set.zones);
-    this.l.store.set.data.forEach(d => {
+    this.l.store.set.sudoe.forEach(d => {
       const customDoc = doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
       ++n;
@@ -110,7 +123,7 @@ export class PredictionsService {
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {
-        this.l.store.setFireDoc('data-sudoe', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.store.setFireDoc('data-sudoe', { uid: String(this.creeTmp?.time), doc: this.creeTmp })
         this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       })
       .catch(er => console.log(er));
@@ -120,13 +133,13 @@ export class PredictionsService {
    * @param time time to set name time of the collection, globally not useful
    * @returns {promise} Returns a promise
    */
-  async batchFireBordeauxDocs(time:number = -1) {
+  async batchFireBordeauxDocs(time: number = -1) {
     let n = 0;
-    const col = this.setDate();
-    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: this.setDate() };
+    const col = this.setDate('dataset-bordeaux:');
+    this.creeTmp = { time: time == -1 ? Date.now() : time, collection: col };
     this.batch.set(doc(this.dbf, col, 'creeLe'), this.creeTmp);
     // this.batch.set(doc(this.dbf, col, 'zones'), this.l.store.set.zones);
-    this.l.store.set.data.forEach(d => {
+    this.l.store.set.bordeaux.forEach(d => {
       const customDoc = doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
       ++n;
@@ -134,7 +147,7 @@ export class PredictionsService {
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {
-        this.l.store.setFireDoc('data-bordeaux', { uid:String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.store.setFireDoc('data-bordeaux', { uid: String(this.creeTmp?.time), doc: this.creeTmp })
         this.l.msg.msgOk(this.l.t['MSG_MAJ']);
       })
       .catch(er => console.log(er));
@@ -153,7 +166,7 @@ export class PredictionsService {
    * Delete a document
    * @param doc Document to delete
    */
-  async delFireDoc(collec:string, id:string){
+  async delFireDoc(collec: string, id: string) {
     await deleteDoc(doc(this.dbf, collec, id));
   }
   /** Create ID for a new loadedDataset version */
@@ -166,7 +179,7 @@ export class PredictionsService {
    */
   getData(e: any) {
     this.saveVersion = true;
-    this.l.store.setSet(e.target.value);
+    this.l.store.setSudoeSet(e.target.value);
   }
   /** List accounts */
   getListeProfils() {
@@ -206,7 +219,7 @@ export class PredictionsService {
    * @param { string } code Promotionnal code
   */
   getAccessFromCode(code: string) {
-    const infos:Array<string> = code.split('-');
+    const infos: Array<string> = code.split('-');
     const access = JSON.parse(atob(infos[1]));
     return access;
   }
@@ -215,7 +228,7 @@ export class PredictionsService {
    * @param {any} d Array of data to write on graph
    * @param {string} c Color of line
   */
-   setDataset(l: string, c: string = '#78281F', d: any):DatasetI {
+  setDataset(l: string, c: string = '#78281F', d: any): DatasetI {
     console.log(l, d, d.length);
     const tmp = <DatasetI>{};
     tmp.label = l;
@@ -223,12 +236,10 @@ export class PredictionsService {
     tmp.borderColor = c;
     for (let i = 0; i < d.length; ++i) {
       tmp.data.push(d[i]);
-      console.log(i, d[i], tmp.data);
     }
     console.log(tmp);
     return tmp;
     // tmp.data.splice(1, d.length);
     // if (!target.includes(tmp)) target.push(tmp);
-    // console.log(target);
   }
 }

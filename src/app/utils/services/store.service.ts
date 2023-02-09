@@ -16,7 +16,6 @@ export interface TraductionI {
   providedIn: 'root'
 })
 export class StoreService {
-
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
   config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' }, version:0.9 }; // App config
@@ -25,21 +24,28 @@ export class StoreService {
   lastSudoe: Array<CreeI> = []; // ID of last data loaded in Firestore
   lastBordeaux:Array<CreeI> = []; // Last data for boreaux yields
   // Set of data with filters and averages
-  set: DataI = { creeLe: <CreeI>{}, data: [new Rendement()], zones: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
+  set: DataI = { creeLe: <CreeI>{}, sudoe: [new Rendement()], bordeaux: [new Rendement()], zones: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
   // Save list of labels from config and create datasets when data are loaded
-  charts:any = {labels:<YieldI>{RD:[],PR:[]}, datasets:<YieldI>{RD:{},PR:{}}};
+  chartsSudoe:any = {labels:<YieldI>{RD:[],PR:[]}, datasets:<YieldI>{RD:{},PR:{}}};
+  chartsBordeaux:any = {labels:<YieldI>{RD:[],PR:[]}, datasets:<YieldI>{RD:{},PR:{}}};
+
   // Chart configuration
   chartConfigs: any = {};
   // Updated lists of countries, regions, pdos and types for filters
   // listes: { pays: Array<string>, regions: Array<string>, pdo: Array<{type:string, name:string}>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], filtres: [] };
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, bordeaux:Array<string>, filtres: Array<string> } = { pays: [], regions: [], pdo: [], bordeaux:[], filtres: [] };
 
   constructor(public dbf: Firestore, private msg: MsgService) {
     this.getConfig();
   }
   /** Prepare data */
-  initSet() {
-    this.set = { creeLe: <CreeI>{}, data: <Array<RendementI>>[], zones: <ZonesI>{} };
+  initSudoeSet() {
+    // this.set = { creeLe: <CreeI>{}, sudoe: <Array<RendementI>>[], bordeaux:<Array<RendementI>>[], zones: <ZonesI>{} };
+    this.set.sudoe = [];
+    this.set.zones = <ZonesI>{};
+  }
+  initBordeauxSet() {
+    this.set.bordeaux = [];
   }
   /** Load app config */
   async getConfig() {
@@ -49,12 +55,11 @@ export class StoreService {
         this.config = c.data();
         // Set labels for charts : yields and predictions
         for(let i=0; i<this.config.rendements.fin - this.config.rendements.debut + 1; ++i){
-          this.charts.labels.RD.push(this.config.rendements.debut + i);
+          this.chartsSudoe.labels.RD.push(this.config.rendements.debut + i);
         }
         for(let i=0; i<this.config.predictions.fin - this.config.predictions.debut +1; ++i){
-          this.charts.labels.PR.push(this.config.predictions.debut + i);
+          this.chartsSudoe.labels.PR.push(this.config.predictions.debut + i);
         }
-        console.log("Config chargée", this.config);
       })
       .catch(er => {
         console.log(er);
@@ -162,7 +167,9 @@ export class StoreService {
         d.forEach(l => {
           this.lastSudoe.push(l.data());
         });
-        this.setSet(this.lastSudoe[this.lastSudoe.length - 1].collection!);
+        // Get list of data from database
+        this.setSudoeSet(this.lastSudoe[this.lastSudoe.length - 1].collection!);
+        this.getLastBordeaux();
       })
   }
   /** Get last data for harvests in SUDOE (for data) */
@@ -174,31 +181,50 @@ export class StoreService {
         d.forEach(l => {
           this.lastBordeaux.push(l.data());
         });
-        this.setSet(this.lastBordeaux[this.lastBordeaux.length - 1].collection!);
+        this.setBordeauxSet(this.lastBordeaux[this.lastBordeaux.length - 1].collection!);
       })
   }
   /** Set data from database */
-  setSet(collection: string) {
+  setSudoeSet(collection: string) {
     this.getFireCol(collection)
       .then(d => {
-        this.initSet();
+        this.initSudoeSet();
         d.forEach(c => {
-          // console.log("Données brutes", c.data());
           if (c.id == 'creeLe') {
             this.set.creeLe = c.data() as CreeI;
           } else if (c.id == 'zones') {
-            // console.log("Moyennes", c.data()['regions']);
             this.set.zones.regions = c.data()['regions'];
             this.set.zones.pays = c.data()['pays'];
-            this.setAvDataSets('vert', this.set.zones.regions);
-            this.setAvDataSets('bleu', this.set.zones.pays);
+            this.setAvSudoeSets('vert', this.set.zones.regions);
+            this.setAvSudoeSets('bleu', this.set.zones.pays);
           } else {
-            this.set.data.push(c.data() as RendementI);
-            this.setPdoDataSets(this.setCouleur('violet'), c.data() as RendementI)
+            this.set.sudoe.push(c.data() as RendementI);
+            this.setSudoeSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
         // Set list of filters (countries, regions, pdos for visualisation page)
-        this.set.data.forEach(d => this.setFilterFromData(d));
+        this.set.sudoe.forEach(d => this.setFilterFromData(d));
+        this.orderLists();
+      })
+      .catch(er => {
+        console.log(er);
+      });
+  }
+  /** Set data from database */
+  setBordeauxSet(collection: string) {
+    this.getFireCol(collection)
+      .then(d => {
+        this.initBordeauxSet();
+        d.forEach(c => {
+          if (c.id == 'creeLe') {
+            this.set.creeLe = c.data() as CreeI;
+          } else {
+            this.set.bordeaux.push(c.data() as RendementI);
+            this.setBordeauxSets(this.setCouleur('violet'), c.data() as RendementI)
+          }
+        });
+        // Set list of filters (countries, regions, pdos for visualisation page)
+        this.set.bordeaux.forEach(d => this.setFilterFromBordeaux(d));
         this.orderLists();
       })
       .catch(er => {
@@ -206,16 +232,27 @@ export class StoreService {
       });
   }
   /** Add dataset objects to loaded data for charts */
-  setAvDataSets(couleur:string, obj:any){
+  setAvSudoeSets(couleur:string, obj:any){
     for(let i in obj){
       const c = this.setCouleur(couleur);
-      this.charts.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
-      this.charts.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
+      this.chartsSudoe.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+      this.chartsSudoe.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
     }
   }
-  setPdoDataSets(couleur:string, obj:RendementI){
-      this.charts.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
-      this.charts.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
+  setSudoeSets(couleur:string, obj:RendementI){
+      this.chartsSudoe.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
+      this.chartsSudoe.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
+  }
+  setAvBordeauxSets(couleur:string, obj:any){
+    for(let i in obj){
+      const c = this.setCouleur(couleur);
+      this.chartsSudoe.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+      this.chartsSudoe.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
+    }
+  }
+  setBordeauxSets(couleur:string, obj:RendementI){
+      this.chartsBordeaux.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
+      this.chartsBordeaux.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
   /** Set colors from list of colors in config data */
   setCouleur(c:string):string{
@@ -224,20 +261,11 @@ export class StoreService {
     const couleur = this.config.couleurs[c][math];
     return couleur;
   }
-  /**
-   * (Deprecated) Get last ID document
-   */
-  async getLastID() {
-    const q = query(collection(this.dbf, 'predictions'), orderBy('creeLe', 'desc'), limit(1));
-    return await getDocs(q);
-  }
-  /** Request countries and/or regions
-   * @param {Array<string>} p List of countries
-   * @param {Array<string} r list of regions
-   */
-  async getAverageData(p: Array<string>, r: Array<string>) {
-
-  }
+  /** (Deprecated) Get last ID document */
+  // async getLastID() {
+  //   const q = query(collection(this.dbf, 'predictions'), orderBy('creeLe', 'desc'), limit(1));
+  //   return await getDocs(q);
+  // }
   /** Set filters lists (in listbox from visualisation) from dataset
    * @param {any} r a array of data received from server or uploaded
   */
@@ -247,10 +275,14 @@ export class StoreService {
     if (!this.listes.regions.includes(r.regions)) this.listes.regions = [...this.listes.regions, r.regions];
     if (!this.listes.pdo.includes(r.pdo!)) this.listes.pdo = [...this.listes.pdo, r.pdo!];
   }
+  setFilterFromBordeaux(r:RendementI){
+    if (!this.listes.bordeaux.includes(r.pdo!)) this.listes.bordeaux = [...this.listes.bordeaux, r.pdo!];
+  }
   /** Order list in alphabetic */
   orderLists(){
     this.listes.pays.sort();
     this.listes.regions.sort();
     this.listes.pdo.sort();
+    this.listes.bordeaux.sort();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
 
@@ -26,7 +26,8 @@ export class DataMajComponent implements OnInit {
   /** File to load */
   file?: string;
   /** Show/hide pages infos */
-  infos:boolean = false;
+  infos:boolean = false; // Show informations
+  sudoe:boolean = true; // Boolean to check wich data is on
 
   constructor(public predServ:PredictionsService, public l:LanguesService, private fbuild:FormBuilder) { }
 
@@ -36,23 +37,43 @@ export class DataMajComponent implements OnInit {
     this.l.getPage('adminvisualisation');
     if(this.l.store.lastSudoe.length == 0) this.l.store.getLastSudoe();
   }
+  /** Set contents after tab click */
+  getSudoe(){
+    this.sudoe = true;
+    this.file=undefined;
+  }
+  getBordeaux(){
+    this.sudoe = false;
+    this.file = undefined;
+    console.log(this.l.store.set.bordeaux);
+  }
   /**
    * Upload CSV file
    * @param e File event
    */
-  upload(e:any){
+  uploadSudoe(e:any){
     const reader = new FileReader();
     reader.onload = (e: any) => {
       // console.log('csv content', e.target.result);
       this.file = e.target.result;
       // Transform data to Rendement interface array
-      this.predServ.setData(this.file as string);
+      this.predServ.setDataSudoe(this.file as string);
+    };
+    reader.readAsText(e.target.files[0]);
+  }
+  uploadBordeaux(e:any){
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      // console.log('csv content', e.target.result);
+      this.file = e.target.result;
+      // Transform data to Rendement interface array
+      this.predServ.setDataBordeaux(this.file as string);
     };
     reader.readAsText(e.target.files[0]);
   }
   /** Save data for harvests (SUDOE) */
   saveSudoe(){
-    this.file = undefined;
+    // this.file = undefined
     this.predServ.fireSudoeAdd();
   }
   /** Save data for yields (Bordeaux) */
