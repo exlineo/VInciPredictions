@@ -30,8 +30,8 @@ export class VisualService {
     // debut: [this.store.config.rendements.debut],
     // fin: [this.store.config.predictions.fin]
   });
-  chartType: string = 'line';
-  chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
+  chartType: string = 'line'; // Default charts style (lines)
+  chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} }; // Options for charts
   /** All data for charts */
   DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
   /** Year's gaps for yields and predictions */
@@ -210,7 +210,12 @@ export class VisualService {
   /** Refreshing charts in page */
   refreshCharts() {
     this.chartsEls.forEach( c => {
-      c.refresh()});
+      c.refresh();
+    });
+  }
+  /** Getting highest and mininmum value in dataset to set the charts length */
+  getMinMax(chart:UIChart){
+    // return Math.round(Math.max(...this.))
   }
   /** Set color of graph with automated gradiant
    * @param {number} i index of color

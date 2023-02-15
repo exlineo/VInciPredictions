@@ -39,11 +39,16 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
         { nom: this.visual.l.t['FILTRE_FR'], value: "fr" },
         { nom: this.visual.l.t['FILTRE_PT'], value: "pt" }
       ];
-      this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
-      this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
+      // this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
+      // this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
+      // this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
+      // this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
+      // this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
+      this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
+      this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
       this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
-      this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
-      this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
+      this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
+      this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
     }
     );
     /** Get config and   */
