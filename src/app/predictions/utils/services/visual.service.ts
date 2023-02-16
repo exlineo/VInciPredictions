@@ -6,7 +6,7 @@ import { RendementI, ChartI, Chart, DatasetI } from 'src/app/utils/modeles/filtr
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
-import { options } from '../../utils/chartOptions';
+// import { options } from '../../utils/chartOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class VisualService {
     pays: [[]],
     regions: [[]],
     pdo: [[]],
+    bordeaux: [[]],
     rendements: [this.store.config.rendements.debut],
     predictions: [this.store.config.predictions.fin],
     donnees: [true],
@@ -31,46 +32,59 @@ export class VisualService {
     // fin: [this.store.config.predictions.fin]
   });
   chartType: string = 'line'; // Default charts style (lines)
-  chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} }; // Options for charts
-  /** All data for charts */
-  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
+  // chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
+  chartOp = { left: {}, right: {} }; // Options for charts
+  /** All data for charts (sudoe zone) */
+  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart()};
+  /** All data for charts (Bordeaux) */
+  DATA_B: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart()};
   /** Year's gaps for yields and predictions */
   gap: any = { rd: 0, pr: 0 };
 
   pays: Array<any> = []; // List of countries
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string> } = { pays: [], regions: [], pdo: [] }; // Liste of filters
-  pdo: Array<RendementI> = []; // List of loaded PDOs in session
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, bordeaux:Array<string> } = { pays: [], regions: [], pdo: [], bordeaux:[] }; // Liste of filters
+  pdo: Array<RendementI> = []; // List of loaded PDOs from SUDOE zone
+  bordeaux:Array<RendementI> = []; // List of PDOs from Bordeaux
+  chartsEls: Array<UIChart> = []; // List of charts of Sudoe to refresh
+  chartsBEls: Array<UIChart> = []; // List of charts pf Bordeaux to refresh
 
-  chartsEls:Array<UIChart> = []; // List of charts to refresh
-
-  constructor(private dbf:Firestore, public store:StoreService, public l:LanguesService, private fbuild:FormBuilder) {};
+  constructor(private dbf: Firestore, public store: StoreService, public l: LanguesService, private fbuild: FormBuilder) { };
 
   /** Update user's profil
    * @param {number} uid uid to update
    * @param {ProfilI} profil Updated data
   */
-   async updateOwnProfil(uid:string, profil:ProfilI){
+  async updateOwnProfil(uid: string, profil: ProfilI) {
     const customDoc = doc(this.dbf, 'comptes', uid);
     await setDoc(customDoc, JSON.parse(JSON.stringify(profil)), { merge: true })
-    .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
-    .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
+      .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
+      .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
   }
   /** Initialise data and objects */
-  initData(){
-    this.chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
-    this.DATA = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
-    this.gap = { rd: 0, pr: 0 };
-    this.fF = this.fbuild.group({
-      pays: [[]],
-      regions: [[]],
-      pdo: [[]],
-      rendements: [this.store.config.rendements.debut],
-      predictions: [this.store.config.predictions.fin],
-      donnees: [true],
-      moyennes: [true],
-      croissance: [true],
-      type: ['']
-    });
+  // init() {
+  //   this.chartOp = { left: {}, right: {} };
+  //   this.gap = { rd: 0, pr: 0 };
+  //   this.fF = this.fbuild.group({
+  //     pays: [[]],
+  //     regions: [[]],
+  //     pdo: [[]],
+  //     rendements: [this.store.config.rendements.debut],
+  //     predictions: [this.store.config.predictions.fin],
+  //     donnees: [true],
+  //     moyennes: [true],
+  //     croissance: [true],
+  //     type: ['']
+  //   });
+  //   this.initData();
+  // };
+  /** Init data */
+  initDATA() {
+    this.listes = { pays: [], regions: [], pdo: [], bordeaux:[] };
+    this.pdo = [];
+    for(let i in this.DATA){
+      this.DATA[i].datasets = [];
+      this.DATA_B[i].datasets = [];
+    }
   }
   /**
    * write a document on Firestore
@@ -78,12 +92,12 @@ export class VisualService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-   async setFireDoc(collec: string, data: { uid: string, doc: any }) {
+  async setFireDoc(collec: string, data: { uid: string, doc: any }) {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
   // ============ MANIPULATE DATA =============
-  /** Load PDO data from database
+  /** Load PDO data from database in SUDOE
    */
   async filtrePdo() {
     this.pdo = [];
@@ -101,11 +115,39 @@ export class VisualService {
       this.filtrePlages();
     }
   }
-  /** Filter dataset to get years */
-  filtrePlages(e: any = null) {
+  /** Load PDO data from database in Bordeaux
+   */
+  async filtreBordeauxPdo() {
+    this.bordeaux = [];
+    // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
+    if (this.fF.controls.bordeaux.value!.length > 0) {
+      this.bordeaux = [];
+      console.log("PDO Bordeaux sélectionnés", this.fF.controls.bordeaux.value);
+      // Get PDO data
+      await this.store.getBordeauxPdo(this.fF.controls.bordeaux.value as Array<string>)
+        .then(d => {
+          d.forEach(p => {
+            console.log(p.data());
+            this.bordeaux.push(p.data() as RendementI);
+          });
+          this.filtreBordeauxPlages();
+        })
+    } else {
+      this.filtreBordeauxPlages();
+    }
+  }
+  setGaps(){
     this.gap.rd = this.fF.controls.rendements.value - this.config.rendements.debut;
     this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
+  }
+  /** Filter dataset to get years */
+  filtrePlages(e: any = null) {
+    this.setGaps();
     this.setFiltres();
+  }
+  filtreBordeauxPlages(e: any = null) {
+    this.setGaps();
+    this.setBordeauxFiltres();
   }
   /** Set data and show for yields and predictions on charts */
   setFiltres() {
@@ -133,7 +175,21 @@ export class VisualService {
       };
     }
 
-    this.setAverage();
+    this.setAverage(this.DATA);
+  }
+  /** Set data and show for yields and predictions on charts */
+  setBordeauxFiltres() {
+    this.DATA_B.RD.labels = this.gap.rd != 0 ? this.store.chartsBordeaux.labels.RD.slice(this.gap.rd, this.store.chartsSudoe.labels.RD.length) : [...this.store.chartsSudoe.labels.RD];
+    this.DATA_B.PR.labels = this.gap.pr != 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
+    this.DATA_B.RD.datasets = [];
+    this.DATA_B.PR.datasets = [];
+    // Add PDO
+    if (this.bordeaux.length > 0) {
+      for (let i = 0; i < this.bordeaux.length; ++i) {
+        this.getBordeauxDatasets(this.bordeaux[i].pdo!);
+      };
+    }
+    this.setAverage(this.DATA_B);
   }
   /** Get datasets from  */
   getDatasets(i: string) {
@@ -142,6 +198,15 @@ export class VisualService {
     this.DATA.RD.datasets.push(this.setPlageRd(rd));
     const pr = { ...this.store.chartsSudoe.datasets.PR[i] };
     this.DATA.PR.datasets.push(this.setPlagePr(pr));
+  }
+  /** Get datasets from  */
+  getBordeauxDatasets(i: string) {
+    const rd = { ...this.store.chartsBordeaux.datasets.RD[i] };
+    // this.DATA.RD.datasets.push(rd);
+    this.DATA_B.RD.datasets.push(this.setPlageRd(rd));
+    const pr = { ...this.store.chartsBordeaux.datasets.PR[i] };
+    this.DATA_B.PR.datasets.push(this.setPlagePr(pr));
+    console.log(this.DATA_B);
   }
   /** Calculate gap in years with slides filters for yields  */
   setPlageRd(d: DatasetI) {
@@ -158,20 +223,20 @@ export class VisualService {
     return d;
   }
   /** Calculate and show the average data */
-  setAverage() {
+  setAverage(data:any) {
     // Calculate average data, 5 years and purcent growth on years
-    this.DATA.RDAV.labels = this.DATA.RD.labels.slice(4, this.DATA.RD.labels.length);
-    this.DATA.RDGR.labels = this.DATA.RD.labels.slice(1, this.DATA.RD.labels.length);
-    // this.DATA.PRAV.labels = this.DATA.RD.labels.slice(3, this.DATA.PR.labels.length);
-    this.DATA.PRGR.labels = this.DATA.PR.labels;
+    data.RDAV.labels = data.RD.labels.slice(4, data.RD.labels.length);
+    data.RDGR.labels = data.RD.labels.slice(1, data.RD.labels.length);
+    // data.PRAV.labels = data.RD.labels.slice(3, data.PR.labels.length);
+    data.PRGR.labels = data.PR.labels;
 
-    this.DATA.RDAV.datasets = [];
-    this.DATA.RDGR.datasets = [];
+    data.RDAV.datasets = [];
+    data.RDGR.datasets = [];
 
-    this.DATA.PRGR.datasets = [];
+    data.PRGR.datasets = [];
 
     // Calculate purcent growth on years
-    this.DATA.RD.datasets.forEach((av: DatasetI) => {
+    data.RD.datasets.forEach((av: DatasetI) => {
       // Empty datasets containers
       const rd: DatasetI = { label: av.label, borderColor: av.borderColor, backgroundColor: av.borderColor, data: [] }; // Yields datas average
       const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
@@ -185,52 +250,52 @@ export class VisualService {
           gr.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
         };
       });
-      this.DATA.RDAV.datasets.push(rd);
-      this.DATA.RDGR.datasets.push(gr);
+      data.RDAV.datasets.push(rd);
+      data.RDGR.datasets.push(gr);
     });
     /** Calculate growth prediction in purcent */
-    this.DATA.PR.datasets.forEach((av: DatasetI) => {
+    data.PR.datasets.forEach((av: DatasetI) => {
       // Empty datasets containers
       const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
 
       av.data.forEach((d, i) => {
         if (i == 0) {
-          const tmp = this.DATA.PR.datasets[this.DATA.PR.datasets.length - 1];
+          const tmp = data.PR.datasets[data.PR.datasets.length - 1];
           gr.data.push(Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100));
         } else {
           gr.data.push(Math.round((av.data[i] * 100 / av.data[i - 1]) - 100));
         };
       });
-      this.DATA.PRGR.datasets.push(gr);
+      data.PRGR.datasets.push(gr);
     });
     // Refreshing HTML charts
-    this.refreshCharts()
+    this.refreshCharts(data);
   }
   // =============== INTERFACE ================
   /** Refreshing charts in page */
-  refreshCharts() {
-    this.chartsEls.forEach( c => {
-      c.refresh();
-    });
+  refreshCharts(data:any) {
+    console.log(this.chartsBEls, this.chartsEls);
+    if(data == this.DATA){
+      this.chartsEls.forEach(c => {
+        c.refresh();
+      });
+    }else {
+      this.chartsBEls.forEach(c => {
+        console.log("chart", c);
+        c.refresh();
+      });
+    }
   }
   /** Getting highest and mininmum value in dataset to set the charts length */
-  getMinMax(chart:UIChart){
+  getMinMax(chart: UIChart) {
     // return Math.round(Math.max(...this.))
   }
-  /** Set color of graph with automated gradiant
-   * @param {number} i index of color
-   * @param {string} coul Color base
-   */
-  // setCouleur(i: number = 0, coul: string = 'bleu') {
-  //   if (i > this.store.config.couleurs[coul].length - 1) i -= this.store.config.couleurs[coul].length - 1;
-  //   return this.store.config.couleurs[coul][i];
-  // }
   /**
    * Get image from a chart
    * @param localChart Chart from where the graph is extracted
    * @param name Name of the file to generate
    */
-  imgDownloadStats(localChart:UIChart, name:string) {
+  imgDownloadStats(localChart: UIChart, name: string) {
     let img;
     const lien = document.createElement('a');
     img = localChart.getBase64Image();

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
@@ -15,19 +15,25 @@ import { VisualService } from '../utils/services/visual.service';
 export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Charts */
-  @ViewChild('chart') chartrd!: UIChart; // HTML Chart for yields
-  @ViewChild('average') chartAvrd!: UIChart; // HTML Chart for aveage yields
-  @ViewChild('growth') chartGrowthrd!: UIChart; // HTML Chart for growth
-  @ViewChild('chartPredictions') chartpr!: UIChart; // HTML Chart for predictions
+  @ViewChild('chart', { static: false }) chartrd!: UIChart; // HTML Chart for yields
+  @ViewChild('average', { static: false }) chartAvrd!: UIChart; // HTML Chart for aveage yields
+  @ViewChild('growth', { static: false }) chartGrowthrd!: UIChart; // HTML Chart for growth
+  @ViewChild('chartPredictions', { static: false }) chartpr!: UIChart; // HTML Chart for predictions
+  @ViewChild('growthPredictions', { static: false }) chartGrowthpr!: UIChart; // HTML Chart for growth predictions
   // @ViewChild('averagePredictions') chartAvpr!: UIChart;
-  @ViewChild('growthPredictions') chartGrowthpr!: UIChart; // HTML Chart for growth predictions
+
+  @ViewChild('chartB', { static: false }) chartrdB!: UIChart; // HTML Chart for yields
+  @ViewChild('averageB', { static: false }) chartAvrdB!: UIChart; // HTML Chart for aveage yields
+  @ViewChild('growthB', { static: false }) chartGrowthrdB!: UIChart; // HTML Chart for growth
+  @ViewChild('chartPredictionsB', { static: false }) chartprB!: UIChart; // HTML Chart for predictions
+  @ViewChild('growthPredictionsB', { static: false }) chartGrowthprB!: UIChart; // HTML Chart for growth predictions
 
   l$!: Subscription; // Subscribe to translation loading
   config$!: Subscription; // Subscribe to configuration loading observable
   infos: boolean = false; // Show / hide infos on click
   sudoe:boolean = true; // Showing SUDOE's data or Bordeaux's data
 
-  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService, public visual: VisualService) { }
+  constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService, public visual: VisualService, private changeUI:ChangeDetectorRef) { }
 
   ngOnInit(): void {
     // Loading text page content from database
@@ -46,9 +52,9 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
       // this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
       this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
       this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
-      this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
-      this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
-      this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
+      // this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
+      // this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
+      // this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
     }
     );
     /** Get config and   */
@@ -59,9 +65,9 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   };
   /** Get HTML ELements */
   ngAfterViewInit(){
+    console.log(this.chartrdB, this.chartrd);
     // Get list of charts to refresh
     this.visual.chartsEls = [this.chartrd, this.chartAvrd, this.chartGrowthrd, this.chartpr, this.chartGrowthpr];
-    console.log(this.visual.chartsEls);
   }
   // ======================= FORMS INTERACTIONS =====================
   /** Get data from countries selected countries
@@ -80,7 +86,7 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   }
   /** Get PDO */
   filtrePdo() {
-    this.visual.filtrePdo();
+    this.sudoe ? this.visual.filtrePdo() : this.visual.filtreBordeauxPdo();
   }
   /** Download img */
   downloadStats(el: string) {
@@ -103,14 +109,37 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
       case 'growthPredictions':
         this.visual.imgDownloadStats(this.chartGrowthpr, 'growthPredictions.png');
         break;
+        case 'chartB':
+        this.visual.imgDownloadStats(this.chartrdB, 'yields.png');
+        break;
+      case 'chartPredictionsB':
+        this.visual.imgDownloadStats(this.chartprB, 'yieldsPredictions.png');
+        break;
+      case 'averageB':
+        this.visual.imgDownloadStats(this.chartAvrdB, 'averages.png');
+        break;
+      case 'averagePredictionsB':
+        this.visual.imgDownloadStats(this.chartAvrdB, 'averagesPredictions.png');
+        break;
+      case 'growthB':
+        this.visual.imgDownloadStats(this.chartGrowthrdB, 'growths.png');
+        break;
+      case 'growthPredictionsB':
+        this.visual.imgDownloadStats(this.chartGrowthprB, 'growthPredictions.png');
+        break;
     };
   }
   /** Panes to show SUDOE data or Bordeaux */
   showSudoe(){
     this.sudoe = true;
+    this.changeUI.detectChanges();
+    this.visual.chartsEls = [this.chartrd, this.chartAvrd, this.chartGrowthrd, this.chartpr, this.chartGrowthpr];
   }
   showBordeaux(){
     this.sudoe = false;
+    console.log("ChartsBEls", this.chartrdB, this.visual.chartsBEls.length );
+    this.changeUI.detectChanges();
+    this.visual.chartsBEls = [this.chartrdB, this.chartAvrdB, this.chartGrowthrdB, this.chartprB, this.chartGrowthprB];
     if(this.store.lastBordeaux.length == 0) this.store.getLastBordeaux();
   }
   /** Clear observable on navigation change to avoid data overload */

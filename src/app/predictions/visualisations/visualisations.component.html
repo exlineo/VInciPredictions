@@ -23,7 +23,7 @@
     <div *ngIf="!sudoe" class="pdo-allonge">
       <h3>{{ visual.l.t['FILTRE_BORDELAIS'] }}</h3>
       <!-- <p-listbox [options]="store.listes.pdo | types:visual.fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
-      <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="filtrePdo()" [multiple]="true"
+      <p-listbox [options]="store.listes.bordeaux" formControlName="bordeaux" (onChange)="filtrePdo()" [multiple]="true"
         [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
@@ -34,15 +34,15 @@
       <h4 *ngIf="!sudoe">{{ visual.l.t['FILTRE_PLAGE_REND'] }}</h4>
       <p class="ecarts">
         <span>{{ visual.fF.controls.rendements.value }}</span>
-        <p-slider formControlName="rendements" [min]="visual.config.rendements.debut" [max]="visual.config.rendements.fin"
-          (onSlideEnd)="visual.filtrePlages($event)" class="inverse"></p-slider>
+        <p-slider formControlName="rendements" [min]="visual.config.rendements.debut"
+          [max]="visual.config.rendements.fin" (onSlideEnd)="visual.filtrePlages($event)" class="inverse"></p-slider>
         <span>{{ visual.config.rendements.fin }}</span>
       </p>
       <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
         <span>{{ visual.config.predictions.debut }}</span>
-        <p-slider formControlName="predictions" [min]="visual.config.predictions.debut" [max]="visual.config.predictions.fin"
-          (onSlideEnd)="visual.filtrePlages($event)"></p-slider>
+        <p-slider formControlName="predictions" [min]="visual.config.predictions.debut"
+          [max]="visual.config.predictions.fin" (onSlideEnd)="visual.filtrePlages($event)"></p-slider>
         <span>{{ visual.fF.controls.predictions.value }}</span>
       </p>
     </div>
@@ -55,15 +55,12 @@
   <p-dialog [header]="visual.l.page.titre" [(visible)]="infos">
     <article [innerHTML]="visual.l.page.contenu"></article>
   </p-dialog>
-  <!-- Change view -->
+  <!-- Change view between SUDOE zone and bordeaux -->
   <nav class="onglets">
-    <a (click)="showSudoe()" [class.active]="sudoe">{{ visual.l.t['VISU_SUDOE'] }}</a><a (click)="showBordeaux()" [class.active]="!sudoe">{{ visual.l.t['VISU_BORDELAIS'] }}</a>
+    <a (click)="showSudoe()" [class.active]="sudoe">{{ visual.l.t['VISU_SUDOE'] }}</a><a (click)="showBordeaux()"
+      [class.active]="!sudoe">{{ visual.l.t['VISU_BORDELAIS'] }}</a>
   </nav>
   <form [formGroup]="visual.fF">
-    <!-- <label>
-      <p-checkbox name="predictions" formControlName="donnees" [binary]="true"></p-checkbox>
-      {{ visual.l.t['FILTRE_PREDICTIONS'] }}
-    </label> -->
     <label>
       <p-checkbox name="moyennes" formControlName="moyennes" [binary]="true"></p-checkbox>
       {{ visual.l.t['FILTRE_MOYENNES'] }}
@@ -73,74 +70,150 @@
       {{ visual.l.t['FILTRE_CROISSANCE'] }}
     </label>
   </form>
-  <!-- CHART -->
-  <article id="chartdata">
-    <h3>{{ visual.l.t['RES_VISUAL'] }}</h3>
-    <div>
+  <!-- DATA FOR SUDOE -->
+  <section *ngIf="sudoe">
+    <!-- CHARTS -->
+    <article id="chartdata">
+      <h3>{{ visual.l.t['RES_VISUAL'] }}</h3>
       <div>
-        <h4 *ngIf="!sudoe">{{ visual.l.t['DONNEES_D_DESCR'] }}</h4>
-        <h4 *ngIf="sudoe">{{ visual.l.t['DONNEES_P_DESCR'] }}</h4>
-        <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
-        <p-chart [type]="visual.chartType" [data]="visual.DATA.RD" [options]="visual.chartOp.left" #chart></p-chart>
-      </div>
-      <div>
-        <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
-        <button (click)="downloadStats('chartPredictions')" class="download"><i class="pi pi-download"></i></button>
-        <p-chart [type]="visual.chartType" [data]="visual.DATA.PR" [options]="visual.chartOp.right" #chartPredictions></p-chart>
-      </div>
-    </div>
-    <div class="legende">
-      <legend *ngFor="let d of visual.DATA.RD.datasets">
-        <span [ngStyle]="{'background-color': d.borderColor}"></span>
-        <p>{{ d.label }}</p>
-      </legend>
-    </div>
-  </article>
-  <article *ngIf="visual.pdo.length > 0 && visual.fF.controls.predictions.value">
-    <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
-          <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
-          <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
-          <th *ngFor="let a of visual.pdo[0].predictions; let i=index">{{ visual.config.predictions.debut + i }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let d of visual.pdo">
-          <td>{{ d.pays }}</td>
-          <td>{{ d.regions }}</td>
-          <td>{{ d.pdo }}</td>
-          <td *ngFor="let p of d.predictions">{{ p }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </article>
-  <article *ngIf="visual.fF.controls.moyennes.value" class="chart">
-    <h3>{{ visual.l.t['FILTRE_MOYENNES'] }}</h3>
-        <h4>{{ visual.l.t['DONNEES_M_DESCR'] }}</h4>
-        <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
-        <p-chart [type]="visual.chartType" [data]="visual.DATA.RDAV" [options]="visual.chartOp.left" #average></p-chart>
-      <!--
+        <!-- CHART HARVESTS -->
         <div>
-          <p-chart [type]="chartType" [data]="visual.DATA.PRAV" [options]="basicRight" #averagePredictions></p-chart>
+          <h4>{{ visual.l.t['DONNEES_P_DESCR'] }}</h4>
+          <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA.RD" [options]="visual.chartOp.left" #chart></p-chart>
         </div>
-      -->
-  </article>
-  <article *ngIf="visual.fF.controls.croissance.value" class="chart">
-    <h3>{{ visual.l.t['FILTRE_CROISSANCE'] }}</h3>
-    <div>
-      <div>
-        <h4>{{ visual.l.t['DONNEES_C_DESCR'] }}</h4>
-        <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
-        <p-chart type="bar" [data]="visual.DATA.RDGR" [options]="visual.chartOp.barLeft" #growth></p-chart>
+
+        <!-- CHART PREDICTIONS -->
+        <div>
+          <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
+          <button (click)="downloadStats('chartPredictions')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA.PR" [options]="visual.chartOp.right"
+            #chartPredictions></p-chart>
+        </div>
       </div>
-      <div>
-        <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
-        <button (click)="downloadStats('growthPredictions')" class="download"><i class="pi pi-download"></i></button>
-        <p-chart type="bar" [data]="visual.DATA.PRGR" [options]="visual.chartOp.barRight" #growthPredictions></p-chart>
+      <div class="legende">
+        <legend *ngFor="let d of visual.DATA.RD.datasets">
+          <span [ngStyle]="{'background-color': d.borderColor}"></span>
+          <p>{{ d.label }}</p>
+        </legend>
       </div>
-    </div>
-  </article>
+    </article>
+    <!-- PDO from SUDOE -->
+    <article *ngIf="visual.pdo.length > 0 && visual.fF.controls.predictions.value">
+      <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
+            <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
+            <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
+            <th *ngFor="let a of visual.pdo[0].predictions; let i=index">{{ visual.config.predictions.debut + i }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of visual.pdo">
+            <td>{{ d.pays }}</td>
+            <td>{{ d.regions }}</td>
+            <td>{{ d.pdo }}</td>
+            <td *ngFor="let p of d.predictions">{{ p }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+    <!-- AVERAGE DATA -->
+    <article *ngIf="visual.fF.controls.moyennes.value" class="chart">
+      <h3>{{ visual.l.t['FILTRE_MOYENNES'] }}</h3>
+      <h4>{{ visual.l.t['DONNEES_M_DESCR'] }}</h4>
+      <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
+      <p-chart [type]="visual.chartType" [data]="visual.DATA.RDAV" [options]="visual.chartOp.left" #average></p-chart>
+    </article>
+    <article *ngIf="visual.fF.controls.croissance.value" class="chart">
+      <h3>{{ visual.l.t['FILTRE_CROISSANCE'] }}</h3>
+      <div>
+        <div>
+          <h4>{{ visual.l.t['DONNEES_C_DESCR'] }}</h4>
+          <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart type="bar" [data]="visual.DATA.RDGR" [options]="visual.chartOp.left" #growth></p-chart>
+        </div>
+        <div>
+          <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
+          <button (click)="downloadStats('growthPredictions')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart type="bar" [data]="visual.DATA.PRGR" [options]="visual.chartOp.right" #growthPredictions></p-chart>
+        </div>
+      </div>
+    </article>
+  </section>
+  <!-- DATA FOR BORDEAUX -->
+  <section *ngIf="!sudoe">
+    <!-- CHARTS -->
+    <article>
+      <h3>{{ visual.l.t['RES_VISUAL'] }}</h3>
+      <div>
+        <!-- CHART YIELDS -->
+        <div>
+          <h4>{{ visual.l.t['DONNEES_D_DESCR'] }}</h4>
+          <button (click)="downloadStats('chartB')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.RD" [options]="visual.chartOp.left" #chartB></p-chart>
+        </div>
+
+        <!-- CHART PREDICTIONS -->
+        <div>
+          <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
+          <button (click)="downloadStats('chartPredictionsB')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.PR" [options]="visual.chartOp.right"
+            #chartPredictionsB></p-chart>
+        </div>
+      </div>
+      <div class="legende">
+        <legend *ngFor="let d of visual.DATA_B.RD.datasets">
+          <span [ngStyle]="{'background-color': d.borderColor}"></span>
+          <p>{{ d.label }}</p>
+        </legend>
+      </div>
+    </article>
+    <!-- PDO from SUDOE -->
+    <article *ngIf="visual.pdo.length > 0 && visual.fF.controls.predictions.value">
+      <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
+            <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
+            <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
+            <th *ngFor="let a of visual.bordeaux[0].predictions; let i=index">{{ visual.config.predictions.debut + i }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of visual.bordeaux">
+            <td>{{ d.pays }}</td>
+            <td>{{ d.regions }}</td>
+            <td>{{ d.pdo }}</td>
+            <td *ngFor="let p of d.predictions">{{ p }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+    <!-- AVERAGE DATA -->
+    <article *ngIf="visual.fF.controls.moyennes.value" class="chart">
+      <h3>{{ visual.l.t['FILTRE_MOYENNES'] }}</h3>
+      <h4>{{ visual.l.t['DONNEES_M_DESCR'] }}</h4>
+      <button (click)="downloadStats('averageB')" class="download"><i class="pi pi-download"></i></button>
+      <p-chart [type]="visual.chartType" [data]="visual.DATA_B.RDAV" [options]="visual.chartOp.left" #averageB></p-chart>
+    </article>
+    <article *ngIf="visual.fF.controls.croissance.value" class="chart">
+      <h3>{{ visual.l.t['FILTRE_CROISSANCE'] }}</h3>
+      <div>
+        <div>
+          <h4>{{ visual.l.t['DONNEES_C_DESCR'] }}</h4>
+          <button (click)="downloadStats('growthB')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart type="bar" [data]="visual.DATA_B.RDGR" [options]="visual.chartOp.left" #growthB></p-chart>
+        </div>
+        <div>
+          <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
+          <button (click)="downloadStats('growthPredictionsB')" class="download"><i class="pi pi-download"></i></button>
+          <p-chart type="bar" [data]="visual.DATA_B.PRGR" [options]="visual.chartOp.right" #growthPredictionsB></p-chart>
+        </div>
+      </div>
+    </article>
+  </section>
 </section>

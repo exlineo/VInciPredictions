@@ -24,7 +24,7 @@ section:nth-child(2){
   overflow-x:hidden;
   overflow-y: auto;
 }
-section:nth-child(2) > article{
+section:nth-child(2) article{
   background-color: white;
   padding:0 15px 10px;
   margin-bottom:15px;
@@ -33,21 +33,19 @@ section:nth-child(2) > article{
   display:flex;
   flex-flow:column nowrap;
 }
-section:nth-child(2) > article div{
+#chartdata > div{
   display: flex;
-}
-section:nth-child(2) > article > div{
   flex-flow: row nowrap;
   width: 100%;
 }
-section:nth-child(2) > article > div > div{
+#chartdata > div > div{
   flex-flow: column nowrap;
   position: relative;
 }
-section:nth-child(2) > article > div > div:first-child{
+#chartdata > div > div:first-child{
   width:75%;
 }
-section:nth-child(2) > article > div > div:nth-child(2){
+#chartdata > div > div:nth-child(2){
   width:25%;
   background-color: var(--jaunea);
   margin-left:-5px;

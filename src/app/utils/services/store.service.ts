@@ -158,6 +158,13 @@ export class StoreService {
     const q = query(collection(this.dbf, this.lastSudoe[this.lastSudoe.length - 1].collection!), where("pdo", "in", pdo));
     return await getDocs(q);
   }
+   /** Get data from bordeaux PDO
+   * @param {Array<string>} pdo Array on filters to looking for in database
+  */
+   async getBordeauxPdo(pdo: Array<string>) {
+    const q = query(collection(this.dbf, this.lastBordeaux[this.lastBordeaux.length - 1].collection!), where("pdo", "in", pdo));
+    return await getDocs(q);
+  }
   /** Get last data for harvests in SUDOE (for data) */
   async getLastSudoe() {
     const q = query(collection(this.dbf, 'data-sudoe'));
@@ -198,7 +205,10 @@ export class StoreService {
             this.setAvSudoeSets('vert', this.set.zones.regions);
             this.setAvSudoeSets('bleu', this.set.zones.pays);
           } else {
-            this.set.sudoe.push(c.data() as RendementI);
+            const rd = c.data() as RendementI;
+            if(rd.pays.length > 0 && rd.regions.length > 0){
+              this.set.sudoe.push(rd);
+            };
             this.setSudoeSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
@@ -210,7 +220,7 @@ export class StoreService {
         console.log(er);
       });
   }
-  /** Set data from database */
+  /** Set data from database for bordeaux PDO */
   setBordeauxSet(collection: string) {
     this.getFireCol(collection)
       .then(d => {
@@ -219,7 +229,11 @@ export class StoreService {
           if (c.id == 'creeLe') {
             this.set.creeLe = c.data() as CreeI;
           } else {
-            this.set.bordeaux.push(c.data() as RendementI);
+            const rd = c.data() as RendementI;
+            if(rd.pays.length > 0 && rd.regions.length > 0){
+              this.set.bordeaux.push(rd);
+            };
+            // this.set.bordeaux.push(c.data() as RendementI);
             this.setBordeauxSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
@@ -243,13 +257,13 @@ export class StoreService {
       this.chartsSudoe.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
       this.chartsSudoe.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
-  setAvBordeauxSets(couleur:string, obj:any){
-    for(let i in obj){
-      const c = this.setCouleur(couleur);
-      this.chartsSudoe.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
-      this.chartsSudoe.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
-    }
-  }
+  // setAvBordeauxSets(couleur:string, obj:any){
+  //   for(let i in obj){
+  //     const c = this.setCouleur(couleur);
+  //     this.chartsBordeaux.datasets.RD[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+  //     this.chartsBordeaux.datasets.PR[i] = {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
+  //   }
+  // }
   setBordeauxSets(couleur:string, obj:RendementI){
       this.chartsBordeaux.datasets.RD[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
       this.chartsBordeaux.datasets.PR[obj.pdo!] = {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
