@@ -11,6 +11,8 @@ export interface RendementI{
   regions:string;
   type?:Couleur;
   pdo?:string;
+  min?:number;
+  max?:number;
   rendements:Array<number>;
   predictions:Array<number>;
   fiabilites:Array<number>;

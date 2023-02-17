@@ -51,6 +51,10 @@ export class PredictionsService {
     let m = p.split(',');
     // Convert data to RendementI
     let tmp = this.conversion(m);
+    // Set minimum and maximum values in yield or harvests
+    tmp.min = Math.floor(Math.min(...tmp.rendements));
+    tmp.max = Math.ceil(Math.max(...tmp.rendements));
+
     if (type == 'sudoe') {
       this.l.store.set.sudoe.push(tmp);
       // Create lists from data for countries, regions and pdo
@@ -70,7 +74,7 @@ export class PredictionsService {
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array<string>): Array<number> {
-    return a.map(c => parseFloat(c));
+    return a.map(c => c != "0" ? parseFloat(c) : 0);
   }
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values

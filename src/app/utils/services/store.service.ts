@@ -212,6 +212,7 @@ export class StoreService {
             this.setSudoeSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
+        console.log(this.set.sudoe);
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.sudoe.forEach(d => this.setFilterFromData(d));
         this.orderLists();

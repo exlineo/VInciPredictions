@@ -15,7 +15,6 @@
     </div>
     <div *ngIf="sudoe">
       <h3>{{ visual.l.t['FILTRE_PDO'] }}</h3>
-      <!-- <p-listbox [options]="store.listes.pdo | types:visual.fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
       <p-listbox [options]="store.listes.pdo" formControlName="pdo" (onChange)="filtrePdo()" [multiple]="true"
         [checkbox]="true" [filter]="true">
       </p-listbox>
@@ -73,21 +72,21 @@
   <!-- DATA FOR SUDOE -->
   <section *ngIf="sudoe">
     <!-- CHARTS -->
-    <article id="chartdata">
+    <article class="chartdata">
       <h3>{{ visual.l.t['RES_VISUAL'] }}</h3>
       <div>
         <!-- CHART HARVESTS -->
         <div>
           <h4>{{ visual.l.t['DONNEES_P_DESCR'] }}</h4>
           <button (click)="downloadStats('chart')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart [type]="visual.chartType" [data]="visual.DATA.RD" [options]="visual.chartOp.left" #chart></p-chart>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA.RD" [options]="visual.chartOp.RD" #chart></p-chart>
         </div>
 
         <!-- CHART PREDICTIONS -->
         <div>
           <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
           <button (click)="downloadStats('chartPredictions')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart [type]="visual.chartType" [data]="visual.DATA.PR" [options]="visual.chartOp.right"
+          <p-chart [type]="visual.chartType" [data]="visual.DATA.PR" [options]="visual.chartOp.PR"
             #chartPredictions></p-chart>
         </div>
       </div>
@@ -127,18 +126,18 @@
       <button (click)="downloadStats('average')" class="download"><i class="pi pi-download"></i></button>
       <p-chart [type]="visual.chartType" [data]="visual.DATA.RDAV" [options]="visual.chartOp.left" #average></p-chart>
     </article>
-    <article *ngIf="visual.fF.controls.croissance.value" class="chart">
+    <article *ngIf="visual.fF.controls.croissance.value" class="chart chartdata">
       <h3>{{ visual.l.t['FILTRE_CROISSANCE'] }}</h3>
       <div>
         <div>
           <h4>{{ visual.l.t['DONNEES_C_DESCR'] }}</h4>
           <button (click)="downloadStats('growth')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart type="bar" [data]="visual.DATA.RDGR" [options]="visual.chartOp.left" #growth></p-chart>
+          <p-chart type="bar" [data]="visual.DATA.RDGR" [options]="visual.chartOp.RDGR" #growth></p-chart>
         </div>
         <div>
           <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
           <button (click)="downloadStats('growthPredictions')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart type="bar" [data]="visual.DATA.PRGR" [options]="visual.chartOp.right" #growthPredictions></p-chart>
+          <p-chart type="bar" [data]="visual.DATA.PRGR" [options]="visual.chartOp.PRGR" #growthPredictions></p-chart>
         </div>
       </div>
     </article>
@@ -146,21 +145,21 @@
   <!-- DATA FOR BORDEAUX -->
   <section *ngIf="!sudoe">
     <!-- CHARTS -->
-    <article>
+    <article class="chartdata">
       <h3>{{ visual.l.t['RES_VISUAL'] }}</h3>
       <div>
         <!-- CHART YIELDS -->
         <div>
           <h4>{{ visual.l.t['DONNEES_D_DESCR'] }}</h4>
           <button (click)="downloadStats('chartB')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.RD" [options]="visual.chartOp.left" #chartB></p-chart>
+          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.RD" [options]="visual.chartOp.RDB" #chartB></p-chart>
         </div>
 
         <!-- CHART PREDICTIONS -->
         <div>
           <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
           <button (click)="downloadStats('chartPredictionsB')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.PR" [options]="visual.chartOp.right"
+          <p-chart [type]="visual.chartType" [data]="visual.DATA_B.PR" [options]="visual.chartOp.PRB"
             #chartPredictionsB></p-chart>
         </div>
       </div>
@@ -200,18 +199,18 @@
       <button (click)="downloadStats('averageB')" class="download"><i class="pi pi-download"></i></button>
       <p-chart [type]="visual.chartType" [data]="visual.DATA_B.RDAV" [options]="visual.chartOp.left" #averageB></p-chart>
     </article>
-    <article *ngIf="visual.fF.controls.croissance.value" class="chart">
+    <article *ngIf="visual.fF.controls.croissance.value" class="chart chartdata">
       <h3>{{ visual.l.t['FILTRE_CROISSANCE'] }}</h3>
       <div>
         <div>
           <h4>{{ visual.l.t['DONNEES_C_DESCR'] }}</h4>
           <button (click)="downloadStats('growthB')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart type="bar" [data]="visual.DATA_B.RDGR" [options]="visual.chartOp.left" #growthB></p-chart>
+          <p-chart type="bar" [data]="visual.DATA_B.RDGR" [options]="visual.chartOp.RDGRB" #growthB></p-chart>
         </div>
         <div>
           <h4>{{ visual.l.t['FILTRE_PREDICTIONS'] }}</h4>
           <button (click)="downloadStats('growthPredictionsB')" class="download"><i class="pi pi-download"></i></button>
-          <p-chart type="bar" [data]="visual.DATA_B.PRGR" [options]="visual.chartOp.right" #growthPredictionsB></p-chart>
+          <p-chart type="bar" [data]="visual.DATA_B.PRGR" [options]="visual.chartOp.PRGRB" #growthPredictionsB></p-chart>
         </div>
       </div>
     </article>

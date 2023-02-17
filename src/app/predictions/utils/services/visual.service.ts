@@ -6,7 +6,7 @@ import { RendementI, ChartI, Chart, DatasetI } from 'src/app/utils/modeles/filtr
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
-// import { options } from '../../utils/chartOptions';
+import { options } from '../../utils/chartOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -33,18 +33,22 @@ export class VisualService {
   });
   chartType: string = 'line'; // Default charts style (lines)
   // chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
-  chartOp = { left: {}, right: {} }; // Options for charts
+  chartOp: any = { left: {}, right: {}, RD: {}, PR: {}, PRGR:{}, RDGR:{}, RDB: {}, PRB: {}, PRGRB:{}, RDGRB:{} }; // Options for charts
   /** All data for charts (sudoe zone) */
-  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart()};
+  DATA: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
   /** All data for charts (Bordeaux) */
-  DATA_B: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart()};
+  DATA_B: any = { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
   /** Year's gaps for yields and predictions */
   gap: any = { rd: 0, pr: 0 };
 
+  scales = {min:0, max:25, grmin:-25, grmax:25};
+  minimum: number = 0;
+  maximum: number = 25;
+
   pays: Array<any> = []; // List of countries
-  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, bordeaux:Array<string> } = { pays: [], regions: [], pdo: [], bordeaux:[] }; // Liste of filters
+  listes: { pays: Array<string>, regions: Array<string>, pdo: Array<string>, bordeaux: Array<string> } = { pays: [], regions: [], pdo: [], bordeaux: [] }; // Liste of filters
   pdo: Array<RendementI> = []; // List of loaded PDOs from SUDOE zone
-  bordeaux:Array<RendementI> = []; // List of PDOs from Bordeaux
+  bordeaux: Array<RendementI> = []; // List of PDOs from Bordeaux
   chartsEls: Array<UIChart> = []; // List of charts of Sudoe to refresh
   chartsBEls: Array<UIChart> = []; // List of charts pf Bordeaux to refresh
 
@@ -59,32 +63,6 @@ export class VisualService {
     await setDoc(customDoc, JSON.parse(JSON.stringify(profil)), { merge: true })
       .then(p => this.l.msg.msgOk(this.l.t['MSG_DATA'], this.l.t['MSG_U_DESCR']))
       .catch(er => this.l.msg.msgFail(this.l.t['MSG_ER'], er));
-  }
-  /** Initialise data and objects */
-  // init() {
-  //   this.chartOp = { left: {}, right: {} };
-  //   this.gap = { rd: 0, pr: 0 };
-  //   this.fF = this.fbuild.group({
-  //     pays: [[]],
-  //     regions: [[]],
-  //     pdo: [[]],
-  //     rendements: [this.store.config.rendements.debut],
-  //     predictions: [this.store.config.predictions.fin],
-  //     donnees: [true],
-  //     moyennes: [true],
-  //     croissance: [true],
-  //     type: ['']
-  //   });
-  //   this.initData();
-  // };
-  /** Init data */
-  initDATA() {
-    this.listes = { pays: [], regions: [], pdo: [], bordeaux:[] };
-    this.pdo = [];
-    for(let i in this.DATA){
-      this.DATA[i].datasets = [];
-      this.DATA_B[i].datasets = [];
-    }
   }
   /**
    * write a document on Firestore
@@ -127,7 +105,6 @@ export class VisualService {
       await this.store.getBordeauxPdo(this.fF.controls.bordeaux.value as Array<string>)
         .then(d => {
           d.forEach(p => {
-            console.log(p.data());
             this.bordeaux.push(p.data() as RendementI);
           });
           this.filtreBordeauxPlages();
@@ -136,7 +113,7 @@ export class VisualService {
       this.filtreBordeauxPlages();
     }
   }
-  setGaps(){
+  setGaps() {
     this.gap.rd = this.fF.controls.rendements.value - this.config.rendements.debut;
     this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
   }
@@ -155,7 +132,6 @@ export class VisualService {
     this.DATA.PR.labels = this.gap.pr != 0 ? this.store.chartsSudoe.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
     this.DATA.RD.datasets = [];
     this.DATA.PR.datasets = [];
-    // const data: Array<any> = [];
     // Set region if some was selected in filters
     if (this.listes.pays.length > 0) {
       for (let i = 0; i < this.listes.pays.length; ++i) {
@@ -175,7 +151,8 @@ export class VisualService {
       };
     }
 
-    this.setAverage(this.DATA);
+    this.setAverage(this.DATA); // Calculate average values for chart data
+    this.setScalesSudoe(); // Calculate min and max for charts scale
   }
   /** Set data and show for yields and predictions on charts */
   setBordeauxFiltres() {
@@ -189,7 +166,8 @@ export class VisualService {
         this.getBordeauxDatasets(this.bordeaux[i].pdo!);
       };
     }
-    this.setAverage(this.DATA_B);
+    this.setAverage(this.DATA_B); // Calculate average values for chart data
+    this.setScalesBordeaux(); // Calculate min and max for charts scale
   }
   /** Get datasets from  */
   getDatasets(i: string) {
@@ -206,7 +184,6 @@ export class VisualService {
     this.DATA_B.RD.datasets.push(this.setPlageRd(rd));
     const pr = { ...this.store.chartsBordeaux.datasets.PR[i] };
     this.DATA_B.PR.datasets.push(this.setPlagePr(pr));
-    console.log(this.DATA_B);
   }
   /** Calculate gap in years with slides filters for yields  */
   setPlageRd(d: DatasetI) {
@@ -223,7 +200,9 @@ export class VisualService {
     return d;
   }
   /** Calculate and show the average data */
-  setAverage(data:any) {
+  setAverage(data: any) {
+    this.scales = {min:0, max:25, grmin:-100, grmax:100};
+
     // Calculate average data, 5 years and purcent growth on years
     data.RDAV.labels = data.RD.labels.slice(4, data.RD.labels.length);
     data.RDGR.labels = data.RD.labels.slice(1, data.RD.labels.length);
@@ -242,14 +221,24 @@ export class VisualService {
       const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
 
       av.data.forEach((d, i) => {
+        let n = 0;
         if (i > 3) {
           // Add average data to data array
           rd.data.push(Math.round((av.data[i - 4] + av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 5));
         };
         if (i > 0) {
-          gr.data.push((av.data[i] * 100 / av.data[i - 1]) - 100);
+          n = (av.data[i] * 100 / av.data[i - 1]) - 100
+          gr.data.push(n);
         };
+        // Calculate scale for charts
+        if (av.data[i] < this.scales.min) this.scales.min = Math.floor(av.data[i]);
+        if (av.data[i] > this.scales.max) this.scales.max = Math.ceil(av.data[i]);
+
+        if (n < this.scales.grmin && n != Infinity) this.scales.grmin = Math.floor(n);
+        if (n > this.scales.grmax && n != Infinity) this.scales.grmax = Math.ceil(n);
+
       });
+      // Set datasets for average charts
       data.RDAV.datasets.push(rd);
       data.RDGR.datasets.push(gr);
     });
@@ -259,27 +248,49 @@ export class VisualService {
       const gr: DatasetI = { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
 
       av.data.forEach((d, i) => {
+        let n = 0;
         if (i == 0) {
           const tmp = data.PR.datasets[data.PR.datasets.length - 1];
-          gr.data.push(Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100));
+          n = Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100);
         } else {
-          gr.data.push(Math.round((av.data[i] * 100 / av.data[i - 1]) - 100));
+          n = Math.round((av.data[i] * 100 / av.data[i - 1]) - 100);
         };
+        gr.data.push(n);
+        // Calculate scale for charts
+        if (n < this.scales.grmin && n != Infinity) this.scales.grmin = Math.floor(n);
+        if (n > this.scales.grmax && n != Infinity) this.scales.grmax = Math.ceil(n);
       });
       data.PRGR.datasets.push(gr);
+
     });
     // Refreshing HTML charts
     this.refreshCharts(data);
   }
   // =============== INTERFACE ================
+  /** Set min and max values for charts scales */
+  setScalesSudoe() {
+    console.log(this.minimum, this.maximum);
+    this.chartOp.RD = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', this.scales.min, this.scales.max);
+    this.chartOp.PR = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', this.scales.min, this.scales.max);
+
+    this.chartOp.RDGR = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', this.scales.grmin, this.scales.grmax);
+    this.chartOp.PRGR = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', this.scales.grmin, this.scales.grmax);
+  }
+  setScalesBordeaux() {
+    this.chartOp.RDB = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', this.scales.min, this.scales.max);
+    this.chartOp.PRB = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', this.scales.min, this.scales.max);
+
+    this.chartOp.RDGRB = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', this.scales.grmin, this.scales.grmax);
+    this.chartOp.PRGRB = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', this.scales.grmin, this.scales.grmax);
+  }
   /** Refreshing charts in page */
-  refreshCharts(data:any) {
+  refreshCharts(data: any) {
     console.log(this.chartsBEls, this.chartsEls);
-    if(data == this.DATA){
+    if (data == this.DATA) {
       this.chartsEls.forEach(c => {
         c.refresh();
       });
-    }else {
+    } else {
       this.chartsBEls.forEach(c => {
         console.log("chart", c);
         c.refresh();

@@ -191,7 +191,6 @@
   "MSG_ER_HTTP":"Se ha producido un error de red indefinido, vuelva a conectarse más tarde",
   "MSG_VERIFIE":"Valida su correo electrónico",
   "MSG_VERIFIE_DESCR":"Tenías que validar tu correo electrónico con el enlace que te enviaron para poder conectarte",
-  "VERIFICATION":"Reenviar correo electrónico de verificación",
   "VERIF_TITRE":"Reenviar correo electrónico de verificación",
   "VERIF_DESCR":"Complete su correo electrónico para enviar un mensaje que contenga un enlace para validar su cuenta.",
   "VERIF_MAIL_TITRE":"Se le ha enviado un correo electrónico",

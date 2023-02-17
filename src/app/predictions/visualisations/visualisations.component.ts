@@ -33,6 +33,9 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   infos: boolean = false; // Show / hide infos on click
   sudoe:boolean = true; // Showing SUDOE's data or Bordeaux's data
 
+  min:number = 0;
+  max:number = 100;
+
   constructor(public l: LanguesService, public fbuild: FormBuilder, public store: StoreService, public visual: VisualService, private changeUI:ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -45,16 +48,12 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
         { nom: this.visual.l.t['FILTRE_FR'], value: "fr" },
         { nom: this.visual.l.t['FILTRE_PT'], value: "pt" }
       ];
-      // this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', 0, 100);
-      // this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
-      // this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
-      // this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left', -100, 500);
-      // this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', -100, 500);
+      this.visual.chartOp.PR = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
+      this.visual.chartOp.RD = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
+      this.visual.chartOp.PRB = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
+      this.visual.chartOp.RDB = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right', 0, 100);
       this.visual.chartOp.left = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
       this.visual.chartOp.right = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
-      // this.visual.chartOp.nu = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false);
-      // this.visual.chartOp.barLeft = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'left');
-      // this.visual.chartOp.barRight = options(this.visual.l.t['FORM_ANNEES'], this.visual.l.t['FORM_RENDEMENTS'], false, 'right');
     }
     );
     /** Get config and   */
@@ -76,6 +75,7 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   filtrePays(e: any) {
     this.visual.listes.pays = e.value;
     this.visual.filtrePlages();
+    this.setMinMax();
   }
   /** Get data from selected regions
    * @param {event} e Event send from HTML
@@ -83,10 +83,16 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   filtreRegions(e: any) {
     this.visual.listes.regions = e.value;
     this.visual.filtrePlages();
+    this.setMinMax();
   }
   /** Get PDO */
   filtrePdo() {
     this.sudoe ? this.visual.filtrePdo() : this.visual.filtreBordeauxPdo();
+    this.setMinMax();
+  }
+  setMinMax(){
+    this.min = Math.floor(Math.min(this.visual.DATA.RD));
+    this.max = Math.ceil(Math.max(this.visual.DATA.RD));
   }
   /** Download img */
   downloadStats(el: string) {

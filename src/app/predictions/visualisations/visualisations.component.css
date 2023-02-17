@@ -33,19 +33,19 @@ section:nth-child(2) article{
   display:flex;
   flex-flow:column nowrap;
 }
-#chartdata > div{
+.chartdata > div{
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
 }
-#chartdata > div > div{
+.chartdata > div > div{
   flex-flow: column nowrap;
   position: relative;
 }
-#chartdata > div > div:first-child{
+.chartdata > div > div:first-child{
   width:75%;
 }
-#chartdata > div > div:nth-child(2){
+.chartdata > div > div:nth-child(2){
   width:25%;
   background-color: var(--jaunea);
   margin-left:-5px;

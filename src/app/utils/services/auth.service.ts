@@ -18,6 +18,7 @@ export class AuthService {
     if (this.l.store.getSessionProfil()) {
       this.profil = this.l.store.getSessionProfil() as ProfilI;
     }
+    // Sending verification
   }
   /**
    * Create account on firebase with email and password
@@ -119,6 +120,7 @@ export class AuthService {
   };
   /** Resend verification email */
   verificationEmail() {
+    console.log("Current user", this.auth.currentUser);
     sendEmailVerification(this.auth.currentUser!)
       .then(d => {
         this.l.msg.msgOk(this.l.t['VERIF_MAIL_TITRE'], this.l.t['VERIF_MAIL_DESCR']);

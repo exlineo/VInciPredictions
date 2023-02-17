@@ -191,7 +191,6 @@
   "MSG_ER_HTTP":"An undefined network error has occurred, please reconnect later",
   "MSG_VERIFIE":"Validate your email",
   "MSG_VERIFIE_DESCR":"You must validate your email with the link sent to you to be able to connect",
-  "VERIFICATION":"Resend verification email",
   "VERIF_TITRE":"Resend verification email",
   "VERIF_DESCR":"Fill in your email to send a message containing a link to validate your account.",
   "VERIF_MAIL_TITRE":"An email has been sent to you",

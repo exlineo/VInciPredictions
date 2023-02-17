@@ -73,12 +73,12 @@ export class DataMajComponent implements OnInit {
   }
   /** Save data for harvests (SUDOE) */
   saveSudoe(){
-    // this.file = undefined
     this.predServ.fireSudoeAdd();
+    this.file = undefined;
   }
   /** Save data for yields (Bordeaux) */
   saveBordeaux(){
-    this.file = undefined;
     this.predServ.fireBordeauxAdd();
+    this.file = undefined;
   }
 }
