@@ -314,8 +314,9 @@ form.bleu option:hover{
   flex-flow: row nowrap;
   justify-content: flex-start !important;
   width:100%;
-  border-bottom:1px solid var(--jaunea);
+  border-bottom:1px solid var(--bleu);
   margin-bottom: 20px;
+  background-color: var(--jaune);
 }
 .onglets a{
   padding:10px 20px;
@@ -323,9 +324,12 @@ form.bleu option:hover{
   border-top-right-radius:10px;
   display:block;
   color: var(--bleu);
+  font-weight: bold;
+  opacity: 1;
 }
 .onglets a.active{
-  background: var(--jaune);
+  background: var(--bleu);
+  color: var(--grisclair);
 }
 .pdo-allonge{
   height:450px;

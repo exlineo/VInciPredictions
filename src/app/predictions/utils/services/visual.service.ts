@@ -160,6 +160,7 @@ export class VisualService {
     this.DATA_B.PR.labels = this.gap.pr != 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
     this.DATA_B.RD.datasets = [];
     this.DATA_B.PR.datasets = [];
+    console.log(this.DATA_B);
     // Add PDO
     if (this.bordeaux.length > 0) {
       for (let i = 0; i < this.bordeaux.length; ++i) {
@@ -285,21 +286,15 @@ export class VisualService {
   }
   /** Refreshing charts in page */
   refreshCharts(data: any) {
-    console.log(this.chartsBEls, this.chartsEls);
     if (data == this.DATA) {
       this.chartsEls.forEach(c => {
         c.refresh();
       });
     } else {
       this.chartsBEls.forEach(c => {
-        console.log("chart", c);
         c.refresh();
       });
     }
-  }
-  /** Getting highest and mininmum value in dataset to set the charts length */
-  getMinMax(chart: UIChart) {
-    // return Math.round(Math.max(...this.))
   }
   /**
    * Get image from a chart
