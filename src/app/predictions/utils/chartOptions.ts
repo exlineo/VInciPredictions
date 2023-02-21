@@ -7,20 +7,14 @@ export const options = (rd:string, an:string, legende:boolean, align:string='lef
         display: legende,
         position:'top',
         align:'center',
-        // title:{
-        //   text:'t'
-        // }
       }
     },
-    // legend: {
-    //   display: false,
-    //   position:'bottom',
-    //   align:'center'
-    // },
     scales: {
       x: {
         ticks: {
-          color: '#495057'
+          color: '#495057',
+          minRotation: 45,
+          maxRotation: 45
         },
         grid: {
           color: '#ebedef'

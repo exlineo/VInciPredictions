@@ -3,11 +3,11 @@
   <h2>{{ visual.l.t['FILTRE_TITRE'] }}</h2>
   <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ visual.l.t['COMMENT'] }}</button>
   <form [formGroup]="visual.fF" class="bleu">
-    <div *ngIf="sudoe">
+    <!-- <div *ngIf="sudoe">
       <h3>{{ visual.l.t['FILTRE_PAYS'] }}</h3>
       <p-listbox [options]="store.listes.pays" formControlName="pays" (onChange)="filtrePays($event)" [multiple]="true"
         [checkbox]="true" [filter]="true"></p-listbox>
-    </div>
+    </div> -->
     <div *ngIf="sudoe">
       <h3>{{ visual.l.t['FILTRE_REGIONS'] }}</h3>
       <p-listbox [options]="store.listes.regions" formControlName="regions" (onChange)="filtreRegions($event)"
@@ -19,6 +19,7 @@
         [checkbox]="true" [filter]="true">
       </p-listbox>
     </div>
+    <!-- FILTER BORDEAUX'S PDO -->
     <div *ngIf="!sudoe" class="pdo-allonge">
       <h3>{{ visual.l.t['FILTRE_BORDELAIS'] }}</h3>
       <!-- <p-listbox [options]="store.listes.pdo | types:visual.fF.controls.type.value" formControlName="pdo" optionLabel="name" -->
@@ -27,21 +28,39 @@
       </p-listbox>
     </div>
     <!-- FILTERS FOR YEARS GAP -->
-    <div>
+    <div *ngIf="sudoe">
       <h3>{{ visual.l.t['FILTRE_ANNEES'] }}</h3>
       <h4 *ngIf="sudoe">{{ visual.l.t['FILTRE_PLAGE_PROD'] }}</h4>
       <h4 *ngIf="!sudoe">{{ visual.l.t['FILTRE_PLAGE_REND'] }}</h4>
       <p class="ecarts">
         <span>{{ visual.fF.controls.rendements.value }}</span>
-        <p-slider formControlName="rendements" [min]="visual.config.rendements.debut"
-          [max]="visual.config.rendements.fin" (onSlideEnd)="visual.filtrePlages($event)" class="inverse"></p-slider>
-        <span>{{ visual.config.rendements.fin }}</span>
+        <p-slider formControlName="rendements" [min]="store.config.rendements.debut"
+          [max]="store.config.rendements.fin" (onSlideEnd)="visual.filtrePlages($event)" class="inverse"></p-slider>
+        <span>{{ store.config.rendements.fin }}</span>
       </p>
       <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
-        <span>{{ visual.config.predictions.debut }}</span>
-        <p-slider formControlName="predictions" [min]="visual.config.predictions.debut"
-          [max]="visual.config.predictions.fin" (onSlideEnd)="visual.filtrePlages($event)"></p-slider>
+        <span>{{ store.config.predictions.debut }}</span>
+        <p-slider formControlName="predictions" [min]="store.config.predictions.debut"
+          [max]="store.config.predictions.fin" (onSlideEnd)="visual.filtrePlages($event)"></p-slider>
+        <span>{{ visual.fF.controls.predictions.value }}</span>
+      </p>
+    </div>
+    <div *ngIf="!sudoe">
+      <h3>{{ visual.l.t['FILTRE_ANNEES'] }}</h3>
+      <h4 *ngIf="sudoe">{{ visual.l.t['FILTRE_PLAGE_PROD'] }}</h4>
+      <h4 *ngIf="!sudoe">{{ visual.l.t['FILTRE_PLAGE_REND'] }}</h4>
+      <p class="ecarts">
+        <span>{{ visual.fF.controls.rendements.value }}</span>
+        <p-slider formControlName="rendements" [min]="store.config.rendements.debut"
+          [max]="store.config.rendements.fin" (onSlideEnd)="visual.filtreBordeauxPlages($event)" class="inverse"></p-slider>
+        <span>{{ store.config.rendements.fin }}</span>
+      </p>
+      <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
+      <p class="ecarts">
+        <span>{{ store.config.predictions.debut }}</span>
+        <p-slider formControlName="predictions" [min]="store.config.predictions.debut"
+          [max]="store.config.predictions.fin" (onSlideEnd)="visual.filtreBordeauxPlages($event)"></p-slider>
         <span>{{ visual.fF.controls.predictions.value }}</span>
       </p>
     </div>
@@ -106,7 +125,7 @@
             <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
             <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
             <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
-            <th *ngFor="let a of visual.pdo[0].predictions; let i=index">{{ visual.config.predictions.debut + i }}</th>
+            <th *ngFor="let a of visual.pdo[0].fiabilites; let i=index">{{ store.config.predictions.debut + i }}</th>
           </tr>
         </thead>
         <tbody>
@@ -171,7 +190,7 @@
       </div>
     </article>
     <!-- PDO from SUDOE -->
-    <article *ngIf="visual.pdo.length > 0 && visual.fF.controls.predictions.value">
+    <article *ngIf="visual.bordeaux.length > 0 && visual.fF.controls.predictions.value">
       <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
       <table>
         <thead>
@@ -179,7 +198,7 @@
             <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
             <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
             <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
-            <th *ngFor="let a of visual.bordeaux[0].predictions; let i=index">{{ visual.config.predictions.debut + i }}</th>
+            <th *ngFor="let a of visual.bordeaux[0].predictions; let i=index">{{ store.config.predictions.debut + i }}</th>
           </tr>
         </thead>
         <tbody>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, setDoc } from "@angular/fire/firestore";
 import { FormBuilder } from '@angular/forms';
 import { UIChart } from 'primeng/chart';
-import { RendementI, ChartI, Chart, DatasetI } from 'src/app/utils/modeles/filtres-i';
+import { RendementI, ChartI, Chart, DatasetI, ConfigI, Config } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
@@ -14,7 +14,7 @@ import { options } from '../../utils/chartOptions';
 export class VisualService {
 
   // Forms local configuration
-  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 } }; // App config
+  // config: ConfigI = new Config();
 
   /** Filter form */
   fF = this.fbuild.group({
@@ -27,9 +27,7 @@ export class VisualService {
     donnees: [true],
     moyennes: [true],
     croissance: [true],
-    type: [''],
-    // debut: [this.store.config.rendements.debut],
-    // fin: [this.store.config.predictions.fin]
+    type: ['']
   });
   chartType: string = 'line'; // Default charts style (lines)
   // chartOp = { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
@@ -100,7 +98,7 @@ export class VisualService {
     // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
     if (this.fF.controls.bordeaux.value!.length > 0) {
       this.bordeaux = [];
-      console.log("PDO Bordeaux sélectionnés", this.fF.controls.bordeaux.value);
+      // console.log("PDO Bordeaux sélectionnés", this.fF.controls.bordeaux.value);
       // Get PDO data
       await this.store.getBordeauxPdo(this.fF.controls.bordeaux.value as Array<string>)
         .then(d => {
@@ -113,9 +111,11 @@ export class VisualService {
       this.filtreBordeauxPlages();
     }
   }
+  /** Define start and end of data scale in charts (yields and predictions) */
   setGaps() {
-    this.gap.rd = this.fF.controls.rendements.value - this.config.rendements.debut;
-    this.gap.pr = this.fF.controls.predictions.value - this.config.predictions.fin;
+    this.gap.rd = this.fF.controls.rendements.value! - this.store.config.rendements.debut;
+    this.gap.pr = this.fF.controls.predictions.value! - this.store.config.predictions.fin;
+    console.log("Gap", this.gap);
   }
   /** Filter dataset to get years */
   filtrePlages(e: any = null) {
@@ -160,7 +160,6 @@ export class VisualService {
     this.DATA_B.PR.labels = this.gap.pr != 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
     this.DATA_B.RD.datasets = [];
     this.DATA_B.PR.datasets = [];
-    console.log(this.DATA_B);
     // Add PDO
     if (this.bordeaux.length > 0) {
       for (let i = 0; i < this.bordeaux.length; ++i) {
@@ -169,34 +168,40 @@ export class VisualService {
     }
     this.setAverage(this.DATA_B); // Calculate average values for chart data
     this.setScalesBordeaux(); // Calculate min and max for charts scale
+    console.log("Données bordeaux", this.DATA_B);
   }
   /** Get datasets from  */
   getDatasets(i: string) {
     const rd = { ...this.store.chartsSudoe.datasets.RD[i] };
-    // this.DATA.RD.datasets.push(rd);
     this.DATA.RD.datasets.push(this.setPlageRd(rd));
+    // this.DATA.RD.datasets.push(rd);
+
     const pr = { ...this.store.chartsSudoe.datasets.PR[i] };
     this.DATA.PR.datasets.push(this.setPlagePr(pr));
+    // this.DATA.PR.datasets.push(pr);
   }
   /** Get datasets from  */
   getBordeauxDatasets(i: string) {
     const rd = { ...this.store.chartsBordeaux.datasets.RD[i] };
-    // this.DATA.RD.datasets.push(rd);
+    console.log(this.setPlageRd(rd));
     this.DATA_B.RD.datasets.push(this.setPlageRd(rd));
+    // this.DATA_B.RD.datasets.push(rd);
+
     const pr = { ...this.store.chartsBordeaux.datasets.PR[i] };
     this.DATA_B.PR.datasets.push(this.setPlagePr(pr));
+    // this.DATA_B.PR.datasets.push(pr);
   }
   /** Calculate gap in years with slides filters for yields  */
   setPlageRd(d: DatasetI) {
     if (this.gap.rd != 0) {
-      d.data.slice(this.gap.rd, d.data.length);
+      d.data = d.data.slice(this.gap.rd, d.data.length);
     }
     return d;
   }
   /** Calculate gap in years with slides filters for predictions  */
   setPlagePr(d: DatasetI) {
     if (this.gap.pr != 0) {
-      d.data.slice(0, this.gap.pr);
+      d.data = d.data.slice(0, this.gap.pr);
     }
     return d;
   }

@@ -512,6 +512,15 @@ p-chart, p-chart canvas{
   min-height:300px !important;
   height:300px !important;
 }
+p-dialog article{
+  color:var(--sombre);
+}
+p-dialog h3{
+  margin:10px 0 5px;
+}
+p-dialog p{
+  margin:5px 10px
+}
 div.range-slider > input[type="range"]::-webkit-slider-runnable-track{
   background-color:rgba(0, 0, 0, .1);
 }

@@ -77,3 +77,23 @@ export class Chart implements ChartI {
   labels = [];
   datasets = [];
 }
+export interface ConfigI {
+  couleurs: any;
+  predictions: { debut: number, fin: number };
+  fiabilites: { debut: number, fin: number };
+  rendements: { debut: number, fin: number };
+  contact: string;
+  cle: string;
+  liens: { petite:string, grande:string };
+  version:number
+}
+export class Config implements ConfigI {
+  couleurs = {};
+  predictions = { debut: 2022, fin: 2032 };
+  fiabilites = { debut: 2020, fin: 2032 };
+  rendements = { debut: 1981, fin: 2021 };
+  contact = '';
+  cle = '';
+  liens = { petite: '', grande: '' };
+  version = 0.9
+}

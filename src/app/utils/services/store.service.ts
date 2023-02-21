@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
 import { BehaviorSubject } from 'rxjs';
-import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI } from '../modeles/filtres-i';
+import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI, ConfigI, Config } from '../modeles/filtres-i';
 import { ProfilI } from '../modeles/profil-i';
 import { MsgService } from './msg.service';
 
@@ -18,7 +18,7 @@ export interface TraductionI {
 export class StoreService {
   // private doc: any;
   config$: BehaviorSubject<any> = new BehaviorSubject({});
-  config: any = { couleurs: {}, predictions: { debut: 2020, fin: 2032 }, rendements: { debut: 1981, fin: 2019 }, contact: '', cle: '', liens: { petite: '', grande: '' }, version:0.9 }; // App config
+  config: ConfigI = new Config(); // App config
   // Dynamic filters list
   filtres: any;
   lastSudoe: Array<CreeI> = []; // ID of last data loaded in Firestore
@@ -52,28 +52,31 @@ export class StoreService {
     await this.getFireDoc('config', 'app').
       then(c => {
         this.config$.next(c.data());
-        this.config = c.data();
+        this.config = c.data() as ConfigI;
         // Set labels for charts : yields and predictions
         for(let i=0; i<this.config.rendements.fin - this.config.rendements.debut + 1; ++i){
           this.chartsSudoe.labels.RD.push(this.config.rendements.debut + i);
+          this.chartsBordeaux.labels.RD.push(this.config.rendements.debut + i);
         }
         for(let i=0; i<this.config.predictions.fin - this.config.predictions.debut +1; ++i){
           this.chartsSudoe.labels.PR.push(this.config.predictions.debut + i);
+          this.chartsBordeaux.labels.PR.push(this.config.predictions.debut + i);
         }
+        // console.log("Config", this.config, this.chartsSudoe, this.chartsBordeaux);
       })
       .catch(er => {
         console.log(er);
       });
   }
   /** Get local version for data update */
-  getVersion(){
-    if(localStorage.getItem('version')){
-      if(parseInt(localStorage.getItem('version')!) >= this.config.version) {
-        return true;
-      };
-    }
-    return false;
-  }
+  // getVersion(){
+  //   if(localStorage.getItem('version')){
+  //     if(parseInt(localStorage.getItem('version')!) >= this.config.version) {
+  //       return true;
+  //     };
+  //   }
+  //   return false;
+  // }
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
@@ -212,7 +215,6 @@ export class StoreService {
             this.setSudoeSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
-        console.log(this.set.sudoe);
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.sudoe.forEach(d => this.setFilterFromData(d));
         this.orderLists();
@@ -231,15 +233,17 @@ export class StoreService {
             this.set.creeLe = c.data() as CreeI;
           } else {
             const rd = c.data() as RendementI;
-            if(rd.pays.length > 0 && rd.regions.length > 0){
-              this.set.bordeaux.push(rd);
-            };
-            // this.set.bordeaux.push(c.data() as RendementI);
+            // if(rd.pays.length > 0 && rd.regions.length > 0){
+            this.set.bordeaux.push(rd);
+            // };
             this.setBordeauxSets(this.setCouleur('violet'), c.data() as RendementI)
           }
         });
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.bordeaux.forEach(d => this.setFilterFromBordeaux(d));
+        console.log("liste bordeaux après traitement des données", this.listes.bordeaux);
+        console.log("ChartsBordeaux", this.chartsBordeaux);
+        console.log("Set bordeaux", this.set.bordeaux)
         this.orderLists();
       })
       .catch(er => {

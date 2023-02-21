@@ -143,7 +143,6 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   }
   showBordeaux(){
     this.sudoe = false;
-    console.log("ChartsBEls", this.chartrdB, this.visual.chartsBEls.length );
     this.changeUI.detectChanges();
     this.visual.chartsBEls = [this.chartrdB, this.chartAvrdB, this.chartGrowthrdB, this.chartprB, this.chartGrowthprB];
     if(this.store.lastBordeaux.length == 0) this.store.getLastBordeaux();

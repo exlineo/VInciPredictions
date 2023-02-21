@@ -21,9 +21,7 @@ export class PredictionsService {
   listeDataVersions: Array<CreeI> = []; // List of availlable data
   saveVersion: boolean = false; //
 
-  constructor(private dbf: Firestore, public l: LanguesService) {
-    // this.listeDatas();
-  };
+  constructor(private dbf: Firestore, public l: LanguesService) {};
 
   /** Convert CSV data to RendementI array */
   setDataSudoe(data: string) {
