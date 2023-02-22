@@ -138,13 +138,16 @@ export class VisualisationsComponent implements OnInit, AfterViewInit, OnDestroy
   /** Panes to show SUDOE data or Bordeaux */
   showSudoe(){
     this.sudoe = true;
+    this.visual.gap = {rd:0, pr:0};
     this.changeUI.detectChanges();
     this.visual.chartsEls = [this.chartrd, this.chartAvrd, this.chartGrowthrd, this.chartpr, this.chartGrowthpr];
   }
   showBordeaux(){
     this.sudoe = false;
+    this.visual.gap = {rd:0, pr:0};
     this.changeUI.detectChanges();
     this.visual.chartsBEls = [this.chartrdB, this.chartAvrdB, this.chartGrowthrdB, this.chartprB, this.chartGrowthprB];
+    console.log(this.visual.chartsBEls);
     if(this.store.lastBordeaux.length == 0) this.store.getLastBordeaux();
   }
   /** Clear observable on navigation change to avoid data overload */

@@ -38,6 +38,8 @@
           [max]="store.config.rendements.fin" (onSlideEnd)="visual.filtrePlages($event)" class="inverse"></p-slider>
         <span>{{ store.config.rendements.fin }}</span>
       </p>
+      <!-- <h4 *ngIf="store.config.predictions.fin - store.config.predictions.debut > 4">{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4> -->
+      <!-- <p class="ecarts" *ngIf="store.config.predictions.fin - store.config.predictions.debut > 4"> -->
       <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
         <span>{{ store.config.predictions.debut }}</span>
@@ -53,14 +55,16 @@
       <p class="ecarts">
         <span>{{ visual.fF.controls.rendements.value }}</span>
         <p-slider formControlName="rendements" [min]="store.config.rendements.debut"
-          [max]="store.config.rendements.fin" (onSlideEnd)="visual.filtreBordeauxPlages($event)" class="inverse"></p-slider>
+          [max]="store.config.rendements.fin" (onSlideEnd)="visual.filtrePlages($event, 'bordeaux')" class="inverse"></p-slider>
         <span>{{ store.config.rendements.fin }}</span>
       </p>
-      <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
+      <!-- <h4 *ngIf="store.config.predictions.fin - store.config.predictions.debut > 4">{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4> -->
+      <!-- <p class="ecarts" *ngIf="store.config.predictions.fin - store.config.predictions.debut > 4"> -->
+        <h4>{{ visual.l.t['FILTRE_PLAGE_PREDIC'] }}</h4>
       <p class="ecarts">
         <span>{{ store.config.predictions.debut }}</span>
         <p-slider formControlName="predictions" [min]="store.config.predictions.debut"
-          [max]="store.config.predictions.fin" (onSlideEnd)="visual.filtreBordeauxPlages($event)"></p-slider>
+          [max]="store.config.predictions.fin" (onSlideEnd)="visual.filtrePlages($event, 'bordeaux')"></p-slider>
         <span>{{ visual.fF.controls.predictions.value }}</span>
       </p>
     </div>
@@ -117,7 +121,7 @@
       </div>
     </article>
     <!-- PDO from SUDOE -->
-    <article *ngIf="visual.pdo.length > 0 && visual.fF.controls.predictions.value">
+    <article *ngIf="visual.pdo.length > 0">
       <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
       <table>
         <thead>
@@ -125,7 +129,9 @@
             <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
             <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
             <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
-            <th *ngFor="let a of visual.pdo[0].fiabilites; let i=index">{{ store.config.predictions.debut + i }}</th>
+            <th *ngFor="let a of visual.pdo[0].fiabilites | slice:0:store.config.fiabilites.fin-store.config.fiabilites.debut let i=index">
+              {{ store.config.fiabilites.debut + i }}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -133,7 +139,7 @@
             <td>{{ d.pays }}</td>
             <td>{{ d.regions }}</td>
             <td>{{ d.pdo }}</td>
-            <td *ngFor="let p of d.predictions">{{ p }}</td>
+            <td *ngFor="let p of d.fiabilites | slice:0:store.config.fiabilites.fin-store.config.fiabilites.debut">{{ p }}</td>
           </tr>
         </tbody>
       </table>
@@ -189,24 +195,22 @@
         </legend>
       </div>
     </article>
-    <!-- PDO from SUDOE -->
-    <article *ngIf="visual.bordeaux.length > 0 && visual.fF.controls.predictions.value">
+    <!-- PDO from Bordeaux -->
+    <article *ngIf="visual.bordeaux.length > 0 && !sudoe">
       <h3>{{ visual.l.t['FILTRE_FIABILITE'] }}</h3>
       <table>
         <thead>
           <tr>
-            <th>{{ visual.l.t['FILTRE_PAYS'] }}</th>
-            <th>{{ visual.l.t['FILTRE_REGIONS'] }}</th>
             <th>{{ visual.l.t['FILTRE_PDO'] }}</th>
-            <th *ngFor="let a of visual.bordeaux[0].predictions; let i=index">{{ store.config.predictions.debut + i }}</th>
+            <th *ngFor="let a of visual.bordeaux[0].fiabilites | slice:0:store.config.fiabilites.fin-store.config.fiabilites.debut; let i=index">
+              {{ store.config.fiabilites.debut + i }}
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let d of visual.bordeaux">
-            <td>{{ d.pays }}</td>
-            <td>{{ d.regions }}</td>
-            <td>{{ d.pdo }}</td>
-            <td *ngFor="let p of d.predictions">{{ p }}</td>
+          <tr *ngFor="let b of visual.bordeaux">
+            <td>{{ b.pdo }}</td>
+            <td *ngFor="let p of b.fiabilites | slice:0:store.config.fiabilites.fin-store.config.fiabilites.debut">{{ p }}</td>
           </tr>
         </tbody>
       </table>

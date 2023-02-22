@@ -89,8 +89,8 @@ export interface ConfigI {
 }
 export class Config implements ConfigI {
   couleurs = {};
-  predictions = { debut: 2022, fin: 2032 };
-  fiabilites = { debut: 2020, fin: 2032 };
+  predictions = { debut: 2022, fin: 2023 };
+  fiabilites = { debut: 2020, fin: 2023 };
   rendements = { debut: 1981, fin: 2021 };
   contact = '';
   cle = '';

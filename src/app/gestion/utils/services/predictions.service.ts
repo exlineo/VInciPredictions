@@ -64,7 +64,10 @@ export class PredictionsService {
       this.l.store.setFilterFromBordeaux(tmp);
     }
   }
-  /** Convert excel line to JSON object */
+  /** Convert excel line to JSON object
+   * er and ep are for prediction : values from config.predictions.debut and config.predictions.fin
+   * Column of predictions and fiabilities can be added in the source file if config is correctly parametred
+  */
   conversion(d: Array<any>): RendementI {
     const er: number = this.l.store.config.rendements.fin - this.l.store.config.rendements.debut + 1;
     const ep: number = this.l.store.config.predictions.fin - this.l.store.config.rendements.debut + 1;
@@ -112,6 +115,8 @@ export class PredictionsService {
    * @returns {promise} Returns a promise
    */
   async batchFireSudoeDocs(time: number = -1) {
+    this.batch = writeBatch(this.dbf); // Redeclare batch to avoid error on successivs writes
+
     let n = 0;
     const col = this.setDate('dataset-sudoe:');
     this.creeTmp = { time: time == -1 ? Date.now() : time, collection: col };
@@ -136,6 +141,8 @@ export class PredictionsService {
    * @returns {promise} Returns a promise
    */
   async batchFireBordeauxDocs(time: number = -1) {
+    this.batch = writeBatch(this.dbf); // Redeclare batch to avoid error on successivs writes
+
     let n = 0;
     const col = this.setDate('dataset-bordeaux:');
     this.creeTmp = { time: time == -1 ? Date.now() : time, collection: col };
@@ -146,6 +153,8 @@ export class PredictionsService {
       this.batch.set(customDoc, d);
       ++n;
     });
+
+    console.log(this.l.store.set);
     /** Commit data to write */
     await this.batch.commit()
       .then(d => {

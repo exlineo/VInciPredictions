@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, doc, setDoc } from "@angular/fire/firestore";
 import { FormBuilder } from '@angular/forms';
 import { UIChart } from 'primeng/chart';
-import { RendementI, ChartI, Chart, DatasetI, ConfigI, Config } from 'src/app/utils/modeles/filtres-i';
+import { RendementI, Chart, DatasetI } from 'src/app/utils/modeles/filtres-i';
 import { ProfilI } from 'src/app/utils/modeles/profil-i';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { StoreService } from 'src/app/utils/services/store.service';
@@ -12,10 +12,6 @@ import { options } from '../../utils/chartOptions';
   providedIn: 'root'
 })
 export class VisualService {
-
-  // Forms local configuration
-  // config: ConfigI = new Config();
-
   /** Filter form */
   fF = this.fbuild.group({
     pays: [[]],
@@ -91,41 +87,38 @@ export class VisualService {
       this.filtrePlages();
     }
   }
-  /** Load PDO data from database in Bordeaux
-   */
+  /** Load PDO data from database in Bordeaux */
   async filtreBordeauxPdo() {
     this.bordeaux = [];
     // let ar = this.fF.controls.pdo.value!.map(p => p['name']);
     if (this.fF.controls.bordeaux.value!.length > 0) {
       this.bordeaux = [];
-      // console.log("PDO Bordeaux sélectionnés", this.fF.controls.bordeaux.value);
       // Get PDO data
       await this.store.getBordeauxPdo(this.fF.controls.bordeaux.value as Array<string>)
         .then(d => {
           d.forEach(p => {
             this.bordeaux.push(p.data() as RendementI);
           });
-          this.filtreBordeauxPlages();
+          this.filtrePlages(null, 'bordeaux');
         })
     } else {
-      this.filtreBordeauxPlages();
+      this.filtrePlages(null, 'bordeaux');
     }
   }
   /** Define start and end of data scale in charts (yields and predictions) */
   setGaps() {
     this.gap.rd = this.fF.controls.rendements.value! - this.store.config.rendements.debut;
     this.gap.pr = this.fF.controls.predictions.value! - this.store.config.predictions.fin;
-    console.log("Gap", this.gap);
   }
   /** Filter dataset to get years */
-  filtrePlages(e: any = null) {
+  filtrePlages(e: any = null, filtre:string = 'sudoe') {
     this.setGaps();
-    this.setFiltres();
+    filtre == 'sudoe' ? this.setFiltres() : this.setBordeauxFiltres();
   }
-  filtreBordeauxPlages(e: any = null) {
-    this.setGaps();
-    this.setBordeauxFiltres();
-  }
+  // filtreBordeauxPlages(e: any = null) {
+  //   this.setGaps();
+  //   this.setBordeauxFiltres();
+  // }
   /** Set data and show for yields and predictions on charts */
   setFiltres() {
     this.DATA.RD.labels = this.gap.rd != 0 ? this.store.chartsSudoe.labels.RD.slice(this.gap.rd, this.store.chartsSudoe.labels.RD.length) : [...this.store.chartsSudoe.labels.RD];
@@ -156,8 +149,8 @@ export class VisualService {
   }
   /** Set data and show for yields and predictions on charts */
   setBordeauxFiltres() {
-    this.DATA_B.RD.labels = this.gap.rd != 0 ? this.store.chartsBordeaux.labels.RD.slice(this.gap.rd, this.store.chartsSudoe.labels.RD.length) : [...this.store.chartsSudoe.labels.RD];
-    this.DATA_B.PR.labels = this.gap.pr != 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
+    this.DATA_B.RD.labels = this.gap.rd != 0 ? this.store.chartsBordeaux.labels.RD.slice(this.gap.rd, this.store.chartsBordeaux.labels.RD.length) : [...this.store.chartsBordeaux.labels.RD];
+    this.DATA_B.PR.labels = this.gap.pr != 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsBordeaux.labels.PR];
     this.DATA_B.RD.datasets = [];
     this.DATA_B.PR.datasets = [];
     // Add PDO
@@ -168,7 +161,6 @@ export class VisualService {
     }
     this.setAverage(this.DATA_B); // Calculate average values for chart data
     this.setScalesBordeaux(); // Calculate min and max for charts scale
-    console.log("Données bordeaux", this.DATA_B);
   }
   /** Get datasets from  */
   getDatasets(i: string) {
@@ -183,7 +175,6 @@ export class VisualService {
   /** Get datasets from  */
   getBordeauxDatasets(i: string) {
     const rd = { ...this.store.chartsBordeaux.datasets.RD[i] };
-    console.log(this.setPlageRd(rd));
     this.DATA_B.RD.datasets.push(this.setPlageRd(rd));
     // this.DATA_B.RD.datasets.push(rd);
 
@@ -240,7 +231,7 @@ export class VisualService {
         if (av.data[i] < this.scales.min) this.scales.min = Math.floor(av.data[i]);
         if (av.data[i] > this.scales.max) this.scales.max = Math.ceil(av.data[i]);
 
-        if (n < this.scales.grmin && n != Infinity) this.scales.grmin = Math.floor(n);
+        if (n < this.scales.grmin && n != -Infinity) this.scales.grmin = Math.floor(n);
         if (n > this.scales.grmax && n != Infinity) this.scales.grmax = Math.ceil(n);
 
       });
@@ -256,26 +247,27 @@ export class VisualService {
       av.data.forEach((d, i) => {
         let n = 0;
         if (i == 0) {
-          const tmp = data.PR.datasets[data.PR.datasets.length - 1];
+          const tmp = data.RD.datasets[data.RD.datasets.length - 1];
           n = Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100);
         } else {
           n = Math.round((av.data[i] * 100 / av.data[i - 1]) - 100);
         };
-        gr.data.push(n);
+        gr.data.push(n == -100 || Number.isNaN(n) || n == Infinity || n == -Infinity ? 0 : n);
+        console.log("Pourcentage des prédictions", gr, n);
         // Calculate scale for charts
-        if (n < this.scales.grmin && n != Infinity) this.scales.grmin = Math.floor(n);
+        if (n < this.scales.grmin && n != -Infinity) this.scales.grmin = Math.floor(n);
         if (n > this.scales.grmax && n != Infinity) this.scales.grmax = Math.ceil(n);
       });
       data.PRGR.datasets.push(gr);
 
     });
+    console.log(data);
     // Refreshing HTML charts
     this.refreshCharts(data);
   }
   // =============== INTERFACE ================
   /** Set min and max values for charts scales */
   setScalesSudoe() {
-    console.log(this.minimum, this.maximum);
     this.chartOp.RD = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'left', this.scales.min, this.scales.max);
     this.chartOp.PR = options(this.l.t['FORM_ANNEES'], this.l.t['FORM_RENDEMENTS'], false, 'right', this.scales.min, this.scales.max);
 
@@ -297,6 +289,7 @@ export class VisualService {
       });
     } else {
       this.chartsBEls.forEach(c => {
+        console.log("refresh con", c, this.scales);
         c.refresh();
       });
     }

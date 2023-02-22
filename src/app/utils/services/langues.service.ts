@@ -31,14 +31,11 @@ export class LanguesService {
   }
   /** Charger les ndonnées de la langue depuis la base de données */
   loadLangue() {
-    console.log(this.langue, typeof this.langue, JSON.stringify(this.langue));
     this.store.getFireDoc('traductions', this.langue)
       .then<any>(d => {
-        console.log(d, d.data());
         return d.data();
       })
       .then<unknown>(d => {
-        console.log(d);
         if (d) {
           let tmp = d['data'];
           this.t = JSON.parse(tmp);
@@ -80,18 +77,5 @@ export class LanguesService {
         )
         .catch(er => console.log(er));
     }
-
-    // if (this.pages[this.langue][id]) {
-    // } else {
-    //   this.store.getFireDoc(this.langue, id)
-    //     .then<any>(d => d.data())
-    //     .then<unknown>(p => {
-    //       this.page = p;
-    //       if(!this.page.id) this.page.id = id;
-    //       this.pages[this.langue][id] = p;
-    //     }
-    //     )
-    //     .catch(er => console.log(er));
-    // }
   }
 }

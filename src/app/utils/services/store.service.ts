@@ -62,7 +62,6 @@ export class StoreService {
           this.chartsSudoe.labels.PR.push(this.config.predictions.debut + i);
           this.chartsBordeaux.labels.PR.push(this.config.predictions.debut + i);
         }
-        // console.log("Config", this.config, this.chartsSudoe, this.chartsBordeaux);
       })
       .catch(er => {
         console.log(er);
@@ -241,9 +240,6 @@ export class StoreService {
         });
         // Set list of filters (countries, regions, pdos for visualisation page)
         this.set.bordeaux.forEach(d => this.setFilterFromBordeaux(d));
-        console.log("liste bordeaux après traitement des données", this.listes.bordeaux);
-        console.log("ChartsBordeaux", this.chartsBordeaux);
-        console.log("Set bordeaux", this.set.bordeaux)
         this.orderLists();
       })
       .catch(er => {
