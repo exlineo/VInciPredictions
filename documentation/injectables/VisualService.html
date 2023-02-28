@@ -1,0 +1,2319 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>vinci-predictions documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">vinci-predictions documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li >VisualService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/predictions/utils/services/visual.service.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#bordeaux" >bordeaux</a>
+                            </li>
+                            <li>
+                                <a href="#chartOp" >chartOp</a>
+                            </li>
+                            <li>
+                                <a href="#chartsBEls" >chartsBEls</a>
+                            </li>
+                            <li>
+                                <a href="#chartsEls" >chartsEls</a>
+                            </li>
+                            <li>
+                                <a href="#chartType" >chartType</a>
+                            </li>
+                            <li>
+                                <a href="#DATA" >DATA</a>
+                            </li>
+                            <li>
+                                <a href="#DATA_B" >DATA_B</a>
+                            </li>
+                            <li>
+                                <a href="#fF" >fF</a>
+                            </li>
+                            <li>
+                                <a href="#gap" >gap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#l" >l</a>
+                            </li>
+                            <li>
+                                <a href="#listes" >listes</a>
+                            </li>
+                            <li>
+                                <a href="#maximum" >maximum</a>
+                            </li>
+                            <li>
+                                <a href="#minimum" >minimum</a>
+                            </li>
+                            <li>
+                                <a href="#pays" >pays</a>
+                            </li>
+                            <li>
+                                <a href="#pdo" >pdo</a>
+                            </li>
+                            <li>
+                                <a href="#scales" >scales</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#store" >store</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#filtreBordeauxPdo" >filtreBordeauxPdo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#filtrePdo" >filtrePdo</a>
+                            </li>
+                            <li>
+                                <a href="#filtrePlages" >filtrePlages</a>
+                            </li>
+                            <li>
+                                <a href="#getBordeauxDatasets" >getBordeauxDatasets</a>
+                            </li>
+                            <li>
+                                <a href="#getDatasets" >getDatasets</a>
+                            </li>
+                            <li>
+                                <a href="#imgDownloadStats" >imgDownloadStats</a>
+                            </li>
+                            <li>
+                                <a href="#refreshCharts" >refreshCharts</a>
+                            </li>
+                            <li>
+                                <a href="#setAverage" >setAverage</a>
+                            </li>
+                            <li>
+                                <a href="#setBordeauxFiltres" >setBordeauxFiltres</a>
+                            </li>
+                            <li>
+                                <a href="#setFiltres" >setFiltres</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#setFireDoc" >setFireDoc</a>
+                            </li>
+                            <li>
+                                <a href="#setGaps" >setGaps</a>
+                            </li>
+                            <li>
+                                <a href="#setPlagePr" >setPlagePr</a>
+                            </li>
+                            <li>
+                                <a href="#setPlageRd" >setPlageRd</a>
+                            </li>
+                            <li>
+                                <a href="#setScalesBordeaux" >setScalesBordeaux</a>
+                            </li>
+                            <li>
+                                <a href="#setScalesSudoe" >setScalesSudoe</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateOwnProfil" >updateOwnProfil</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dbf: Firestore, store: <a href="../injectables/StoreService.html" target="_self">StoreService</a>, l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>, fbuild: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dbf</td>
+                                                  
+                                                        <td>
+                                                                    <code>Firestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>store</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StoreService.html" target="_self" >StoreService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>l</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fbuild</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtreBordeauxPdo"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>filtreBordeauxPdo</b></span>
+                        <a href="#filtreBordeauxPdo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filtreBordeauxPdo()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:91</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Load PDO data from database in Bordeaux</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtrePdo"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>filtrePdo</b></span>
+                        <a href="#filtrePdo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filtrePdo()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Load PDO data from database in SUDOE</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtrePlages"></a>
+                    <span class="name">
+                        <span ><b>filtrePlages</b></span>
+                        <a href="#filtrePlages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filtrePlages(e: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, filtre: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:114</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Filter dataset to get years</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>e</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>null</code>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>filtre</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>&#x27;sudoe&#x27;</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBordeauxDatasets"></a>
+                    <span class="name">
+                        <span ><b>getBordeauxDatasets</b></span>
+                        <a href="#getBordeauxDatasets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBordeauxDatasets(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="176"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:176</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get datasets from</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>i</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatasets"></a>
+                    <span class="name">
+                        <span ><b>getDatasets</b></span>
+                        <a href="#getDatasets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatasets(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:166</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get datasets from</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>i</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="imgDownloadStats"></a>
+                    <span class="name">
+                        <span ><b>imgDownloadStats</b></span>
+                        <a href="#imgDownloadStats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>imgDownloadStats(localChart: <a href="../classes/Chart.html" target="_self">UIChart</a>, name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="302"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:302</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get image from a chart</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>localChart</td>
+                                    <td>
+                                                <code><a href="../classes/Chart.html" target="_self" >UIChart</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Chart from where the graph is extracted</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Name of the file to generate</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshCharts"></a>
+                    <span class="name">
+                        <span ><b>refreshCharts</b></span>
+                        <a href="#refreshCharts"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshCharts(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="285"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:285</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Refreshing charts in page</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setAverage"></a>
+                    <span class="name">
+                        <span ><b>setAverage</b></span>
+                        <a href="#setAverage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setAverage(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:200</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculate and show the average data</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setBordeauxFiltres"></a>
+                    <span class="name">
+                        <span ><b>setBordeauxFiltres</b></span>
+                        <a href="#setBordeauxFiltres"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setBordeauxFiltres()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="151"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:151</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set data and show for yields and predictions on charts</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setFiltres"></a>
+                    <span class="name">
+                        <span ><b>setFiltres</b></span>
+                        <a href="#setFiltres"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setFiltres()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set data and show for yields and predictions on charts</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setFireDoc"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>setFireDoc</b></span>
+                        <a href="#setFireDoc"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setFireDoc(collec: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: literal type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:67</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>write a document on Firestore</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>collec</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Name of collection</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Object with UID to write</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>unknown</code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Returns a promise</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setGaps"></a>
+                    <span class="name">
+                        <span ><b>setGaps</b></span>
+                        <a href="#setGaps"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setGaps()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="109"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:109</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Define start and end of data scale in charts (yields and predictions)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setPlagePr"></a>
+                    <span class="name">
+                        <span ><b>setPlagePr</b></span>
+                        <a href="#setPlagePr"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setPlagePr(d: <a href="../interfaces/DatasetI.html" target="_self">DatasetI</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="193"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:193</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculate gap in years with slides filters for predictions</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>d</td>
+                                    <td>
+                                                <code><a href="../interfaces/DatasetI.html" target="_self" >DatasetI</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/DatasetI.html" target="_self" >DatasetI</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setPlageRd"></a>
+                    <span class="name">
+                        <span ><b>setPlageRd</b></span>
+                        <a href="#setPlageRd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setPlageRd(d: <a href="../interfaces/DatasetI.html" target="_self">DatasetI</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:186</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculate gap in years with slides filters for yields</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>d</td>
+                                    <td>
+                                                <code><a href="../interfaces/DatasetI.html" target="_self" >DatasetI</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/DatasetI.html" target="_self" >DatasetI</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setScalesBordeaux"></a>
+                    <span class="name">
+                        <span ><b>setScalesBordeaux</b></span>
+                        <a href="#setScalesBordeaux"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setScalesBordeaux()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="277"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:277</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setScalesSudoe"></a>
+                    <span class="name">
+                        <span ><b>setScalesSudoe</b></span>
+                        <a href="#setScalesSudoe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setScalesSudoe()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="270"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:270</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set min and max values for charts scales</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateOwnProfil"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>updateOwnProfil</b></span>
+                        <a href="#updateOwnProfil"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateOwnProfil(uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, profil: <a href="../interfaces/ProfilI.html" target="_self">ProfilI</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:55</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Update user&#39;s profil</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>uid</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>uid to update</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>profil</td>
+                                    <td>
+                                                <code><a href="../interfaces/ProfilI.html" target="_self" >ProfilI</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Updated data</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bordeaux"></a>
+                    <span class="name">
+                        <span ><b>bordeaux</b></span>
+                        <a href="#bordeaux"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chartOp"></a>
+                    <span class="name">
+                        <span ><b>chartOp</b></span>
+                        <a href="#chartOp"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ left: {}, right: {}, RD: {}, PR: {}, PRGR:{}, RDGR:{}, RDB: {}, PRB: {}, PRGRB:{}, RDGRB:{} }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chartsBEls"></a>
+                    <span class="name">
+                        <span ><b>chartsBEls</b></span>
+                        <a href="#chartsBEls"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Chart.html" target="_self" >Array&lt;UIChart&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chartsEls"></a>
+                    <span class="name">
+                        <span ><b>chartsEls</b></span>
+                        <a href="#chartsEls"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Chart.html" target="_self" >Array&lt;UIChart&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chartType"></a>
+                    <span class="name">
+                        <span ><b>chartType</b></span>
+                        <a href="#chartType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;line&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DATA"></a>
+                    <span class="name">
+                        <span ><b>DATA</b></span>
+                        <a href="#DATA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>All data for charts (sudoe zone)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DATA_B"></a>
+                    <span class="name">
+                        <span ><b>DATA_B</b></span>
+                        <a href="#DATA_B"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:34</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>All data for charts (Bordeaux)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fF"></a>
+                    <span class="name">
+                        <span ><b>fF</b></span>
+                        <a href="#fF"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.fbuild.group({
+    pays: [[]],
+    regions: [[]],
+    pdo: [[]],
+    bordeaux: [[]],
+    rendements: [this.store.config.rendements.debut],
+    predictions: [this.store.config.predictions.fin],
+    donnees: [true],
+    moyennes: [true],
+    croissance: [true],
+    type: [&#x27;&#x27;]
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:16</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Filter form</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gap"></a>
+                    <span class="name">
+                        <span ><b>gap</b></span>
+                        <a href="#gap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ rd: 0, pr: 0 }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Year&#39;s gaps for yields and predictions</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="l"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>l</b></span>
+                        <a href="#l"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listes"></a>
+                    <span class="name">
+                        <span ><b>listes</b></span>
+                        <a href="#listes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{ pays: [], regions: [], pdo: [], bordeaux: [] }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="maximum"></a>
+                    <span class="name">
+                        <span ><b>maximum</b></span>
+                        <a href="#maximum"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>25</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="minimum"></a>
+                    <span class="name">
+                        <span ><b>minimum</b></span>
+                        <a href="#minimum"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pays"></a>
+                    <span class="name">
+                        <span ><b>pays</b></span>
+                        <a href="#pays"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Array&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pdo"></a>
+                    <span class="name">
+                        <span ><b>pdo</b></span>
+                        <a href="#pdo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scales"></a>
+                    <span class="name">
+                        <span ><b>scales</b></span>
+                        <a href="#scales"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{min:0, max:25, grmin:-25, grmax:25}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="store"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>store</b></span>
+                        <a href="#store"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/StoreService.html" target="_self" >StoreService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/predictions/utils/services/visual.service.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Firestore, doc, setDoc } from &quot;@angular/fire/firestore&quot;;
+import { FormBuilder } from &#x27;@angular/forms&#x27;;
+import { UIChart } from &#x27;primeng/chart&#x27;;
+import { RendementI, Chart, DatasetI } from &#x27;src/app/utils/modeles/filtres-i&#x27;;
+import { ProfilI } from &#x27;src/app/utils/modeles/profil-i&#x27;;
+import { LanguesService } from &#x27;src/app/utils/services/langues.service&#x27;;
+import { StoreService } from &#x27;src/app/utils/services/store.service&#x27;;
+import { options } from &#x27;../../utils/chartOptions&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class VisualService {
+  /** Filter form */
+  fF &#x3D; this.fbuild.group({
+    pays: [[]],
+    regions: [[]],
+    pdo: [[]],
+    bordeaux: [[]],
+    rendements: [this.store.config.rendements.debut],
+    predictions: [this.store.config.predictions.fin],
+    donnees: [true],
+    moyennes: [true],
+    croissance: [true],
+    type: [&#x27;&#x27;]
+  });
+  chartType: string &#x3D; &#x27;line&#x27;; // Default charts style (lines)
+  // chartOp &#x3D; { nu: {}, left: {}, right: {}, barLeft: {}, barRight: {} };
+  chartOp: any &#x3D; { left: {}, right: {}, RD: {}, PR: {}, PRGR:{}, RDGR:{}, RDB: {}, PRB: {}, PRGRB:{}, RDGRB:{} }; // Options for charts
+  /** All data for charts (sudoe zone) */
+  DATA: any &#x3D; { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
+  /** All data for charts (Bordeaux) */
+  DATA_B: any &#x3D; { RD: new Chart(), PR: new Chart(), RDAV: new Chart(), PRAV: new Chart(), RDGR: new Chart(), PRGR: new Chart() };
+  /** Year&#x27;s gaps for yields and predictions */
+  gap: any &#x3D; { rd: 0, pr: 0 };
+
+  scales &#x3D; {min:0, max:25, grmin:-25, grmax:25};
+  minimum: number &#x3D; 0;
+  maximum: number &#x3D; 25;
+
+  pays: Array&lt;any&gt; &#x3D; []; // List of countries
+  listes: { pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;string&gt;, bordeaux: Array&lt;string&gt; } &#x3D; { pays: [], regions: [], pdo: [], bordeaux: [] }; // Liste of filters
+  pdo: Array&lt;RendementI&gt; &#x3D; []; // List of loaded PDOs from SUDOE zone
+  bordeaux: Array&lt;RendementI&gt; &#x3D; []; // List of PDOs from Bordeaux
+  chartsEls: Array&lt;UIChart&gt; &#x3D; []; // List of charts of Sudoe to refresh
+  chartsBEls: Array&lt;UIChart&gt; &#x3D; []; // List of charts pf Bordeaux to refresh
+
+  constructor(private dbf: Firestore, public store: StoreService, public l: LanguesService, private fbuild: FormBuilder) { };
+
+  /** Update user&#x27;s profil
+   * @param {number} uid uid to update
+   * @param {ProfilI} profil Updated data
+  */
+  async updateOwnProfil(uid: string, profil: ProfilI) {
+    const customDoc &#x3D; doc(this.dbf, &#x27;comptes&#x27;, uid);
+    await setDoc(customDoc, JSON.parse(JSON.stringify(profil)), { merge: true })
+      .then(p &#x3D;&gt; this.l.msg.msgOk(this.l.t[&#x27;MSG_DATA&#x27;], this.l.t[&#x27;MSG_U_DESCR&#x27;]))
+      .catch(er &#x3D;&gt; this.l.msg.msgFail(this.l.t[&#x27;MSG_ER&#x27;], er));
+  }
+  /**
+   * write a document on Firestore
+   * @param collec Name of collection
+   * @param data Object with UID to write
+   * @returns {promise} Returns a promise
+   */
+  async setFireDoc(collec: string, data: { uid: string, doc: any }) {
+    const customDoc &#x3D; doc(this.dbf, collec, data.uid);
+    return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
+  }
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; MANIPULATE DATA &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /** Load PDO data from database in SUDOE
+   */
+  async filtrePdo() {
+    this.pdo &#x3D; [];
+    // let ar &#x3D; this.fF.controls.pdo.value!.map(p &#x3D;&gt; p[&#x27;name&#x27;]);
+    if (this.fF.controls.pdo.value!.length &gt; 0) {
+      // Get PDO data
+      await this.store.getPdo(this.fF.controls.pdo.value as Array&lt;string&gt;)
+        .then(d &#x3D;&gt; {
+          d.forEach(p &#x3D;&gt; {
+            this.pdo.push(p.data() as RendementI);
+          });
+          this.filtrePlages();
+        })
+    } else {
+      this.filtrePlages();
+    }
+  }
+  /** Load PDO data from database in Bordeaux */
+  async filtreBordeauxPdo() {
+    this.bordeaux &#x3D; [];
+    // let ar &#x3D; this.fF.controls.pdo.value!.map(p &#x3D;&gt; p[&#x27;name&#x27;]);
+    if (this.fF.controls.bordeaux.value!.length &gt; 0) {
+      this.bordeaux &#x3D; [];
+      // Get PDO data
+      await this.store.getBordeauxPdo(this.fF.controls.bordeaux.value as Array&lt;string&gt;)
+        .then(d &#x3D;&gt; {
+          d.forEach(p &#x3D;&gt; {
+            this.bordeaux.push(p.data() as RendementI);
+          });
+          this.filtrePlages(null, &#x27;bordeaux&#x27;);
+        })
+    } else {
+      this.filtrePlages(null, &#x27;bordeaux&#x27;);
+    }
+  }
+  /** Define start and end of data scale in charts (yields and predictions) */
+  setGaps() {
+    this.gap.rd &#x3D; this.fF.controls.rendements.value! - this.store.config.rendements.debut;
+    this.gap.pr &#x3D; this.fF.controls.predictions.value! - this.store.config.predictions.fin;
+  }
+  /** Filter dataset to get years */
+  filtrePlages(e: any &#x3D; null, filtre:string &#x3D; &#x27;sudoe&#x27;) {
+    this.setGaps();
+    filtre &#x3D;&#x3D; &#x27;sudoe&#x27; ? this.setFiltres() : this.setBordeauxFiltres();
+  }
+  // filtreBordeauxPlages(e: any &#x3D; null) {
+  //   this.setGaps();
+  //   this.setBordeauxFiltres();
+  // }
+  /** Set data and show for yields and predictions on charts */
+  setFiltres() {
+    this.DATA.RD.labels &#x3D; this.gap.rd !&#x3D; 0 ? this.store.chartsSudoe.labels.RD.slice(this.gap.rd, this.store.chartsSudoe.labels.RD.length) : [...this.store.chartsSudoe.labels.RD];
+    this.DATA.PR.labels &#x3D; this.gap.pr !&#x3D; 0 ? this.store.chartsSudoe.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsSudoe.labels.PR];
+    this.DATA.RD.datasets &#x3D; [];
+    this.DATA.PR.datasets &#x3D; [];
+    // Set region if some was selected in filters
+    if (this.listes.pays.length &gt; 0) {
+      for (let i &#x3D; 0; i &lt; this.listes.pays.length; ++i) {
+        this.getDatasets(this.listes.pays[i]);
+      };
+    }
+    // Set region if some was selected in filters
+    if (this.listes.regions.length &gt; 0) {
+      for (let i &#x3D; 0; i &lt; this.listes.regions.length; ++i) {
+        this.getDatasets(this.listes.regions[i]);
+      };
+    }
+    // Add PDO
+    if (this.pdo.length &gt; 0) {
+      for (let i &#x3D; 0; i &lt; this.pdo.length; ++i) {
+        this.getDatasets(this.pdo[i].pdo!);
+      };
+    }
+
+    this.setAverage(this.DATA); // Calculate average values for chart data
+    this.setScalesSudoe(); // Calculate min and max for charts scale
+  }
+  /** Set data and show for yields and predictions on charts */
+  setBordeauxFiltres() {
+    this.DATA_B.RD.labels &#x3D; this.gap.rd !&#x3D; 0 ? this.store.chartsBordeaux.labels.RD.slice(this.gap.rd, this.store.chartsBordeaux.labels.RD.length) : [...this.store.chartsBordeaux.labels.RD];
+    this.DATA_B.PR.labels &#x3D; this.gap.pr !&#x3D; 0 ? this.store.chartsBordeaux.labels.PR.slice(0, this.gap.pr) : [...this.store.chartsBordeaux.labels.PR];
+    this.DATA_B.RD.datasets &#x3D; [];
+    this.DATA_B.PR.datasets &#x3D; [];
+    // Add PDO
+    if (this.bordeaux.length &gt; 0) {
+      for (let i &#x3D; 0; i &lt; this.bordeaux.length; ++i) {
+        this.getBordeauxDatasets(this.bordeaux[i].pdo!);
+      };
+    }
+    this.setAverage(this.DATA_B); // Calculate average values for chart data
+    this.setScalesBordeaux(); // Calculate min and max for charts scale
+  }
+  /** Get datasets from  */
+  getDatasets(i: string) {
+    const rd &#x3D; { ...this.store.chartsSudoe.datasets.RD[i] };
+    this.DATA.RD.datasets.push(this.setPlageRd(rd));
+    // this.DATA.RD.datasets.push(rd);
+
+    const pr &#x3D; { ...this.store.chartsSudoe.datasets.PR[i] };
+    this.DATA.PR.datasets.push(this.setPlagePr(pr));
+    // this.DATA.PR.datasets.push(pr);
+  }
+  /** Get datasets from  */
+  getBordeauxDatasets(i: string) {
+    const rd &#x3D; { ...this.store.chartsBordeaux.datasets.RD[i] };
+    this.DATA_B.RD.datasets.push(this.setPlageRd(rd));
+    // this.DATA_B.RD.datasets.push(rd);
+
+    const pr &#x3D; { ...this.store.chartsBordeaux.datasets.PR[i] };
+    this.DATA_B.PR.datasets.push(this.setPlagePr(pr));
+    // this.DATA_B.PR.datasets.push(pr);
+  }
+  /** Calculate gap in years with slides filters for yields  */
+  setPlageRd(d: DatasetI) {
+    if (this.gap.rd !&#x3D; 0) {
+      d.data &#x3D; d.data.slice(this.gap.rd, d.data.length);
+    }
+    return d;
+  }
+  /** Calculate gap in years with slides filters for predictions  */
+  setPlagePr(d: DatasetI) {
+    if (this.gap.pr !&#x3D; 0) {
+      d.data &#x3D; d.data.slice(0, this.gap.pr);
+    }
+    return d;
+  }
+  /** Calculate and show the average data */
+  setAverage(data: any) {
+    this.scales &#x3D; {min:0, max:25, grmin:-100, grmax:100};
+
+    // Calculate average data, 5 years and purcent growth on years
+    data.RDAV.labels &#x3D; data.RD.labels.slice(4, data.RD.labels.length);
+    data.RDGR.labels &#x3D; data.RD.labels.slice(1, data.RD.labels.length);
+    // data.PRAV.labels &#x3D; data.RD.labels.slice(3, data.PR.labels.length);
+    data.PRGR.labels &#x3D; data.PR.labels;
+
+    data.RDAV.datasets &#x3D; [];
+    data.RDGR.datasets &#x3D; [];
+
+    data.PRGR.datasets &#x3D; [];
+
+    // Calculate purcent growth on years
+    data.RD.datasets.forEach((av: DatasetI) &#x3D;&gt; {
+      // Empty datasets containers
+      const rd: DatasetI &#x3D; { label: av.label, borderColor: av.borderColor, backgroundColor: av.borderColor, data: [] }; // Yields datas average
+      const gr: DatasetI &#x3D; { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
+
+      av.data.forEach((d, i) &#x3D;&gt; {
+        let n &#x3D; 0;
+        if (i &gt; 3) {
+          // Add average data to data array
+          rd.data.push(Math.round((av.data[i - 4] + av.data[i - 3] + av.data[i - 2] + av.data[i - 1] + av.data[i]) / 5));
+        };
+        if (i &gt; 0) {
+          n &#x3D; (av.data[i] * 100 / av.data[i - 1]) - 100
+          gr.data.push(n);
+        };
+        // Calculate scale for charts
+        if (av.data[i] &lt; this.scales.min) this.scales.min &#x3D; Math.floor(av.data[i]);
+        if (av.data[i] &gt; this.scales.max) this.scales.max &#x3D; Math.ceil(av.data[i]);
+
+        if (n &lt; this.scales.grmin &amp;&amp; n !&#x3D; -Infinity) this.scales.grmin &#x3D; Math.floor(n);
+        if (n &gt; this.scales.grmax &amp;&amp; n !&#x3D; Infinity) this.scales.grmax &#x3D; Math.ceil(n);
+
+      });
+      // Set datasets for average charts
+      data.RDAV.datasets.push(rd);
+      data.RDGR.datasets.push(gr);
+    });
+    /** Calculate growth prediction in purcent */
+    data.PR.datasets.forEach((av: DatasetI) &#x3D;&gt; {
+      // Empty datasets containers
+      const gr: DatasetI &#x3D; { label: av.label, backgroundColor: av.borderColor, data: [] }; // Growth data purcent
+
+      av.data.forEach((d, i) &#x3D;&gt; {
+        let n &#x3D; 0;
+        if (i &#x3D;&#x3D; 0) {
+          const tmp &#x3D; data.RD.datasets[data.RD.datasets.length - 1];
+          n &#x3D; Math.round((av.data[i] * 100 / tmp.data[tmp.data.length - 1]) - 100);
+        } else {
+          n &#x3D; Math.round((av.data[i] * 100 / av.data[i - 1]) - 100);
+        };
+        gr.data.push(n &#x3D;&#x3D; -100 || Number.isNaN(n) || n &#x3D;&#x3D; Infinity || n &#x3D;&#x3D; -Infinity ? 0 : n);
+        console.log(&quot;Pourcentage des prédictions&quot;, gr, n);
+        // Calculate scale for charts
+        if (n &lt; this.scales.grmin &amp;&amp; n !&#x3D; -Infinity) this.scales.grmin &#x3D; Math.floor(n);
+        if (n &gt; this.scales.grmax &amp;&amp; n !&#x3D; Infinity) this.scales.grmax &#x3D; Math.ceil(n);
+      });
+      data.PRGR.datasets.push(gr);
+
+    });
+    console.log(data);
+    // Refreshing HTML charts
+    this.refreshCharts(data);
+  }
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; INTERFACE &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  /** Set min and max values for charts scales */
+  setScalesSudoe() {
+    this.chartOp.RD &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;left&#x27;, this.scales.min, this.scales.max);
+    this.chartOp.PR &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;right&#x27;, this.scales.min, this.scales.max);
+
+    this.chartOp.RDGR &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;left&#x27;, this.scales.grmin, this.scales.grmax);
+    this.chartOp.PRGR &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;right&#x27;, this.scales.grmin, this.scales.grmax);
+  }
+  setScalesBordeaux() {
+    this.chartOp.RDB &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;left&#x27;, this.scales.min, this.scales.max);
+    this.chartOp.PRB &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;right&#x27;, this.scales.min, this.scales.max);
+
+    this.chartOp.RDGRB &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;left&#x27;, this.scales.grmin, this.scales.grmax);
+    this.chartOp.PRGRB &#x3D; options(this.l.t[&#x27;FORM_ANNEES&#x27;], this.l.t[&#x27;FORM_RENDEMENTS&#x27;], false, &#x27;right&#x27;, this.scales.grmin, this.scales.grmax);
+  }
+  /** Refreshing charts in page */
+  refreshCharts(data: any) {
+    if (data &#x3D;&#x3D; this.DATA) {
+      this.chartsEls.forEach(c &#x3D;&gt; {
+        c.refresh();
+      });
+    } else {
+      this.chartsBEls.forEach(c &#x3D;&gt; {
+        console.log(&quot;refresh con&quot;, c, this.scales);
+        c.refresh();
+      });
+    }
+  }
+  /**
+   * Get image from a chart
+   * @param localChart Chart from where the graph is extracted
+   * @param name Name of the file to generate
+   */
+  imgDownloadStats(localChart: UIChart, name: string) {
+    let img;
+    const lien &#x3D; document.createElement(&#x27;a&#x27;);
+    img &#x3D; localChart.getBase64Image();
+    lien.setAttribute(&#x27;download&#x27;, name);
+    lien.setAttribute(&#x27;href&#x27;, img.replace(&quot;image/png&quot;, &quot;image/octet-stream&quot;));
+    lien.click();
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'VisualService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

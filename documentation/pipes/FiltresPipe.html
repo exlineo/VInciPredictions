@@ -223,9 +223,10 @@ export class FiltresPipe implements PipeTransform {
         data.push(v);
       } else if (args.pays.indexOf(v.pays) !&#x3D; -1) {
         data.push(v);
-      } else if (args.type &#x3D;&#x3D; v.type.toLowerCase()) {
-        data.push(v);
       }
+      // } else if (args.type &#x3D;&#x3D; v.type.toLowerCase()) {
+      //   data.push(v);
+      // }
     });
     return data.length &gt; 0 ? data : values;
   }

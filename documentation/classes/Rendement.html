@@ -152,7 +152,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:35</a></div>
                         </td>
                     </tr>
 
@@ -183,7 +183,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -214,7 +214,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -245,7 +245,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:34</a></div>
                         </td>
                     </tr>
 
@@ -276,7 +276,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -307,7 +307,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -332,7 +332,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/utils/modeles/filtres-i.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -363,13 +363,19 @@ export interface RendementI{
   regions:string;
   type?:Couleur;
   pdo?:string;
+  min?:number;
+  max?:number;
   rendements:Array&lt;number&gt;;
   predictions:Array&lt;number&gt;;
   fiabilites:Array&lt;number&gt;;
 }
-export interface MoyennesI{
-  pays: any;
-  regions: any;
+export interface ZonesI{
+  pays:any; // List of countries averages
+  regions:any; // List of regions averages
+}
+export interface YieldI{
+  RD:any; // Array of yields
+  PR:any; // Array of predictions
 }
 export class Rendement implements RendementI{
   pays &#x3D; &quot;&quot;;
@@ -382,35 +388,66 @@ export class Rendement implements RendementI{
 }
 export interface DataI{
   creeLe?:CreeI;
-  data:Array&lt;RendementI&gt;;
+  sudoe:Array&lt;RendementI&gt;;
+  bordeaux:Array&lt;RendementI&gt;;
   filtres?:{ pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;string&gt; };
-  moyennes?:MoyennesI;
+  zones:ZonesI;
 }
 export interface CreeI{
-  time?:number;
-  collection?:string;
+  time?:number; // Timestamp
+  collection?:string; // name of the set (collection) in Firebase
 }
 export interface DatasetI{
   label: string,
   fill?: boolean,
   borderColor?: string,
+  backgroundColor?:string,
   yAxisID?: string,
   tension?: number,
-  data: Array&lt;number&gt;;
+  data: Array&lt;any&gt;;
 }
 export class Dataset implements DatasetI{
   label &#x3D; &#x27;&#x27;;
   fill &#x3D; false;
   borderColor &#x3D; &#x27;#42A5F5&#x27;;
+  backgroundColor &#x3D; &#x27;#42A5F5&#x27;;
   yAxisID &#x3D; &#x27;y&#x27;;
   tension &#x3D; .4;
-  data &#x3D; [];
+  data &#x3D; &lt;Array&lt;any&gt;&gt;[];
 }
 export enum Couleur{
   blanc &#x3D; &#x27;blanc&#x27;,
   rouge &#x3D; &#x27;rouge&#x27;,
   tous &#x3D; &#x27;tous&#x27;,
   aucun &#x3D; &#x27;&#x27;
+}
+export interface ChartI{
+  labels:Array&lt;number&gt;;
+  datasets:Array&lt;DatasetI&gt;;
+}
+export class Chart implements ChartI {
+  labels &#x3D; [];
+  datasets &#x3D; [];
+}
+export interface ConfigI {
+  couleurs: any;
+  predictions: { debut: number, fin: number };
+  fiabilites: { debut: number, fin: number };
+  rendements: { debut: number, fin: number };
+  contact: string;
+  cle: string;
+  liens: { petite:string, grande:string };
+  version:number
+}
+export class Config implements ConfigI {
+  couleurs &#x3D; {};
+  predictions &#x3D; { debut: 2022, fin: 2023 };
+  fiabilites &#x3D; { debut: 2020, fin: 2023 };
+  rendements &#x3D; { debut: 1981, fin: 2021 };
+  contact &#x3D; &#x27;&#x27;;
+  cle &#x3D; &#x27;&#x27;;
+  liens &#x3D; { petite: &#x27;&#x27;, grande: &#x27;&#x27; };
+  version &#x3D; 0.9
 }
 </code></pre>
     </div>

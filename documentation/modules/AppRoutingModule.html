@@ -76,22 +76,23 @@
 import { RouterModule, Routes } from &#x27;@angular/router&#x27;;
 import { CompteComponent } from &#x27;./compte/compte.component&#x27;;
 import { ConnexionComponent } from &#x27;./connexion/connexion.component&#x27;;
-import { OublieComponent } from &#x27;./connexion/oublie/oublie.component&#x27;;
 import { ContactComponent } from &#x27;./contact/contact.component&#x27;;
 import { ErreurComponent } from &#x27;./erreur/erreur.component&#x27;;
 import { MentionsComponent } from &#x27;./structure/mentions/mentions.component&#x27;;
 import { RgpdComponent } from &#x27;./structure/rgpd/rgpd.component&#x27;;
+import { AdminGuard } from &#x27;./utils/securite/admin.guard&#x27;;
+import { AuthGuard } from &#x27;./utils/securite/auth.guard&#x27;;
+import { VerificationComponent } from &#x27;./verification/verification.component&#x27;;
 
 const routes: Routes &#x3D; [
   {path:&#x27;&#x27;, component:ConnexionComponent},
-  {path:&#x27;:email&#x27;, component:ConnexionComponent},
   {path:&#x27;compte&#x27;, component:CompteComponent},
   {path:&#x27;rgpd&#x27;, component:RgpdComponent},
+  {path:&#x27;verification&#x27;, component:VerificationComponent},
   {path:&#x27;mentions&#x27;, component:MentionsComponent},
-  {path:&#x27;predictions&#x27;, loadChildren: () &#x3D;&gt; &quot;import(&#x27;./predictions/predictions.module&#x27;).then(m &#x3D;&gt; m.PredictionsModule)&quot;},
-  {path:&#x27;gestion&#x27;, loadChildren: () &#x3D;&gt; &quot;import(&#x27;./gestion/gestion.module&#x27;).then(m &#x3D;&gt; m.GestionModule)&quot;},
+  {path:&#x27;predictions&#x27;, loadChildren: () &#x3D;&gt; &quot;import(&#x27;./predictions/predictions.module&#x27;).then(m &#x3D;&gt; m.PredictionsModule)&quot;, canActivate:[AuthGuard], canLoad:[AuthGuard]},
+  {path:&#x27;gestion&#x27;, loadChildren: () &#x3D;&gt; &quot;import(&#x27;./gestion/gestion.module&#x27;).then(m &#x3D;&gt; m.GestionModule)&quot;, canActivate:[AdminGuard], canLoad:[AdminGuard]},
   {path:&#x27;contact&#x27;, component:ContactComponent},
-  {path:&#x27;oublie/:uid&#x27;, component:OublieComponent},
   {path:&#x27;**&#x27;, component:ErreurComponent}
 ];
 

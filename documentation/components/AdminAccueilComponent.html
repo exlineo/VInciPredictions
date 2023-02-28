@@ -321,12 +321,24 @@ export class AdminAccueilComponent implements OnInit {
         <pre class="line-numbers"><code class="language-html">&lt;section class&#x3D;&quot;bleufonce&quot;&gt;
   &lt;app-entete&gt;&lt;/app-entete&gt;
   &lt;nav&gt;
-    &lt;!-- &lt;span class&#x3D;&quot;icone&quot;&gt;pin_drop&lt;/span&gt; --&gt;
-    &lt;a routerLink&#x3D;&quot;/gestion/&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_ADMIN&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-home&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_ADMIN&#x27;] }}&lt;/span&gt;&lt;/a&gt;
-    &lt;a routerLink&#x3D;&quot;/gestion/predictions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_DATA&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-database&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_DATA&#x27;] }}&lt;/span&gt;&lt;/a&gt;
-    &lt;a routerLink&#x3D;&quot;/gestion/utilisateurs&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_USERS&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-users&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_USERS&#x27;] }}&lt;/span&gt;&lt;/a&gt;
-    &lt;a routerLink&#x3D;&quot;/gestion/traductions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_TRAD&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-globe&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_TRAD&#x27;] }}&lt;/span&gt;&lt;/a&gt;
-    &lt;a routerLink&#x3D;&quot;/predictions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_PREDICTIONS&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-eye&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_PREDICTIONS&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+    &lt;li&gt;&lt;img src&#x3D;&quot;/assets/images/pictos/burger_menu.png&quot;&gt;
+      &lt;ul&gt;
+        &lt;!-- &lt;span class&#x3D;&quot;icone&quot;&gt;pin_drop&lt;/span&gt; --&gt;
+        &lt;a routerLink&#x3D;&quot;/gestion/&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_ADMIN&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-home&quot;&gt;&lt;/i&gt;&lt;span&gt;{{ l.t[&#x27;MENU_ADMIN&#x27;]
+            }}&lt;/span&gt;&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/gestion/predictions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_DATA&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-database&quot;&gt;&lt;/i&gt;&lt;span&gt;{{
+            l.t[&#x27;MENU_DATA&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/gestion/utilisateurs&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_USERS&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-users&quot;&gt;&lt;/i&gt;&lt;span&gt;{{
+            l.t[&#x27;MENU_USERS&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/gestion/traductions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_TRAD&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-globe&quot;&gt;&lt;/i&gt;&lt;span&gt;{{
+            l.t[&#x27;MENU_TRAD&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+            &lt;a routerLink&#x3D;&quot;/gestion/promo&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_TRAD&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-shopping-bag&quot;&gt;&lt;/i&gt;&lt;span&gt;{{
+              l.t[&#x27;MENU_PROMO&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/predictions&quot; [title]&#x3D;&quot;l.t[&#x27;MENU_PREDICTIONS&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-eye&quot;&gt;&lt;/i&gt;&lt;span&gt;{{
+            l.t[&#x27;MENU_PREDICTIONS&#x27;] }}&lt;/span&gt;&lt;/a&gt;
+
+      &lt;/ul&gt;
+    &lt;/li&gt;
   &lt;/nav&gt;
 &lt;/section&gt;
 &lt;section&gt;
@@ -350,7 +362,7 @@ section:nth-child(1){
   flex-flow:row nowrap;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding:0 10px;
 }
 section:nth-child(2){
@@ -397,8 +409,8 @@ footer{
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><section class="bleufonce">  <app-entete></app-entete>  <nav>    <!-- <span class="icone">pin_drop</span> -->    <a routerLink="/gestion/" [title]="l.t[\'MENU_ADMIN\']"><i class="pi pi-home"></i><span>{{ l.t[\'MENU_ADMIN\'] }}</span></a>    <a routerLink="/gestion/predictions" [title]="l.t[\'MENU_DATA\']"><i class="pi pi-database"></i><span>{{ l.t[\'MENU_DATA\'] }}</span></a>    <a routerLink="/gestion/utilisateurs" [title]="l.t[\'MENU_USERS\']"><i class="pi pi-users"></i><span>{{ l.t[\'MENU_USERS\'] }}</span></a>    <a routerLink="/gestion/traductions" [title]="l.t[\'MENU_TRAD\']"><i class="pi pi-globe"></i><span>{{ l.t[\'MENU_TRAD\'] }}</span></a>    <a routerLink="/predictions" [title]="l.t[\'MENU_PREDICTIONS\']"><i class="pi pi-eye"></i><span>{{ l.t[\'MENU_PREDICTIONS\'] }}</span></a>  </nav></section><section>  <router-outlet></router-outlet></section></div>'
-    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'OublieComponent', 'selector': 'app-connexion'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'SupportComponent', 'selector': 'app-support'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
+        var COMPONENT_TEMPLATE = '<div><section class="bleufonce">  <app-entete></app-entete>  <nav>    <li><img src="/assets/images/pictos/burger_menu.png">      <ul>        <!-- <span class="icone">pin_drop</span> -->        <a routerLink="/gestion/" [title]="l.t[\'MENU_ADMIN\']"><i class="pi pi-home"></i><span>{{ l.t[\'MENU_ADMIN\']            }}</span></a>        <a routerLink="/gestion/predictions" [title]="l.t[\'MENU_DATA\']"><i class="pi pi-database"></i><span>{{            l.t[\'MENU_DATA\'] }}</span></a>        <a routerLink="/gestion/utilisateurs" [title]="l.t[\'MENU_USERS\']"><i class="pi pi-users"></i><span>{{            l.t[\'MENU_USERS\'] }}</span></a>        <a routerLink="/gestion/traductions" [title]="l.t[\'MENU_TRAD\']"><i class="pi pi-globe"></i><span>{{            l.t[\'MENU_TRAD\'] }}</span></a>            <a routerLink="/gestion/promo" [title]="l.t[\'MENU_TRAD\']"><i class="pi pi-shopping-bag"></i><span>{{              l.t[\'MENU_PROMO\'] }}</span></a>        <a routerLink="/predictions" [title]="l.t[\'MENU_PREDICTIONS\']"><i class="pi pi-eye"></i><span>{{            l.t[\'MENU_PREDICTIONS\'] }}</span></a>      </ul>    </li>  </nav></section><section>  <router-outlet></router-outlet></section></div>'
+    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'AdminAccueilComponent'};
 </script>

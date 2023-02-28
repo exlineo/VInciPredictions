@@ -182,7 +182,8 @@
 // Accès aux bases de données
 import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from &quot;@angular/fire/firestore&quot;;
 import { BehaviorSubject } from &#x27;rxjs&#x27;;
-import { CreeI, DataI, FiltresI, MoyennesI, Rendement, RendementI } from &#x27;../modeles/filtres-i&#x27;;
+import { CreeI, DataI, ZonesI, Rendement, RendementI, YieldI, ConfigI, Config } from &#x27;../modeles/filtres-i&#x27;;
+import { ProfilI } from &#x27;../modeles/profil-i&#x27;;
 import { MsgService } from &#x27;./msg.service&#x27;;
 
 export interface TraductionI {
@@ -194,47 +195,76 @@ export interface TraductionI {
   providedIn: &#x27;root&#x27;
 })
 export class StoreService {
-
   // private doc: any;
   config$: BehaviorSubject&lt;any&gt; &#x3D; new BehaviorSubject({});
-  config: any &#x3D; {couleurs:{}, predictions:{debut:2023, fin:2033}, rendements:{debut:1982, fin:2023}, contact:&#x27;&#x27;}; // App config
+  config: ConfigI &#x3D; new Config(); // App config
   // Dynamic filters list
   filtres: any;
-  lastData: Array&lt;CreeI&gt; &#x3D; []; // ID of last data loaded in Firestore
+  lastSudoe: Array&lt;CreeI&gt; &#x3D; []; // ID of last data loaded in Firestore
+  lastBordeaux:Array&lt;CreeI&gt; &#x3D; []; // Last data for boreaux yields
   // Set of data with filters and averages
-  set: DataI &#x3D; { creeLe: &lt;CreeI&gt;{}, data: [new Rendement()], moyennes: { pays: {}, regions: {} } };
+  set: DataI &#x3D; { creeLe: &lt;CreeI&gt;{}, sudoe: [new Rendement()], bordeaux: [new Rendement()], zones: { pays:{RD:[], PR:[]}, regions:{RD:[], PR:[] }}};
+  // Save list of labels from config and create datasets when data are loaded
+  chartsSudoe:any &#x3D; {labels:&lt;YieldI&gt;{RD:[],PR:[]}, datasets:&lt;YieldI&gt;{RD:{},PR:{}}};
+  chartsBordeaux:any &#x3D; {labels:&lt;YieldI&gt;{RD:[],PR:[]}, datasets:&lt;YieldI&gt;{RD:{},PR:{}}};
+
   // Chart configuration
   chartConfigs: any &#x3D; {};
   // Updated lists of countries, regions, pdos and types for filters
-  listes: { pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;{type:string, name:string}&gt;, filtres: Array&lt;string&gt; } &#x3D; { pays: [], regions: [], pdo: [], filtres: [] };
+  // listes: { pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;{type:string, name:string}&gt;, filtres: Array&lt;string&gt; } &#x3D; { pays: [], regions: [], pdo: [], filtres: [] };
+  listes: { pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;string&gt;, bordeaux:Array&lt;string&gt;, filtres: Array&lt;string&gt; } &#x3D; { pays: [], regions: [], pdo: [], bordeaux:[], filtres: [] };
 
   constructor(public dbf: Firestore, private msg: MsgService) {
     this.getConfig();
   }
   /** Prepare data */
-  initSet() {
-    this.set &#x3D; { creeLe: &lt;CreeI&gt;{}, data: [], moyennes: &lt;MoyennesI&gt;{} };
+  initSudoeSet() {
+    // this.set &#x3D; { creeLe: &lt;CreeI&gt;{}, sudoe: &lt;Array&lt;RendementI&gt;&gt;[], bordeaux:&lt;Array&lt;RendementI&gt;&gt;[], zones: &lt;ZonesI&gt;{} };
+    this.set.sudoe &#x3D; [];
+    this.set.zones &#x3D; &lt;ZonesI&gt;{};
+  }
+  initBordeauxSet() {
+    this.set.bordeaux &#x3D; [];
   }
   /** Load app config */
   async getConfig() {
     await this.getFireDoc(&#x27;config&#x27;, &#x27;app&#x27;).
       then(c &#x3D;&gt; {
         this.config$.next(c.data());
-        this.config &#x3D; c.data();
+        this.config &#x3D; c.data() as ConfigI;
+        // Set labels for charts : yields and predictions
+        for(let i&#x3D;0; i&lt;this.config.rendements.fin - this.config.rendements.debut + 1; ++i){
+          this.chartsSudoe.labels.RD.push(this.config.rendements.debut + i);
+          this.chartsBordeaux.labels.RD.push(this.config.rendements.debut + i);
+        }
+        for(let i&#x3D;0; i&lt;this.config.predictions.fin - this.config.predictions.debut +1; ++i){
+          this.chartsSudoe.labels.PR.push(this.config.predictions.debut + i);
+          this.chartsBordeaux.labels.PR.push(this.config.predictions.debut + i);
+        }
       })
       .catch(er &#x3D;&gt; {
         console.log(er);
       });
   }
+  /** Get local version for data update */
+  // getVersion(){
+  //   if(localStorage.getItem(&#x27;version&#x27;)){
+  //     if(parseInt(localStorage.getItem(&#x27;version&#x27;)!) &gt;&#x3D; this.config.version) {
+  //       return true;
+  //     };
+  //   }
+  //   return false;
+  // }
   /**
    * Get back data from local storage
    * @param {string} id IID of the data
    * @returns {promise} Renvoie une chaîne de caractères
    */
-  getLocalString(id: string, defaut:string&#x3D;&#x27;fr&#x27;): string {
+  getLocalString(id: string, defaut: string &#x3D; &#x27;fr&#x27;): string {
     if (localStorage.getItem(id)) {
       return localStorage.getItem(id) as string
-    } else { return defaut };
+    }
+    return defaut;
   }
   /**
    * Get JSON data
@@ -252,8 +282,22 @@ export class StoreService {
    * @param id {string} ID of the data
    * @param data {unknown} data to write
    */
-  setData(id: string, data: unknown) {
-    localStorage.setItem(id, JSON.stringify(data));
+  setLocalData(id: string, data: unknown) {
+    typeof data &#x3D;&#x3D; &#x27;string&#x27; ? localStorage.setItem(id, data) : localStorage.setItem(id, JSON.stringify(data));
+  }
+  /** Get profil from session storage */
+  getSessionProfil() {
+    if (sessionStorage.getItem(&#x27;profil&#x27;)) {
+      return JSON.parse(sessionStorage.getItem(&#x27;profil&#x27;) as string);
+    }
+    return null;
+  }
+  /**
+   * Save profil on session storage to help identification when refresh
+   * @param data Profil to write on session
+   */
+  setSessionProfil(data: ProfilI | null) {
+    data ? sessionStorage.setItem(&#x27;profil&#x27;, JSON.stringify(data)) : sessionStorage.removeItem(&#x27;profil&#x27;);
   }
   /**
    * Get entire collection
@@ -292,74 +336,148 @@ export class StoreService {
    * @param {Array&lt;string&gt;} pdo Array on filters to looking for in database
   */
   async getPdo(pdo: Array&lt;string&gt;) {
-    const q &#x3D; query(collection(this.dbf, this.lastData[this.lastData.length - 1].collection!), where(&quot;pdo&quot;, &quot;in&quot;, pdo));
+    const q &#x3D; query(collection(this.dbf, this.lastSudoe[this.lastSudoe.length - 1].collection!), where(&quot;pdo&quot;, &quot;in&quot;, pdo));
     return await getDocs(q);
   }
-  /**
-   * (Deprecated) Get last document in a collection (for data)
-   * @param {string} collection Name of called collection
-   * @param {string} param Searched object
-   * @returns {promise} Send back object
-   */
-  async getLastData() {
-    const q &#x3D; query(collection(this.dbf, &#x27;data&#x27;));
+   /** Get data from bordeaux PDO
+   * @param {Array&lt;string&gt;} pdo Array on filters to looking for in database
+  */
+   async getBordeauxPdo(pdo: Array&lt;string&gt;) {
+    const q &#x3D; query(collection(this.dbf, this.lastBordeaux[this.lastBordeaux.length - 1].collection!), where(&quot;pdo&quot;, &quot;in&quot;, pdo));
+    return await getDocs(q);
+  }
+  /** Get last data for harvests in SUDOE (for data) */
+  async getLastSudoe() {
+    const q &#x3D; query(collection(this.dbf, &#x27;data-sudoe&#x27;));
     await getDocs(q)
       .then(d &#x3D;&gt; {
+        this.lastSudoe &#x3D; [];
         d.forEach(l &#x3D;&gt; {
-          this.lastData.push(l.data());
+          this.lastSudoe.push(l.data());
         });
-        this.setSet();
+        // Get list of data from database
+        this.setSudoeSet(this.lastSudoe[this.lastSudoe.length - 1].collection!);
+        this.getLastBordeaux();
+      })
+  }
+  /** Get last data for harvests in SUDOE (for data) */
+  async getLastBordeaux() {
+    const q &#x3D; query(collection(this.dbf, &#x27;data-bordeaux&#x27;));
+    await getDocs(q)
+      .then(d &#x3D;&gt; {
+        this.lastBordeaux &#x3D; [];
+        d.forEach(l &#x3D;&gt; {
+          this.lastBordeaux.push(l.data());
+        });
+        this.setBordeauxSet(this.lastBordeaux[this.lastBordeaux.length - 1].collection!);
       })
   }
   /** Set data from database */
-  setSet() {
-    this.getFireCol(this.lastData[this.lastData.length - 1].collection!)
+  setSudoeSet(collection: string) {
+    this.getFireCol(collection)
       .then(d &#x3D;&gt; {
-        this.initSet();
-        // console.log(d);
+        this.initSudoeSet();
         d.forEach(c &#x3D;&gt; {
           if (c.id &#x3D;&#x3D; &#x27;creeLe&#x27;) {
             this.set.creeLe &#x3D; c.data() as CreeI;
-          } else if (c.id &#x3D;&#x3D; &#x27;moyennes&#x27;) {
-            this.set.moyennes &#x3D; c.data() as MoyennesI;
+          } else if (c.id &#x3D;&#x3D; &#x27;zones&#x27;) {
+            this.set.zones.regions &#x3D; c.data()[&#x27;regions&#x27;];
+            this.set.zones.pays &#x3D; c.data()[&#x27;pays&#x27;];
+            this.setAvSudoeSets(&#x27;vert&#x27;, this.set.zones.regions);
+            this.setAvSudoeSets(&#x27;bleu&#x27;, this.set.zones.pays);
           } else {
-            this.set.data.push(c.data() as RendementI);
+            const rd &#x3D; c.data() as RendementI;
+            if(rd.pays.length &gt; 0 &amp;&amp; rd.regions.length &gt; 0){
+              this.set.sudoe.push(rd);
+            };
+            this.setSudoeSets(this.setCouleur(&#x27;violet&#x27;), c.data() as RendementI)
           }
         });
-        this.setFilters(); // Set filters from datas
-        console.log(this.set);
+        // Set list of filters (countries, regions, pdos for visualisation page)
+        this.set.sudoe.forEach(d &#x3D;&gt; this.setFilterFromData(d));
+        this.orderLists();
+      })
+      .catch(er &#x3D;&gt; {
+        console.log(er);
       });
   }
-  /**
-   * (Deprecated) Get last ID document
-   */
-  async getLastID() {
-    const q &#x3D; query(collection(this.dbf, &#x27;predictions&#x27;), orderBy(&#x27;creeLe&#x27;, &#x27;desc&#x27;), limit(1));
-    return await getDocs(q);
+  /** Set data from database for bordeaux PDO */
+  setBordeauxSet(collection: string) {
+    this.getFireCol(collection)
+      .then(d &#x3D;&gt; {
+        this.initBordeauxSet();
+        d.forEach(c &#x3D;&gt; {
+          if (c.id &#x3D;&#x3D; &#x27;creeLe&#x27;) {
+            this.set.creeLe &#x3D; c.data() as CreeI;
+          } else {
+            const rd &#x3D; c.data() as RendementI;
+            // if(rd.pays.length &gt; 0 &amp;&amp; rd.regions.length &gt; 0){
+            this.set.bordeaux.push(rd);
+            // };
+            this.setBordeauxSets(this.setCouleur(&#x27;violet&#x27;), c.data() as RendementI)
+          }
+        });
+        // Set list of filters (countries, regions, pdos for visualisation page)
+        this.set.bordeaux.forEach(d &#x3D;&gt; this.setFilterFromBordeaux(d));
+        this.orderLists();
+      })
+      .catch(er &#x3D;&gt; {
+        console.log(er);
+      });
   }
-  /** Request countries and/or regions
-   * @param {Array&lt;string&gt;} p List of countries
-   * @param {Array&lt;string} r list of regions
-   */
-  async getAverageData(p: Array&lt;string&gt;, r: Array&lt;string&gt;) {
-
+  /** Add dataset objects to loaded data for charts */
+  setAvSudoeSets(couleur:string, obj:any){
+    for(let i in obj){
+      const c &#x3D; this.setCouleur(couleur);
+      this.chartsSudoe.datasets.RD[i] &#x3D; {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+      this.chartsSudoe.datasets.PR[i] &#x3D; {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
+    }
   }
-  /** Request for filtered data */
-  async getFilteredData(f: FiltresI) {
-
+  setSudoeSets(couleur:string, obj:RendementI){
+      this.chartsSudoe.datasets.RD[obj.pdo!] &#x3D; {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
+      this.chartsSudoe.datasets.PR[obj.pdo!] &#x3D; {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
-  /** Set filters from dataset */
-  setFilters() {
-    this.set.data.forEach(d &#x3D;&gt; this.setFilterFromData(d));
+  // setAvBordeauxSets(couleur:string, obj:any){
+  //   for(let i in obj){
+  //     const c &#x3D; this.setCouleur(couleur);
+  //     this.chartsBordeaux.datasets.RD[i] &#x3D; {label:i, borderColor:c, backgroundColor:c, data:obj[i].RD};
+  //     this.chartsBordeaux.datasets.PR[i] &#x3D; {label:i, borderColor:c, backgroundColor:c, data:obj[i].PR};
+  //   }
+  // }
+  setBordeauxSets(couleur:string, obj:RendementI){
+      this.chartsBordeaux.datasets.RD[obj.pdo!] &#x3D; {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.rendements};
+      this.chartsBordeaux.datasets.PR[obj.pdo!] &#x3D; {label:obj.pdo, borderColor:couleur, backgroundColor:couleur, data:obj.predictions};
   }
-  /** Set filters from dataset
+  /** Set colors from list of colors in config data */
+  setCouleur(c:string):string{
+    const l &#x3D; this.config.couleurs[c].length;
+    const math &#x3D; Math.floor(Math.random()*l);
+    const couleur &#x3D; this.config.couleurs[c][math];
+    return couleur;
+  }
+  /** (Deprecated) Get last ID document */
+  // async getLastID() {
+  //   const q &#x3D; query(collection(this.dbf, &#x27;predictions&#x27;), orderBy(&#x27;creeLe&#x27;, &#x27;desc&#x27;), limit(1));
+  //   return await getDocs(q);
+  // }
+  /** Set filters lists (in listbox from visualisation) from dataset
    * @param {any} r a array of data received from server or uploaded
   */
   setFilterFromData(r: RendementI) {
     // Create lists from data for countries, regions and pdo
     if (!this.listes.pays.includes(r.pays)) this.listes.pays &#x3D; [...this.listes.pays, r.pays];
     if (!this.listes.regions.includes(r.regions)) this.listes.regions &#x3D; [...this.listes.regions, r.regions];
-    if (!this.listes.pdo.includes({type:r.type as string, name:r.pdo as string})) this.listes.pdo &#x3D; [...this.listes.pdo, {type:r.type as string, name:r.pdo as string}];
+    if (!this.listes.pdo.includes(r.pdo!)) this.listes.pdo &#x3D; [...this.listes.pdo, r.pdo!];
+  }
+  setFilterFromBordeaux(r:RendementI){
+    if (!this.listes.bordeaux.includes(r.pdo!)) this.listes.bordeaux &#x3D; [...this.listes.bordeaux, r.pdo!];
+  }
+  /** Order list in alphabetic */
+  orderLists(){
+    this.listes.pays.sort();
+    this.listes.regions.sort();
+    this.listes.pdo.sort();
+    this.listes.bordeaux.sort();
   }
 }
 </code></pre>

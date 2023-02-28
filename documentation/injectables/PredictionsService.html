@@ -88,6 +88,10 @@
                                 <a href="#filesCSV" >filesCSV</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#l" >l</a>
+                            </li>
+                            <li>
                                 <a href="#listeDataVersions" >listeDataVersions</a>
                             </li>
                             <li>
@@ -97,8 +101,7 @@
                                 <a href="#listeVersions" >listeVersions</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#store" >store</a>
+                                <a href="#saveVersion" >saveVersion</a>
                             </li>
                         </ul>
                     </td>
@@ -117,13 +120,27 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#batchFireCollecDocs" >batchFireCollecDocs</a>
+                                <a href="#batchFireBordeauxDocs" >batchFireBordeauxDocs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#batchFireSudoeDocs" >batchFireSudoeDocs</a>
                             </li>
                             <li>
                                 <a href="#conversion" >conversion</a>
                             </li>
                             <li>
-                                <a href="#docFireAdd" >docFireAdd</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#delFireDoc" >delFireDoc</a>
+                            </li>
+                            <li>
+                                <a href="#fireBordeauxAdd" >fireBordeauxAdd</a>
+                            </li>
+                            <li>
+                                <a href="#fireSudoeAdd" >fireSudoeAdd</a>
+                            </li>
+                            <li>
+                                <a href="#getAccessFromCode" >getAccessFromCode</a>
                             </li>
                             <li>
                                 <a href="#getData" >getData</a>
@@ -132,13 +149,16 @@
                                 <a href="#getListeProfils" >getListeProfils</a>
                             </li>
                             <li>
-                                <a href="#listeDatas" >listeDatas</a>
-                            </li>
-                            <li>
                                 <a href="#setAverages" >setAverages</a>
                             </li>
                             <li>
+                                <a href="#setDataBordeaux" >setDataBordeaux</a>
+                            </li>
+                            <li>
                                 <a href="#setDataset" >setDataset</a>
+                            </li>
+                            <li>
+                                <a href="#setDataSudoe" >setDataSudoe</a>
                             </li>
                             <li>
                                 <a href="#setDate" >setDate</a>
@@ -175,7 +195,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(dbf: Firestore, store: <a href="../injectables/StoreService.html" target="_self">StoreService</a>, l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>)</code>
+<code>constructor(dbf: Firestore, l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -202,18 +222,6 @@
                                                   
                                                         <td>
                                                                     <code>Firestore</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>store</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/StoreService.html" target="_self" >StoreService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -267,8 +275,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:83</a></div>
                 </td>
             </tr>
 
@@ -313,7 +321,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>        <code><a href="../interfaces/YieldI.html" target="_self" >YieldI</a></code>
 
                     </div>
                     <div class="io-description">
@@ -327,26 +335,26 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="batchFireCollecDocs"></a>
+                    <a name="batchFireBordeauxDocs"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
-                        <span ><b>batchFireCollecDocs</b></span>
-                        <a href="#batchFireCollecDocs"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>batchFireBordeauxDocs</b></span>
+                        <a href="#batchFireBordeauxDocs"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>batchFireCollecDocs()</code>
+                    <code>batchFireBordeauxDocs(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:143</a></div>
                 </td>
             </tr>
 
@@ -356,6 +364,125 @@
                     <div class="io-description"><p>Write documents from a new data uploaded</p>
 </div>
 
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>-1</code>
+                                    </td>
+
+                                    <td>
+                                        <p>time to set name time of the collection, globally not useful</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Returns a promise</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="batchFireSudoeDocs"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>batchFireSudoeDocs</b></span>
+                        <a href="#batchFireSudoeDocs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>batchFireSudoeDocs(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:117</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Write documents from a new data uploaded</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>-1</code>
+                                    </td>
+
+                                    <td>
+                                        <p>time to set name time of the collection, globally not useful</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div>
                     </div>
                     <div class="io-description">
@@ -383,22 +510,24 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>conversion(l: Array<any>)</code>
+<code>conversion(d: Array<any>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:52</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:71</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Convert excel line to JSON object</p>
+                    <div class="io-description"><p>Convert excel line to JSON object
+er and ep are for prediction : values from config.predictions.debut and config.predictions.fin
+Column of predictions and fiabilities can be added in the source file if config is correctly parametred</p>
 </div>
 
                     <div class="io-description">
@@ -414,7 +543,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>l</td>
+                                    <td>d</td>
                                     <td>
                                             <code>Array&lt;any&gt;</code>
                                     </td>
@@ -445,24 +574,109 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="docFireAdd"></a>
+                    <a name="delFireDoc"></a>
                     <span class="name">
-                        <span ><b>docFireAdd</b></span>
-                        <a href="#docFireAdd"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Async</span>
+                        <span ><b>delFireDoc</b></span>
+                        <a href="#delFireDoc"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>docFireAdd()</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delFireDoc(collec: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="122"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:122</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:180</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delete a document</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>collec</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireBordeauxAdd"></a>
+                    <span class="name">
+                        <span ><b>fireBordeauxAdd</b></span>
+                        <a href="#fireBordeauxAdd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fireBordeauxAdd()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:172</a></div>
                 </td>
             </tr>
 
@@ -475,6 +689,121 @@
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fireSudoeAdd"></a>
+                    <span class="name">
+                        <span ><b>fireSudoeAdd</b></span>
+                        <a href="#fireSudoeAdd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fireSudoeAdd()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:167</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Add loadedDataset formatted as array in Firebase</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAccessFromCode"></a>
+                    <span class="name">
+                        <span ><b>getAccessFromCode</b></span>
+                        <a href="#getAccessFromCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAccessFromCode(code: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="232"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:232</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get access from promotionnal code</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>code</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Promotionnal code</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -500,15 +829,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="134"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:134</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:191</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Get dataset from Firestore</p>
+                    <div class="io-description"><p>Get complete dataset from Firestore</p>
 </div>
 
                     <div class="io-description">
@@ -576,8 +905,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="149"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:149</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="196"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:196</a></div>
                 </td>
             </tr>
 
@@ -585,45 +914,6 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>List accounts</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="listeDatas"></a>
-                    <span class="name">
-                        <span ><b>listeDatas</b></span>
-                        <a href="#listeDatas"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>listeDatas()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="88"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:88</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>List predictions versions data</p>
 </div>
 
                     <div class="io-description">
@@ -654,8 +944,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="71"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:71</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:96</a></div>
                 </td>
             </tr>
 
@@ -677,6 +967,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="setDataBordeaux"></a>
+                    <span class="name">
+                        <span ><b>setDataBordeaux</b></span>
+                        <a href="#setDataBordeaux"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setDataBordeaux(data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:35</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="setDataset"></a>
                     <span class="name">
                         <span ><b>setDataset</b></span>
@@ -686,15 +1045,131 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>setDataset(data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>setDataset(l: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, c: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, d: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:242</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set dataset</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>l</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>Label to write on over</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>c</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>&#x27;#78281F&#x27;</code>
+                                    </td>
+
+                                    <td>
+                                        <p>Color of line</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>d</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <p>Array of data to write on graph</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/DatasetI.html" target="_self" >DatasetI</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setDataSudoe"></a>
+                    <span class="name">
+                        <span ><b>setDataSudoe</b></span>
+                        <a href="#setDataSudoe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setDataSudoe(data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:27</a></div>
                 </td>
             </tr>
 
@@ -764,8 +1239,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="127"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:127</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="184"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:184</a></div>
                 </td>
             </tr>
 
@@ -841,8 +1316,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="169"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:169</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:216</a></div>
                 </td>
             </tr>
 
@@ -934,8 +1409,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:77</a></div>
                 </td>
             </tr>
 
@@ -998,15 +1473,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>setPredictions(l: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+<code>setPredictions(p: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:47</a></div>
                 </td>
             </tr>
 
@@ -1025,12 +1500,13 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                     <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>l</td>
+                                    <td>p</td>
                                     <td>
                                                 <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
                                     </td>
@@ -1039,10 +1515,29 @@
                                         No
                                     </td>
 
+                                    <td>
+                                    </td>
 
                                     <td>
                                         <p>Object to convert</p>
 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>&#x27;sudoe&#x27;</code>
+                                    </td>
+
+                                    <td>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1083,14 +1578,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="173"
-                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:173</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="223"
+                            class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:223</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Update user&#39;s profil</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -1101,6 +1598,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1115,6 +1613,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>index of the user in the user&#39;s list</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1156,7 +1658,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -1183,7 +1685,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:20</a></div>
                         </td>
                     </tr>
 
@@ -1214,7 +1716,34 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="l"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>l</b></span>
+                        <a href="#l"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -1245,7 +1774,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:21</a></div>
                         </td>
                     </tr>
 
@@ -1276,7 +1805,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -1307,7 +1836,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -1318,23 +1847,27 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="store"></a>
+                    <a name="saveVersion"></a>
                     <span class="name">
-                            <span class="modifier">Public</span>
-                        <span ><b>store</b></span>
-                        <a href="#store"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>saveVersion</b></span>
+                        <a href="#saveVersion"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../injectables/StoreService.html" target="_self" >StoreService</a></code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/gestion/utils/services/predictions.service.ts:22</a></div>
                         </td>
                     </tr>
 
@@ -1348,13 +1881,12 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { Firestore, doc, writeBatch, setDoc } from &quot;@angular/fire/firestore&quot;;
+import { Firestore, doc, writeBatch, setDoc, deleteDoc } from &quot;@angular/fire/firestore&quot;;
 
 import { FileI } from &#x27;src/app/utils/modeles/file-i&#x27;;
-import { CreeI, DataI, RendementI } from &#x27;src/app/utils/modeles/filtres-i&#x27;;
+import { CreeI, DatasetI, ZonesI, RendementI, YieldI } from &#x27;src/app/utils/modeles/filtres-i&#x27;;
 import { ProfilI } from &#x27;src/app/utils/modeles/profil-i&#x27;;
 import { LanguesService } from &#x27;src/app/utils/services/langues.service&#x27;;
-import { StoreService } from &#x27;src/app/utils/services/store.service&#x27;;
 
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -1367,136 +1899,184 @@ export class PredictionsService {
   // moyennes: { pays:any, regions:any } &#x3D; {pays:{}, regions:{}}; // Updated lists of countries, regions, pdos and types
   batch &#x3D; writeBatch(this.dbf); // Prepare write of new loadedDataset collection
   listeProfils: Array&lt;ProfilI&gt; &#x3D; [];
-  creeTmp?:CreeI;
-  listeDataVersions:Array&lt;CreeI&gt; &#x3D; []; // List of availlable data
+  creeTmp?: CreeI;
+  listeDataVersions: Array&lt;CreeI&gt; &#x3D; []; // List of availlable data
+  saveVersion: boolean &#x3D; false; //
 
-  constructor(private dbf:Firestore, public store: StoreService, private l:LanguesService) {
-    this.listeDatas();
-  };
+  constructor(private dbf: Firestore, public l: LanguesService) {};
 
   /** Convert CSV data to RendementI array */
-  setDataset(data: string) {
-    this.store.set.data &#x3D; [];
+  setDataSudoe(data: string) {
+    this.l.store.set.sudoe &#x3D; [];
     let lignes &#x3D; data.split(&#x27;\n&#x27;);
     lignes.forEach(l &#x3D;&gt; {
       this.setPredictions(l);
     });
+    this.l.msg.msgOk(this.l.t[&#x27;MSG_LOAD&#x27;], this.l.t[&#x27;MSG_VALID&#x27;]);
+  };
+  setDataBordeaux(data: string) {
+    this.l.store.set.bordeaux &#x3D; [];
+    let lignes &#x3D; data.split(&#x27;\n&#x27;);
+    lignes.forEach(l &#x3D;&gt; {
+      this.setPredictions(l, &#x27;bordeaux&#x27;);
+    });
+    this.l.msg.msgOk(this.l.t[&#x27;MSG_LOAD&#x27;], this.l.t[&#x27;MSG_VALID&#x27;]);
   }
   /**
    * Set predictions array
-   * @param l Object to convert
+   * @param p Object to convert
    */
-  setPredictions(l: any) {
-    l &#x3D; l.replace(/[\r]/g, &#x27;&#x27;).trim();
-    let m &#x3D; l.split(&#x27;,&#x27;);
-    // this.loadedDataset.push(this.conversion(m));
+  setPredictions(p: any, type: string &#x3D; &#x27;sudoe&#x27;) {
+    p &#x3D; p.replace(/[\r]/g, &#x27;&#x27;).trim();
+    let m &#x3D; p.split(&#x27;,&#x27;);
+    // Convert data to RendementI
     let tmp &#x3D; this.conversion(m);
-    this.store.set.data.push(tmp);
-    // Create lists from data for countries, regions and pdo
-    this.store.setFilterFromData(tmp);
-    this.setAverages(); // Get average values
-    this.l.msg.msgOk(this.l.t[&#x27;MSG_LOAD&#x27;], this.l.t[&#x27;MSG_VALID&#x27;]);
+    // Set minimum and maximum values in yield or harvests
+    tmp.min &#x3D; Math.floor(Math.min(...tmp.rendements));
+    tmp.max &#x3D; Math.ceil(Math.max(...tmp.rendements));
+
+    if (type &#x3D;&#x3D; &#x27;sudoe&#x27;) {
+      this.l.store.set.sudoe.push(tmp);
+      // Create lists from data for countries, regions and pdo
+      this.l.store.setFilterFromData(tmp);
+      this.setAverages(); // Get average values
+    }
+    else {
+      this.l.store.set.bordeaux.push(tmp);
+      this.l.store.setFilterFromBordeaux(tmp);
+    }
   }
-  /** Convert excel line to JSON object */
-  conversion(l: Array&lt;any&gt;): RendementI {
-    return { pays: l[0].trim(), regions: l[1].trim(), type: l[2].trim(), pdo: l[3].trim(), rendements: this.setNumbers(l.slice(4, 55)), predictions: this.setNumbers(l.slice(44, 55)), fiabilites: this.setNumbers(l.slice(56, l.length)) };
+  /** Convert excel line to JSON object
+   * er and ep are for prediction : values from config.predictions.debut and config.predictions.fin
+   * Column of predictions and fiabilities can be added in the source file if config is correctly parametred
+  */
+  conversion(d: Array&lt;any&gt;): RendementI {
+    const er: number &#x3D; this.l.store.config.rendements.fin - this.l.store.config.rendements.debut + 1;
+    const ep: number &#x3D; this.l.store.config.predictions.fin - this.l.store.config.rendements.debut + 1;
+    return { pays: d[0].trim(), regions: d[1].trim(), pdo: d[2].trim(), rendements: this.setNumbers(d.slice(3, 3 + er)), predictions: this.setNumbers(d.slice(3 + er, 3 + ep)), fiabilites: this.setNumbers(d.slice(3 + ep, d.length)) };
   }
   /** Parse string to integer on dataset */
   setNumbers(a: Array&lt;string&gt;): Array&lt;number&gt; {
-    return a.map(c &#x3D;&gt; parseInt(c));
+    return a.map(c &#x3D;&gt; c !&#x3D; &quot;0&quot; ? parseFloat(c) : 0);
   }
   /** Set average data from countries and regions
    * @param {array} ar Array to reduce to get values
   */
-   av(ar:Array&lt;RendementI&gt;){
-    const truc:any &#x3D; [];
-     for(let i&#x3D;0; i&lt;ar[0].rendements.length; ++i){
-       // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N&#x27;EST PAS RENSEIGNEE
-        truc.push(Math.round(ar.reduce( ( p, c ) &#x3D;&gt; p + c.rendements[i] | 0, 0 ) / ar.length));
-      };
-      return truc;
+  av(ar: Array&lt;RendementI&gt;): YieldI {
+    const truc: YieldI &#x3D; { RD: [], PR: [] };
+    for (let i &#x3D; 0; i &lt; ar[0].rendements.length; ++i) {
+      // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N&#x27;EST PAS RENSEIGNEE
+      truc.RD.push(Math.round(ar.reduce((p, c) &#x3D;&gt; p + c.rendements[i] | 0, 0) / ar.length));
+    };
+    for (let i &#x3D; 0; i &lt; ar[0].predictions.length; ++i) {
+      // ATTENTION, LE 0 APRES RENDEMENTS[i] PEUT BIAISER LES MOYENNES MAIS CA EVITE LES ERREURS (NaN) SI LA DONNEE N&#x27;EST PAS RENSEIGNEE
+      truc.PR.push(Math.round(ar.reduce((p, c) &#x3D;&gt; p + c.predictions[i] | 0, 0) / ar.length));
+    };
+    return truc;
   }
   /** Calculate averages values on countries and regions */
-  setAverages(){
-    // Averages on countries in data
-    this.store.listes.pays.forEach(d &#x3D;&gt; {
-      const pays &#x3D; this.store.set.data.filter(p &#x3D;&gt; d &amp;&amp; p.pays &#x3D;&#x3D; d &amp;&amp; d.length &gt; 0);
+  setAverages() {
+    // Set averages for countries
+    this.l.store.listes.pays.forEach(d &#x3D;&gt; {
+      const pays &#x3D; this.l.store.set.sudoe.filter(p &#x3D;&gt; d &amp;&amp; p.pays &#x3D;&#x3D; d &amp;&amp; d.length &gt; 0);
       pays.forEach(p &#x3D;&gt; {
-        if(p.pays &amp;&amp; p.pays.length &gt; 0) this.store.set.moyennes!.pays[p.pays] &#x3D; this.av(pays);
+        if (p.pays &amp;&amp; p.pays.length &gt; 0) this.l.store.set.zones.pays[p.pays] &#x3D; this.av(pays);
       })
     });
-    // Averages on regions
-    this.store.listes.regions.forEach(d &#x3D;&gt; {
-      const regions &#x3D; this.store.set.data.filter(p &#x3D;&gt; d &amp;&amp; p.regions &#x3D;&#x3D; d &amp;&amp; d.length &gt; 0);
+    // Set averages for regions
+    this.l.store.listes.regions.forEach(d &#x3D;&gt; {
+      const regions &#x3D; this.l.store.set.sudoe.filter(p &#x3D;&gt; d &amp;&amp; p.regions &#x3D;&#x3D; d &amp;&amp; d.length &gt; 0);
       regions.forEach(r &#x3D;&gt; {
-        if(r.regions &amp;&amp; r.regions.length &gt; 0) this.store.set.moyennes!.regions[r.regions] &#x3D; this.av(regions);
+        if (r.regions &amp;&amp; r.regions.length &gt; 0) this.l.store.set.zones.regions[r.regions] &#x3D; this.av(regions);
       })
     });
   }
-  /** List predictions versions data */
-  listeDatas() {
-    this.store.getFireCol(&#x27;predictions&#x27;)
-      .then(d &#x3D;&gt; d.forEach(
-        f &#x3D;&gt; {
-          this.listeVersions.push(f.id);
-        }
-      ));
-  };
   /**
    * Write documents from a new data uploaded
-   * @param collec Name of collection
-   * @param data Object with UID to write
+   * @param time time to set name time of the collection, globally not useful
    * @returns {promise} Returns a promise
    */
-  async batchFireCollecDocs() {
+  async batchFireSudoeDocs(time: number &#x3D; -1) {
+    this.batch &#x3D; writeBatch(this.dbf); // Redeclare batch to avoid error on successivs writes
+
     let n &#x3D; 0;
-    const col &#x3D; this.setDate();
-    this.creeTmp &#x3D; {time:Date.now(), collection:this.setDate()};
+    const col &#x3D; this.setDate(&#x27;dataset-sudoe:&#x27;);
+    this.creeTmp &#x3D; { time: time &#x3D;&#x3D; -1 ? Date.now() : time, collection: col };
     this.batch.set(doc(this.dbf, col, &#x27;creeLe&#x27;), this.creeTmp);
-    this.batch.set(doc(this.dbf, col, &#x27;moyennes&#x27;), this.store.set.moyennes);
-    this.store.set.data.forEach(d &#x3D;&gt; {
+    this.batch.set(doc(this.dbf, col, &#x27;zones&#x27;), this.l.store.set.zones);
+    this.l.store.set.sudoe.forEach(d &#x3D;&gt; {
       const customDoc &#x3D; doc(this.dbf, col, n.toString());
       this.batch.set(customDoc, d);
       ++n;
     });
     /** Commit data to write */
     await this.batch.commit()
-    .then(d &#x3D;&gt; {
-      this.store.setFireDoc(&#x27;data&#x27;, { uid:String(this.creeTmp?.time), doc: this.creeTmp })
-      this.l.msg.msgOk(this.l.t[&#x27;MSG_MAJ&#x27;]);
-    })
-    .catch(er &#x3D;&gt; console.log(er));
+      .then(d &#x3D;&gt; {
+        this.l.store.setFireDoc(&#x27;data-sudoe&#x27;, { uid: String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.msg.msgOk(this.l.t[&#x27;MSG_MAJ&#x27;]);
+      })
+      .catch(er &#x3D;&gt; console.log(er));
+  }
+  /**
+   * Write documents from a new data uploaded
+   * @param time time to set name time of the collection, globally not useful
+   * @returns {promise} Returns a promise
+   */
+  async batchFireBordeauxDocs(time: number &#x3D; -1) {
+    this.batch &#x3D; writeBatch(this.dbf); // Redeclare batch to avoid error on successivs writes
+
+    let n &#x3D; 0;
+    const col &#x3D; this.setDate(&#x27;dataset-bordeaux:&#x27;);
+    this.creeTmp &#x3D; { time: time &#x3D;&#x3D; -1 ? Date.now() : time, collection: col };
+    this.batch.set(doc(this.dbf, col, &#x27;creeLe&#x27;), this.creeTmp);
+    // this.batch.set(doc(this.dbf, col, &#x27;zones&#x27;), this.l.store.set.zones);
+    this.l.store.set.bordeaux.forEach(d &#x3D;&gt; {
+      const customDoc &#x3D; doc(this.dbf, col, n.toString());
+      this.batch.set(customDoc, d);
+      ++n;
+    });
+
+    console.log(this.l.store.set);
+    /** Commit data to write */
+    await this.batch.commit()
+      .then(d &#x3D;&gt; {
+        this.l.store.setFireDoc(&#x27;data-bordeaux&#x27;, { uid: String(this.creeTmp?.time), doc: this.creeTmp })
+        this.l.msg.msgOk(this.l.t[&#x27;MSG_MAJ&#x27;]);
+      })
+      .catch(er &#x3D;&gt; console.log(er));
   }
   /** Add loadedDataset formatted as array in Firebase */
-  docFireAdd() {
-    this.store.set.creeLe!.time &#x3D; Date.now();
-    this.batchFireCollecDocs();
+  fireSudoeAdd() {
+    this.l.store.set.creeLe!.time &#x3D; Date.now();
+    this.batchFireSudoeDocs();
+  }
+  /** Add loadedDataset formatted as array in Firebase */
+  fireBordeauxAdd() {
+    this.l.store.set.creeLe!.time &#x3D; Date.now();
+    this.batchFireBordeauxDocs();
+  }
+  /**
+   * Delete a document
+   * @param doc Document to delete
+   */
+  async delFireDoc(collec: string, id: string) {
+    await deleteDoc(doc(this.dbf, collec, id));
   }
   /** Create ID for a new loadedDataset version */
-  setDate(d:string&#x3D;&#x27;dataset:&#x27;):string {
+  setDate(d: string &#x3D; &#x27;dataset:&#x27;): string {
     const date &#x3D; new Date();
-    return d+&#x60;${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s&#x60;;
+    return d + &#x60;${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}:${date.getHours()}h${date.getMinutes()}mn${date.getSeconds()}s&#x60;;
   }
-  /** Get dataset from Firestore
+  /** Get complete dataset from Firestore
    * @param {event} e Event send by select HtmlElement
    */
   getData(e: any) {
-    this.store.getFireDoc(&#x27;predictions&#x27;, e.target.value)
-      .then(d &#x3D;&gt; d.data() as DataI)
-      .then(d &#x3D;&gt; {
-        this.store.set &#x3D; d; // Data loaded
-        this.store.setFilters(); // Create filters from data
-        this.setAverages(); // Get average values on countries and regions
-        // this.l.msg.msgOk(this.l.t[&#x27;MSG_LOAD&#x27;], this.l.t[&#x27;MSG_VALID&#x27;]);
-      })
-      .catch(er &#x3D;&gt; {
-        console.log(er);
-        this.l.msg.msgFail(this.l.t[&#x27;MSG_ER&#x27;], er);
-      })
+    this.saveVersion &#x3D; true;
+    this.l.store.setSudoeSet(e.target.value);
   }
   /** List accounts */
   getListeProfils() {
-    this.store.getFireCol(&#x27;comptes&#x27;)
+    this.l.store.getFireCol(&#x27;comptes&#x27;)
       .then(c &#x3D;&gt; {
         this.listeProfils &#x3D; [];
         c.forEach(d &#x3D;&gt; {
@@ -1515,15 +2095,45 @@ export class PredictionsService {
    * @param data Object with UID to write
    * @returns {promise} Returns a promise
    */
-   async setFireDoc(collec: string, data: { uid: string, doc: any }) {
+  async setFireDoc(collec: string, data: { uid: string, doc: any }) {
     const customDoc &#x3D; doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
   }
-  async updateProfil(i:number){
+  /** Update user&#x27;s profil
+   * @param {number} i index of the user in the user&#x27;s list
+  */
+  async updateProfil(i: number) {
     const customDoc &#x3D; doc(this.dbf, &#x27;comptes&#x27;, this.listeProfils[i].u.uid!);
     await setDoc(customDoc, JSON.parse(JSON.stringify(this.listeProfils[i])), { merge: true })
-    .then(p &#x3D;&gt; this.l.msg.msgOk(this.l.t[&#x27;MSG_DATA&#x27;], this.l.t[&#x27;MSG_U_DESCR&#x27;]))
-    .catch(er &#x3D;&gt; this.l.msg.msgFail(this.l.t[&#x27;MSG_ER&#x27;], er));
+      .then(p &#x3D;&gt; this.l.msg.msgOk(this.l.t[&#x27;MSG_DATA&#x27;], this.l.t[&#x27;MSG_U_DESCR&#x27;]))
+      .catch(er &#x3D;&gt; this.l.msg.msgFail(this.l.t[&#x27;MSG_ER&#x27;], er));
+  }
+  /** Get access from promotionnal code
+   * @param { string } code Promotionnal code
+  */
+  getAccessFromCode(code: string) {
+    const infos: Array&lt;string&gt; &#x3D; code.split(&#x27;-&#x27;);
+    const access &#x3D; JSON.parse(atob(infos[1]));
+    return access;
+  }
+  /** Set dataset
+   * @param {string} l Label to write on over
+   * @param {any} d Array of data to write on graph
+   * @param {string} c Color of line
+  */
+  setDataset(l: string, c: string &#x3D; &#x27;#78281F&#x27;, d: any): DatasetI {
+    console.log(l, d, d.length);
+    const tmp &#x3D; &lt;DatasetI&gt;{};
+    tmp.label &#x3D; l;
+    tmp.data &#x3D; new Array();
+    tmp.borderColor &#x3D; c;
+    for (let i &#x3D; 0; i &lt; d.length; ++i) {
+      tmp.data.push(d[i]);
+    }
+    console.log(tmp);
+    return tmp;
+    // tmp.data.splice(1, d.length);
+    // if (!target.includes(tmp)) target.push(tmp);
   }
 }
 </code></pre>

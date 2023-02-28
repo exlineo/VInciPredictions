@@ -125,6 +125,21 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#l" >l</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -155,15 +170,52 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/structure/rgpd/rgpd.component.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/structure/rgpd/rgpd.component.ts:9</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Formulaire de connexion des utilisateurs</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>l</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Pointeur vers le service de langues</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -197,8 +249,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/app/structure/rgpd/rgpd.component.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="17"
+                            class="link-to-prism">src/app/structure/rgpd/rgpd.component.ts:17</a></div>
                 </td>
             </tr>
 
@@ -215,12 +267,51 @@
         </tbody>
     </table>
 </section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="l"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>l</b></span>
+                        <a href="#l"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/structure/rgpd/rgpd.component.ts:15</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description">Pointeur vers le service de langues</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
 
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { LanguesService } from &#x27;src/app/utils/services/langues.service&#x27;;
 
 @Component({
   selector: &#x27;app-rgpd&#x27;,
@@ -229,18 +320,40 @@
 })
 export class RgpdComponent implements OnInit {
 
-  constructor() { }
+  /**
+   * Formulaire de connexion des utilisateurs
+   * @param l {LanguesService} Pointeur vers le service de langues
+   */
+   constructor(public l:LanguesService) {}
 
-  ngOnInit(): void {
-  }
+   ngOnInit(): void {
+     this.l.getPage(&#x27;rgpd&#x27;);
+   }
 
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;p&gt;rgpd works!&lt;/p&gt;
-&lt;a href&#x3D;&quot;https://firebase.google.com/support/privacy&quot; target&#x3D;&quot;_blank&quot; title&#x3D;&quot;Traitement des données privées par Firebase&quot;&gt;Des informations sur le contrôleur de données (sous-traitant)&lt;/a&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;main class&#x3D;&quot;public&quot;&gt;
+  &lt;section class&#x3D;&quot;bleu&quot;&gt;
+
+  &lt;/section&gt;
+  &lt;section class&#x3D;&quot;bleufonce&quot;&gt;
+    &lt;!-- ENTETE DE LA COLONNE --&gt;
+    &lt;app-entete&gt;&lt;/app-entete&gt;
+
+    &lt;p&gt;{{ l.page.accroche }}&lt;/p&gt;
+    &lt;!-- FORMULAIRE DE CONNEXION --&gt;
+
+    &lt;!-- MENU DU BAS --&gt;
+    &lt;app-pied&gt;&lt;/app-pied&gt;
+  &lt;/section&gt;
+  &lt;section class&#x3D;&quot;jaune&quot;&gt;
+    &lt;h1&gt;{{ l.page.titre }}&lt;/h1&gt;
+    &lt;article [innerHTML]&#x3D;&quot;l.page.contenu&quot;&gt;&lt;/article&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
 </code></pre>
     </div>
 
@@ -255,7 +368,13 @@ section:nth-child(2){
   justify-content: space-between;
 }
 section:nth-child(3){
-
+  /* justify-content: center; */
+}
+a{
+  margin:5px;
+}
+a &gt; span{
+  padding-right:10px;
 }
 </code></pre>
     </div>
@@ -285,8 +404,8 @@ section:nth-child(3){
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><p>rgpd works!</p><a href="https://firebase.google.com/support/privacy" target="_blank" title="Traitement des données privées par Firebase">Des informations sur le contrôleur de données (sous-traitant)</a></div>'
-    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'OublieComponent', 'selector': 'app-connexion'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'SupportComponent', 'selector': 'app-support'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
+        var COMPONENT_TEMPLATE = '<div><main class="public">  <section class="bleu">  </section>  <section class="bleufonce">    <!-- ENTETE DE LA COLONNE -->    <app-entete></app-entete>    <p>{{ l.page.accroche }}</p>    <!-- FORMULAIRE DE CONNEXION -->    <!-- MENU DU BAS -->    <app-pied></app-pied>  </section>  <section class="jaune">    <h1>{{ l.page.titre }}</h1>    <article [innerHTML]="l.page.contenu"></article>  </section></main></div>'
+    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'RgpdComponent'};
 </script>

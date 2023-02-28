@@ -135,10 +135,6 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#auth" >auth</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#fbuild" >fbuild</a>
                             </li>
                             <li>
@@ -184,7 +180,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>, fbuild: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, auth: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
+<code>constructor(l: <a href="../injectables/LanguesService.html" target="_self">LanguesService</a>, fbuild: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, visual: <a href="../injectables/VisualService.html" target="_self">VisualService</a>, auth: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -223,6 +219,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>visual</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/VisualService.html" target="_self" >VisualService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -346,33 +354,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="auth"></a>
-                    <span class="name">
-                            <span class="modifier">Public</span>
-                        <span ><b>auth</b></span>
-                        <a href="#auth"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
-
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/predictions/profil/profil.component.ts:28</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="fbuild"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
@@ -474,9 +455,9 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
-import { ProfilI } from &#x27;src/app/utils/modeles/profil-i&#x27;;
 import { AuthService } from &#x27;src/app/utils/services/auth.service&#x27;;
 import { LanguesService } from &#x27;src/app/utils/services/langues.service&#x27;;
+import { VisualService } from &#x27;../utils/services/visual.service&#x27;;
 
 @Component({
   selector: &#x27;app-profil&#x27;,
@@ -499,7 +480,7 @@ export class ProfilComponent implements OnInit {
     code: [this.auth.profil.tel]
   });
 
-  constructor(public l:LanguesService, public fbuild:FormBuilder, public auth:AuthService) { }
+  constructor(public l:LanguesService, public fbuild:FormBuilder, private visual:VisualService, private auth:AuthService ) { }
 
   ngOnInit(): void {
     this.l.getPage(&#x27;profil&#x27;);
@@ -507,8 +488,8 @@ export class ProfilComponent implements OnInit {
 
   /** Update user&#x27;s profile */
   majProfil(){
-    console.log(this.profil.value);
-    this.auth.creeProfil(this.profil.value as ProfilI);
+    console.log(this.auth.profil.u.uid!, this.auth.profil);
+    this.visual.updateOwnProfil(this.auth.profil.u.uid!, this.auth.profil);
   }
 }
 </code></pre>
@@ -633,7 +614,7 @@ section{
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><section class="jaune">  <h1>{{ l.page.titre }}</h1>  <article [innerHTML]="l.page.contenu">  </article></section><section><!-- ACCOUNT FORM --><form [formGroup]="profil" (submit)="majProfil()">  <!-- Name, Surname -->  <fieldset>    <label>{{ l.t[\'FORM_NOM\'] }} *</label>    <input type="text" formControlName="nom" [placeholder]="l.t[\'FORM_NOM\']" required>    <span *ngIf="profil.controls[\'nom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PRENOM\'] }} *</label>    <input type="text" formControlName="prenom" [placeholder]="l.t[\'FORM_PRENOM\']" required>    <span *ngIf="profil.controls[\'prenom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <!-- ORGANISATION -->  <fieldset>    <label>{{ l.t[\'FORM_ORG\'] }}</label>    <input type="text" formControlName="organisation" [placeholder]="l.t[\'FORM_ORG\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_ADR\'] }}</label>    <input type="text" formControlName="adresse" [placeholder]="l.t[\'FORM_ADR\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ADR2\'] }}</label>    <input type="text" formControlName="adresse2" [placeholder]="l.t[\'FORM_ADR2\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ZIP\'] }}</label>    <input type="number" formControlName="codePostal" [placeholder]="l.t[\'FORM_ZIP\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_VILLE\'] }}</label>    <input type="text" formControlName="ville" [placeholder]="l.t[\'FORM_VILLE\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_TEL\'] }}</label>    <input type="text" formControlName="tel" [placeholder]="l.t[\'FORM_TEL\']">    <!-- <span *ngIf="compte.controls[\'tel\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_MOBILE\'] }}</label>    <input type="text" formControlName="mobile" [placeholder]="l.t[\'FORM_MOBILE\']">    <!-- <span *ngIf="compte.controls[\'mobile\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PROMO\'] }}</label>    <input type="text" formControlName="code" [placeholder]="l.t[\'FORM_PROMO\']" [pTooltip]="l.t[\'FORM_PROMO_INFOS\']">  </fieldset>  <fieldset class="l">    <input type="reset" [value]="l.t[\'FORM_EFFACE\']">    <input type="submit" [value]="l.t[\'FORM_VALIDE\']">  </fieldset></form><p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p></section></div>'
-    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'OublieComponent', 'selector': 'app-connexion'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'SupportComponent', 'selector': 'app-support'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
+    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ProfilComponent'};
 </script>

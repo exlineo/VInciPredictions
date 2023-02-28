@@ -84,16 +84,16 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
+                                        <a href="#bordeaux" 
+>
+                                            bordeaux
+                                        </a>
+                                </li>
+                                <li>
                                             <span class="modifier">Optional</span>
                                         <a href="#creeLe" 
 >
                                             creeLe
-                                        </a>
-                                </li>
-                                <li>
-                                        <a href="#data" 
->
-                                            data
                                         </a>
                                 </li>
                                 <li>
@@ -104,10 +104,15 @@
                                         </a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#moyennes" 
+                                        <a href="#sudoe" 
 >
-                                            moyennes
+                                            sudoe
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#zones" 
+>
+                                            zones
                                         </a>
                                 </li>
                             </ul>
@@ -121,6 +126,39 @@
 
             <section>
                 <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="bordeaux"></a>
+                                        <span class="name "><b>bordeaux</b>
+                                            <a href="#bordeaux">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>bordeaux:         <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
                                 <tr>
@@ -153,39 +191,6 @@
                                             <i>Optional</i>
                                         </td>
                                     </tr>
-
-
-
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="data"></a>
-                                        <span class="name "><b>data</b>
-                                            <a href="#data">
-                                                <span class="icon ion-ios-link"></span>
-                                            </a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>data:         <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
-
-                                        </td>
-                                    </tr>
-
 
 
 
@@ -234,9 +239,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="moyennes"></a>
-                                        <span class="name "><b>moyennes</b>
-                                            <a href="#moyennes">
+                                        <a name="sudoe"></a>
+                                        <span class="name "><b>sudoe</b>
+                                            <a href="#sudoe">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -244,7 +249,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>moyennes:         <code><a href="../interfaces/MoyennesI.html" target="_self" >MoyennesI</a></code>
+                                        <code>sudoe:         <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -252,16 +257,44 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/MoyennesI.html" target="_self" >MoyennesI</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/RendementI.html" target="_self" >Array&lt;RendementI&gt;</a></code>
 
                                         </td>
                                     </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="zones"></a>
+                                        <span class="name "><b>zones</b>
+                                            <a href="#zones">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>zones:         <code><a href="../interfaces/ZonesI.html" target="_self" >ZonesI</a></code>
+</code>
+                                    </td>
+                                </tr>
+
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Optional</i>
+                                            <i>Type : </i>        <code><a href="../interfaces/ZonesI.html" target="_self" >ZonesI</a></code>
+
                                         </td>
                                     </tr>
+
 
 
 
@@ -285,13 +318,19 @@ export interface RendementI{
   regions:string;
   type?:Couleur;
   pdo?:string;
+  min?:number;
+  max?:number;
   rendements:Array&lt;number&gt;;
   predictions:Array&lt;number&gt;;
   fiabilites:Array&lt;number&gt;;
 }
-export interface MoyennesI{
-  pays: any;
-  regions: any;
+export interface ZonesI{
+  pays:any; // List of countries averages
+  regions:any; // List of regions averages
+}
+export interface YieldI{
+  RD:any; // Array of yields
+  PR:any; // Array of predictions
 }
 export class Rendement implements RendementI{
   pays &#x3D; &quot;&quot;;
@@ -304,35 +343,66 @@ export class Rendement implements RendementI{
 }
 export interface DataI{
   creeLe?:CreeI;
-  data:Array&lt;RendementI&gt;;
+  sudoe:Array&lt;RendementI&gt;;
+  bordeaux:Array&lt;RendementI&gt;;
   filtres?:{ pays: Array&lt;string&gt;, regions: Array&lt;string&gt;, pdo: Array&lt;string&gt; };
-  moyennes?:MoyennesI;
+  zones:ZonesI;
 }
 export interface CreeI{
-  time?:number;
-  collection?:string;
+  time?:number; // Timestamp
+  collection?:string; // name of the set (collection) in Firebase
 }
 export interface DatasetI{
   label: string,
   fill?: boolean,
   borderColor?: string,
+  backgroundColor?:string,
   yAxisID?: string,
   tension?: number,
-  data: Array&lt;number&gt;;
+  data: Array&lt;any&gt;;
 }
 export class Dataset implements DatasetI{
   label &#x3D; &#x27;&#x27;;
   fill &#x3D; false;
   borderColor &#x3D; &#x27;#42A5F5&#x27;;
+  backgroundColor &#x3D; &#x27;#42A5F5&#x27;;
   yAxisID &#x3D; &#x27;y&#x27;;
   tension &#x3D; .4;
-  data &#x3D; [];
+  data &#x3D; &lt;Array&lt;any&gt;&gt;[];
 }
 export enum Couleur{
   blanc &#x3D; &#x27;blanc&#x27;,
   rouge &#x3D; &#x27;rouge&#x27;,
   tous &#x3D; &#x27;tous&#x27;,
   aucun &#x3D; &#x27;&#x27;
+}
+export interface ChartI{
+  labels:Array&lt;number&gt;;
+  datasets:Array&lt;DatasetI&gt;;
+}
+export class Chart implements ChartI {
+  labels &#x3D; [];
+  datasets &#x3D; [];
+}
+export interface ConfigI {
+  couleurs: any;
+  predictions: { debut: number, fin: number };
+  fiabilites: { debut: number, fin: number };
+  rendements: { debut: number, fin: number };
+  contact: string;
+  cle: string;
+  liens: { petite:string, grande:string };
+  version:number
+}
+export class Config implements ConfigI {
+  couleurs &#x3D; {};
+  predictions &#x3D; { debut: 2022, fin: 2023 };
+  fiabilites &#x3D; { debut: 2020, fin: 2023 };
+  rendements &#x3D; { debut: 1981, fin: 2021 };
+  contact &#x3D; &#x27;&#x27;;
+  cle &#x3D; &#x27;&#x27;;
+  liens &#x3D; { petite: &#x27;&#x27;, grande: &#x27;&#x27; };
+  version &#x3D; 0.9
 }
 </code></pre>
     </div>

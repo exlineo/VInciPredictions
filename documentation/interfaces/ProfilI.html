@@ -353,7 +353,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>droits:         <code><a href="../interfaces/Droits.html" target="_self" >Droits</a></code>
+                                        <code>droits:         <code><a href="../interfaces/DroitsI.html" target="_self" >DroitsI</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -361,7 +361,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/Droits.html" target="_self" >Droits</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/DroitsI.html" target="_self" >DroitsI</a></code>
 
                                         </td>
                                     </tr>
@@ -637,7 +637,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>u:         <code><a href="../interfaces/UserI.html" target="_self" >UserI</a></code>
+                                        <code>u:     <code>User</code>
 </code>
                                     </td>
                                 </tr>
@@ -645,7 +645,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/UserI.html" target="_self" >UserI</a></code>
+                                            <i>Type : </i>    <code>User</code>
 
                                         </td>
                                     </tr>
@@ -699,7 +699,8 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { UserI } from &quot;./user-i&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { User } from &quot;firebase/auth&quot;;
+import { UserI } from &quot;./user-i&quot;;
 
 export interface ProfilI {
   nom:string;
@@ -713,22 +714,17 @@ export interface ProfilI {
   tel?:string;
   mobile?:string;
   code?:string; // Code promotionnel éventuel
-  droits:Droits;
+  droits:DroitsI;
   statut:number;
-  u:UserI;
+  u:User;
 }
 /** Interface des droits des utilisateurs */
-export interface Droits{
+export interface DroitsI{
   petite:number;
   grande:number;
   export:number;
 }
-/** Niveau d&#x27;accès */
-export enum Acces{
-  bloque &#x3D; 0,
-  gratuit &#x3D; 1,
-  payant &#x3D; 2
-}
+/** Create en empty profil */
 export class Profil implements ProfilI{
   nom &#x3D; &#x27;&#x27;;
   prenom &#x3D; &#x27;&#x27;;
@@ -739,9 +735,9 @@ export class Profil implements ProfilI{
   pays &#x3D; &#x27;&#x27;;
   mail &#x3D; &#x27;&#x27;;
   code &#x3D; &#x27;&#x27;; // Code promotionnel éventuel
-  droits &#x3D; {petite:0, grande:0, export:0};
+  droits &#x3D; {petite:1, grande:1, export:1};
   statut &#x3D; 0;
-  u &#x3D; {}
+  u &#x3D; &lt;User&gt;{}
 }
 </code></pre>
     </div>

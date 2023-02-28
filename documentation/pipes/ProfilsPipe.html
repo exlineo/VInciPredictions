@@ -112,8 +112,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="134"
-                            class="link-to-prism">src/app/utils/tools/filtres.pipe.ts:134</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">src/app/utils/tools/filtres.pipe.ts:135</a></div>
                 </td>
             </tr>
 
@@ -218,9 +218,10 @@ export class FiltresPipe implements PipeTransform {
         data.push(v);
       } else if (args.pays.indexOf(v.pays) !&#x3D; -1) {
         data.push(v);
-      } else if (args.type &#x3D;&#x3D; v.type.toLowerCase()) {
-        data.push(v);
       }
+      // } else if (args.type &#x3D;&#x3D; v.type.toLowerCase()) {
+      //   data.push(v);
+      // }
     });
     return data.length &gt; 0 ? data : values;
   }

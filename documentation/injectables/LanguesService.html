@@ -116,7 +116,7 @@
                                 <a href="#getPage" >getPage</a>
                             </li>
                             <li>
-                                <a href="#getTextLangue" >getTextLangue</a>
+                                <a href="#getTraductions" >getTraductions</a>
                             </li>
                             <li>
                                 <a href="#loadLangue" >loadLangue</a>
@@ -247,8 +247,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="67"
-                            class="link-to-prism">src/app/utils/services/langues.service.ts:67</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">src/app/utils/services/langues.service.ts:66</a></div>
                 </td>
             </tr>
 
@@ -302,73 +302,36 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getTextLangue"></a>
+                    <a name="getTraductions"></a>
                     <span class="name">
-                        <span ><b>getTextLangue</b></span>
-                        <a href="#getTextLangue"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>getTraductions</b></span>
+                        <a href="#getTraductions"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getTextLangue(l: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>getTraductions()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="49"
-                            class="link-to-prism">src/app/utils/services/langues.service.ts:49</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/app/utils/services/langues.service.ts:51</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Permet de récupérer les textes en lien avec une langue lors de la sélection</p>
+                    <div class="io-description"><p>Get translations from local or online data</p>
 </div>
 
                     <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>l</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>La langue dont il faut récupérer les données</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
                     </div>
                 </td>
             </tr>
@@ -433,8 +396,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">src/app/utils/services/langues.service.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/app/utils/services/langues.service.ts:59</a></div>
                 </td>
             </tr>
 
@@ -573,7 +536,7 @@ Les données de la langue sont écrasées dans la localstorage et deviennent par
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>{ nom: &#x27;&#x27;, titre: &#x27;&#x27;, contenu: &#x27;&#x27; }</code>
+                        <i>Default value : </i><code>{ id: &#x27;&#x27;, nom: &#x27;&#x27;, titre: &#x27;&#x27;, contenu: &#x27;&#x27; }</code>
                     </td>
                 </tr>
                     <tr>
@@ -604,7 +567,7 @@ Les données de la langue sont écrasées dans la localstorage et deviennent par
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>{}</code>
+                        <i>Default value : </i><code>{ fr: [], es: [], pt: [], uk: [] }</code>
                     </td>
                 </tr>
                     <tr>
@@ -732,8 +695,8 @@ export class LanguesService {
   langue &#x3D; &#x27;fr&#x27;;
   t: any &#x3D; {}; // Traductions téléchargées
   // lang: any; // Langue actuelle
-  pages: any &#x3D; {};
-  page: PageI &#x3D; { nom: &#x27;&#x27;, titre: &#x27;&#x27;, contenu: &#x27;&#x27; }; // Nom de la page en cours si nécessaire
+  pages: any &#x3D; { fr: [], es: [], pt: [], uk: [] };
+  page: PageI &#x3D; { id: &#x27;&#x27;, nom: &#x27;&#x27;, titre: &#x27;&#x27;, contenu: &#x27;&#x27; }; // Nom de la page en cours si nécessaire
   t$: BehaviorSubject&lt;any&gt; &#x3D; new BehaviorSubject({})
 
   /**
@@ -745,30 +708,29 @@ export class LanguesService {
     // Récupérer la langue par défaut de l&#x27;utilisateur ou indiquer en français sinon
     this.langue &#x3D; this.store.getLocalString(&#x27;langue&#x27;, &#x27;fr&#x27;);
     // Récupérer les traductions stockées en local pour éviter des requêtes
-    this.store.getLocalData(&#x27;traductions&#x27;) ? this.t &#x3D; this.store.getLocalData(&#x27;traductions&#x27;) : this.loadLangue();
+    this.getTraductions();
   }
   /** Charger les ndonnées de la langue depuis la base de données */
   loadLangue() {
     this.store.getFireDoc(&#x27;traductions&#x27;, this.langue)
-      .then&lt;any&gt;(d &#x3D;&gt; d.data())
+      .then&lt;any&gt;(d &#x3D;&gt; {
+        return d.data();
+      })
       .then&lt;unknown&gt;(d &#x3D;&gt; {
-        let tmp &#x3D; d[&#x27;data&#x27;];
-        this.t &#x3D; JSON.parse(tmp);
-        this.t$.next(this.t);
-        this.store.setData(&#x27;traductions&#x27;, this.t);
-      }
-      )
-      .catch(er &#x3D;&gt; console.log(er));
+        if (d) {
+          let tmp &#x3D; d[&#x27;data&#x27;];
+          this.t &#x3D; JSON.parse(tmp);
+          this.t$.next(this.t);
+          this.store.setLocalData(&#x27;t-&#x27; + this.langue, this.t);
+        }
+      })
+      .catch(er &#x3D;&gt; {
+        this.msg.msgFail(this.t[&#x27;MSG_ER_DATA&#x27;], this.t[&#x27;MSG_ER_HTTP&#x27;]);
+        console.log(er)});
   }
-  /**
-   * Permet de récupérer les textes en lien avec une langue lors de la sélection
-   * @param l {String} La langue dont il faut récupérer les données
-   */
-  getTextLangue(l: string) {
-    this.langue &#x3D; l;
-    this.http.get(&#x60;assets/langues/${this.langue}/traductions.json&#x60;).subscribe(t &#x3D;&gt; {
-      this.t &#x3D; t;
-    });
+  /** Get translations from local or online data */
+  getTraductions() {
+    this.store.getLocalData(&#x27;t-&#x27; + this.langue) ? this.t &#x3D; this.store.getLocalData(&#x27;t-&#x27; + this.langue) : this.loadLangue();
   }
   /**
    * Modifier la langue par défaut et recharger un nouveau texte
@@ -777,20 +739,21 @@ export class LanguesService {
    */
   setLang(l: string) {
     this.langue &#x3D; l;
-    this.store.setData(&#x27;langue&#x27;, l);
-    // Recharger la langue après la sélection
-    this.getTextLangue(l);
+    this.store.setLocalData(&#x27;langue&#x27;, l);
+    this.getTraductions();
+    this.getPage(this.page.id);
   }
   /** Get texts from Firestore to populate HTML pages */
   getPage(id: string) {
-    if (this.pages[id]) {
-      this.page &#x3D; this.pages[id];
+    if (this.pages[this.langue][id]) {
+      this.page &#x3D; this.pages[this.langue][id];
     } else {
       this.store.getFireDoc(this.langue, id)
         .then&lt;any&gt;(d &#x3D;&gt; d.data())
         .then&lt;unknown&gt;(p &#x3D;&gt; {
           this.page &#x3D; p;
-          this.pages[id] &#x3D; p;
+          if (!this.page.id) this.page.id &#x3D; id;
+          this.pages[this.langue][id] &#x3D; p;
         }
         )
         .catch(er &#x3D;&gt; console.log(er));

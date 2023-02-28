@@ -319,14 +319,21 @@ export class PiedComponent implements OnInit {
 
     <div class="tab-pane fade " id="c-templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!-- MENU DU BAS --&gt;
+&lt;a href&#x3D;&quot;https://docs.google.com/presentation/d/12vS3cGwbbcjABptYbAwYpcbile1t1M7IONnxWvy9igU/edit?usp&#x3D;sharing&quot;
+  target&#x3D;&quot;_blank&quot; [title]&#x3D;&quot;l.t[&#x27;COMMENT&#x27;]&quot;&gt;
+  &lt;i class&#x3D;&quot;pi pi-question&quot;&gt;&lt;/i&gt;
+  {{ l.t[&#x27;COMMENT&#x27;] }}
+&lt;/a&gt;
+
 &lt;article class&#x3D;&quot;menupied&quot;&gt;
-    &lt;nav&gt;
-      &lt;a routerLink&#x3D;&quot;/rgpd&quot; [title]&#x3D;&quot;l.t[&#x27;MENTIONS&#x27;]&quot;&gt;&lt;span class&#x3D;&quot;icone&quot;&gt;gavel&lt;/span&gt;&lt;/a&gt;
-      &lt;a routerLink&#x3D;&quot;/mentions&quot; [title]&#x3D;&quot;l.t[&#x27;RGPD&#x27;]&quot;&gt;&lt;span class&#x3D;&quot;icone&quot;&gt;record_voice_over&lt;/span&gt;&lt;/a&gt;
-      &lt;a href&#x3D;&quot;https://exlineo.com&quot; [title]&#x3D;&quot;l.t[&#x27;COPYRIGHT&#x27;]&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;span class&#x3D;&quot;icone&quot;&gt;copyright&lt;/span&gt;&lt;/a&gt;
-    &lt;/nav&gt;
-    &lt;a href&#x3D;&quot;https://www.interreg-sudoe.eu/&quot; [title]&#x3D;&quot;l.t[&#x27;LIEN&#x27;]+&#x27; Inerreg Sudoe&#x27;&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;img src&#x3D;&quot;/assets/images/logos/logo_interreg.png&quot; [alt]&#x3D;&quot;l.t[&#x27;LOGO&#x27;]&quot;&gt;&lt;/a&gt;
-  &lt;/article&gt;
+  &lt;nav&gt;
+    &lt;a href&#x3D;&quot;http://vincisudoe.eu/mentionslegales&quot; [title]&#x3D;&quot;l.t[&#x27;MENTIONS&#x27;]&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;i class&#x3D;&quot;pi pi-info-circle&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a routerLink&#x3D;&quot;rgpd&quot; href&#x3D;&quot;/rgpd&quot; [title]&#x3D;&quot;l.t[&#x27;RGPD&#x27;]&quot;&gt;&lt;i class&#x3D;&quot;pi pi-directions&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href&#x3D;&quot;https://exlineo.com&quot; [title]&#x3D;&quot;l.t[&#x27;COPYRIGHT&#x27;]&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;i class&#x3D;&quot;pi pi-hashtag&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;a href&#x3D;&quot;https://www.interreg-sudoe.eu/&quot; [title]&#x3D;&quot;l.t[&#x27;LIEN&#x27;]+&#x27; Inerreg Sudoe&#x27;&quot; target&#x3D;&quot;_blank&quot;&gt;&lt;img
+      src&#x3D;&quot;/assets/images/logos/logo_interreg.png&quot; [alt]&#x3D;&quot;l.t[&#x27;LOGO&#x27;]&quot;&gt;&lt;/a&gt;
+&lt;/article&gt;
 </code></pre>
     </div>
 
@@ -365,8 +372,8 @@ export class PiedComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!-- MENU DU BAS --><article class="menupied">    <nav>      <a routerLink="/rgpd" [title]="l.t[\'MENTIONS\']"><span class="icone">gavel</span></a>      <a routerLink="/mentions" [title]="l.t[\'RGPD\']"><span class="icone">record_voice_over</span></a>      <a href="https://exlineo.com" [title]="l.t[\'COPYRIGHT\']" target="_blank"><span class="icone">copyright</span></a>    </nav>    <a href="https://www.interreg-sudoe.eu/" [title]="l.t[\'LIEN\']+\' Inerreg Sudoe\'" target="_blank"><img src="/assets/images/logos/logo_interreg.png" [alt]="l.t[\'LOGO\']"></a>  </article></div>'
-    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'OublieComponent', 'selector': 'app-connexion'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'SupportComponent', 'selector': 'app-support'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
+        var COMPONENT_TEMPLATE = '<div><!-- MENU DU BAS --><a href="https://docs.google.com/presentation/d/12vS3cGwbbcjABptYbAwYpcbile1t1M7IONnxWvy9igU/edit?usp=sharing"  target="_blank" [title]="l.t[\'COMMENT\']">  <i class="pi pi-question"></i>  {{ l.t[\'COMMENT\'] }}</a><article class="menupied">  <nav>    <a href="http://vincisudoe.eu/mentionslegales" [title]="l.t[\'MENTIONS\']" target="_blank"><i class="pi pi-info-circle"></i></a>    <a routerLink="rgpd" href="/rgpd" [title]="l.t[\'RGPD\']"><i class="pi pi-directions"></i></a>    <a href="https://exlineo.com" [title]="l.t[\'COPYRIGHT\']" target="_blank"><i class="pi pi-hashtag"></i></a>  </nav>  <a href="https://www.interreg-sudoe.eu/" [title]="l.t[\'LIEN\']+\' Inerreg Sudoe\'" target="_blank"><img      src="/assets/images/logos/logo_interreg.png" [alt]="l.t[\'LOGO\']"></a></article></div>'
+    var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'PiedComponent'};
 </script>
