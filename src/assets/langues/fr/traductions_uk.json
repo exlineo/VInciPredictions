@@ -81,7 +81,7 @@
   "COPYRIGHT":"Realization exlineo.com",
   "FICHIER":"File",
   "FICHIERS":"Files",
-  "FICHIER_UP":"Upload a file",
+  "FICHIER_UP":"Upload",
   "FICHIER_VALIDE":"Save this data",
   "FICHIER_CSV":"The file must be in CSV format",
   "FICHIER_V":"Go back to this version",
@@ -195,6 +195,11 @@
   "VERIF_DESCR":"Fill in your email to send a message containing a link to validate your account.",
   "VERIF_MAIL_TITRE":"An email has been sent to you",
   "VERIF_MAIL_DESCR":"An email has just been sent to you, please click on the link to activate your account.",
-  "VISU_SUDOE":"Données des vignobles SUDOE",
-  "VISU_BORDELAIS":"Données du vignoble bordelais"
+  "FILTRE_BORDELAIS":"Bordeaux yields",
+  "FILTRE_PLAGE_PROD":"Annual harvest range",
+  "FILTRE_PROD":"Yields",
+  "DONNEES_P_DESCR":"Annual harvests recorded in hectoliters",
+  "VISU_SUDOE":"Harvests & predictions (SUDOE region)",
+  "VISU_BORDELAIS":"Yields & predictions (Bordeaux region)",
+  "GESTION_VERSION_REND":"Yields & predictions (Bordeaux)"
 }

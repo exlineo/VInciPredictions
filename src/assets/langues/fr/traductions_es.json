@@ -81,7 +81,7 @@
   "COPYRIGHT":"Realización exlineo.co",
   "FICHIER":"Fichero",
   "FICHIERS":"Ficheros",
-  "FICHIER_UP":"Cargar un fichero",
+  "FICHIER_UP":"Cargar",
   "FICHIER_VALIDE":"Guardar estos datos",
   "FICHIER_CSV":"El archivo debe estar en formato CSV",
   "FICHIER_V":"Volver a esta versión",
@@ -194,5 +194,12 @@
   "VERIF_TITRE":"Reenviar correo electrónico de verificación",
   "VERIF_DESCR":"Complete su correo electrónico para enviar un mensaje que contenga un enlace para validar su cuenta.",
   "VERIF_MAIL_TITRE":"Se le ha enviado un correo electrónico",
-  "VERIF_MAIL_DESCR":"Se le acaba de enviar un correo electrónico, haga clic en el enlace para activar su cuenta."
+  "VERIF_MAIL_DESCR":"Se le acaba de enviar un correo electrónico, haga clic en el enlace para activar su cuenta.",
+  "FILTRE_BORDELAIS":"Rendimientos de Burdeos",
+  "FILTRE_PLAGE_PROD":"Gama de cosecha anual",
+  "FILTRE_PROD":"Cosechas",
+  "DONNEES_P_DESCR":"Cosechas anuales registradas en hectolitros",
+  "VISU_SUDOE":"Cosechas y previsiones (región SUDOE)",
+  "VISU_BORDELAIS":"Rendimientos y previsiones (región de Burdeos)",
+  "GESTION_VERSION_REND":"Rendimientos y previsiones (Burdeos)"
 }
