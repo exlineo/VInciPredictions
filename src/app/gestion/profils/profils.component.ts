@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Profil, ProfilI } from 'src/app/utils/modeles/profil-i';
+import { AuthService } from 'src/app/utils/services/auth.service';
 import { LanguesService } from 'src/app/utils/services/langues.service';
 import { PredictionsService } from '../utils/services/predictions.service';
 
@@ -17,7 +18,7 @@ export class ProfilsComponent implements OnInit {
   edit:boolean = false; // Show/hide edition on codes
   searchForm:any; // Search form to filter users
 
-  constructor(public l: LanguesService, public predServ: PredictionsService, private fB:FormBuilder) {
+  constructor(public l: LanguesService, public predServ: PredictionsService, private fB:FormBuilder, public auth:AuthService) {
     this.searchForm = this.fB.group({search:['']});
   }
 

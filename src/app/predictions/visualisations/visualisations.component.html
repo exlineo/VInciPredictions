@@ -78,7 +78,7 @@
     <article [innerHTML]="visual.l.page.contenu"></article>
   </p-dialog>
   <!-- Change view between SUDOE zone and bordeaux -->
-  <nav class="onglets">
+  <nav class="tabs">
     <a (click)="showSudoe()" [class.active]="sudoe">{{ visual.l.t['VISU_SUDOE'] }}</a><a (click)="showBordeaux()"
       [class.active]="!sudoe">{{ visual.l.t['VISU_BORDELAIS'] }}</a>
   </nav>

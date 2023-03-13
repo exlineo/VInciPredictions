@@ -59,6 +59,12 @@ section:nth-child(1) > form{
   overflow-x: hidden;
   flex-flow:column nowrap;
 }
+article{
+  background-color: white;
+  margin:10px 0;
+  padding:0 0 0 10px;
+  position:relative;
+}
 table{
   width:100%;
 }

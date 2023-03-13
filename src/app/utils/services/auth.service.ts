@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, sendEmailVerification, User, IdTokenResult } from "@angular/fire/auth";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, sendEmailVerification, User, updateProfile } from "@angular/fire/auth";
 import { Router } from '@angular/router';
 import { Profil, ProfilI } from '../modeles/profil-i';
 import { LanguesService } from './langues.service';

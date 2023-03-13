@@ -15,6 +15,7 @@ export class DataMajComponent implements OnInit {
     pays: [[]],
     regions: [[]],
     pdo: [[]],
+    bordeaux:[[]],
     rendements: [[1981, 2022]],
     predictions: [[2023, 2032]],
     moyennes: [''],

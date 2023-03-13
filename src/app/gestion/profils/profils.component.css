@@ -6,8 +6,17 @@ h2{
   flex-flow:row nowrap;
   align-items: center;
 }
+main{
+  height:85vh;
+}
+article{
+  overflow-x: hidden;
+  overflow-y:auto;
+  padding-bottom:50px;
+  width:96vw;
+}
 table{
-  width:94vw;
+  width:100%;
   margin:0 auto;
 }
 tfoot th{

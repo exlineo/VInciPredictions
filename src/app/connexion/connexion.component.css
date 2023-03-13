@@ -5,7 +5,8 @@ section:nth-child(2){
   justify-content: space-between;
 }
 section:nth-child(3){
-  /* justify-content: center; */
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 a{
   margin:5px;

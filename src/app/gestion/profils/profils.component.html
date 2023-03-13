@@ -1,7 +1,6 @@
 <main>
   <section>
     <h2>{{ l.page.titre }}</h2>
-
     <p-dialog [header]="l.page.titre" [(visible)]="infos">
       <article [innerHTML]="l.page.contenu"></article>
     </p-dialog>
@@ -15,12 +14,8 @@
       <table>
         <thead>
           <tr>
-            <th colspan="3"></th>
-            <th colspan="4"></th>
-          </tr>
-          <tr>
-            <!-- <th><input type="checkbox" (change)="selectAll($event)" class="rangemin"></th> -->
             <th>{{ l.t['PROFIL_NOM'] }}, {{ l.t['PROFIL_PRENOM'] }}</th>
+            <th>{{ l.t['EMAIL'] }}</th>
             <th>{{ l.t['PROFIL_VILLE'] }}</th>
             <th>{{ l.t['FORM_PROMO'] }}</th>
             <th>{{ l.t['PROFIL_PETITE'] }}</th>
@@ -32,9 +27,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let p of predServ.listeProfils | profils:searchForm.controls.search.value; let i=index">
-            <!-- <td><input type="checkbox" (change)="selectUn($event, i)" [value]="i"></td> -->
             <td>{{ p.nom }} {{ p.prenom }}</td>
             <td>{{ p.ville }}</td>
+            <td>{{ p.u.email }}</td>
             <td>
               <div>
                 <span *ngIf="!edit">{{ p.code }}</span>

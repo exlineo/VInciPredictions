@@ -1,6 +1,6 @@
 <section>
   <article class="jaune">
-    <form [formGroup]="filtresForm">
+    <form [formGroup]="filtresForm" *ngIf="sudoe">
       <h3>{{ l.t['FILTRE_TITRE'] }}</h3>
       <select name="pays" formControlName="pays">
         <option value="">{{ l.t['FILTRE_PAYS'] }}</option>
@@ -14,19 +14,20 @@
         <option value="">{{ l.t['FILTRE_PDO'] }}</option>
         <option *ngFor="let o of predServ.l.store.listes.pdo" [value]="o">{{ o }}</option>
       </select>
-      <select name="type" formControlName="type">
+      <!-- <select name="type" formControlName="type">
         <option value="">{{ l.t['FILTRE_TYPE'] }}</option>
         <option value="rouge">{{ l.t['FILTRE_ROUGE'] }}</option>
         <option value="blanc">{{ l.t['FILTRE_BLANC'] }}</option>
       </select>
       <input type="number" formControlName="debut" min="1981" max="2015">
-      <input type="number" formControlName="fin" min="2023" max="2032">
-      <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
+      <input type="number" formControlName="fin" min="2023" max="2032"> -->
+
     </form>
+    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t['COMMENT'] }}</button>
   </article>
   <!-- DATA -->
   <!-- Change view -->
-  <nav class="onglets">
+  <nav class="tabs">
     <a (click)="getSudoe()" [class.active]="sudoe">{{ l.t['VISU_SUDOE'] }}</a>
     <a (click)="getBordeaux()" [class.active]="!sudoe">{{ l.t['VISU_BORDELAIS'] }}</a>
   </nav>

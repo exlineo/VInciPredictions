@@ -10,9 +10,11 @@ h1{
 }
 section{
   padding:20px;
+  overflow-x: hidden;
+  overflow-y:auto;
 }
 section:nth-child(1){
-  flex:1;
+  flex:2;
   /* justify-content: space-around; */
 }
 section:nth-child(1) > nav{
@@ -20,11 +22,11 @@ section:nth-child(1) > nav{
   justify-content: center;
 }
 section:nth-child(2){
-  flex:5;
+  flex:4;
   overflow-y:auto;
 }
 section:nth-child(3){
-  flex:3;
+  flex:4;
   overflow-y:auto;
 }
 
