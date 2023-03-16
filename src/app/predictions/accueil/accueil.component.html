@@ -3,7 +3,8 @@
     <!-- ENTETE DE LA COLONNE -->
     <app-entete></app-entete>
     <nav>
-      <!-- <span class="icone">pin_drop</span> -->
+      <a routerLink="/predictions" [title]="l.t['ACCUEIL']"><i class="pi pi-home"></i>{{ l.t['ACCUEIL'] }}</a>
+      <hr>
       <a [href]="l.store.config.liens.petite" target="_blank" [title]="l.t['MENU_EXTERNE']"><i class="pi pi-clone"></i>{{ l.t['MENU_PETITE'] }}<i class="pi pi-external-link"></i></a>
       <hr>
       <a routerLink="/predictions/visualisations" [title]="l.t['MENU_PREDICTIONS']"><i class="pi pi-map-marker"></i>{{ l.t['MENU_PREDICTIONS'] }}</a>

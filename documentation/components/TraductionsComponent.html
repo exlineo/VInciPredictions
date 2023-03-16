@@ -249,27 +249,27 @@
                                         <tbody>
                                                 <tr>
                                                         <td>l</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>fB</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -285,7 +285,7 @@
 
 
     <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -361,7 +361,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -405,7 +405,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -561,7 +561,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -598,7 +598,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -684,7 +684,7 @@
     </table>
 </section>
     <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -1271,7 +1271,7 @@ export class TraductionsComponent implements OnInit {
       &lt;label for&#x3D;&quot;contenu&quot;&gt;{{ l.t[&#x27;EDIT_CONTENU&#x27;] }}&lt;/label&gt;
       &lt;p-editor formControlName&#x3D;&quot;contenu&quot; ngDefaultControl name&#x3D;&quot;contenu&quot;&gt;&lt;/p-editor&gt;
       &lt;div class&#x3D;&quot;h&quot;&gt;
-        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
         &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_VALIDE&#x27;]&quot;&gt;
       &lt;/div&gt;
     &lt;/form&gt;
@@ -1279,7 +1279,7 @@ export class TraductionsComponent implements OnInit {
   &lt;article *ngIf&#x3D;&quot;trad&quot;&gt;
     &lt;form [formGroup]&#x3D;&quot;editTradForm&quot; (submit)&#x3D;&quot;sendEditTrad()&quot;&gt;
       &lt;div class&#x3D;&quot;h&quot;&gt;
-        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
         &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_VALIDE&#x27;]&quot;&gt;
       &lt;/div&gt;
       &lt;fieldset *ngFor&#x3D;&quot;let f of editTradForm.controls | keyvalue&quot; &gt;
@@ -1393,14 +1393,14 @@ form &gt; fieldset{
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><section class="bleu">  <article>    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t[\'COMMENT\'] }}</button>    <h3>{{ l.t[\'LANG_CHOIX\'] }}</h3>    <nav class="menulangues">      <a (click)="setEditLang(\'uk\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/uk.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'es\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/es.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'fr\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/fr.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'pt\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/pt.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>    </nav>  </article>  <article>    <h3>{{ l.t[\'EDIT_MENU_PAGES\'] }}</h3>    <ul>      <li *ngFor="let p of pages"><a (click)="selectPage($event, p)">{{ p | titlecase }}</a></li>    </ul>  </article>  <article>    <h3>{{ l.t[\'EDIT_MENU_INTERFACE\'] }}</h3>    <ul>      <li><a (click)="selectTrad()">{{ l.t[\'MENU_TRAD\'] }}</a></li>    </ul>  </article></section><section>  <h1><img [src]="\'/assets/images/pictos/\' + editLang + \'.png\'" *ngIf="editLang"> {{ l.t[\'EDIT_EDIT\'] }}</h1>  <hr>  <!-- PAGE -->  <article *ngIf="!trad">    <form [formGroup]="editPageForm" (submit)="sendEditPage()">      <label for="titre">{{ l.t[\'EDIT_TITRE\'] }}</label>      <input formControlName="titre" name="titre" [placeholder]="l.t[\'EDIT_TITRE\']">      <label for="accroche">{{ l.t[\'EDIT_STITRE\'] }}</label>      <input formControlName="accroche" name="accroche" [placeholder]="l.t[\'EDIT_STITRE\']">      <label for="contenu">{{ l.t[\'EDIT_CONTENU\'] }}</label>      <p-editor formControlName="contenu" ngDefaultControl name="contenu"></p-editor>      <div class="h">        <input type="reset" [value]="l.t[\'FORM_EFFACE\']">        <input type="submit" [value]="l.t[\'FORM_VALIDE\']">      </div>    </form>  </article>  <article *ngIf="trad">    <form [formGroup]="editTradForm" (submit)="sendEditTrad()">      <div class="h">        <input type="reset" [value]="l.t[\'FORM_EFFACE\']">        <input type="submit" [value]="l.t[\'FORM_VALIDE\']">      </div>      <fieldset *ngFor="let f of editTradForm.controls | keyvalue" >        <label>{{ f.key }}</label>        <input [formControlName]="f.key">      </fieldset>    </form>  </article>  <!-- TRADUCTION -->  <article *ngIf="pageId.length == 0"></article></section><!-- DONNEES INITIALES --><section class="jaune">  <h1><img [src]="\'/assets/images/pictos/\' + l.langue + \'.png\'" *ngIf="l.langue"> {{ l.t[\'EDIT_INIT\'] }}</h1>  <!-- PAGE INITIALE -->  <article *ngIf="!trad">    <h2>{{ page.titre }}</h2>    <blockquote>{{ page.accroche }}</blockquote>    <article [innerHTML]="page.contenu"></article>  </article>  <!-- TRADUCTION INITIALE -->  <article *ngIf="trad">    <h2>{{ l.t[\'EDIT_SOFT\'] }}</h2>    <hr>    <ul>      <li *ngFor="let t of trad.data | keyvalue">        {{ t.key }} : {{ t.value }}      </li>    </ul>  </article></section><p-dialog [header]="l.page.titre" [(visible)]="infos">  <article [innerHTML]="l.page.contenu"></article></p-dialog></div>'
+        var COMPONENT_TEMPLATE = '<div><section class="bleu">  <article>    <button (click)="infos = !infos" class="annule"><i class="pi pi-info-circle"></i>{{ l.t[\'COMMENT\'] }}</button>    <h3>{{ l.t[\'LANG_CHOIX\'] }}</h3>    <nav class="menulangues">      <a (click)="setEditLang(\'uk\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/uk.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'es\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/es.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'fr\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/fr.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>      <a (click)="setEditLang(\'pt\')" [title]="l.t[\'LANG_CHOIX\']"><img src="/assets/images/pictos/pt.png" [alt]="l.t[\'LANG_IMG\']+\' \'+l.t[\'LANG_L\']"></a>    </nav>  </article>  <article>    <h3>{{ l.t[\'EDIT_MENU_PAGES\'] }}</h3>    <ul>      <li *ngFor="let p of pages"><a (click)="selectPage($event, p)">{{ p | titlecase }}</a></li>    </ul>  </article>  <article>    <h3>{{ l.t[\'EDIT_MENU_INTERFACE\'] }}</h3>    <ul>      <li><a (click)="selectTrad()">{{ l.t[\'MENU_TRAD\'] }}</a></li>    </ul>  </article></section><section>  <h1><img [src]="\'/assets/images/pictos/\' + editLang + \'.png\'" *ngIf="editLang"> {{ l.t[\'EDIT_EDIT\'] }}</h1>  <hr>  <!-- PAGE -->  <article *ngIf="!trad">    <form [formGroup]="editPageForm" (submit)="sendEditPage()">      <label for="titre">{{ l.t[\'EDIT_TITRE\'] }}</label>      <input formControlName="titre" name="titre" [placeholder]="l.t[\'EDIT_TITRE\']">      <label for="accroche">{{ l.t[\'EDIT_STITRE\'] }}</label>      <input formControlName="accroche" name="accroche" [placeholder]="l.t[\'EDIT_STITRE\']">      <label for="contenu">{{ l.t[\'EDIT_CONTENU\'] }}</label>      <p-editor formControlName="contenu" ngDefaultControl name="contenu"></p-editor>      <div class="h">        <input type="reset" [value]="l.t[\'FORM_ANNULE\']">        <input type="submit" [value]="l.t[\'FORM_VALIDE\']">      </div>    </form>  </article>  <article *ngIf="trad">    <form [formGroup]="editTradForm" (submit)="sendEditTrad()">      <div class="h">        <input type="reset" [value]="l.t[\'FORM_ANNULE\']">        <input type="submit" [value]="l.t[\'FORM_VALIDE\']">      </div>      <fieldset *ngFor="let f of editTradForm.controls | keyvalue" >        <label>{{ f.key }}</label>        <input [formControlName]="f.key">      </fieldset>    </form>  </article>  <!-- TRADUCTION -->  <article *ngIf="pageId.length == 0"></article></section><!-- DONNEES INITIALES --><section class="jaune">  <h1><img [src]="\'/assets/images/pictos/\' + l.langue + \'.png\'" *ngIf="l.langue"> {{ l.t[\'EDIT_INIT\'] }}</h1>  <!-- PAGE INITIALE -->  <article *ngIf="!trad">    <h2>{{ page.titre }}</h2>    <blockquote>{{ page.accroche }}</blockquote>    <article [innerHTML]="page.contenu"></article>  </article>  <!-- TRADUCTION INITIALE -->  <article *ngIf="trad">    <h2>{{ l.t[\'EDIT_SOFT\'] }}</h2>    <hr>    <ul>      <li *ngFor="let t of trad.data | keyvalue">        {{ t.key }} : {{ t.value }}      </li>    </ul>  </article></section><p-dialog [header]="l.page.titre" [(visible)]="infos">  <article [innerHTML]="l.page.contenu"></article></p-dialog></div>'
     var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TraductionsComponent'};

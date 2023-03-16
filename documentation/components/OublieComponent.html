@@ -209,15 +209,15 @@
                                         <tbody>
                                                 <tr>
                                                         <td>l</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                                 <p>Pointeur vers le service de langues</p>
 
@@ -225,43 +225,43 @@
                                                 </tr>
                                                 <tr>
                                                         <td>fbuild</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>auth</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>router</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                         </td>
                                                 </tr>
@@ -279,7 +279,7 @@
 
 
     <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -400,7 +400,7 @@
     </table>
 </section>
     <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -591,7 +591,7 @@ export class OublieComponent implements OnInit {
           }}&lt;/a&gt;
       &lt;/fieldset&gt;
       &lt;fieldset class&#x3D;&quot;h&quot;&gt;
-        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+        &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
         &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_CONNECTE&#x27;]&quot;&gt;
       &lt;/fieldset&gt;
     &lt;/form&gt;
@@ -651,14 +651,14 @@ form span{
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><main class="public">  <section class="bleu">  </section>  <section class="bleufonce">    <!-- ENTETE DE LA COLONNE -->    <app-entete></app-entete>    <p>{{ l.page.contenu }}</p>    <!-- FORMULAIRE DE CONNEXION -->    <form [formGroup]="passForm" (submit)="connexion()">      <!-- EMAIL -->      <fieldset>        <label>{{ l.t[\'FORM_EMAIL\'] }} *</label>        <input type="email" formControlName="mail" [placeholder]="l.t[\'FORM_EMAIL\']" required>        <!-- <span class="orange">{{ l.t[\'FORM_EMAIL\'] }}</span> -->        <span          *ngIf="passForm.controls[\'mail\'].hasError(\'email\') && !passForm.controls[\'mail\'].hasError(\'required\')"          class="orange">          {{ l.t[\'FORM_FORMAT_MAIL\'] }}        </span>        <span *ngIf="passForm.controls[\'mail\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span>      </fieldset>      <!-- PASSE -->      <fieldset>        <label>{{ l.t[\'FORM_PASSE\'] }} *</label>        <input type="password" formControlName="pass" require [placeholder]="l.t[\'FORM_PASSE\']" minlength="8" required>        <!-- <span  class="orange">{{ l.t[\'FORM_PASSE\'] }}</span> -->        <span          *ngIf="passForm.controls[\'pass\'].hasError(\'pattern\') && !passForm.controls[\'pass\'].hasError(\'required\')"          class="orange">          {{ l.t[\'FORM_FORMAT_PASSE\'] }}        </span>        <span *ngIf="passForm.controls[\'pass\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span>      </fieldset>      <fieldset>        <a (click)="oublie = true" [title]="l.t[\'FORM_OUBLIE\']"><span class="icone">vpn_key</span>{{ l.t[\'FORM_OUBLIE\']          }}</a>        <a routerLink="/compte" [title]="l.t[\'FORM_CREE\']"><span class="icone">person_add_alt</span>{{ l.t[\'FORM_CREE\']          }}</a>      </fieldset>      <fieldset class="h">        <input type="reset" [value]="l.t[\'FORM_EFFACE\']">        <input type="submit" [value]="l.t[\'FORM_CONNECTE\']">      </fieldset>    </form>    <!-- MENU DU BAS -->    <app-pied></app-pied>  </section>  <section class="jaune">    <article>    </article>  </section></main></div>'
+        var COMPONENT_TEMPLATE = '<div><main class="public">  <section class="bleu">  </section>  <section class="bleufonce">    <!-- ENTETE DE LA COLONNE -->    <app-entete></app-entete>    <p>{{ l.page.contenu }}</p>    <!-- FORMULAIRE DE CONNEXION -->    <form [formGroup]="passForm" (submit)="connexion()">      <!-- EMAIL -->      <fieldset>        <label>{{ l.t[\'FORM_EMAIL\'] }} *</label>        <input type="email" formControlName="mail" [placeholder]="l.t[\'FORM_EMAIL\']" required>        <!-- <span class="orange">{{ l.t[\'FORM_EMAIL\'] }}</span> -->        <span          *ngIf="passForm.controls[\'mail\'].hasError(\'email\') && !passForm.controls[\'mail\'].hasError(\'required\')"          class="orange">          {{ l.t[\'FORM_FORMAT_MAIL\'] }}        </span>        <span *ngIf="passForm.controls[\'mail\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span>      </fieldset>      <!-- PASSE -->      <fieldset>        <label>{{ l.t[\'FORM_PASSE\'] }} *</label>        <input type="password" formControlName="pass" require [placeholder]="l.t[\'FORM_PASSE\']" minlength="8" required>        <!-- <span  class="orange">{{ l.t[\'FORM_PASSE\'] }}</span> -->        <span          *ngIf="passForm.controls[\'pass\'].hasError(\'pattern\') && !passForm.controls[\'pass\'].hasError(\'required\')"          class="orange">          {{ l.t[\'FORM_FORMAT_PASSE\'] }}        </span>        <span *ngIf="passForm.controls[\'pass\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span>      </fieldset>      <fieldset>        <a (click)="oublie = true" [title]="l.t[\'FORM_OUBLIE\']"><span class="icone">vpn_key</span>{{ l.t[\'FORM_OUBLIE\']          }}</a>        <a routerLink="/compte" [title]="l.t[\'FORM_CREE\']"><span class="icone">person_add_alt</span>{{ l.t[\'FORM_CREE\']          }}</a>      </fieldset>      <fieldset class="h">        <input type="reset" [value]="l.t[\'FORM_ANNULE\']">        <input type="submit" [value]="l.t[\'FORM_CONNECTE\']">      </fieldset>    </form>    <!-- MENU DU BAS -->    <app-pied></app-pied>  </section>  <section class="jaune">    <article>    </article>  </section></main></div>'
     var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'OublieComponent', 'selector': 'app-connexion'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'SupportComponent', 'selector': 'app-support'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'OublieComponent'};

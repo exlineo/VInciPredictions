@@ -1,8 +1,8 @@
 import { NumberFormatStyle } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
-import { GraphI, GraphSetI } from 'src/app/predictions/utils/modeles/graph-i';
 import { DatasetI, RendementI } from '../modeles/filtres-i';
+import { ProfilI } from '../modeles/profil-i';
 
 marked.setOptions({
   // renderer: new marked.Renderer(),
@@ -132,10 +132,10 @@ export class TypesPipe implements PipeTransform {
 })
 export class ProfilsPipe implements PipeTransform {
 
-  transform(profils: Array<any>, str: string | null) {
+  transform(profils: Array<ProfilI>, str: string | null) {
     if (!str || str.length == 0) return profils;
     if (!profils) return [];
 
-    return profils.filter(p => p.nom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.prenom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.ville.toLowerCase().indexOf(str.toLowerCase()) != -1);
+    return profils.filter(p => p.nom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.prenom.toLowerCase().indexOf(str.toLowerCase()) != -1 || p.u.email!.toLowerCase().indexOf(str.toLowerCase()) != -1);
   }
 }

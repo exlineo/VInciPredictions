@@ -223,15 +223,15 @@
                                         <tbody>
                                                 <tr>
                                                         <td>l</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                                 <p>Pointeur vers le service de langues</p>
 
@@ -239,29 +239,29 @@
                                                 </tr>
                                                 <tr>
                                                         <td>auth</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                         </td>
                                                 </tr>
                                                 <tr>
                                                         <td>fbuild</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                         <td>
                                                         </td>
                                                 </tr>
@@ -279,7 +279,7 @@
 
 
     <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -439,7 +439,7 @@
     </table>
 </section>
     <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -785,7 +785,7 @@ export class CompteComponent implements OnInit {
             &lt;/span&gt;
           &lt;/fieldset&gt;
           &lt;fieldset class&#x3D;&quot;l&quot;&gt;
-            &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+            &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
             &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_VALIDE&#x27;]&quot;&gt;
           &lt;/fieldset&gt;
         &lt;/form&gt;
@@ -852,7 +852,7 @@ export class CompteComponent implements OnInit {
             &lt;input type&#x3D;&quot;text&quot; formControlName&#x3D;&quot;code&quot; [placeholder]&#x3D;&quot;l.t[&#x27;FORM_PROMO&#x27;]&quot; [pTooltip]&#x3D;&quot;l.t[&#x27;FORM_PROMO_INFOS&#x27;]&quot;&gt;
           &lt;/fieldset&gt;
           &lt;fieldset class&#x3D;&quot;l&quot;&gt;
-            &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+            &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
             &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_VALIDE&#x27;]&quot;&gt;
           &lt;/fieldset&gt;
         &lt;/form&gt;
@@ -910,14 +910,14 @@ form span{
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><main class="public">  <section class="bleu">  </section>  <section class="bleufonce">    <!-- COLONNE HEADER -->    <app-entete></app-entete>    <!-- CONTENT -->    <h2>{{ l.page.titre }}</h2>    <article [innerHTML]="l.page.contenu">    </article>    <!-- BOTTOM NAV -->    <app-pied></app-pied>  </section>  <!-- FORMULAIRES DE CREATION DE COMPTE -->  <section class="orange">    <h2>{{ l.t[\'COMPTE\'] }}</h2>    <p-tabView [(activeIndex)]="tabI">      <p-tabPanel [header]="l.t[\'ETAPE\'] + \' 1 : \' + l.t[\'COMPTE\']" [disabled]="tabI != 0">        <!-- Create account -->        <form [formGroup]="account" (submit)="creeCompte()">          <fieldset>            <label>{{ l.t[\'FORM_EMAIL\'] }} *</label>            <input type="email" formControlName="mail" [placeholder]="l.t[\'FORM_EMAIL\']" required>            <!-- <span class="orange"> -->            <span *ngIf="account.get(\'mail\')?.hasError(\'email\') && account.get(\'mail\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_FORMAT_MAIL\'] }}            </span>            <span *ngIf="account.get(\'mail\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_EMAIL2\'] }} *</label>            <input type="email" formControlName="mail2" [placeholder]="l.t[\'FORM_EMAIL\']" required>            <!-- <span class="orange">{{ l.t[\'FORM_EMAIL\'] }}</span> -->            <span *ngIf="account.get(\'mail2\')?.hasError(\'email\') && account.get(\'mail2\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_FORMAT_MAIL\'] }}            </span>            <span              *ngIf="(account.get(\'mail2\')?.value != account.get(\'mail2\')?.value) && !account.get(\'mail2\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_CORRESPOND\'] }}            </span>            <span *ngIf="account.get(\'mail2\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PASSE\'] }} *</label>            <input type="password" formControlName="pass" [placeholder]="l.t[\'FORM_PASSE\']" required              pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}">            <!-- <input type="text" formControlName="pass" [placeholder]="l.t[\'FORM_PASSE\']" required              pattern="^[a-zA-Z0-9_-]{8,}$"> -->            <span *ngIf="account.get(\'pass\')?.hasError(\'pattern\')" class="orange">              {{ l.t[\'FORM_FORMAT_PASSE\'] }}            </span>            <!-- Requis -->            <span *ngIf="account.get(\'pass\')?.hasError(\'required\')" class="orange">{{ l.t[\'FORM_REQUIS\'] }}</span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PASSE2\'] }} *</label>            <input type="password" formControlName="pass2" [placeholder]="l.t[\'FORM_PASSE2\']" required>            <span *ngIf="(account.get(\'pass\')?.value != account.get(\'pass2\')?.value) && !account.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_CORRESPOND\'] }}            </span>            <span *ngIf="account.get(\'pass2\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset class="l">            <input type="reset" [value]="l.t[\'FORM_EFFACE\']">            <input type="submit" [value]="l.t[\'FORM_VALIDE\']">          </fieldset>        </form>        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>      </p-tabPanel>      <p-tabPanel [header]="l.t[\'ETAPE\'] + \' 2 : \' + l.t[\'PROFIL_EDIT\']" [disabled]="tabI == 0">        <!-- ACCOUNT FORM -->        <form [formGroup]="profil" (submit)="creeProfil()">          <!-- Name, Surname -->          <fieldset>            <label>{{ l.t[\'FORM_NOM\'] }} *</label>            <input type="text" formControlName="nom" [placeholder]="l.t[\'FORM_NOM\']" required>            <span *ngIf="profil.controls[\'nom\'].hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PRENOM\'] }} *</label>            <input type="text" formControlName="prenom" [placeholder]="l.t[\'FORM_PRENOM\']" required>            <span *ngIf="profil.controls[\'prenom\'].hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <!-- ORGANISATION -->          <fieldset>            <label>{{ l.t[\'FORM_ORG\'] }}</label>            <input type="text" formControlName="organisation" [placeholder]="l.t[\'FORM_ORG\']">          </fieldset>          <!-- ADRESSE -->          <fieldset>            <label>{{ l.t[\'FORM_ADR\'] }}</label>            <input type="text" formControlName="adresse" [placeholder]="l.t[\'FORM_ADR\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_ADR2\'] }}</label>            <input type="text" formControlName="adresse2" [placeholder]="l.t[\'FORM_ADR2\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_ZIP\'] }}</label>            <input type="number" formControlName="codePostal" [placeholder]="l.t[\'FORM_ZIP\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_VILLE\'] }}</label>            <input type="text" formControlName="ville" [placeholder]="l.t[\'FORM_VILLE\']">          </fieldset>          <!-- ADRESSE -->          <fieldset>            <label>{{ l.t[\'FORM_TEL\'] }}</label>            <input type="text" formControlName="tel" [placeholder]="l.t[\'FORM_TEL\']">            <!-- <span *ngIf="compte.controls[\'tel\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span> -->          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_MOBILE\'] }}</label>            <input type="text" formControlName="mobile" [placeholder]="l.t[\'FORM_MOBILE\']">            <!-- <span *ngIf="compte.controls[\'mobile\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span> -->          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PROMO\'] }}</label>            <input type="text" formControlName="code" [placeholder]="l.t[\'FORM_PROMO\']" [pTooltip]="l.t[\'FORM_PROMO_INFOS\']">          </fieldset>          <fieldset class="l">            <input type="reset" [value]="l.t[\'FORM_EFFACE\']">            <input type="submit" [value]="l.t[\'FORM_VALIDE\']">          </fieldset>        </form>        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>      </p-tabPanel>    </p-tabView>  </section></main></div>'
+        var COMPONENT_TEMPLATE = '<div><main class="public">  <section class="bleu">  </section>  <section class="bleufonce">    <!-- COLONNE HEADER -->    <app-entete></app-entete>    <!-- CONTENT -->    <h2>{{ l.page.titre }}</h2>    <article [innerHTML]="l.page.contenu">    </article>    <!-- BOTTOM NAV -->    <app-pied></app-pied>  </section>  <!-- FORMULAIRES DE CREATION DE COMPTE -->  <section class="orange">    <h2>{{ l.t[\'COMPTE\'] }}</h2>    <p-tabView [(activeIndex)]="tabI">      <p-tabPanel [header]="l.t[\'ETAPE\'] + \' 1 : \' + l.t[\'COMPTE\']" [disabled]="tabI != 0">        <!-- Create account -->        <form [formGroup]="account" (submit)="creeCompte()">          <fieldset>            <label>{{ l.t[\'FORM_EMAIL\'] }} *</label>            <input type="email" formControlName="mail" [placeholder]="l.t[\'FORM_EMAIL\']" required>            <!-- <span class="orange"> -->            <span *ngIf="account.get(\'mail\')?.hasError(\'email\') && account.get(\'mail\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_FORMAT_MAIL\'] }}            </span>            <span *ngIf="account.get(\'mail\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_EMAIL2\'] }} *</label>            <input type="email" formControlName="mail2" [placeholder]="l.t[\'FORM_EMAIL\']" required>            <!-- <span class="orange">{{ l.t[\'FORM_EMAIL\'] }}</span> -->            <span *ngIf="account.get(\'mail2\')?.hasError(\'email\') && account.get(\'mail2\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_FORMAT_MAIL\'] }}            </span>            <span              *ngIf="(account.get(\'mail2\')?.value != account.get(\'mail2\')?.value) && !account.get(\'mail2\')?.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_CORRESPOND\'] }}            </span>            <span *ngIf="account.get(\'mail2\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PASSE\'] }} *</label>            <input type="password" formControlName="pass" [placeholder]="l.t[\'FORM_PASSE\']" required              pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}">            <!-- <input type="text" formControlName="pass" [placeholder]="l.t[\'FORM_PASSE\']" required              pattern="^[a-zA-Z0-9_-]{8,}$"> -->            <span *ngIf="account.get(\'pass\')?.hasError(\'pattern\')" class="orange">              {{ l.t[\'FORM_FORMAT_PASSE\'] }}            </span>            <!-- Requis -->            <span *ngIf="account.get(\'pass\')?.hasError(\'required\')" class="orange">{{ l.t[\'FORM_REQUIS\'] }}</span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PASSE2\'] }} *</label>            <input type="password" formControlName="pass2" [placeholder]="l.t[\'FORM_PASSE2\']" required>            <span *ngIf="(account.get(\'pass\')?.value != account.get(\'pass2\')?.value) && !account.hasError(\'required\')"              class="orange">              {{ l.t[\'FORM_CORRESPOND\'] }}            </span>            <span *ngIf="account.get(\'pass2\')?.hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset class="l">            <input type="reset" [value]="l.t[\'FORM_ANNULE\']">            <input type="submit" [value]="l.t[\'FORM_VALIDE\']">          </fieldset>        </form>        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>      </p-tabPanel>      <p-tabPanel [header]="l.t[\'ETAPE\'] + \' 2 : \' + l.t[\'PROFIL_EDIT\']" [disabled]="tabI == 0">        <!-- ACCOUNT FORM -->        <form [formGroup]="profil" (submit)="creeProfil()">          <!-- Name, Surname -->          <fieldset>            <label>{{ l.t[\'FORM_NOM\'] }} *</label>            <input type="text" formControlName="nom" [placeholder]="l.t[\'FORM_NOM\']" required>            <span *ngIf="profil.controls[\'nom\'].hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PRENOM\'] }} *</label>            <input type="text" formControlName="prenom" [placeholder]="l.t[\'FORM_PRENOM\']" required>            <span *ngIf="profil.controls[\'prenom\'].hasError(\'required\')" class="orange">              {{ l.t[\'FORM_REQUIS\'] }}            </span>          </fieldset>          <!-- ORGANISATION -->          <fieldset>            <label>{{ l.t[\'FORM_ORG\'] }}</label>            <input type="text" formControlName="organisation" [placeholder]="l.t[\'FORM_ORG\']">          </fieldset>          <!-- ADRESSE -->          <fieldset>            <label>{{ l.t[\'FORM_ADR\'] }}</label>            <input type="text" formControlName="adresse" [placeholder]="l.t[\'FORM_ADR\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_ADR2\'] }}</label>            <input type="text" formControlName="adresse2" [placeholder]="l.t[\'FORM_ADR2\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_ZIP\'] }}</label>            <input type="number" formControlName="codePostal" [placeholder]="l.t[\'FORM_ZIP\']">          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_VILLE\'] }}</label>            <input type="text" formControlName="ville" [placeholder]="l.t[\'FORM_VILLE\']">          </fieldset>          <!-- ADRESSE -->          <fieldset>            <label>{{ l.t[\'FORM_TEL\'] }}</label>            <input type="text" formControlName="tel" [placeholder]="l.t[\'FORM_TEL\']">            <!-- <span *ngIf="compte.controls[\'tel\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span> -->          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_MOBILE\'] }}</label>            <input type="text" formControlName="mobile" [placeholder]="l.t[\'FORM_MOBILE\']">            <!-- <span *ngIf="compte.controls[\'mobile\'].hasError(\'required\')" class="orange">          {{ l.t[\'FORM_REQUIS\'] }}        </span> -->          </fieldset>          <fieldset>            <label>{{ l.t[\'FORM_PROMO\'] }}</label>            <input type="text" formControlName="code" [placeholder]="l.t[\'FORM_PROMO\']" [pTooltip]="l.t[\'FORM_PROMO_INFOS\']">          </fieldset>          <fieldset class="l">            <input type="reset" [value]="l.t[\'FORM_ANNULE\']">            <input type="submit" [value]="l.t[\'FORM_VALIDE\']">          </fieldset>        </form>        <p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p>      </p-tabPanel>    </p-tabView>  </section></main></div>'
     var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CompteComponent'};

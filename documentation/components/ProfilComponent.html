@@ -204,51 +204,51 @@
                                         <tbody>
                                                 <tr>
                                                         <td>l</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/LanguesService.html" target="_self" >LanguesService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>fbuild</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>visual</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/VisualService.html" target="_self" >VisualService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>auth</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -264,7 +264,7 @@
 
 
     <section>
-    
+
     <h3 id="methods">
         Methods
     </h3>
@@ -346,7 +346,7 @@
     </table>
 </section>
     <section>
-    
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -561,7 +561,7 @@ export class ProfilComponent implements OnInit {
     &lt;input type&#x3D;&quot;text&quot; formControlName&#x3D;&quot;code&quot; [placeholder]&#x3D;&quot;l.t[&#x27;FORM_PROMO&#x27;]&quot; [pTooltip]&#x3D;&quot;l.t[&#x27;FORM_PROMO_INFOS&#x27;]&quot;&gt;
   &lt;/fieldset&gt;
   &lt;fieldset class&#x3D;&quot;l&quot;&gt;
-    &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_EFFACE&#x27;]&quot;&gt;
+    &lt;input type&#x3D;&quot;reset&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_ANNULE&#x27;]&quot;&gt;
     &lt;input type&#x3D;&quot;submit&quot; [value]&#x3D;&quot;l.t[&#x27;FORM_VALIDE&#x27;]&quot;&gt;
   &lt;/fieldset&gt;
 &lt;/form&gt;
@@ -606,14 +606,14 @@ section{
         </div>
     </div>
 
-    
+
 </div>
 
 <script src="../js/libs/vis.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><section class="jaune">  <h1>{{ l.page.titre }}</h1>  <article [innerHTML]="l.page.contenu">  </article></section><section><!-- ACCOUNT FORM --><form [formGroup]="profil" (submit)="majProfil()">  <!-- Name, Surname -->  <fieldset>    <label>{{ l.t[\'FORM_NOM\'] }} *</label>    <input type="text" formControlName="nom" [placeholder]="l.t[\'FORM_NOM\']" required>    <span *ngIf="profil.controls[\'nom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PRENOM\'] }} *</label>    <input type="text" formControlName="prenom" [placeholder]="l.t[\'FORM_PRENOM\']" required>    <span *ngIf="profil.controls[\'prenom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <!-- ORGANISATION -->  <fieldset>    <label>{{ l.t[\'FORM_ORG\'] }}</label>    <input type="text" formControlName="organisation" [placeholder]="l.t[\'FORM_ORG\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_ADR\'] }}</label>    <input type="text" formControlName="adresse" [placeholder]="l.t[\'FORM_ADR\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ADR2\'] }}</label>    <input type="text" formControlName="adresse2" [placeholder]="l.t[\'FORM_ADR2\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ZIP\'] }}</label>    <input type="number" formControlName="codePostal" [placeholder]="l.t[\'FORM_ZIP\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_VILLE\'] }}</label>    <input type="text" formControlName="ville" [placeholder]="l.t[\'FORM_VILLE\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_TEL\'] }}</label>    <input type="text" formControlName="tel" [placeholder]="l.t[\'FORM_TEL\']">    <!-- <span *ngIf="compte.controls[\'tel\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_MOBILE\'] }}</label>    <input type="text" formControlName="mobile" [placeholder]="l.t[\'FORM_MOBILE\']">    <!-- <span *ngIf="compte.controls[\'mobile\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PROMO\'] }}</label>    <input type="text" formControlName="code" [placeholder]="l.t[\'FORM_PROMO\']" [pTooltip]="l.t[\'FORM_PROMO_INFOS\']">  </fieldset>  <fieldset class="l">    <input type="reset" [value]="l.t[\'FORM_EFFACE\']">    <input type="submit" [value]="l.t[\'FORM_VALIDE\']">  </fieldset></form><p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p></section></div>'
+        var COMPONENT_TEMPLATE = '<div><section class="jaune">  <h1>{{ l.page.titre }}</h1>  <article [innerHTML]="l.page.contenu">  </article></section><section><!-- ACCOUNT FORM --><form [formGroup]="profil" (submit)="majProfil()">  <!-- Name, Surname -->  <fieldset>    <label>{{ l.t[\'FORM_NOM\'] }} *</label>    <input type="text" formControlName="nom" [placeholder]="l.t[\'FORM_NOM\']" required>    <span *ngIf="profil.controls[\'nom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PRENOM\'] }} *</label>    <input type="text" formControlName="prenom" [placeholder]="l.t[\'FORM_PRENOM\']" required>    <span *ngIf="profil.controls[\'prenom\'].hasError(\'required\')" class="orange">      {{ l.t[\'FORM_REQUIS\'] }}    </span>  </fieldset>  <!-- ORGANISATION -->  <fieldset>    <label>{{ l.t[\'FORM_ORG\'] }}</label>    <input type="text" formControlName="organisation" [placeholder]="l.t[\'FORM_ORG\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_ADR\'] }}</label>    <input type="text" formControlName="adresse" [placeholder]="l.t[\'FORM_ADR\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ADR2\'] }}</label>    <input type="text" formControlName="adresse2" [placeholder]="l.t[\'FORM_ADR2\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_ZIP\'] }}</label>    <input type="number" formControlName="codePostal" [placeholder]="l.t[\'FORM_ZIP\']">  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_VILLE\'] }}</label>    <input type="text" formControlName="ville" [placeholder]="l.t[\'FORM_VILLE\']">  </fieldset>  <!-- ADRESSE -->  <fieldset>    <label>{{ l.t[\'FORM_TEL\'] }}</label>    <input type="text" formControlName="tel" [placeholder]="l.t[\'FORM_TEL\']">    <!-- <span *ngIf="compte.controls[\'tel\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_MOBILE\'] }}</label>    <input type="text" formControlName="mobile" [placeholder]="l.t[\'FORM_MOBILE\']">    <!-- <span *ngIf="compte.controls[\'mobile\'].hasError(\'required\')" class="orange">  {{ l.t[\'FORM_REQUIS\'] }}</span> -->  </fieldset>  <fieldset>    <label>{{ l.t[\'FORM_PROMO\'] }}</label>    <input type="text" formControlName="code" [placeholder]="l.t[\'FORM_PROMO\']" [pTooltip]="l.t[\'FORM_PROMO_INFOS\']">  </fieldset>  <fieldset class="l">    <input type="reset" [value]="l.t[\'FORM_ANNULE\']">    <input type="submit" [value]="l.t[\'FORM_VALIDE\']">  </fieldset></form><p>* {{ l.t["FORM_OBLIGATOIRE"] }}</p></section></div>'
     var COMPONENTS = [{'name': 'AccueilComponent', 'selector': 'app-accueil'},{'name': 'AdminAccueilComponent', 'selector': 'app-admin-accueil'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CompteComponent', 'selector': 'app-compte'},{'name': 'ConnexionComponent', 'selector': 'app-connexion'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'DataMajComponent', 'selector': 'app-data-maj'},{'name': 'EnteteComponent', 'selector': 'app-entete'},{'name': 'ErreurComponent', 'selector': 'app-erreur'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'InfosComponent', 'selector': 'app-infos'},{'name': 'MentionsComponent', 'selector': 'app-mentions'},{'name': 'PiedComponent', 'selector': 'app-pied'},{'name': 'PopupComponent', 'selector': 'app-popup'},{'name': 'ProfilComponent', 'selector': 'app-profil'},{'name': 'ProfilsComponent', 'selector': 'app-profils'},{'name': 'PromoComponent', 'selector': 'app-promo'},{'name': 'RgpdComponent', 'selector': 'app-rgpd'},{'name': 'TraductionsComponent', 'selector': 'app-traductions'},{'name': 'VerificationComponent', 'selector': 'app-verification'},{'name': 'VisualisationsComponent', 'selector': 'app-visualisations'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ProfilComponent'};

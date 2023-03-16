@@ -35,7 +35,7 @@
       <label for="contenu">{{ l.t['EDIT_CONTENU'] }}</label>
       <p-editor formControlName="contenu" ngDefaultControl name="contenu"></p-editor>
       <div class="h">
-        <input type="reset" [value]="l.t['FORM_EFFACE']">
+        <input type="reset" [value]="l.t['FORM_ANNULE']">
         <input type="submit" [value]="l.t['FORM_VALIDE']">
       </div>
     </form>
@@ -43,7 +43,7 @@
   <article *ngIf="trad">
     <form [formGroup]="editTradForm" (submit)="sendEditTrad()">
       <div class="h">
-        <input type="reset" [value]="l.t['FORM_EFFACE']">
+        <input type="reset" [value]="l.t['FORM_ANNULE']">
         <input type="submit" [value]="l.t['FORM_VALIDE']">
       </div>
       <fieldset *ngFor="let f of editTradForm.controls | keyvalue" >

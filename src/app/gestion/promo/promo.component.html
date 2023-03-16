@@ -65,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let p of promos | profils:searchForm.controls.search.value; let i=index">
+          <tr *ngFor="let p of promos; let i=index">
             <td>{{ p.code }}
               <a [title]="l.t['COPY']" (click)="copyCode(p.code)"><i class="pi pi-copy textsombre"></i></a>
             </td>
@@ -89,7 +89,7 @@
               </div>
             </td>
             <td>
-              <p-checkbox name="validite" [(ngModel)]="p.validite" [binary]="true"></p-checkbox>
+              <p-checkbox name="validite" [(ngModel)]="p.validite!" [binary]="true"></p-checkbox>
               <!-- <input type="checkbox" name="validite" [(ngModel)]="p.validite" [checked]="p.validite"> -->
             </td>
             <td>
