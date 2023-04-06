@@ -84,7 +84,7 @@ export interface ConfigI {
   rendements: { debut: number, fin: number };
   contact: string;
   cle: string;
-  liens: { petite:string, grande:string };
+  liens: { petite:string, grande:string, aide:string, aideAdmin:string };
   version:number
 }
 export class Config implements ConfigI {
@@ -94,6 +94,6 @@ export class Config implements ConfigI {
   rendements = { debut: 1981, fin: 2021 };
   contact = '';
   cle = '';
-  liens = { petite: '', grande: '' };
+  liens = { petite: '', grande: '', aide:'', aideAdmin:'' };
   version = 0.9
 }

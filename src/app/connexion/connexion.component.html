@@ -52,7 +52,6 @@
       <fieldset>
         <label>{{ l.t['FORM_EMAIL'] }} *</label>
         <input type="email" formControlName="mail" [placeholder]="l.t['FORM_EMAIL']" required>
-        <!-- <span class="orange">{{ l.t['FORM_EMAIL'] }}</span> -->
         <span
           *ngIf="connexionForm.controls['mail'].hasError('email') && !connexionForm.controls['mail'].hasError('required')"
           class="orange">

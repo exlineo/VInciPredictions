@@ -16,7 +16,6 @@
   </section>
   <section>
     <router-outlet></router-outlet>
-    <!-- <app-visualisations></app-visualisations> -->
   </section>
   <section class="jaune">
     <article>
@@ -26,7 +25,6 @@
     </article>
     <article>
       <a routerLink="/gestion" [title]="l.t['GESTION']" *ngIf="authServ.profil.statut == 666"><i class="pi pi-shield"></i></a>
-      <!-- <a><i class="pi pi-sliders-h"></i></a> -->
     </article>
   </section>
 </main>
