@@ -251,7 +251,7 @@ form.bleu option:hover{
 .logo a > *{
   margin-top:auto;
 }
-.logo > a img{
+.logo > a:nth-child(3) img{
   width:75px;
   height:90px;
   margin:0 10px;
@@ -259,6 +259,11 @@ form.bleu option:hover{
 .logo h4{
   margin:10px;
   padding:0;
+}
+.logo > a:nth-child(2) img{
+  width:100%;
+  max-width:210px;
+  margin:0 auto;
 }
 .menupied{
   display:flex;
@@ -739,3 +744,9 @@ p-messages{
 ::-webkit-scrollbar-thumb {
   background-color:var(--rose);
 }
+/* @media screen and (max-width: 980px) {
+  .logo > a:nth-child(2) img{
+    width:100%;
+    margin:0 auto;
+  }
+} */
